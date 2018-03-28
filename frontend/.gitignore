@@ -13,3 +13,4 @@ dist
 coverage/
 
 .env
+.yarn-error.log
