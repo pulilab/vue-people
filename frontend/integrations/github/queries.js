@@ -13,6 +13,7 @@ export const gitHubUserRepositories = (login) => ({
           repositories(first: 100, privacy: PUBLIC) {
             edges {
               node {
+                id,
                 name,
                 url,
                 stargazers {
@@ -31,6 +32,7 @@ export const gitHubUserRepositories = (login) => ({
           repositoriesContributedTo(first: 100 privacy: PUBLIC) {
             edges {
               node {
+                id,
                 name,
                 url,
                 stargazers {
