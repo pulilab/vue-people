@@ -1,21 +1,28 @@
 <template>
   <div class="main-map">
-    <no-ssr>
-      <div class="map-wrapper">
+    <div
+      class="map-wrapper">
+      <no-ssr>
         <v-map
           v-if="center"
           :zoom="13"
           :center="center">
           <v-tilelayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"/>
-          <v-marker :lat-lng="center"/>
+          <v-marker-cluster>
+            <v-marker
+              v-for="pin in pins"
+              v-if="pin.location"
+              :key="pin.id"
+              :lat-lng="pin.latlng"/>
+          </v-marker-cluster>
         </v-map>
-      </div>
-    </no-ssr>
+      </no-ssr>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import NoSSR from 'vue-no-ssr';
 export default {
     components: {
@@ -25,11 +32,16 @@ export default {
         ...mapState({
             geo: 'geolocation'
         }),
+        ...mapGetters({
+            pins: 'people/getList'
+        }),
         center() {
             if (this.geo && this.geo.lat && this.geo.lng) {
                 return [this.geo.lat, this.geo.lng];
             }
         }
+    },
+    methods: {
     }
 };
 </script>
@@ -37,9 +49,13 @@ export default {
 <style lang="less">
 
 .main-map {
+    position: relative;
+    width:100%;
+    height: 100%;
+    z-index: 1;
     .map-wrapper {
-        height: 100vh;
-        width: 100%;
+        width:100%;
+        height: 100%;
     }
 }
 
