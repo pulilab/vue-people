@@ -2,12 +2,10 @@
   <v-container
     fluid
     fill-height>
+    <nuxt-child />
     <top-informations />
     <main-map/>
     <bottom-buttons />
-    <div class="child-container">
-      <nuxt-child />
-    </div>
   </v-container>
 </template>
 
@@ -25,6 +23,7 @@ export default {
   transition: 'none',
   async fetch({store}) {
     await store.dispatch('user/loadGitHubProfile');
+    await store.dispatch('people/loadPeople');
   }
 };
 </script>
