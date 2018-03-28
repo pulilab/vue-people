@@ -6,4 +6,10 @@ export const gitHubGraphQlRequest = () => {
   return { url , options: { headers }};
 };
 
-export const filterOutNonVue = (repositories) => {};
+export const filterOutNonVue = (repositories) => {
+  return repositories.filter(r => {
+    return r.node.languages.edges.reduce((prev, curr) => {
+      return prev || curr.node.name === 'Vue';
+    }, false);
+  });
+};
