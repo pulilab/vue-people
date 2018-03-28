@@ -17,6 +17,7 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.1.1",
     "@nuxtjs/proxy": "^1.1.4",
+    "dotenv": "^5.0.1",
     "nuxt": "^1.0.0",
     "vee-validate": "^2.0.6",
     "vue-no-ssr": "^0.2.2",
@@ -37,6 +38,8 @@
     "jest": "^22.4.3",
     "less": "^3.0.1",
     "less-loader": "^4.1.0",
-    "regenerator-runtime": "^0.11.1"
+    "regenerator-runtime": "^0.11.1",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2"
   }
 }
