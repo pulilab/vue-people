@@ -1,0 +1,135 @@
+[
+  {
+    "tags": [
+      "nisi",
+      "ipsum",
+      "adipisicing",
+      "dolore",
+      "velit"
+    ],
+    "longitude": "19.09115",
+    "latitude": "47.51446",
+    "registered": "Tuesday, January 28, 2014 3:30 PM",
+    "about": "In reprehenderit amet consequat duis tempor amet exercitation cillum aliqua voluptate exercitation nulla ipsum. Elit aliquip aute tempor nisi labore est velit ipsum incididunt consequat esse. Et qui elit cupidatat ex. Nisi laborum ea aute sit ad sint fugiat est laboris ad velit officia eiusmod. Ad quis cillum reprehenderit officia duis adipisicing. Aliquip mollit voluptate do pariatur aliqua culpa ut consequat adipisicing ea ullamco mollit.",
+    "email": "frye holder@animalia.biz",
+    "organisation": "Animalia",
+    "name": "Frye Holder",
+    "isActive": true,
+    "gitHubLogin": "lordfuoco",
+    "id": 0
+  },
+  {
+    "tags": [
+      "nostrud",
+      "deserunt",
+      "voluptate",
+      "magna",
+      "et"
+    ],
+    "longitude": "19.053812",
+    "latitude": "47.51265",
+    "registered": "Thursday, September 22, 2016 3:34 PM",
+    "about": "Culpa incididunt culpa magna mollit in est proident. Officia occaecat excepteur Lorem in excepteur ad anim Lorem est veniam ut minim non. Officia exercitation officia incididunt mollit cupidatat elit esse non. Sint mollit Lorem qui eiusmod culpa deserunt amet ea excepteur aliquip exercitation laboris.",
+    "email": "muriel monroe@fanfare.com",
+    "organisation": "Fanfare",
+    "name": "Muriel Monroe",
+    "isActive": true,
+    "gitHubLogin": "nullcode",
+    "id": 1
+  },
+  {
+    "tags": [
+      "incididunt",
+      "exercitation",
+      "culpa",
+      "nisi",
+      "esse"
+    ],
+    "longitude": "19.061181",
+    "latitude": "47.5164",
+    "registered": "Saturday, August 15, 2015 2:28 AM",
+    "about": "Non duis do eiusmod nisi. Est voluptate eu nisi voluptate cillum qui duis proident veniam commodo ad deserunt. Consequat aute exercitation cillum exercitation do excepteur tempor minim. Et qui culpa enim fugiat esse enim.",
+    "email": "waller bright@geekol.io",
+    "organisation": "Geekol",
+    "name": "Waller Bright",
+    "isActive": false,
+    "gitHubLogin": "paragonHex",
+    "id": 2
+  },
+  {
+    "tags": [
+      "dolor",
+      "dolor",
+      "aute",
+      "est",
+      "fugiat"
+    ],
+    "longitude": "19.075805",
+    "latitude": "47.51349",
+    "registered": "Thursday, February 27, 2014 12:10 AM",
+    "about": "Esse ea tempor duis anim fugiat do duis magna. Voluptate est ex cupidatat consectetur consequat do reprehenderit velit quis laborum ipsum esse. Cupidatat elit adipisicing nostrud do ea commodo excepteur irure officia quis sint eu occaecat elit. Cupidatat do consectetur voluptate velit ex ut quis amet voluptate proident ex ad proident.",
+    "email": "mildred harrington@cytrek.org",
+    "organisation": "Cytrek",
+    "name": "Mildred Harrington",
+    "isActive": true,
+    "gitHubLogin": "paizai",
+    "id": 3
+  },
+  {
+    "tags": [
+      "reprehenderit",
+      "anim",
+      "pariatur",
+      "ea",
+      "anim"
+    ],
+    "longitude": "19.079414",
+    "latitude": "47.51396",
+    "registered": "Wednesday, June 4, 2014 5:54 PM",
+    "about": "Velit occaecat non commodo pariatur tempor mollit et pariatur. Consectetur magna mollit eiusmod esse sit. Consequat fugiat ad tempor consectetur labore aliqua deserunt esse proident.",
+    "email": "angeline clements@newcube.name",
+    "organisation": "Newcube",
+    "name": "Angeline Clements",
+    "isActive": true,
+    "gitHubLogin": "bashleigh",
+    "id": 4
+  },
+  {
+    "tags": [
+      "eu",
+      "ad",
+      "quis",
+      "laboris",
+      "exercitation"
+    ],
+    "longitude": "19.084422",
+    "latitude": "47.5134",
+    "registered": "Tuesday, February 18, 2014 7:22 PM",
+    "about": "Laboris aliqua officia anim elit incididunt id amet aliquip consequat qui. Et sit deserunt excepteur fugiat qui sunt fugiat commodo minim cupidatat sint. Tempor nisi amet quis voluptate minim labore aliquip labore in reprehenderit. Sit cupidatat do culpa ad sunt occaecat laboris duis Lorem proident in quis. Non reprehenderit ullamco esse dolore sint officia elit ut Lorem. Enim cupidatat incididunt magna proident consequat aute Lorem aliqua sunt labore culpa esse. Consequat quis voluptate adipisicing esse veniam id sit.",
+    "email": "wade david@marvane.ca",
+    "organisation": "Marvane",
+    "name": "Wade David",
+    "isActive": true,
+    "gitHubLogin": "yyx990803",
+    "id": 5
+  },
+  {
+    "tags": [
+      "id",
+      "et",
+      "exercitation",
+      "elit",
+      "ipsum"
+    ],
+    "longitude": "19.055957",
+    "latitude": "47.51998",
+    "registered": "Saturday, March 29, 2014 5:56 PM",
+    "about": "Amet Lorem exercitation non nisi velit sit ex. Ea labore eiusmod nulla incididunt officia amet sint anim magna exercitation mollit esse. Et tempor culpa ut in qui. Tempor excepteur commodo duis officia culpa dolor pariatur laborum.",
+    "email": "hayes justice@tellifly.co.uk",
+    "organisation": "Tellifly",
+    "name": "Hayes Justice",
+    "isActive": true,
+    "gitHubLogin": "posva",
+    "id": 6
+  }
+]
