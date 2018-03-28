@@ -1949,6 +1949,10 @@ css-loader@^0.28.9:
     postcss-value-parser "^3.3.0"
     source-list-map "^2.0.0"
 
+css-parse@1.7.x:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/css-parse/-/css-parse-1.7.0.tgz#321f6cf73782a6ff751111390fc05e2c657d8c9b"
+
 css-select@^1.1.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/css-select/-/css-select-1.2.0.tgz#2b3a110539c5355f1cd8d314623e870b121ec858"
@@ -2111,15 +2115,15 @@ de-indent@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/de-indent/-/de-indent-1.0.2.tgz#b2038e846dc33baa5796128d0804b455b8c1e21d"
 
-debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.8:
-  version "2.6.9"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
+debug@*, debug@3.1.0, debug@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
   dependencies:
     ms "2.0.0"
 
-debug@3.1.0, debug@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
+debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.8:
+  version "2.6.9"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
   dependencies:
     ms "2.0.0"
 
@@ -2299,6 +2303,10 @@ domutils@1.5.1:
   dependencies:
     dom-serializer "0"
     domelementtype "1"
+
+dotenv@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-5.0.1.tgz#a5317459bd3d79ab88cff6e44057a6a3fbb1fcef"
 
 duplexer@^0.1.1:
   version "0.1.1"
@@ -3160,6 +3168,17 @@ glob-parent@^3.1.0:
   dependencies:
     is-glob "^3.1.0"
     path-dirname "^1.0.0"
+
+glob@7.0.x:
+  version "7.0.6"
+  resolved "https://registry.yarnpkg.com/glob/-/glob-7.0.6.tgz#211bafaf49e525b8cd93260d14ab136152b3f57a"
+  dependencies:
+    fs.realpath "^1.0.0"
+    inflight "^1.0.4"
+    inherits "2"
+    minimatch "^3.0.2"
+    once "^1.3.0"
+    path-is-absolute "^1.0.0"
 
 glob@7.1.2, glob@^7.0.3, glob@^7.0.5, glob@^7.1.1, glob@^7.1.2:
   version "7.1.2"
@@ -4557,6 +4576,10 @@ lodash.camelcase@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz#b28aa6288a2b9fc651035c7711f65ab6190331a6"
 
+lodash.clonedeep@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
+
 lodash.isplainobject@^4.0.6:
   version "4.0.6"
   resolved "https://registry.yarnpkg.com/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz#7c526a52d89b45c45cc690b88163be0497f550cb"
@@ -4844,7 +4867,7 @@ mkdirp@0.5.0:
   dependencies:
     minimist "0.0.8"
 
-mkdirp@0.5.1, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@~0.5.1:
+mkdirp@0.5.1, mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@~0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
@@ -6626,6 +6649,10 @@ sane@^2.0.0:
   optionalDependencies:
     fsevents "^1.1.1"
 
+sax@0.5.x:
+  version "0.5.8"
+  resolved "https://registry.yarnpkg.com/sax/-/sax-0.5.8.tgz#d472db228eb331c2506b0e8c15524adb939d12c1"
+
 sax@^1.2.4, sax@~1.2.1:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
@@ -6848,6 +6875,12 @@ source-map-support@^0.5.0:
 source-map-url@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/source-map-url/-/source-map-url-0.4.0.tgz#3e935d7ddd73631b97659956d55128e87b5084a3"
+
+source-map@0.1.x:
+  version "0.1.43"
+  resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.1.43.tgz#c24bc146ca517c1471f5dacbe2571b2b7f9e3346"
+  dependencies:
+    amdefine ">=0.0.4"
 
 source-map@0.5.6:
   version "0.5.6"
@@ -7074,6 +7107,25 @@ style-resources-loader@^1.0.0:
   dependencies:
     glob "^7.1.2"
     loader-utils "^1.1.0"
+
+stylus-loader@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/stylus-loader/-/stylus-loader-3.0.2.tgz#27a706420b05a38e038e7cacb153578d450513c6"
+  dependencies:
+    loader-utils "^1.0.2"
+    lodash.clonedeep "^4.5.0"
+    when "~3.6.x"
+
+stylus@^0.54.5:
+  version "0.54.5"
+  resolved "https://registry.yarnpkg.com/stylus/-/stylus-0.54.5.tgz#42b9560931ca7090ce8515a798ba9e6aa3d6dc79"
+  dependencies:
+    css-parse "1.7.x"
+    debug "*"
+    glob "7.0.x"
+    mkdirp "0.5.x"
+    sax "0.5.x"
+    source-map "0.1.x"
 
 supports-color@5.1.0:
   version "5.1.0"
@@ -7778,6 +7830,10 @@ whatwg-url@^6.4.0:
     lodash.sortby "^4.7.0"
     tr46 "^1.0.0"
     webidl-conversions "^4.0.1"
+
+when@~3.6.x:
+  version "3.6.4"
+  resolved "https://registry.yarnpkg.com/when/-/when-3.6.4.tgz#473b517ec159e2b85005497a13983f095412e34e"
 
 whet.extend@~0.9.9:
   version "0.9.9"
