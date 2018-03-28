@@ -3,46 +3,74 @@
     <div
       class="map-wrapper">
       <no-ssr>
-        <v-map
+        <l-map
           v-if="center"
           :zoom="13"
-          :center="center">
-          <v-tilelayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"/>
-          <v-marker-cluster>
-            <v-marker
-              v-for="pin in pins"
-              v-if="pin.location"
-              :key="pin.id"
-              :lat-lng="pin.latlng"/>
-          </v-marker-cluster>
-        </v-map>
+          :options="mapOptions"
+          :center="center"
+          @click="addMarker">
+          <l-tilelayer
+            url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"/>
+          <l-marker
+            v-for="pin in pins"
+            :key="pin.id"
+            :lat-lng="pin.latlng"
+            @click="openPersonDetails(pin)"/>
+          <l-marker
+            v-if="userMaker"
+            :lat-lng="userMaker"/>
+        </l-map>
       </no-ssr>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
+import { mapState, mapGetters, mapActions } from 'vuex';
+
 import NoSSR from 'vue-no-ssr';
 export default {
-    components: {
-      'no-ssr': NoSSR
+  components: {
+    'no-ssr': NoSSR
+  },
+  data () {
+    return {
+      mapOptions: { zoomControl: false , attributionControl: false }
+    };
+  },
+  computed: {
+    ...mapState({
+      geo: 'geolocation'
+    }),
+    ...mapGetters({
+      pins: 'people/getList',
+      addMode: 'map/isAddMode',
+      userPosition: 'user/getUserPosition'
+    }),
+    center() {
+      if (this.geo && this.geo.lat && this.geo.lng) {
+        return [this.geo.lat, this.geo.lng];
+      }
     },
-    computed: {
-        ...mapState({
-            geo: 'geolocation'
-        }),
-        ...mapGetters({
-            pins: 'people/getList'
-        }),
-        center() {
-            if (this.geo && this.geo.lat && this.geo.lng) {
-                return [this.geo.lat, this.geo.lng];
-            }
-        }
-    },
-    methods: {
+    userMaker() {
+      if(this.userPosition) {
+        return [this.userPosition.lat, this.userPosition.lng];
+      }
     }
+  },
+  methods: {
+    ...mapActions({
+      setUserPosition: 'user/setUserPosition'
+    }),
+    addMarker(event) {
+      if(this.addMode) {
+        this.setUserPosition(event.latlng);
+      }
+    },
+    openPersonDetails(pin) {
+      this.$router.push(`/user/${pin.id}/`);
+    }
+  },
 };
 </script>
 
