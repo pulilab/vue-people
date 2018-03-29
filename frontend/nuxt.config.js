@@ -45,6 +45,7 @@ const config = {
   },
   loading: { color: '#3B8070' },
   build: {
+    extractCSS: true,
     extend (config, { isDev, isClient }) {
       if (isDev && isClient) {
         config.module.rules.push({
