@@ -7,7 +7,7 @@
       <form>
         <v-text-field
           v-validate="'required|max:254'"
-          v-model="name"
+          v-model="profile.name"
           :counter="254"
           :error-messages="errors.collect('name')"
           label="Name"
@@ -16,10 +16,58 @@
         />
         <v-text-field
           v-validate="'email'"
-          v-model="email"
+          v-model="profile.email"
           :error-messages="errors.collect('email')"
           label="E-mail"
           data-vv-name="email"
+        />
+        <v-text-field
+          v-validate="'url'"
+          v-model="profile.githubUrl"
+          :error-messages="errors.collect('githubUrl')"
+          label="GitHub profile"
+          data-vv-name="githubUrl"
+        />
+        <v-text-field
+          v-validate="'url'"
+          v-model="profile.twitterUrl"
+          :error-messages="errors.collect('twitterUrl')"
+          label="Twitter profile"
+          data-vv-name="twitterUrl"
+        />
+        <v-text-field
+          v-validate="'url'"
+          v-model="profile.websiteUrl"
+          :error-messages="errors.collect('websiteUrl')"
+          label="Your website"
+          data-vv-name="websiteUrl"
+        />
+        <v-select
+          :items="organisations"
+          v-model="profile.organisation"
+          label="Organisation"
+          autocomplete
+        />
+
+        <v-select
+          v-model="profile.tags"
+          :items="tagList"
+          label="Tags"
+          multiple
+          tags
+          chips
+          deletable-chips
+        />
+
+        <v-text-field
+          v-validate="'max:500'"
+          v-model="profile.about"
+          :error-messages="errors.collect('about')"
+          :counter="500"
+          data-vv-name="about"
+          name="about"
+          label="About"
+          textarea
         />
 
       </form>
@@ -47,21 +95,34 @@ export default {
   name: 'UserProfileForm',
   data() {
     return {
-      name: '',
-      email: ''
+      profile: {
+        name: '',
+        email: '',
+        githubUrl: '',
+        twitterUrl: '',
+        websiteUrl: '',
+        organisation: '',
+        tags: [],
+        about: ''
+      }
     };
   },
   computed: {
     ...mapGetters({
       userProfile: 'user/getUserProfile'
-    })
+    }),
+    tagList () {
+      return ['vue'];
+    },
+    organisations () {
+      return ['Pulilab', 'GitHub', 'Vidzor'];
+    }
   },
   watch: {
     userProfile: {
       immediate: true,
       handler(p) {
-        this.name = p.name;
-        this.email = p.email;
+        this.profile = {...p};
       }
     }
   },
@@ -70,11 +131,7 @@ export default {
       saveUserProfile: 'user/saveUserProfile'
     }),
     async save() {
-      const profile = {
-        name: this.name,
-        email: this.email
-      };
-      await this.saveUserProfile(profile);
+      await this.saveUserProfile(this.profile);
       this.$router.push('/');
     },
     cancel() {

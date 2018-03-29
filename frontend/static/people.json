@@ -14,6 +14,9 @@
     "email": "frye holder@animalia.biz",
     "organisation": "Animalia",
     "name": "Frye Holder",
+    "githubUrl": "www.github.com/someprofile",
+    "twitterUrl": "www.twitter.com/someUrl",
+    "websiteUrl": "www.gogole.com/some",
     "isActive": true,
     "gitHubLogin": "lordfuoco",
     "id": 0
@@ -33,6 +36,9 @@
     "email": "muriel monroe@fanfare.com",
     "organisation": "Fanfare",
     "name": "Muriel Monroe",
+    "githubUrl": "www.github.com/someprofile",
+    "twitterUrl": "www.twitter.com/someUrl",
+    "websiteUrl": "www.gogole.com/some",
     "isActive": true,
     "gitHubLogin": "nullcode",
     "id": 1
@@ -52,6 +58,9 @@
     "email": "waller bright@geekol.io",
     "organisation": "Geekol",
     "name": "Waller Bright",
+    "githubUrl": "www.github.com/someprofile",
+    "twitterUrl": "www.twitter.com/someUrl",
+    "websiteUrl": "www.gogole.com/some",
     "isActive": false,
     "gitHubLogin": "paragonHex",
     "id": 2
@@ -71,6 +80,9 @@
     "email": "mildred harrington@cytrek.org",
     "organisation": "Cytrek",
     "name": "Mildred Harrington",
+    "githubUrl": "www.github.com/someprofile",
+    "twitterUrl": "www.twitter.com/someUrl",
+    "websiteUrl": "www.gogole.com/some",
     "isActive": true,
     "gitHubLogin": "paizai",
     "id": 3
@@ -90,6 +102,9 @@
     "email": "angeline clements@newcube.name",
     "organisation": "Newcube",
     "name": "Angeline Clements",
+    "githubUrl": "www.github.com/someprofile",
+    "twitterUrl": "www.twitter.com/someUrl",
+    "websiteUrl": "www.gogole.com/some",
     "isActive": true,
     "gitHubLogin": "bashleigh",
     "id": 4
@@ -109,6 +124,9 @@
     "email": "wade david@marvane.ca",
     "organisation": "Marvane",
     "name": "Wade David",
+    "githubUrl": "www.github.com/someprofile",
+    "twitterUrl": "www.twitter.com/someUrl",
+    "websiteUrl": "www.gogole.com/some",
     "isActive": true,
     "gitHubLogin": "yyx990803",
     "id": 5
@@ -128,6 +146,9 @@
     "email": "hayes justice@tellifly.co.uk",
     "organisation": "Tellifly",
     "name": "Hayes Justice",
+    "githubUrl": "www.github.com/someprofile",
+    "twitterUrl": "www.twitter.com/someUrl",
+    "websiteUrl": "www.gogole.com/some",
     "isActive": true,
     "gitHubLogin": "posva",
     "id": 6
