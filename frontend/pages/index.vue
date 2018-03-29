@@ -22,7 +22,6 @@ export default {
   },
   transition: 'none',
   async fetch({store}) {
-    await store.dispatch('user/loadGitHubProfile');
     await store.dispatch('people/loadPeople');
   }
 };
