@@ -51,7 +51,6 @@ export default {
     }),
     confirmMarkerPosition() {
       this.setAddMode(false);
-      this.$router.push('/user/');
     }
   }
 };
