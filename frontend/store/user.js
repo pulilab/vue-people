@@ -1,6 +1,6 @@
 import  { deleteTokens } from '~/utilities/auth';
 import { gitHubUserProfile } from '~/integrations/github/queries';
-import { gitHubGraphQlRequest, gitHubAccessTokenLink } from '~/integrations/github/utilities';
+import { gitHubGraphQlRequest, gitHubAccessTokenLink, profileMapper } from '~/integrations/github/utilities';
 
 export const state = () => ({
   user: null,
@@ -12,7 +12,7 @@ export const state = () => ({
 
 export const getters = {
   getUserProfile: state => {
-    return {...state.gitHubProfile, ...state.savedProfile};
+    return {...profileMapper(state.gitHubProfile), ...state.savedProfile};
   },
   getLoginStatus: state => {
     const ghp = state.gitHubProfile;
