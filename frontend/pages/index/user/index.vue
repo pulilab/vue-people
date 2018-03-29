@@ -14,6 +14,12 @@ export default {
   components: {
     UserProfileForm
   },
+  async fetch({query, store}) {
+    const code = query.code;
+    if ( code ) {
+      await store.dispatch('user/gitHubLogin', code);
+    }
+  },
   data() {
     return {
       isOpen: true
