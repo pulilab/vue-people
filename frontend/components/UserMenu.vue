@@ -24,7 +24,10 @@
     </v-btn>
     <v-card>
       <v-list v-show="isLoggedIn">
-        <v-list-tile avatar>
+        <v-list-tile
+          to="/user/"
+          avatar
+          nuxt >
           <v-list-tile-avatar>
             <img :src="userProfile.avatarUrl" >
           </v-list-tile-avatar>
@@ -44,8 +47,8 @@
         </v-btn>
         <v-btn
           v-show="!isLoggedIn"
-          flat
-          @click="doLogin">
+          :href="gitHubUrl"
+          flat>
           Login
         </v-btn>
       </v-card-actions>
@@ -55,6 +58,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import { gitHubOauthLink } from '~/integrations/github/utilities';
 
 export default {
   data() {
@@ -67,15 +71,15 @@ export default {
     ...mapGetters({
       userProfile: 'user/getUserProfile',
       isLoggedIn: 'user/getLoginStatus'
-    })
+    }),
+    gitHubUrl() {
+      return gitHubOauthLink();
+    }
   },
   methods: {
     ...mapActions({
       logout: 'user/logout'
     }),
-    doLogin() {
-      this.menu = false;
-    },
     doLogout() {
       this.menu = false;
       this.logout();
