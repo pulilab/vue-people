@@ -5,9 +5,10 @@
       <no-ssr>
         <l-map
           v-if="center"
-          :zoom="13"
+          :zoom="zoom"
           :options="mapOptions"
           :center="center"
+          @move="mapMoveHandler"
           @click="addMarker">
           <l-tilelayer
             url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"/>
@@ -26,7 +27,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 import NoSSR from 'vue-no-ssr';
 export default {
@@ -39,28 +40,22 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      geo: 'geolocation'
-    }),
     ...mapGetters({
       pins: 'people/getList',
       addMode: 'map/isAddMode',
-      userPosition: 'user/getUserPosition'
+      userPosition: 'user/getUserPosition',
+      zoom: 'map/getZoom',
+      center: 'map/getCenter'
     }),
-    center() {
-      if (this.geo && this.geo.lat && this.geo.lng) {
-        return [this.geo.lat, this.geo.lng];
-      }
-    },
     userMaker() {
-      if(this.userPosition) {
-        return [this.userPosition.lat, this.userPosition.lng];
-      }
+      return this.userPosition;
     }
   },
   methods: {
     ...mapActions({
-      setUserPosition: 'user/setUserPosition'
+      setUserPosition: 'user/setUserPosition',
+      setZoom: 'map/setZoom',
+      setCenter: 'map/setCenter',
     }),
     addMarker(event) {
       if(this.addMode) {
@@ -69,6 +64,10 @@ export default {
     },
     openPersonDetails(pin) {
       this.$router.push(`/user/${pin.id}/`);
+    },
+    mapMoveHandler(e) {
+      this.setZoom(e.target.getZoom());
+      this.setCenter(e.target.getCenter());
     }
   },
 };
