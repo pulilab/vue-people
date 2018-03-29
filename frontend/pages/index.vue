@@ -20,7 +20,6 @@ export default {
     BottomButtons,
     TopInformations
   },
-  transition: 'none',
   async fetch({store}) {
     await store.dispatch('people/loadPeople');
   }

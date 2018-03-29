@@ -21,7 +21,6 @@ export default {
       isOpen: true
     };
   },
-  transition: 'none',
   async fetch({store, params}) {
     await store.dispatch('people/setCurrent', parseInt(params.id, 10));
   },

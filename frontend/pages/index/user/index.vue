@@ -25,7 +25,6 @@ export default {
       isOpen: true
     };
   },
-  transition: 'none',
   watch: {
     isOpen: {
       immediate: true,
