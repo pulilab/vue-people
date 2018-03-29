@@ -31,7 +31,8 @@ const config = {
     { src: '~plugins/vuetify.js', ssr: true },
     { src: '~plugins/vee-validate.js', ssr: true },
     { src: '~plugins/vue-leaflet.js', ssr: false },
-    { src: '~plugins/vuex-geolocation.js', ssr: false }
+    { src: '~plugins/vuex-geolocation.js', ssr: false },
+    { src: '~plugins/store-tokens.js', ssr: false }
   ],
   modules: [
     '@nuxtjs/axios',
@@ -39,10 +40,8 @@ const config = {
   ],
   proxy: {},
   axios: {},
-  apollo: {
-    clientConfigs: {
-      default: '~/apollo/client-configs/default.js'
-    }
+  router: {
+    middleware: 'auth'
   },
   loading: { color: '#3B8070' },
   build: {
