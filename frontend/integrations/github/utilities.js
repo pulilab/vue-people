@@ -28,7 +28,7 @@ export const gitHubAccessTokenLink = () => {
 
 
 export const profileMapper = (ghp) => {
-  return {
+  return ghp ? {
     name:  ghp.name,
     avatarUrl: ghp.avatarUrl,
     email: ghp.email,
@@ -36,5 +36,5 @@ export const profileMapper = (ghp) => {
     websiteUrl: ghp.websiteUrl,
     organisation: ghp.company,
     about: ghp.bio
-  };
+  } : {};
 };
