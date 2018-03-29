@@ -25,3 +25,16 @@ export const gitHubAccessTokenLink = () => {
   };
   return { url , options: { headers }};
 };
+
+
+export const profileMapper = (ghp) => {
+  return {
+    name:  ghp.name,
+    avatarUrl: ghp.avatarUrl,
+    email: ghp.email,
+    githubUrl: ghp.url,
+    websiteUrl: ghp.websiteUrl,
+    organisation: ghp.company,
+    about: ghp.bio
+  };
+};

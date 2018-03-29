@@ -1,9 +1,13 @@
 export const gitHubUserProfile = () => ({
   query: `{ viewer {
-          name,
-          email,
-          login,
-          avatarUrl
+            name,
+            email,
+            login,
+            avatarUrl,
+            bio,
+            company,
+            url,
+            websiteUrl
           }
       }`
 });
