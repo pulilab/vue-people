@@ -28,8 +28,8 @@
             </v-list-tile-title>
             <v-list-tile-sub-title >
               <v-chip
-                v-for="tag in person.tags"
-                :key="tag"
+                v-for="(tag, index) in person.tags"
+                :key="index"
                 small>
                 {{ tag }}
               </v-chip>
