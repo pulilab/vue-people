@@ -1,5 +1,6 @@
 module.exports = {
   verbose: true,
+  bail: true,
   collectCoverage: true,
   collectCoverageFrom: [
     '**/store/**/*.js'
@@ -12,5 +13,8 @@ module.exports = {
       lines: 100,
       statements: 100
     }
+  },
+  moduleNameMapper: {
+    "~(.*)$": "<rootDir>/$1"
   }
 };
