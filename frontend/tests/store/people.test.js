@@ -37,16 +37,7 @@ describe('getters', () => {
     expect(result).toEqual({id:1, name: 2});
   });
 
-  test('getRepositoriesDefaultSort', () => {
-    expect(getters.getRepositoriesDefaultSort(s)).toEqual(s.repositoriesDefaultSort);
-  });
-
-  test('getContributedDefaultSort', () => {
-    expect(getters.getContributedDefaultSort(s)).toEqual(s.contributedDefaultSort);
-  });
-
   test('getCurrentPersonRepositories', () => {
-    let getRepositoriesDefaultSort = 'asc';
     s.currentPersonRepositories = [
       {
         node: {
@@ -63,16 +54,12 @@ describe('getters', () => {
         }
       }
     ];
-    let result = getters.getCurrentPersonRepositories(s, {getRepositoriesDefaultSort});
-    expect(result[0].node.stargazers.totalCount).toEqual(1);
 
-    getRepositoriesDefaultSort = 'desc';
-    result = getters.getCurrentPersonRepositories(s, {getRepositoriesDefaultSort});
+    const result = getters.getCurrentPersonRepositories(s);
     expect(result[0].node.stargazers.totalCount).toEqual(2);
   });
 
   test('getCurrentPersonContributed', () => {
-    let getContributedDefaultSort = 'asc';
     s.currentPersonContributed = [
       {
         node: {
@@ -89,11 +76,7 @@ describe('getters', () => {
         }
       }
     ];
-    let result = getters.getCurrentPersonContributed(s, {getContributedDefaultSort});
-    expect(result[0].node.stargazers.totalCount).toEqual(1);
-
-    getContributedDefaultSort = 'desc';
-    result = getters.getCurrentPersonContributed(s, {getContributedDefaultSort});
+    const result = getters.getCurrentPersonContributed(s);
     expect(result[0].node.stargazers.totalCount).toEqual(2);
   });
 });
@@ -154,16 +137,6 @@ describe('actions', () => {
     expect(vuex.commit.mock.calls[1]).toEqual(['SET_CURRENT_PERSON_CONTRIBUTED_LIST', 'filtered']);
   });
 
-  test('setRepositoriesDefaultSort', () => {
-    actions.setRepositoriesDefaultSort(vuex, 1);
-    expect(vuex.commit.mock.calls[0]).toEqual(['SET_REPOSITORIES_DEFAULT_SORT', 1]);
-  });
-
-  test('setContributedDefaultSort', () => {
-    actions.setContributedDefaultSort(vuex, 1);
-    expect(vuex.commit.mock.calls[0]).toEqual(['SET_CONTRIBUTED_DEFAULT_SORT', 1]);
-  });
-
 });
 
 describe('mutations', () => {
@@ -191,18 +164,4 @@ describe('mutations', () => {
     mutations.SET_CURRENT_PERSON_CONTRIBUTED_LIST(s, 1);
     expect(s.currentPersonContributed).toEqual(1);
   });
-
-  test('SET_REPOSITORIES_DEFAULT_SORT', () => {
-    const s = {};
-    mutations.SET_REPOSITORIES_DEFAULT_SORT(s, 1);
-    expect(s.repositoriesDefaultSort).toEqual(1);
-  });
-
-  test('SET_CONTRIBUTED_DEFAULT_SORT', () => {
-    const s = {};
-    mutations.SET_CONTRIBUTED_DEFAULT_SORT(s, 1);
-    expect(s.contributedDefaultSort).toEqual(1);
-  });
-
-
 });

@@ -5,19 +5,7 @@
       indeterminate />
     <v-list v-show="!loading">
       <v-subheader>
-        <v-layout row>
-          <v-flex xs6>
-            Repositories
-          </v-flex>
-          <v-flex xs6>
-            <v-switch
-              v-show="repositories.length > 0"
-              :label="repositoriesSortLabel"
-              v-model="repositoriesDefaultSort"
-              class="ml-5"
-            />
-          </v-flex>
-        </v-layout>
+        Repositories
       </v-subheader>
       <v-list-tile v-if="repositories.length === 0">
         <v-list-tile-content>
@@ -45,19 +33,7 @@
     </v-list>
     <v-list v-show="!loading">
       <v-subheader>
-        <v-layout row>
-          <v-flex xs6>
-            Contribution
-          </v-flex>
-          <v-flex xs6>
-            <v-switch
-              v-show="contributed.length > 0"
-              :label="contributedSortLabel"
-              v-model="contributedDefaultSort"
-              class="ml-5"
-            />
-          </v-flex>
-        </v-layout>
+        Contribution
       </v-subheader>
       <v-list-tile v-if="contributed.length === 0">
         <v-list-tile-content>
@@ -99,40 +75,8 @@ export default {
     ...mapGetters({
       current: 'people/getCurrentPerson',
       repositories: 'people/getCurrentPersonRepositories',
-      contributed: 'people/getCurrentPersonContributed',
-      getRepositoriesDefaultSort: 'people/getRepositoriesDefaultSort',
-      getContributedDefaultSort: 'people/getContributedDefaultSort'
-    }),
-    repositoriesDefaultSort: {
-      get () {
-        return this.getRepositoriesDefaultSort === 'desc';
-      },
-      set (value) {
-        if (!value) {
-          this.setRepositoriesDefaultSort('asc');
-        } else {
-          this.setRepositoriesDefaultSort('desc');
-        }
-      }
-    },
-    repositoriesSortLabel() {
-      return `Star order: ${this.repositoriesDefaultSort ? 'desc' : 'asc'}`;
-    },
-    contributedDefaultSort: {
-      get () {
-        return this.getContributedDefaultSort === 'desc';
-      },
-      set (value) {
-        if (!value) {
-          this.setContributedDefaultSort('asc');
-        } else {
-          this.setContributedDefaultSort('desc');
-        }
-      }
-    },
-    contributedSortLabel() {
-      return `Star order: ${this.contributedDefaultSort ? 'desc' : 'asc'}`;
-    }
+      contributed: 'people/getCurrentPersonContributed'
+    })
   },
   watch: {
     current: {
@@ -146,9 +90,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      loadRepositories: 'people/loadRepositories',
-      setRepositoriesDefaultSort: 'people/setRepositoriesDefaultSort',
-      setContributedDefaultSort: 'people/setContributedDefaultSort'
+      loadRepositories: 'people/loadRepositories'
     })
   }
 };
