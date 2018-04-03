@@ -12,14 +12,14 @@ export const saveTokens = (jwt, github) => {
   }
 };
 
-export const deleteTokens = () => {
-  if (process.SERVER_BUILD) return;
-  if (process.client) {
-    window.localStorage.removeItem('jwt_token');
-    window.localStorage.removeItem('github_token');
+export const deleteTokens = (tokens=['jwt_token', 'github_token']) => {
+  if (process.SERVER_BUILD) {
+    return;
   }
-  Cookie.remove('jwt_token');
-  Cookie.remove('github_token');
+  if (process.client) {
+    tokens.forEach(t =>window.localStorage.removeItem(t));
+  }
+  tokens.forEach(t=> Cookie.remove(t));
 };
 
 export const getValueFromCookie = (req, value) => {

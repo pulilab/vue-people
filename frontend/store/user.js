@@ -33,11 +33,21 @@ export const getters = {
 };
 
 export const actions = {
-  async loadGitHubProfile({commit, getters}) {
+  async loadGitHubProfile({commit, dispatch, getters}) {
     const token = getters.getGithubToken;
     const gh = gitHubGraphQlRequest(token);
-    const { data } = await this.$axios.post(gh.url, gitHubUserProfile(), gh.options);
-    commit('SET_USER_GITHUB_PROFILE', {...data.data.viewer });
+    try {
+      const { data } = await this.$axios.post(gh.url, gitHubUserProfile(), gh.options);
+      commit('SET_USER_GITHUB_PROFILE', {...data.data.viewer });
+    } catch(e) {
+      console.log(e.response.status);
+      if ( e.response && e.response.status === 401) {
+        dispatch('logout');
+      }
+      else {
+        console.error('error fetching data from github: ', {...e});
+      }
+    }
   },
   setUserPosition({commit}, position) {
     commit('SET_USER_POSITION', position);
