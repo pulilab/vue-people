@@ -14,9 +14,9 @@ export const getters = {
   getUserProfile: state => {
     return {...profileMapper(state.gitHubProfile), ...state.savedProfile};
   },
-  getLoginStatus: state => {
-    const ghp = state.gitHubProfile;
-    return ghp && ghp.name && ghp.avatarUrl;
+  getLoginStatus: (state, getters) => {
+    const ghp = getters.getUserProfile;
+    return !!(ghp && ghp.name && ghp.avatarUrl);
   },
   getUserPosition: state => {
     if(state.position){
@@ -40,12 +40,11 @@ export const actions = {
       const { data } = await this.$axios.post(gh.url, gitHubUserProfile(), gh.options);
       commit('SET_USER_GITHUB_PROFILE', {...data.data.viewer });
     } catch(e) {
-      console.log(e.response.status);
-      if ( e.response && e.response.status === 401) {
+      if (e && e.response && e.response.status === 401) {
         dispatch('logout');
       }
       else {
-        console.error('error fetching data from github: ', {...e});
+        return Promise.reject(e);
       }
     }
   },
@@ -77,7 +76,7 @@ export const actions = {
     if ( data.access_token ) {
       await dispatch('setGithubToken', data.access_token);
     } else  {
-      console.error('wrong or stale github code');
+      return Promise.reject('wrong or stale github code');
     }
   }
 };
