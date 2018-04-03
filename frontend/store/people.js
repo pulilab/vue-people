@@ -13,7 +13,13 @@ export const state = () => ({
 
 export const getters = {
   getList: state => {
-    return [...state.list.map(p => ({...p, latlng: [p.latitude, p.longitude]}))];
+    return [...state.list.map(p => (
+      {...p,
+        latlng: {
+          lat: p.latitude,
+          lng: p.longitude
+        }
+      }))];
   },
   getCurrentPerson: state => {
     return state.current;
@@ -48,7 +54,7 @@ export const actions = {
     const { data } = await this.$axios.get('/people.json');
     commit('SET_PEOPLE_LIST', data);
   },
-  async setCurrent({commit}, id) {
+  setCurrent({commit}, id) {
     commit('SET_CURRENT', id);
     commit('SET_CURRENT_PERSON_REPOSITORY_LIST', []);
     commit('SET_CURRENT_PERSON_CONTRIBUTED_LIST', []);
