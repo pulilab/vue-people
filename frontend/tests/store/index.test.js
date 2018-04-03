@@ -1,4 +1,4 @@
-import { state } from '../../store/index';
+import { state } from '~/store/index';
 
 test('store state is unique between calls', () => {
   const s = state();
