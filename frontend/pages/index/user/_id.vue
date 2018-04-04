@@ -1,12 +1,5 @@
 <template>
-  <v-dialog
-    v-model="isOpen"
-    :hide-overlay="true"
-    content-class="left-dialog"
-    transition="dialog-bottom-transition"
-    persistent>
-    <person-details/>
-  </v-dialog>
+  <person-details/>
 </template>
 
 <script>
@@ -16,37 +9,12 @@ export default {
   components: {
     PersonDetails
   },
-  data() {
-    return {
-      isOpen: true
-    };
-  },
   async fetch({store, params}) {
     await store.dispatch('people/setCurrent', parseInt(params.id, 10));
-  },
-  watch: {
-    isOpen: {
-      immediate: true,
-      handler(isOpen) {
-        if (!isOpen) {
-          this.$router.push('/');
-        }
-      }
-    }
   }
 };
 </script>
 
 <style lang="less">
-.dialog.left-dialog {
-  max-height: 100%;
-  width:40%;
-  margin: 0;
-  margin-left: -60%;
-
-  .dialog-container {
-    height: 100%;
-  }
-}
 </style>
 

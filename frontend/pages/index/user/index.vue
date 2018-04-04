@@ -1,10 +1,7 @@
 <template>
-  <v-dialog
-    v-model="isOpen"
-    :transition="false"
-    max-width="500px">
+  <div>
     <user-profile-form/>
-  </v-dialog>
+  </div>
 </template>
 
 <script>
@@ -18,21 +15,6 @@ export default {
     const code = query.code;
     if ( code ) {
       await store.dispatch('user/gitHubLogin', code);
-    }
-  },
-  data() {
-    return {
-      isOpen: true
-    };
-  },
-  watch: {
-    isOpen: {
-      immediate: true,
-      handler(isOpen) {
-        if (!isOpen) {
-          this.$router.push('/');
-        }
-      }
     }
   }
 };

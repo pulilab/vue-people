@@ -1,7 +1,19 @@
 <template>
   <v-card>
     <v-card-title>
-      Your profile:
+      <v-layout row>
+        <v-flex>
+          <user-avatar />
+        </v-flex>
+        <v-flex class="pull-right">
+          <v-btn
+            to="/"
+            icon
+            nuxt >
+            <v-icon>close</v-icon>
+          </v-btn>
+        </v-flex>
+      </v-layout>
     </v-card-title>
     <v-card-text>
       <form>
@@ -73,12 +85,6 @@
       </form>
     </v-card-text>
     <v-card-actions>
-      <v-btn
-        color="primary"
-        flat
-        @click.stop="cancel">
-        Close
-      </v-btn>
       <v-spacer />
       <v-btn
         color="primary"
@@ -91,8 +97,13 @@
 
 <script>
 import {mapGetters, mapActions} from 'vuex';
+import UserAvatar from './UserAvatar.vue';
+
 export default {
   name: 'UserProfileForm',
+  components: {
+    UserAvatar
+  },
   data() {
     return {
       profile: {
@@ -133,14 +144,14 @@ export default {
     async save() {
       await this.saveUserProfile(this.profile);
       this.$router.push('/');
-    },
-    cancel() {
-      this.$router.push('/');
     }
   }
 };
 </script>
 
-<style>
-
+<style lang="less">
+  .pull-right {
+    display: flex;
+    justify-content: flex-end;
+  }
 </style>

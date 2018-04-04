@@ -1,12 +1,23 @@
 <template>
-  <v-card
-    v-if="person"
-    class="white--text person-details">
-    <v-card-title primary-title>
-      <div class="headline">{{ person.name }}</div>
-      <div>{{ person.about }}</div>
-    </v-card-title>
-    <v-card-text>
+  <div class="person-details">
+    <v-toolbar
+      absolute>
+      <v-btn
+        icon
+        nuxt
+        to="/">
+        <v-icon>arrow_back</v-icon>
+        back
+      </v-btn>
+      <v-spacer/>
+    </v-toolbar>
+    <div
+      v-if="person"
+      class="person-info">
+      <div>
+        <div class="headline">{{ person.name }}</div>
+        <div>{{ person.about }}</div>
+      </div>
       <v-list two-line>
         <v-subheader>
           Details
@@ -80,16 +91,8 @@
         </v-list-tile>
       </v-list>
       <repository-list/>
-    </v-card-text>
-    <v-card-actions>
-      <v-btn
-        flat
-        dark
-        @click="closeDetails">
-        Close
-      </v-btn>
-    </v-card-actions>
-  </v-card>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -122,8 +125,12 @@ export default {
 <style lang="less">
 
 .person-details {
-  min-height: 100vh;
-  overflow-x: hidden;
+  position: relative;
+
+  .person-info {
+    position: relative;
+    padding-top: 70px;
+  }
 }
 
 </style>
