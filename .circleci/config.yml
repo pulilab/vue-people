@@ -11,20 +11,19 @@ jobs:
 
     steps:
       - checkout
-      - run: cd frontend
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-{{ checksum "frontend/package.json" }}
           - v1-dependencies-
 
-      - run: yarn install
+      - run: cd frontend && yarn install
 
       - save_cache:
           paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+            - frontend/node_modules
+          key: v1-dependencies-{{ checksum "frontend/package.json" }}
 
       # run tests!
-      - run: yarn test
+      - run: cd frontend && yarn test
 
 
