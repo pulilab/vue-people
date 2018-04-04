@@ -16,7 +16,9 @@ jobs:
           - v1-dependencies-{{ checksum "frontend/package.json" }}
           - v1-dependencies-
 
-      - run: cd frontend && yarn install
+      - run:
+          working_directory: ~/vue-people/frontend
+          comand: yarn install
 
       - save_cache:
           paths:
@@ -24,6 +26,8 @@ jobs:
           key: v1-dependencies-{{ checksum "frontend/package.json" }}
 
       # run tests!
-      - run: cd frontend && yarn test
+      - run:
+          working_directory: ~/vue-people/frontend
+          comand: yarn test
 
 
