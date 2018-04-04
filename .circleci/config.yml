@@ -4,15 +4,14 @@
 #
 version: 2
 jobs:
-  build:
+  test:
     docker:
       - image: circleci/node:8.11
     working_directory: ~/vue-people
 
     steps:
       - checkout
-
-      # Download and cache dependencies
+      - run: cd frontend
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
