@@ -1,5 +1,6 @@
 <template>
   <div class="main-map">
+    <map-toolbar />
     <div
       class="map-wrapper">
       <no-ssr>
@@ -28,11 +29,13 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import MapToolbar from './MapToolbar.vue';
 
 import NoSSR from 'vue-no-ssr';
 export default {
   components: {
-    'no-ssr': NoSSR
+    'no-ssr': NoSSR,
+    MapToolbar
   },
   data () {
     return {
@@ -81,8 +84,10 @@ export default {
     height: 100%;
     z-index: 1;
     .map-wrapper {
+        position: relative;
         width:100%;
         height: 100%;
+        z-index: 2;
     }
 }
 

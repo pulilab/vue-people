@@ -1,27 +1,9 @@
 <template>
   <v-menu
-    :close-on-content-click="false"
     v-model="menu"
     bottom
     left>
-    <v-btn
-      slot="activator"
-      class="ml-5"
-      color="red"
-      large
-      icon
-      dark>
-      <v-avatar class="user-avatar">
-        <v-icon
-          v-show="!isLoggedIn"
-          dark>
-          account_circle
-        </v-icon>
-        <img
-          v-show="isLoggedIn"
-          :src="userProfile.avatarUrl" >
-      </v-avatar>
-    </v-btn>
+    <user-avatar slot="activator" />
     <v-card>
       <v-list v-show="isLoggedIn">
         <v-list-tile
@@ -59,12 +41,15 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import { gitHubOauthLink } from '~/integrations/github/utilities';
+import UserAvatar from './UserAvatar.vue';
 
 export default {
+  components: {
+    UserAvatar
+  },
   data() {
     return {
-      menu: false,
-      fav: false
+      menu: false
     };
   },
   computed: {
