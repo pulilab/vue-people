@@ -11,7 +11,8 @@
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint",
-    "test": "jest --watch",
+    "test": "jest",
+    "test:w": "jest --watch",
     "cypress:open": "cypress open"
   },
   "dependencies": {
