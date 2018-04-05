@@ -19,7 +19,22 @@
         :key="r.node.id">
         <v-list-tile-content>
           <v-list-tile-title >
-            {{ r.node.name }}
+            <v-layout row>
+              <v-flex xs8>
+                {{ r.node.name }}
+              </v-flex>
+              <v-flex
+                xs4
+              >
+                <div class="text-xs-right">
+                  <v-icon
+                    small>
+                    star
+                  </v-icon>
+                  {{ r.node.stargazers.totalCount }}
+                </div>
+              </v-flex>
+            </v-layout>
           </v-list-tile-title>
           <v-list-tile-sub-title >
             <a
@@ -47,7 +62,22 @@
         :key="r.node.id">
         <v-list-tile-content>
           <v-list-tile-title >
-            {{ r.node.name }}
+            <v-layout row>
+              <v-flex xs8>
+                {{ r.node.name }}
+              </v-flex>
+              <v-flex
+                xs4
+              >
+                <div class="text-xs-right">
+                  <v-icon
+                    small>
+                    star
+                  </v-icon>
+                  {{ r.node.stargazers.totalCount }}
+                </div>
+              </v-flex>
+            </v-layout>
           </v-list-tile-title>
           <v-list-tile-sub-title >
             <a
