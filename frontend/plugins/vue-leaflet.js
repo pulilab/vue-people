@@ -14,3 +14,5 @@ L.Icon.Default.mergeOptions({
 Vue.component('l-map', Vue2Leaflet.LMap);
 Vue.component('l-tilelayer', Vue2Leaflet.LTileLayer);
 Vue.component('l-marker', Vue2Leaflet.LMarker);
+Vue.component('l-tooltip', Vue2Leaflet.LTooltip);
+Vue.component('l-control-zoom', Vue2Leaflet.LControlZoom);
