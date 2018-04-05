@@ -20,6 +20,7 @@
     "@nuxtjs/proxy": "^1.1.4",
     "dotenv": "^5.0.1",
     "js-cookie": "^2.2.0",
+    "mdi": "^2.2.43",
     "nuxt": "^1.0.0",
     "vee-validate": "^2.0.6",
     "vue-no-ssr": "^0.2.2",
