@@ -3,7 +3,9 @@
     <v-card-title>
       <v-layout row>
         <v-flex>
-          <user-avatar />
+          <user-avatar
+            :person="userProfile"
+          />
         </v-flex>
         <v-flex class="pull-right">
           <v-btn
@@ -120,7 +122,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      userProfile: 'user/getUserProfile'
+      userProfile: 'user/getUserProfile',
+      usLoggedIn: 'user/getLoginStatus'
     }),
     tagList () {
       return ['vue'];

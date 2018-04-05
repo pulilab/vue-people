@@ -3,7 +3,10 @@
     v-model="menu"
     bottom
     left>
-    <user-avatar slot="activator" />
+    <user-avatar
+      slot="activator"
+      :person="userProfile"
+    />
     <v-card>
       <v-list v-show="isLoggedIn">
         <v-list-tile
