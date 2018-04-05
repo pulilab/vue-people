@@ -31,7 +31,6 @@ export default {
   },
   computed: {
     showRight () {
-      console.log(this.$route.name);
       return !!(this.$route.name === 'index-user');
     }
   },
