@@ -36,9 +36,10 @@ jobs:
               ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no \
               ${SERVER_USER}@167.99.245.180 \
               'cd ~/vue-people/ \
-              && docker-compose down && \
-              git pull && docker-compose build \
-              &&  docker-compose up -d'
+              && docker-compose down \
+              && git pull \
+              && docker-compose build \
+              && docker-compose up -d'
             fi
 
 
