@@ -22,12 +22,31 @@ describe('getters', () => {
   });
 
   test('getCenter', () => {
-    const rootState = {
-      geolocation: 1
+    s.center = {lat: 1, lng: 2};
+    expect(getters.getCenter(s)).toEqual(s.center);
+    expect(getters.getCenter(s)).not.toBe(s.center);
+  });
+
+  test('getAutoCentered', () => {
+    s.autoCentered = true;
+    expect(getters.getAutoCentered(s)).toEqual(s.autoCentered);
+  });
+
+  test('getFocusOn', () => {
+    s.focusOn = 1;
+    expect(getters.getFocusOn(s)).toEqual(s.focusOn);
+  });
+
+  test('getFilteredPins', () => {
+    const g = {
+      getFocusOn: 1
     };
-    expect(getters.getCenter(s, null, rootState)).toEqual(rootState.geolocation);
-    s.center = 2;
-    expect(getters.getCenter(s, null, rootState)).toEqual(2);
+    const rootGetters = {
+      'people/getList': [{id: 1, type: 1}, {id: 2, type: 2}]
+    };
+    const result = getters.getFilteredPins(null, g, null, rootGetters);
+    expect(result[0]).toEqual({id: 1, type: 1, key: 2, options: {opacity: 1}});
+    expect(result[1]).toEqual({id: 2, type: 2, key: 2.5, options: {opacity: 0.5}});
   });
 
 });
@@ -54,6 +73,16 @@ describe('actions', () => {
     expect(vuex.commit.mock.calls[0]).toEqual(['SET_CENTER', 1]);
   });
 
+  test('setAutoCentered', () => {
+    actions.setAutoCentered(vuex, 1);
+    expect(vuex.commit.mock.calls[0]).toEqual(['SET_AUTO_CENTERED', 1]);
+  });
+
+  test('setFocusOn', () => {
+    actions.setFocusOn(vuex, 1);
+    expect(vuex.commit.mock.calls[0]).toEqual(['SET_FOCUS_ON', 1]);
+  });
+
 });
 
 describe('mutations', () => {
@@ -74,6 +103,18 @@ describe('mutations', () => {
     const s = {};
     mutations.SET_CENTER(s, 1);
     expect(s.center).toEqual(1);
+  });
+
+  test('SET_AUTO_CENTERED', () => {
+    const s = {};
+    mutations.SET_AUTO_CENTERED(s, true);
+    expect(s.autoCentered).toEqual(true);
+  });
+
+  test('SET_FOCUS_ON', () => {
+    const s = {};
+    mutations.SET_FOCUS_ON(s, 1);
+    expect(s.focusOn).toEqual(1);
   });
 
 });

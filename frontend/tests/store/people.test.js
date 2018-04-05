@@ -32,9 +32,10 @@ describe('getters', () => {
 
   test('getCurrentPersonDetails', () => {
     const getCurrentPerson = 1;
-    const getList = [{id:1, name: 2}];
-    const result = getters.getCurrentPersonDetails(s, {getCurrentPerson, getList});
-    expect(result).toEqual({id:1, name: 2});
+    const getList = [{id:1, name: 2, type: 1}];
+    const getUserTypes = [ {id: 1, name: 'dev'}];
+    const result = getters.getCurrentPersonDetails(s, {getCurrentPerson, getList}, null, {getUserTypes});
+    expect(result).toEqual({id:1, name: 2, type: {id: 1, name: 'dev'}});
   });
 
   test('getCurrentPersonRepositories', () => {

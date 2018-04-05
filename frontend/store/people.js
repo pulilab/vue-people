@@ -10,20 +10,27 @@ export const state = () => ({
 });
 
 export const getters = {
-  getList: state => {
-    return [...state.list.map(p => (
-      {...p,
+  getList: (state) => {
+    return [
+      ...state.list.map(p => ({
+        ...p,
         latlng: {
           lat: p.latitude,
           lng: p.longitude
         }
-      }))];
+      })
+      )
+    ];
   },
   getCurrentPerson: state => {
     return state.current;
   },
-  getCurrentPersonDetails: (state, getters) => {
-    return getters.getList.find(p => p.id === getters.getCurrentPerson);
+  getCurrentPersonDetails: (state, getters, rootState, rootGetters) => {
+    const p = getters.getList.find(p => p.id === getters.getCurrentPerson);
+    return {
+      ...p,
+      type: {...rootGetters.getUserTypes.find(ut => ut.id === p.type)}
+    };
   },
   getCurrentPersonRepositories: (state, getters) => {
     return [...state.currentPersonRepositories].sort((a,b) =>

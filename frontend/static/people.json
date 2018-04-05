@@ -19,6 +19,7 @@
     "websiteUrl": "https://www.gogole.com/some",
     "isActive": true,
     "gitHubLogin": "lordfuoco",
+    "type": 1,
     "id": 0
   },
   {
@@ -41,6 +42,7 @@
     "websiteUrl": "https://www.gogole.com/some",
     "isActive": true,
     "gitHubLogin": "nullcode",
+    "type": 2,
     "id": 1
   },
   {
@@ -63,6 +65,7 @@
     "websiteUrl": "https://www.gogole.com/some",
     "isActive": false,
     "gitHubLogin": "paragonHex",
+    "type": 1,
     "id": 2
   },
   {
@@ -85,6 +88,7 @@
     "websiteUrl": "https://www.gogole.com/some",
     "isActive": true,
     "gitHubLogin": "paizai",
+    "type": 3,
     "id": 3
   },
   {
@@ -107,6 +111,7 @@
     "websiteUrl": "https://www.gogole.com/some",
     "isActive": true,
     "gitHubLogin": "bashleigh",
+    "type": 2,
     "id": 4
   },
   {
@@ -129,6 +134,7 @@
     "websiteUrl": "https://www.gogole.com/some",
     "isActive": true,
     "gitHubLogin": "yyx990803",
+    "type": 3,
     "id": 5
   },
   {
@@ -151,6 +157,7 @@
     "websiteUrl": "https://www.gogole.com/some",
     "isActive": true,
     "gitHubLogin": "posva",
+    "type": 1,
     "id": 6
   }
 ]
