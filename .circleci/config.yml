@@ -35,7 +35,7 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no \
               ${SERVER_USER}@167.99.245.180 \
-              'cd /home/${SERVER_USER}/vue-people/ \
+              'cd ~/vue-people/ \
               && docker-compose down && \
               git pull && docker-compose build \
               &&  docker-compose up -d'
