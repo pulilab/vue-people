@@ -1,8 +1,12 @@
 <template>
   <div class="person-details">
     <v-toolbar
+      light
+      prominent
+      extended
       absolute>
       <v-btn
+        light
         icon
         nuxt
         to="/">
@@ -10,86 +14,74 @@
         back
       </v-btn>
       <v-spacer/>
+      <v-btn
+        icon
+        light>
+        <v-icon>more_vert</v-icon>
+      </v-btn>
+      <user-avatar
+        v-if="person"
+        slot="extension"
+        :person="person"
+      />
     </v-toolbar>
     <div
       v-if="person"
       class="person-info">
-      <div>
-        <div class="headline">{{ person.name }}</div>
-        <div>{{ person.about }}</div>
+      <div class="item">
+        <v-layout row>
+          <v-btn
+            :href="person.githubUrl"
+            icon
+            large
+            target="_blank">
+            <v-icon>mdi-github-circle</v-icon>
+          </v-btn>
+          <v-btn
+            :href="person.twitterUrl"
+            icon
+            large
+            target="_blank">
+            <v-icon>mdi-twitter</v-icon>
+          </v-btn>
+          <v-btn
+            :href="person.websiteUrl"
+            icon
+            large
+            target="_blank">
+            <v-icon>mdi-web</v-icon>
+          </v-btn>
+        </v-layout>
       </div>
-      <v-list two-line>
-        <v-subheader>
-          Details
-        </v-subheader>
-        <v-list-tile>
-          <v-list-tile-content>
-            <v-list-tile-title >
-              Organisation
-            </v-list-tile-title>
-            <v-list-tile-sub-title >
-              {{ person.organisation }}
-            </v-list-tile-sub-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile>
-          <v-list-tile-content>
-            <v-list-tile-title >
-              Tags
-            </v-list-tile-title>
-            <v-list-tile-sub-title >
-              <v-chip
-                v-for="(tag, index) in person.tags"
-                :key="index"
-                small>
-                {{ tag }}
-              </v-chip>
-            </v-list-tile-sub-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile>
-          <v-list-tile-content>
-            <v-list-tile-title >
-              GitHub
-            </v-list-tile-title>
-            <v-list-tile-sub-title >
-              <a
-                :href="person.githubUrl"
-                target="_blank">
-                {{ person.githubUrl }}
-              </a>
-            </v-list-tile-sub-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile>
-          <v-list-tile-content>
-            <v-list-tile-title >
-              Twitter
-            </v-list-tile-title>
-            <v-list-tile-sub-title >
-              <a
-                :href="person.twitterUrl"
-                target="_blank">
-                {{ person.twitterUrl }}
-              </a>
-            </v-list-tile-sub-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile>
-          <v-list-tile-content>
-            <v-list-tile-title >
-              Website
-            </v-list-tile-title>
-            <v-list-tile-sub-title >
-              <a
-                :href="person.websiteUrl"
-                target="_blank">
-                {{ person.websiteUrl }}
-              </a>
-            </v-list-tile-sub-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
+      <div class="item">
+        <div class="title">
+          About
+        </div>
+        <div class="content">
+          {{ person.about }}
+        </div>
+      </div>
+      <div class="item">
+        <div class="title" >
+          Organisation
+        </div>
+        <div class="content">
+          {{ person.organisation }}
+        </div>
+      </div>
+      <div class="item">
+        <div class="title" >
+          Tags
+        </div>
+        <div class="content">
+          <v-chip
+            v-for="(tag, index) in person.tags"
+            :key="index"
+            small>
+            {{ tag }}
+          </v-chip>
+        </div>
+      </div>
       <repository-list/>
     </div>
   </div>
@@ -98,11 +90,13 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import RepositoryList from './RepositoryList.vue';
+import UserAvatar from './UserAvatar.vue';
 
 export default {
   name: 'PersonDetails',
   components: {
-    RepositoryList
+    RepositoryList,
+    UserAvatar
   },
   computed: {
     ...mapGetters({
@@ -126,10 +120,11 @@ export default {
 
 .person-details {
   position: relative;
+  width: 100%;
 
   .person-info {
     position: relative;
-    padding-top: 70px;
+    padding-top: 150px;
   }
 }
 
