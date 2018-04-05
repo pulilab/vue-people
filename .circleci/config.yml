@@ -30,4 +30,15 @@ jobs:
           working_directory: ~/vue-people/frontend
           command: yarn test
 
+      - deploy:
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              ssh ${SERVER_USER}@167.99.245.180 \
+              && cd /home/${SERVER_USER}/vue-people/ \
+              && docker-compose down && \
+              git pull && docker-compose build \
+              &&  docker-compose up -d
+            fi
+
+
 
