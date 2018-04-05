@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+  nuxt:
+    restart: always
+    build: ./frontend
+    expose:
+      - "3000"
+
+  nginx:
+    restart: always
+    image: nginx:1.13.1
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/site:/usr/share/nginx/html:rw
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/config/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/certs:/etc/letsencrypt
+      - ./nginx/certs-data:/data/letsencrypt
+    links:
+      - nuxt
