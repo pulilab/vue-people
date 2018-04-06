@@ -1,5 +1,2 @@
 *
 !.gitignore
-!cert.pem
-!chain.pem
-!key.pem
