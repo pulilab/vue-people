@@ -2,5 +2,6 @@ __pycache__/
 node_modules/
 .idea/
 .vscode/
+django/static
 db.sqlite3
 *.pyc
