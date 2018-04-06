@@ -18,12 +18,9 @@ describe('getters', () => {
   });
 
   test('getUserProfile', () => {
-    s.savedProfile =  { a: 1, b: 2};
-    githubUtils.profileMapper = jest.fn().mockReturnValue({
-      a: 3,
-      c: 4
-    });
-    expect(getters.getUserProfile(s)).toEqual({a: 1, b: 2, c: 4});
+    s.savedProfile = { a: 1, b: 2, type: 2};
+    expect(getters.getUserProfile(s)).toEqual(s.savedProfile);
+    expect(getters.getUserProfile(s)).not.toBe(s.savedProfile);
   });
 
   test('getLoginStatus', () => {

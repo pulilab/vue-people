@@ -30,12 +30,18 @@ describe('getters', () => {
     expect(getters.getCurrentPerson(s)).toEqual(s.current);
   });
 
+  test('getPersonDetails', () => {
+    const getList = [{id:1}, {id:2}];
+    const result = getters.getPersonDetails(s, {getList})(1);
+    expect(result).toEqual(getList[0]);
+    expect(result).not.toBe(getList[0]);
+  });
+
   test('getCurrentPersonDetails', () => {
     const getCurrentPerson = 1;
-    const getList = [{id:1, name: 2, type: 1}];
-    const getUserTypes = [ {id: 1, name: 'dev'}];
-    const result = getters.getCurrentPersonDetails(s, {getCurrentPerson, getList}, null, {getUserTypes});
-    expect(result).toEqual({id:1, name: 2, type: {id: 1, name: 'dev'}});
+    const getPersonDetails = jest.fn();
+    getters.getCurrentPersonDetails(s, {getCurrentPerson, getPersonDetails});
+    expect(getPersonDetails.mock.calls[0]).toEqual([1]);
   });
 
   test('getCurrentPersonRepositories', () => {

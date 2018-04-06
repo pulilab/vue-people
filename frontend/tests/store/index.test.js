@@ -18,5 +18,12 @@ describe('getters', ()  => {
     const result = getters.getUserTypes(s);
     expect(result).toEqual(s.userTypes);
     expect(result).not.toBe(s.userTypes);
-  })
+  });
+
+  test('getUserType', () => {
+    const getUserTypes = [{id: 1}, {id:2}];
+    const result = getters.getUserType(s, {getUserTypes})(1);
+    expect(result).toEqual(getUserTypes[0]);
+    expect(result).not.toBe(getUserTypes[0]);
+  });
 });
