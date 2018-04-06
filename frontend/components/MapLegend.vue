@@ -30,7 +30,6 @@ export default {
       setFocusOn: 'map/setFocusOn',
     }),
     legendEnter: debounce(function(id) {
-      console.log('ENTER')
       this.setFocusOn(id);
     }, 300),
     legendLeave: debounce(function () {
