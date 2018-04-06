@@ -1,0 +1,57 @@
+version: "3"
+
+services:
+  django:
+    restart: always
+    build: ./django
+    expose:
+      - "8000"
+    links:
+      - postgis
+      - redis
+    volumes:
+      - ./django:/usr/src/app
+      - ./frontend:/frontend
+      - ./nginx/site/static:/usr/src/app/static:rw
+      - ./django/media:/usr/share/app/media:rw
+      - log_data:/var/log/django
+      - media_data:/usr/src/app/media
+    command: /usr/local/bin/gunicorn peoplebackend.wsgi:application -w 2 -b :8000 --reload --timeout 120
+
+  nginx:
+    restart: always
+    image: nginx:1.13.1
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/site:/usr/share/nginx/html:rw
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - ./nginx/config/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./django/media:/usr/share/nginx/html/media:rw
+    links:
+      - django
+
+  postgis:
+    restart: always
+    image: mdillon/postgis:10
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    expose:
+      - "5432"
+
+  redis:
+    restart: always
+    image: redis:4.0.9
+    expose:
+      - "6379"
+
+volumes:
+  postgres_data:
+  log_data:
+  media_data:
