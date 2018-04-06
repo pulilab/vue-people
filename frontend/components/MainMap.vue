@@ -13,7 +13,7 @@
           @move="mapMoveHandler"
           @click="addMarker">
           <l-tilelayer
-            url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"/>
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
           <l-marker
             v-for="pin in pins"
             :key="pin.key"
