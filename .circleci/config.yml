@@ -1,0 +1,46 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8.11
+    working_directory: ~/vue-people
+
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "frontend/package.json" }}
+          - v1-dependencies-
+
+      - run:
+          working_directory: ~/vue-people/frontend
+          command: yarn install
+
+      - save_cache:
+          paths:
+            - frontend/node_modules
+          key: v1-dependencies-{{ checksum "frontend/package.json" }}
+
+      # run tests!
+      - run:
+          working_directory: ~/vue-people/frontend
+          command: yarn test
+
+      - deploy:
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no \
+              ${SERVER_USER}@167.99.245.180 \
+              'cd ~/vue-people/ \
+              && docker-compose down \
+              && git pull \
+              && docker-compose build \
+              && docker-compose up -d'
+            fi
+
+
+

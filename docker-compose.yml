@@ -18,6 +18,12 @@ services:
       - media_data:/usr/src/app/media
     command: /usr/local/bin/gunicorn peoplebackend.wsgi:application -w 2 -b :8000 --reload --timeout 120
 
+  nuxt:
+    restart: always
+    build: ./frontend
+    expose:
+      - "3000"
+
   nginx:
     restart: always
     image: nginx:1.13.1
@@ -25,13 +31,15 @@ services:
       - "80:80"
       - "443:443"
     volumes:
+      - ./django/media:/usr/share/nginx/html/media:rw
       - ./nginx/site:/usr/share/nginx/html:rw
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
-      - ./nginx/ssl:/etc/nginx/ssl:ro
       - ./nginx/config/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./django/media:/usr/share/nginx/html/media:rw
+      - ./nginx/certs:/etc/letsencrypt:rw
+      - ./nginx/certs-data:/data/letsencrypt:rw
     links:
       - django
+      - nuxt
 
   postgis:
     restart: always

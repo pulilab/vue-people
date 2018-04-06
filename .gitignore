@@ -5,3 +5,5 @@ node_modules/
 django/static
 db.sqlite3
 *.pyc
+
+*.log

@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Vue2Leaflet from 'vue2-leaflet';
-import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster';
 
 import L from 'leaflet';
 delete L.Icon.Default.prototype._getIconUrl;
@@ -12,7 +11,8 @@ L.Icon.Default.mergeOptions({
 });
 
 
-Vue.component('v-map', Vue2Leaflet.Map);
-Vue.component('v-tilelayer', Vue2Leaflet.TileLayer);
-Vue.component('v-marker', Vue2Leaflet.Marker);
-Vue.component('v-marker-cluster', Vue2LeafletMarkerCluster);
+Vue.component('l-map', Vue2Leaflet.LMap);
+Vue.component('l-tilelayer', Vue2Leaflet.LTileLayer);
+Vue.component('l-marker', Vue2Leaflet.LMarker);
+Vue.component('l-tooltip', Vue2Leaflet.LTooltip);
+Vue.component('l-control-zoom', Vue2Leaflet.LControlZoom);

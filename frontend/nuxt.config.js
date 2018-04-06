@@ -1,3 +1,10 @@
+const result = require('dotenv').config();
+
+if (result.error) {
+  console.log('\x1b[31m%s\x1b[0m','Missing .env file, follow the README instructions');
+  throw result.error;
+}
+
 const config = {
   head: {
     title: 'vue-people',
@@ -7,27 +14,38 @@ const config = {
       { hid: 'description', name: 'description', content: 'vue people' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' }
     ]
   },
   css: [
-    // '~/assets/style/vuetify.styl',
+    '~/assets/style/vuetify.styl',
     '~/assets/style/main.less'
   ],
+  env: {
+    gitHubApiKey: process.env.GITHUB_KEY || '',
+    gitHubClientId: process.env.GITHUB_CLIENT_ID || '',
+    gitHubClientSecret: process.env.GITHUB_SECRET || '',
+  },
   plugins: [
     { src: '~plugins/vuetify.js', ssr: true },
-    { src: '~plugins/vee-validate.js', ssr: false },
+    { src: '~plugins/vee-validate.js', ssr: true },
     { src: '~plugins/vue-leaflet.js', ssr: false },
-    { src: '~plugins/vuex-geolocation.js', ssr: false }
+    { src: '~plugins/vuex-geolocation.js', ssr: false },
+    { src: '~plugins/store-tokens.js', ssr: false }
   ],
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/proxy',
+    '@nuxtjs/proxy'
   ],
   proxy: {},
   axios: {},
+  router: {
+    middleware: 'auth'
+  },
   loading: { color: '#3B8070' },
   build: {
+    extractCSS: true,
     extend (config, { isDev, isClient }) {
       if (isDev && isClient) {
         config.module.rules.push({
