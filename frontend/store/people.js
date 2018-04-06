@@ -7,6 +7,7 @@ export const state = () => ({
   current: null,
   currentPersonRepositories: [],
   currentPersonContributed: [],
+  selectedTags: []
 });
 
 export const getters = {
@@ -40,6 +41,9 @@ export const getters = {
     return [...state.currentPersonContributed].sort((a,b) =>
       b.node.stargazers.totalCount - a.node.stargazers.totalCount
     );
+  },
+  getSelectedTags: state => {
+    return [...state.selectedTags];
   }
 };
 
@@ -62,6 +66,9 @@ export const actions = {
     const contributed = data.data.user.repositoriesContributedTo.edges;
     commit('SET_CURRENT_PERSON_REPOSITORY_LIST', filterOutNonVue(repositories));
     commit('SET_CURRENT_PERSON_CONTRIBUTED_LIST', filterOutNonVue(contributed));
+  },
+  setSelectedTags({commit}, value) {
+    commit('SET_SELECTED_TAGS', value);
   }
 };
 
@@ -77,6 +84,9 @@ export const mutations = {
   },
   SET_CURRENT_PERSON_CONTRIBUTED_LIST: (state, repositories) => {
     state.currentPersonContributed = repositories;
+  },
+  SET_SELECTED_TAGS: (state, tags) => {
+    state.selectedTags = [...tags];
   }
 };
 

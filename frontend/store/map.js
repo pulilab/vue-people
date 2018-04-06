@@ -25,7 +25,10 @@ export const getters = {
     return state.focusOn;
   },
   getFilteredPins: (state, getters, rootState, rootGetters) => {
-    return [...rootGetters['people/getList'].map(p => {
+    const tags = rootGetters['people/getSelectedTags'];
+    const list = rootGetters['people/getList'];
+    const filtered = tags.length > 0 ? list.filter(p => p.tags.some(t => tags.includes(t))) : list;
+    return [...filtered.map(p => {
       const opacity = !getters.getFocusOn || p.type === getters.getFocusOn ? 1 : 0.5;
       // this is important, otherwise the v-for that draws them do not force repaint the marker, and the marker is not reactive
       const key = p.id + opacity;

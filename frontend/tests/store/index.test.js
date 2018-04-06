@@ -26,4 +26,16 @@ describe('getters', ()  => {
     expect(result).toEqual(getUserTypes[0]);
     expect(result).not.toBe(getUserTypes[0]);
   });
+
+  test('getTags', () => {
+    const result = getters.getTags(s);
+    expect(result).toEqual(s.tags);
+    expect(result).not.toBe(s.tags);
+  });
+
+  test('getOrganizations', () => {
+    const result = getters.getOrganizations(s);
+    expect(result).toEqual(s.organizations);
+    expect(result).not.toBe(s.organizations);
+  });
 });

@@ -123,14 +123,10 @@ export default {
   computed: {
     ...mapGetters({
       userProfile: 'user/getUserProfile',
-      usLoggedIn: 'user/getLoginStatus'
-    }),
-    tagList () {
-      return ['vue'];
-    },
-    organisations () {
-      return ['Pulilab', 'GitHub', 'Vidzor'];
-    }
+      usLoggedIn: 'user/getLoginStatus',
+      tagList: 'getTags',
+      organisations: 'getOrganizations'
+    })
   },
   watch: {
     userProfile: {

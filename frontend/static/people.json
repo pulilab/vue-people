@@ -5,7 +5,8 @@
       "ipsum",
       "adipisicing",
       "dolore",
-      "velit"
+      "velit",
+      "vue"
     ],
     "longitude": "19.09115",
     "latitude": "47.51446",
@@ -28,7 +29,8 @@
       "deserunt",
       "voluptate",
       "magna",
-      "et"
+      "et",
+      "vuex"
     ],
     "longitude": "19.053812",
     "latitude": "47.51265",

@@ -1,6 +1,7 @@
 <template>
   <div class="main-map">
     <map-toolbar />
+    <tag-filter />
     <div
       class="map-wrapper">
       <no-ssr>
@@ -53,6 +54,7 @@ import { mapGetters, mapActions, mapState} from 'vuex';
 import MapToolbar from './MapToolbar.vue';
 import UserAvatar from './UserAvatar.vue';
 import MapLegend from './MapLegend.vue';
+import TagFilter from './TagFilter.vue';
 import { debounce } from '~/utilities/common';
 
 import NoSSR from 'vue-no-ssr';
@@ -61,7 +63,8 @@ export default {
     'no-ssr': NoSSR,
     MapToolbar,
     UserAvatar,
-    MapLegend
+    MapLegend,
+    TagFilter
   },
   data () {
     return {

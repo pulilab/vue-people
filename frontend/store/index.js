@@ -18,7 +18,9 @@ export const state = () => ({
       class: 'core',
       available: false
     }
-  ]
+  ],
+  tags: ['vue', 'vuex'],
+  organizations: ['Pulilab']
 });
 
 
@@ -28,6 +30,12 @@ export const getters = {
   },
   getUserType: (state, getters) => id => {
     return {...getters.getUserTypes.find(ut => ut.id === id)};
+  },
+  getTags: state => {
+    return [...state.tags];
+  },
+  getOrganizations: state => {
+    return [...state.organizations];
   }
 }
 ;

@@ -42,11 +42,18 @@ describe('getters', () => {
       getFocusOn: 1
     };
     const rootGetters = {
-      'people/getList': [{id: 1, type: 1}, {id: 2, type: 2}]
+      'people/getList': [{id: 1, type: 1}, {id: 2, type: 2}],
+      'people/getSelectedTags': []
     };
-    const result = getters.getFilteredPins(null, g, null, rootGetters);
+    let result = getters.getFilteredPins(null, g, null, rootGetters);
     expect(result[0]).toEqual({id: 1, type: 1, key: 2, options: {opacity: 1}});
     expect(result[1]).toEqual({id: 2, type: 2, key: 2.5, options: {opacity: 0.5}});
+
+    rootGetters['people/getSelectedTags'] = ['vuex'];
+    rootGetters['people/getList'] = [{id: 1, type: 1, tags:['vuex']}, {id: 2, type: 2, tags: []}];
+    result = getters.getFilteredPins(null, g, null, rootGetters);
+    expect(result[0]).toEqual({id: 1, type: 1, key: 2, options: {opacity: 1}, tags:['vuex']});
+    expect(result.length).toEqual(1);
   });
 
 });

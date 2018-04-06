@@ -86,6 +86,14 @@ describe('getters', () => {
     const result = getters.getCurrentPersonContributed(s);
     expect(result[0].node.stargazers.totalCount).toEqual(2);
   });
+
+  test('getSelectedTags', () => {
+    s.selectedTags = [1,2,3];
+    const result = getters.getSelectedTags(s);
+    expect(result).toEqual(s.selectedTags);
+    expect(result).not.toBe(s.selectedTags);
+
+  });
 });
 
 describe('actions', () => {
@@ -144,6 +152,11 @@ describe('actions', () => {
     expect(vuex.commit.mock.calls[1]).toEqual(['SET_CURRENT_PERSON_CONTRIBUTED_LIST', 'filtered']);
   });
 
+  test('setSelectedTags', () => {
+    actions.setSelectedTags(vuex, 1);
+    expect(vuex.commit.mock.calls[0]).toEqual(['SET_SELECTED_TAGS', 1]);
+  });
+
 });
 
 describe('mutations', () => {
@@ -170,5 +183,11 @@ describe('mutations', () => {
     const s = {};
     mutations.SET_CURRENT_PERSON_CONTRIBUTED_LIST(s, 1);
     expect(s.currentPersonContributed).toEqual(1);
+  });
+
+  test('SET_SELECTED_TAGS', () => {
+    const s = {};
+    mutations.SET_SELECTED_TAGS(s, [1]);
+    expect(s.selectedTags).toEqual([1]);
   });
 });
