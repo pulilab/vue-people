@@ -1,0 +1,14 @@
+Django
+gunicorn
+psycopg2
+djangorestframework
+django-redis-cache
+django-allauth
+redis
+
+pytest
+pytest-django
+pytest-cov
+pytest-testmon
+pytest-watch
+ipdb
