@@ -14,20 +14,40 @@
 
     <div
       v-show="person.name">
-      <div>{{ person.name }}</div>
+      <div>
+        <span>{{ person.name }}</span>
+        <user-type :id="person.type" />
+      </div>
       <div> {{ person.email }} </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import UserType from './UserType';
 
 export default {
   name: 'UserAvatar',
+  components: {
+    UserType
+  },
   props: {
-    person: {
-      type: Object,
-      required: true
+    id: {
+      type: Number,
+      default: null
+    }
+  },
+  computed: {
+    ...mapGetters({
+      getPersonDetails: 'people/getPersonDetails',
+      userProfile: 'user/getUserProfile',
+    }),
+    person() {
+      if (this.id) {
+        return this.getPersonDetails(this.id);
+      }
+      return this.userProfile;
     }
   }
 };

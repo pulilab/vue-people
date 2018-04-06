@@ -12,7 +12,7 @@ export const state = () => ({
 
 export const getters = {
   getUserProfile: state => {
-    return {...profileMapper(state.gitHubProfile), ...state.savedProfile};
+    return {type:1, ...profileMapper(state.gitHubProfile), ...state.savedProfile};
   },
   getLoginStatus: (state, getters) => {
     const ghp = getters.getUserProfile;

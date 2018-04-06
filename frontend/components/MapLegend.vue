@@ -1,21 +1,25 @@
 <template>
   <div class="map-legend">
-    <span
+    <user-type
       v-for="type in userTypes"
       :key="type.id"
-      :class="[type.class, 'mr-2']"
-      @mouseenter="legendEnter(type.id)"
-      @mouseleave="legendLeave"
-    >
-      {{ type.name }}
-    </span>
+      :id="type.id"
+      :show-text="true"
+      @mouseenter.native="legendEnter(type.id)"
+      @mouseleave.native="legendLeave"
+    />
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions} from 'vuex';
 import { debounce } from '~/utilities/common';
+import UserType from './UserType';
+
 export default {
+  components: {
+    UserType
+  },
   computed: {
     ...mapGetters({
       userTypes: 'getUserTypes'
@@ -26,6 +30,7 @@ export default {
       setFocusOn: 'map/setFocusOn',
     }),
     legendEnter: debounce(function(id) {
+      console.log('ENTER')
       this.setFocusOn(id);
     }, 300),
     legendLeave: debounce(function () {

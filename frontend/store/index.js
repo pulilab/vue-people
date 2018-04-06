@@ -25,6 +25,9 @@ export const state = () => ({
 export const getters = {
   getUserTypes: state => {
     return [...state.userTypes.map(s => ({...s}))];
+  },
+  getUserType: (state, getters) => id => {
+    return {...getters.getUserTypes.find(ut => ut.id === id)};
   }
 }
 ;

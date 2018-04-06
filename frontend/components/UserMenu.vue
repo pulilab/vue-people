@@ -5,7 +5,7 @@
     left>
     <user-avatar
       slot="activator"
-      :person="userProfile"
+      :id="userProfile.id"
     />
     <v-card>
       <v-list v-show="isLoggedIn">

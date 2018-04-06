@@ -25,12 +25,11 @@ export const getters = {
   getCurrentPerson: state => {
     return state.current;
   },
+  getPersonDetails: (state, getters, rootState, rootGetters) => id => {
+    return {...getters.getList.find(p => p.id === id)};
+  },
   getCurrentPersonDetails: (state, getters, rootState, rootGetters) => {
-    const p = getters.getList.find(p => p.id === getters.getCurrentPerson);
-    return {
-      ...p,
-      type: {...rootGetters.getUserTypes.find(ut => ut.id === p.type)}
-    };
+    return getters.getPersonDetails(getters.getCurrentPerson);
   },
   getCurrentPersonRepositories: (state, getters) => {
     return [...state.currentPersonRepositories].sort((a,b) =>

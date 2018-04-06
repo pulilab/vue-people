@@ -22,7 +22,7 @@
       <user-avatar
         v-if="person"
         slot="extension"
-        :person="person"
+        :id="person.id"
       />
     </v-toolbar>
     <div

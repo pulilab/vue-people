@@ -4,7 +4,7 @@
       <v-layout row>
         <v-flex>
           <user-avatar
-            :person="userProfile"
+            :id="userProfile.id"
           />
         </v-flex>
         <v-flex class="pull-right">

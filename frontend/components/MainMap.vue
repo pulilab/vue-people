@@ -23,7 +23,7 @@
           >
             <l-tooltip>
               <user-avatar
-                :person="pin"
+                :id="pin.id"
               />
             </l-tooltip>
           </l-marker>
