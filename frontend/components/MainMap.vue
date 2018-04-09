@@ -23,9 +23,10 @@
             :lat-lng="pin.latlng"
             @click="openPersonDetails(pin)"
           >
-            <l-tooltip>
+            <l-tooltip :options="tooltipOptions">
               <user-avatar
                 :id="pin.id"
+                :dark="true"
               />
             </l-tooltip>
           </l-marker>
@@ -70,7 +71,12 @@ export default {
   data () {
     return {
       mapOptions: { zoomControl: false , attributionControl: false },
-      mapBounds: null
+      mapBounds: null,
+      tooltipOptions: {
+        className: 'person-tooltip',
+        // set permanent to true to be able to debug / develop the tooltip css
+        permanent: false
+      }
     };
   },
   computed: {
@@ -179,11 +185,27 @@ export default {
     width:100%;
     height: 100%;
     z-index: 1;
+
     .map-wrapper {
         position: relative;
         width:100%;
         height: 100%;
         z-index: 2;
+    }
+
+    .person-tooltip {
+      border-radius: 4px;
+      border: none;
+	    background-color: #323232;
+      box-shadow: 0 0 6px 0 rgba(0,0,0,0.12), 0 6px 6px 0 rgba(0,0,0,0.24);
+
+    }
+
+    .leaflet-tooltip-left.person-tooltip::before {
+      border-left-color: #323232;;
+    }
+    .leaflet-tooltip-right.person-tooltip::before {
+      border-right-color: #323232;;
     }
 
     .home-button {

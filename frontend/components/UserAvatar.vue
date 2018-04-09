@@ -1,9 +1,10 @@
 <template>
   <div class="avatar-wrapper">
-    <v-avatar class="mr-2">
+    <v-avatar
+      class="mr-2">
       <v-icon
         v-show="!person.avatarUrl"
-        light
+        :light="!dark"
       >
         account_circle
       </v-icon>
@@ -13,12 +14,13 @@
     </v-avatar>
 
     <div
-      v-show="person.name">
+      v-show="person.name"
+      :class="{dark}">
       <div>
         <span>{{ person.name }}</span>
         <user-type :id="person.type" />
       </div>
-      <div> {{ person.email }} </div>
+      <div class="email"> {{ person.email }} </div>
     </div>
   </div>
 </template>
@@ -36,6 +38,10 @@ export default {
     id: {
       type: Number,
       default: null
+    },
+    dark: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -58,6 +64,14 @@ export default {
     width: 100%;
     display: inline-flex;
     align-items: center;
+
+    .dark {
+      color: #FFF;
+
+      .email {
+        color: rgba(255,255,255,0.5);
+      }
+    }
   }
 
 </style>
