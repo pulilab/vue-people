@@ -6,10 +6,15 @@
       <v-layout
         row>
         <v-flex
-          xs4 >
+          xs5
+          sm4
+          md3>
           <left-side />
         </v-flex>
-        <v-flex xs8>
+        <v-flex
+          xs7
+          sm8
+          md9>
           <main-map/>
         </v-flex>
       </v-layout>
