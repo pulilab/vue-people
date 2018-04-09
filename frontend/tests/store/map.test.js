@@ -56,6 +56,11 @@ describe('getters', () => {
     expect(result.length).toEqual(1);
   });
 
+  test('getShownPins', () => {
+    s.shownPins = 3;
+    expect(getters.getShownPins(s)).toEqual(s.shownPins);
+  });
+
 });
 
 describe('actions', () => {
@@ -90,6 +95,11 @@ describe('actions', () => {
     expect(vuex.commit.mock.calls[0]).toEqual(['SET_FOCUS_ON', 1]);
   });
 
+  test('setShownPins', () => {
+    actions.setShownPins(vuex, 1);
+    expect(vuex.commit.mock.calls[0]).toEqual(['SET_SHOWN_PINS', 1]);
+  });
+
 });
 
 describe('mutations', () => {
@@ -122,6 +132,12 @@ describe('mutations', () => {
     const s = {};
     mutations.SET_FOCUS_ON(s, 1);
     expect(s.focusOn).toEqual(1);
+  });
+
+  test('SET_SHOWN_PINS', () => {
+    const s = {};
+    mutations.SET_SHOWN_PINS(s, 1);
+    expect(s.shownPins).toEqual(1);
   });
 
 });

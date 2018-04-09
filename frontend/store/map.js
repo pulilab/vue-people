@@ -5,7 +5,8 @@ export const state = () => ({
   zoom: 3,
   center: {lat: 0, lng: 0},
   autoCentered: false,
-  focusOn: null
+  focusOn: null,
+  shownPins: 0
 });
 
 export const getters = {
@@ -40,6 +41,9 @@ export const getters = {
         }
       };
     })];
+  },
+  getShownPins: (state) => {
+    return state.shownPins;
   }
 };
 
@@ -58,6 +62,9 @@ export const actions = {
   },
   setFocusOn({commit}, value) {
     commit('SET_FOCUS_ON', value);
+  },
+  setShownPins({commit}, value) {
+    commit('SET_SHOWN_PINS', value);
   }
 };
 
@@ -76,6 +83,9 @@ export const mutations = {
   },
   SET_FOCUS_ON: (state, value) => {
     state.focusOn = value;
+  },
+  SET_SHOWN_PINS: (state, value) => {
+    state.shownPins = value;
   }
 };
 

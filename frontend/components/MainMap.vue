@@ -11,7 +11,8 @@
           :zoom="zoom"
           :options="mapOptions"
           :center="center"
-          @move="mapMoveHandler"
+          @moveend="mapMoveHandler"
+          @zoomend="mapZoomHandler"
           @click="addMarker">
           <l-tilelayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
@@ -68,7 +69,8 @@ export default {
   },
   data () {
     return {
-      mapOptions: { zoomControl: false , attributionControl: false }
+      mapOptions: { zoomControl: false , attributionControl: false },
+      mapBounds: null
     };
   },
   computed: {
@@ -92,6 +94,15 @@ export default {
     },
     showCenterToUser() {
       return this.userLocation && this.userLocation.lat;
+    },
+    shownMarkerCount() {
+      if (this.mapBounds && this.pins) {
+        return this.pins.reduce((prev, c) => {
+          const contains = this.mapBounds.contains(L.latLng(c.latlng.lat, c.latlng.lng));
+          return contains ? prev += 1 : prev;
+        }, 0);
+      }
+      return 0;
     }
   },
   watch: {
@@ -100,11 +111,17 @@ export default {
       handler(loc) {
         this.autoCenter();
       }
+    },
+    shownMarkerCount: {
+      immediate: true,
+      handler(count) {
+        this.setShownPins(count);
+      }
     }
   },
   mounted () {
     this.$nextTick(() => {
-      this.$refs.mainMap.mapObject.whenReady(this.autoCenter.bind(this));
+      this.$refs.mainMap.mapObject.whenReady(this.mapReady.bind(this));
     });
   },
   methods: {
@@ -113,6 +130,7 @@ export default {
       setZoom: 'map/setZoom',
       setCenter: 'map/setCenter',
       setAutoCentered: 'map/setAutoCentered',
+      setShownPins: 'map/setShownPins'
     }),
     addMarker(event) {
       if(this.addMode) {
@@ -123,8 +141,11 @@ export default {
       this.$router.push(`/user/${pin.id}/`);
     },
     mapMoveHandler: debounce(function(e) {
-      this.setZoom(e.target.getZoom());
       this.setCenter(e.target.getCenter());
+      this.updateBounds();
+    }, 200),
+    mapZoomHandler: debounce(function(e) {
+      this.setZoom(e.target.getZoom());
     }, 200),
     centerToUser() {
       if (this.$refs.mainMap && this.userLocation && this.userLocation.lat) {
@@ -132,12 +153,19 @@ export default {
         return true;
       }
     },
+    mapReady() {
+      this.autoCenter();
+      this.updateBounds();
+    },
     autoCenter() {
       if(!this.autoCentered) {
         if (this.centerToUser()) {
           this.setAutoCentered(true);
         }
       }
+    },
+    updateBounds() {
+      this.mapBounds = this.$refs.mainMap.mapObject.getBounds();
     }
   }
 };
