@@ -21,6 +21,7 @@
             :key="pin.key"
             :options="pin.options"
             :lat-lng="pin.latlng"
+            :icon="iconGenerator(pin)"
             @click="openPersonDetails(pin)"
           >
             <l-tooltip :options="tooltipOptions">
@@ -33,7 +34,8 @@
 
           <l-marker
             v-if="userMaker"
-            :lat-lng="userMaker">
+            :lat-lng="userMaker"
+            :icon="iconGenerator(userProfile, true)">
             <l-tooltip :options="tooltipOptions">
               <user-avatar
                 :dark="true"
@@ -99,7 +101,9 @@ export default {
       userPosition: 'user/getUserPosition',
       zoom: 'map/getZoom',
       center: 'map/getCenter',
-      autoCentered: 'map/getAutoCentered'
+      autoCentered: 'map/getAutoCentered',
+      getUserType: 'getUserType',
+      userProfile: 'user/getUserProfile'
     }),
     userMaker() {
       return this.userPosition;
@@ -179,6 +183,20 @@ export default {
     },
     updateBounds() {
       this.mapBounds = this.$refs.mainMap.mapObject.getBounds();
+    },
+    iconGenerator(pin, isMe) {
+      if (process.browser) {
+        const type = isMe ? 'me' : pin.selected ? 'selected' : this.getUserType(pin.type).class;
+        const html = !pin.avatarUrl ?
+          '<div class="no-icon center-circle"><i aria-hidden="true" class="icon mdi mdi-account-circle"></i></div>'
+          : `<img src="${pin.avatarUrl}" alt="avatar" class="center-circle" />`;
+        const icon = new L.divIcon({
+          className: `custom-pin-icon ${type}`,
+          html,
+          iconSize: [33, 52]
+        });
+        return icon;
+      }
     }
   }
 };
@@ -212,6 +230,47 @@ export default {
     }
     .leaflet-tooltip-right.person-tooltip::before {
       border-right-color: #323232;;
+    }
+
+    .custom-pin-icon {
+      width: 30px;
+      height: 60px;
+
+      .center-circle {
+        position: relative;
+        width: 26px;
+        height: 26px;
+        border-radius: 25px;
+        left: 3px;
+        top: 2px;
+      }
+
+      .no-icon {
+        background: #FFF;
+
+        i {
+          color: #000;
+          font-size: 26px;
+          position: relative;
+          left: 0.5px;
+        }
+      }
+
+      &.dev {
+        background-image: url('~/assets/pins/pin-dev.svg');
+      }
+      &.core {
+        background-image: url('~/assets/pins/pin-core.svg');
+      }
+      &.enthusiast {
+        background-image: url('~/assets/pins/pin-enthusiast.svg');
+      }
+      &.selected {
+        background-image: url('~/assets/pins/pin-selected.svg');
+      }
+      &.me {
+        background-image: url('~/assets/pins/pin-me.svg');
+      }
     }
 
     .home-button {

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="33px" height="61px" viewBox="0 0 33 61" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>Pin - Dev</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-42.9%" y="-180.0%" width="185.7%" height="460.0%" filterUnits="objectBoundingBox" id="filter-1">
+            <feGaussianBlur stdDeviation="3" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <filter x="-14.3%" y="-150.0%" width="128.6%" height="400.0%" filterUnits="objectBoundingBox" id="filter-2">
+            <feGaussianBlur stdDeviation="1" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <path d="M25.7332727,22.5172381 C28.1196364,18.8029524 28.3983636,16.5966667 28.3983636,13.6190476 C28.3983636,6.09761905 21.7954545,0 14.1590909,0 C6.42727273,0 0,6.09761905 0,13.6190476 C0,16.5966667 0.239272727,18.8029524 2.62563636,22.5172381 C3.68836364,24.1738095 14.1590909,34.9761905 14.1590909,51.5357143 C14.1590909,34.9761905 24.6692727,24.1738095 25.7332727,22.5172381 Z" id="path-3"></path>
+    </defs>
+    <g id="VuePeople-app-v1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Map---component-(feature:-hover-on-pin)" transform="translate(-965.000000, -146.000000)">
+            <g id="Google-map" transform="translate(30.000000, 30.000000)">
+                <g id="Pins---new" transform="translate(603.000000, 117.000000)">
+                    <g id="Pin---Dev" transform="translate(334.000000, 0.000000)">
+                        <g id="pin">
+                            <ellipse id="Oval-2" fill-opacity="0.3" fill="#000000" filter="url(#filter-1)" cx="14.5" cy="51.5" rx="10.5" ry="2.5"></ellipse>
+                            <ellipse id="Oval-2" fill-opacity="0.1" fill="#000000" filter="url(#filter-2)" cx="14.5" cy="52" rx="10.5" ry="1"></ellipse>
+                            <g id="Imported-Layers" stroke-linecap="round" stroke-linejoin="round">
+                                <use fill="#F5515F" fill-rule="evenodd" xlink:href="#path-3"></use>
+                                <path stroke="#C2404B" stroke-width="1" d="M26.1539336,22.7875054 L26.1539704,22.7874482 C26.0017546,23.0244372 24.5116868,24.8862516 24.0527079,25.4884481 C22.7461615,27.2026828 21.5534107,28.9553656 20.4221361,30.9082807 C16.7994136,37.1621727 14.6590909,44.0152496 14.6590909,51.5357143 L13.6590909,51.5357143 C13.6590909,44.0138352 11.5260691,37.1595855 7.9159614,30.9055554 C6.78881367,28.9529223 5.60028746,27.2003554 4.29894232,25.4871743 C3.83718566,24.8792858 2.35592711,23.0228079 2.20497546,22.7875054 C0.0390635698,19.4163446 -0.5,17.3269175 -0.5,13.6190476 C-0.5,5.84559596 6.12549852,-0.5 14.1590909,-0.5 C22.1441862,-0.5 28.8983636,5.88943973 28.8983636,13.6190476 C28.8983636,17.2658133 28.3341601,19.3940644 26.1539336,22.7875054 Z"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
