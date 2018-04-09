@@ -35,7 +35,8 @@
           <l-marker
             v-if="userMaker"
             :lat-lng="userMaker"
-            :icon="iconGenerator(userProfile, true)">
+            :icon="iconGenerator(userProfile, true)"
+            @click="openPersonDetails(userProfile)">
             <l-tooltip :options="tooltipOptions">
               <user-avatar
                 :dark="true"
@@ -155,7 +156,9 @@ export default {
       }
     },
     openPersonDetails(pin) {
-      this.$router.push(`/user/${pin.id}/`);
+      if (!this.addMode) {
+        this.$router.push(`/user/${pin.id}/`);
+      }
     },
     mapMoveHandler: debounce(function(e) {
       this.setCenter(e.target.getCenter());
