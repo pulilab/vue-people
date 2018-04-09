@@ -1,6 +1,8 @@
 <template>
   <div class="left-side">
-    <nuxt-child v-if="!showRootContent" />
+    <nuxt-child
+      v-if="!showRootContent"
+      class="full-height" />
     <div v-if="showRootContent" >
       DefaultLeftNav
       <pin-count />
