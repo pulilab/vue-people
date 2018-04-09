@@ -114,10 +114,14 @@ export default {
     },
     shownMarkerCount() {
       if (this.mapBounds && this.pins) {
-        return this.pins.reduce((prev, c) => {
+        let count = this.pins.reduce((prev, c) => {
           const contains = this.mapBounds.contains(L.latLng(c.latlng.lat, c.latlng.lng));
           return contains ? prev += 1 : prev;
         }, 0);
+        if (this.userPosition && this.mapBounds.contains(L.latLng(this.userPosition))) {
+          return count + 1;
+        }
+        return count;
       }
       return 0;
     }
