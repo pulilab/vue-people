@@ -16,8 +16,16 @@ describe('getters', ()  => {
 
   test('getUserTypes', () => {
     const result = getters.getUserTypes(s);
-    expect(result).toEqual(s.userTypes);
-    expect(result).not.toBe(s.userTypes);
+    expect(result[0]).toEqual(
+      {
+        class: 'core',
+        disabled: true,
+        id: 3,
+        name: 'Vue core member',
+        order: 1,
+      }
+    );
+    expect(result[0]).not.toBe(s.userTypes[0]);
   });
 
   test('getUserType', () => {
