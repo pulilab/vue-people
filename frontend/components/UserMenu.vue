@@ -1,44 +1,55 @@
 <template>
-  <v-menu
-    v-model="menu"
-    bottom
-    left>
-    <user-avatar
-      slot="activator"
-      :id="userProfile.id"
-    />
-    <v-card>
-      <v-list v-show="isLoggedIn">
-        <v-list-tile
-          to="/user/"
-          avatar
-          nuxt >
-          <v-list-tile-avatar>
-            <img :src="userProfile.avatarUrl" >
-          </v-list-tile-avatar>
-          <v-list-tile-content>
-            <v-list-tile-title>{{ userProfile.name }}</v-list-tile-title>
-            <v-list-tile-sub-title>{{ userProfile.email }}</v-list-tile-sub-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
-      <v-divider/>
-      <v-card-actions>
+  <div class="user-menu">
+    <div
+      v-show="isLoggedIn"
+      class="logged-in"
+    >
+      <user-avatar
+        :id="userProfile.id"
+      />
+      <v-menu
+        v-model="menu"
+        bottom
+        left>
         <v-btn
-          v-show="isLoggedIn"
-          flat
-          @click="doLogout">
-          Logout
+          slot="activator"
+          icon
+          light>
+          <v-icon>more_vert</v-icon>
         </v-btn>
-        <v-btn
-          v-show="!isLoggedIn"
-          :href="gitHubUrl"
-          flat>
-          Login
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-menu>
+        <v-list>
+          <v-list-tile
+            to="/user/"
+            avatar
+            nuxt >
+            <v-list-tile-avatar>
+              <v-icon>person</v-icon>
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>Edit profile</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile
+            avatar
+            @click="doLogout">
+            <v-list-tile-avatar>
+              <v-icon>mdi-logout</v-icon>
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>Logout</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
+    </div>
+    <v-btn
+      v-show="!isLoggedIn"
+      :href="gitHubUrl"
+      color="primary">
+      <v-icon>mdi-github-circle</v-icon>
+      Login with GitHub
+    </v-btn>
+  </div>
 </template>
 
 <script>
@@ -76,6 +87,12 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less">
+
+.user-menu {
+  .logged-in {
+    display: inline-flex;
+  }
+}
 
 </style>
