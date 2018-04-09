@@ -17,11 +17,16 @@ describe('getters', () => {
   });
 
   test('getList', () => {
-    s.list = [{a: 1, latitude: 2, longitude: 3}];
-    expect(getters.getList(s)).toEqual(
-      [{a: 1, latitude: 2, longitude: 3, latlng: {
+    const getCurrentPerson = 1;
+    s.list = [{id: 1, latitude: 2, longitude: 3}, {id: 2, latitude: 4, longitude: 5}];
+    expect(getters.getList(s, {getCurrentPerson})).toEqual(
+      [{id: 1, latitude: 2, longitude: 3, selected: true, latlng: {
         lat: 2,
         lng: 3
+      }},
+      {id: 2, latitude: 4, longitude: 5, selected: false, latlng: {
+        lat: 4,
+        lng: 5
       }}]
     );
   });

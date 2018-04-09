@@ -11,10 +11,11 @@ export const state = () => ({
 });
 
 export const getters = {
-  getList: (state) => {
+  getList: (state, getters) => {
     return [
       ...state.list.map(p => ({
         ...p,
+        selected: getters.getCurrentPerson === p.id,
         latlng: {
           lat: p.latitude,
           lng: p.longitude
