@@ -115,6 +115,7 @@ export default {
     shownMarkerCount: {
       immediate: true,
       handler(count) {
+        // this is to update VUEX consequently
         this.setShownPins(count);
       }
     }
