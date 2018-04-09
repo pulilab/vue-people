@@ -13,12 +13,6 @@
         <v-icon>arrow_back</v-icon>
         back
       </v-btn>
-      <v-spacer/>
-      <v-btn
-        icon
-        light>
-        <v-icon>more_vert</v-icon>
-      </v-btn>
       <user-avatar
         v-if="person"
         slot="extension"
