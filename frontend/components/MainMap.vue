@@ -33,7 +33,13 @@
 
           <l-marker
             v-if="userMaker"
-            :lat-lng="userMaker"/>
+            :lat-lng="userMaker">
+            <l-tooltip :options="tooltipOptions">
+              <user-avatar
+                :dark="true"
+              />
+            </l-tooltip>
+          </l-marker>
 
           <v-btn
             v-if="showCenterToUser"

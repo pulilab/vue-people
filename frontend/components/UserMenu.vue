@@ -7,6 +7,24 @@
       <user-avatar
         :id="userProfile.id"
       />
+      <div>
+        <v-btn
+          v-show="showAddLocationButton"
+          color="success"
+          @click="setAddMode(true)"
+        >
+          <v-icon>mdi-map-marker</v-icon>
+          Add Location
+        </v-btn>
+        <v-btn
+          v-show="showConfirmButton"
+          color="primary"
+          @click="setAddMode(false)"
+        >
+          <v-icon>mdi-checkr</v-icon>
+          Confirm Location
+        </v-btn>
+      </div>
       <v-menu
         v-model="menu"
         bottom
@@ -69,15 +87,24 @@ export default {
   computed: {
     ...mapGetters({
       userProfile: 'user/getUserProfile',
-      isLoggedIn: 'user/getLoginStatus'
+      isLoggedIn: 'user/getLoginStatus',
+      positionSet: 'user/isPositionSet',
+      isAddMode: 'map/isAddMode'
     }),
     gitHubUrl() {
       return gitHubOauthLink();
+    },
+    showAddLocationButton() {
+      return !this.positionSet && !this.isAddMode;
+    },
+    showConfirmButton() {
+      return this.positionSet && this.isAddMode;
     }
   },
   methods: {
     ...mapActions({
-      logout: 'user/logout'
+      logout: 'user/logout',
+      setAddMode: 'map/setAddMode'
     }),
     doLogout() {
       this.menu = false;
@@ -91,7 +118,9 @@ export default {
 
 .user-menu {
   .logged-in {
-    display: inline-flex;
+    display: flex;
+    height: 100%;
+    padding: 0 12px;
   }
 }
 

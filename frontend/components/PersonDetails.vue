@@ -123,11 +123,12 @@ export default {
     height: calc(100% - 130px);
     top: 130px;
     width: 100%;
+    max-width: 100%;
     overflow-y: auto;
+    overflow-x: hidden;
 
     .person-info {
       position: relative;
-      padding-top: 150px;
     }
   }
 }
