@@ -1,5 +1,6 @@
 <template>
   <v-toolbar
+    v-show="!hideToolbar"
     class="map-toolbar"
     floating
     light
@@ -14,6 +15,11 @@ export default {
   name: 'MapToolabar',
   components: {
     UserMenu
+  },
+  computed: {
+    hideToolbar () {
+      return this.$route.name === 'index-user';
+    }
   }
 };
 </script>
