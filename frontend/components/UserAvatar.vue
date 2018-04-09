@@ -50,7 +50,7 @@ export default {
       userProfile: 'user/getUserProfile',
     }),
     person() {
-      if (this.id) {
+      if (this.id !== null && this.id !== undefined) {
         return this.getPersonDetails(this.id);
       }
       return this.userProfile;
