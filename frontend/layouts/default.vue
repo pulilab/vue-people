@@ -10,7 +10,7 @@
 
 <style lang="less">
   .vue-people {
-    height: 100vh;;
+    height: 100vh;
 
     .content {
       height: 100%;
