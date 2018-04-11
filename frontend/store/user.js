@@ -60,23 +60,10 @@ export const actions = {
     commit('SET_SAVED_PROFILE', { ...profile });
   },
   async setGithubToken({commit, dispatch}, token) {
+    console.log(token);
     commit('SET_GITHUB_TOKEN', token);
     if (token) {
       await dispatch('loadGitHubProfile');
-    }
-  },
-  async gitHubLogin({commit, dispatch}, code) {
-    const payload = {
-      client_id: process.env.gitHubClientId,
-      client_secret: process.env.gitHubClientSecret,
-      code,
-    };
-    const gh = gitHubAccessTokenLink();
-    const { data } = await this.$axios.post(gh.url, payload, gh.options);
-    if ( data.access_token ) {
-      await dispatch('setGithubToken', data.access_token);
-    } else  {
-      return Promise.reject('wrong or stale github code');
     }
   }
 };

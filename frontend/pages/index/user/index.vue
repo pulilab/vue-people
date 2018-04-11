@@ -12,9 +12,9 @@ export default {
     UserProfileForm
   },
   async fetch({query, store}) {
-    const code = query.code;
-    if ( code ) {
-      await store.dispatch('user/gitHubLogin', code);
+    const token = query.token;
+    if ( token ) {
+      await store.dispatch('user/setGithubToken', token);
     }
   }
 };

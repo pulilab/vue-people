@@ -131,26 +131,6 @@ describe('actions', () => {
     expect(vuex.dispatch.mock.calls[0]).toEqual(['loadGitHubProfile']);
   });
 
-  test('gitHubLogin', async () => {
-    process.env.gitHubClientId = 1;
-    process.env.gitHubClientSecret = 2;
-    actions.$axios.post.mockReturnValue({data: {}});
-    githubUtils.gitHubAccessTokenLink = jest.fn()
-      .mockReturnValue({url: 'url', options: 'options'});
-    await expect(actions.gitHubLogin(vuex, 2)).rejects.toMatch('wrong or stale github code');
-    expect(actions.$axios.post.mock.calls[0])
-      .toEqual(['url', {client_id: '1', client_secret: '2', code: 2}, 'options']);
-
-    actions.$axios.post.mockReturnValue({data: {access_token: 'token'}});
-    await actions.gitHubLogin(vuex, 2);
-    expect(actions.$axios.post.mock.calls[1])
-      .toEqual(['url', {client_id: '1', client_secret: '2', code: 2}, 'options']);
-    expect(vuex.dispatch.mock.calls[0]).toEqual(['setGithubToken', 'token']);
-    process.env.gitHubClientId = undefined;
-    process.env.gitHubClientSecret = undefined;
-  });
-
-
 });
 
 describe('mutations', () => {

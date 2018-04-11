@@ -134,3 +134,13 @@ SITE_ID = 1
 
 SOCIALACCOUNT_ADAPTER = 'people.adapter.MyGithubAccountAdapter'
 ACCOUNT_ADAPTER = 'people.adapter.MyAccountAdapter'
+
+SOCIALACCOUNT_PROVIDERS = {
+    'github': {
+        'SCOPE': [
+            'read:user',
+            'user:email',
+            'public_repo'
+        ],
+    }
+}

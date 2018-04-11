@@ -65,7 +65,8 @@ if (process.env.NODE_ENV !== 'production') {
     proxy: true
   };
   config.proxy = {
-    '/api/': { target: 'http://0.0.0.0:8000' }
+    '/api/': { target: 'http://localhost/' },
+    '/accounts/': { target: 'http://localhost/' }
   };
 }
 
