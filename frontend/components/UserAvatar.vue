@@ -1,6 +1,6 @@
 <template>
   <div class="avatar-wrapper">
-    <v-avatar>
+    <v-avatar class="elevation-2">
       <div
         v-show="!person.avatarUrl"
         class="no-avatar">

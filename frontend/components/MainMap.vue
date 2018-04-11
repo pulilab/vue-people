@@ -24,7 +24,6 @@
             :icon="iconGenerator(pin)"
             @click="openPersonDetails(pin)"
           >
-            <!-- TODO: Please position all tooltips to marker's top -->
             <l-tooltip :options="tooltipOptions">
               <user-avatar
                 :id="pin.id"
@@ -38,7 +37,6 @@
             :lat-lng="userMaker"
             :icon="iconGenerator(userProfile, true)"
             @click="openPersonDetails(userProfile)">
-            <!-- TODO: Please position all tooltips to marker's top -->
             <l-tooltip :options="tooltipOptions">
               <user-avatar
                 :dark="true"
@@ -266,15 +264,19 @@ export default {
         height: 24px;
         border-radius: 24px;
         border: 1px solid @color-white;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,.25);
       }
 
       .no-icon {
+        top: 4px;
+        left: 5px;
         border: 0;
         background: transparent;
+        box-shadow: none;
 
         i {
           color: @color-white;
-          font-size: 25.5px;
+          font-size: 23px;
         }
       }
 
