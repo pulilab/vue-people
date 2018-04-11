@@ -29,6 +29,13 @@
 // Vuetify customisation
 // --------------------------------------------------
 
+.chip {
+  margin: 4px 8px 4px 0;
+  font-size: @font-size-tiny;
+  color: @color-white !important;
+  background-color: @color-tag-pills !important;
+}
+
 
 
 // --------------------------------------------------
@@ -38,14 +45,12 @@
 .leaflet-container {
 
   .leaflet-tooltip-pane {
-    height: @map-card-height;
-
     .avatar-wrapper {
-      padding: 0 12px 0 4px;
+      padding: 6px 10px 6px 6px;
+
       .avatar {
+
         .no-avatar {
-          width: 40px;
-          height: 40px;
           background-color: @icon-light-inactive;
         }
       }

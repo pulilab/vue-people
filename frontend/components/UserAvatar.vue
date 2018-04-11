@@ -68,13 +68,16 @@ export default {
 
   .avatar-wrapper {
     width: 100%;
-    display: inline-flex;
+    display: flex;
     align-items: center;
 
     .avatar {
-      margin-right: 8px;
+      width: 40px !important;
+      height: 40px !important;
+      margin-right: 12px;
 
       .no-avatar {
+        float: left;
         width: 40px;
         height: 40px;
         background-color: @icon-dark-inactive;
@@ -84,6 +87,11 @@ export default {
       .has-avatar {
         width: 40px;
         height: 40px;
+
+        img {
+          width: 40px;
+          height: 40px;
+        }
       }
     }
 

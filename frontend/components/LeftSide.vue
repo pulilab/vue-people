@@ -1,11 +1,11 @@
 <template>
-  <div class="left-side pa-4">
+  <div class="left-side">
     <nuxt-child
       v-if="!showRootContent"
       class="full-height" />
     <div
       v-if="showRootContent"
-      class="intro-text"
+      class="intro-text pa-4"
     >
       <h3 class="title mb-3">Select a developer!
       </h3>

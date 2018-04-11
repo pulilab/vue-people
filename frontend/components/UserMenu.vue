@@ -13,7 +13,7 @@
           color="primary"
           @click="setAddMode(true)"
         >
-          <v-icon>mdi-map-marker</v-icon>
+          <v-icon class="mr-1">mdi-map-marker</v-icon>
           Add Location
         </v-btn>
         <v-btn
