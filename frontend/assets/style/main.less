@@ -36,7 +36,32 @@
 // --------------------------------------------------
 
 .leaflet-container {
-  .leaflet-pane {}
+
+  .leaflet-tooltip-pane {
+    height: @map-card-height;
+
+    .avatar-wrapper {
+      padding: 0 12px 0 4px;
+      .avatar {
+        .no-avatar {
+          width: 40px;
+          height: 40px;
+          background-color: @icon-light-inactive;
+        }
+      }
+
+      .user-info {
+        margin-right: 0 !important;
+
+        .user {
+          color: @font-light-primary;
+        }
+        .email {
+          color: @font-light-disabled;
+        }
+      }
+    }
+  }
 
   .leaflet-control-container {
 
@@ -45,7 +70,7 @@
     }
 
     .leaflet-bottom .leaflet-control {
-      margin-bottom: 16px
+      margin-bottom: 16px;
     }
 
     .leaflet-bar {
@@ -56,8 +81,11 @@
     }
 
     .leaflet-bar a {
+      border-radius: 0 0 3px 3px;
+
       &:first-child {
         height: 31px !important;
+        border-radius: 3px 3px 0 0;
       }
     }
 

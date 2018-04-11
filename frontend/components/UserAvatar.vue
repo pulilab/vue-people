@@ -1,20 +1,23 @@
 <template>
   <div class="avatar-wrapper">
     <v-avatar>
-      <v-icon
+      <div
         v-show="!person.avatarUrl"
-        :light="!dark"
-      >
-        account_circle
-      </v-icon>
-      <img
+        class="no-avatar">
+        <v-icon>
+          account_circle
+        </v-icon>
+      </div>
+      <div
         v-show="person.avatarUrl"
-        :src="person.avatarUrl" >
+        class="has-avatar">
+        <img :src="person.avatarUrl" >
+      </div>
     </v-avatar>
 
     <div
       v-show="person.name"
-      class="user-info mr-5"
+      class="user-info mr-4"
     >
       <div class="user">
         <span>{{ person.name }}</span>
@@ -69,7 +72,19 @@ export default {
     align-items: center;
 
     .avatar {
-      margin-right: 12px;
+      margin-right: 8px;
+
+      .no-avatar {
+        width: 40px;
+        height: 40px;
+        background-color: @icon-dark-inactive;
+        border-radius: 40px;
+      }
+
+      .has-avatar {
+        width: 40px;
+        height: 40px;
+      }
     }
 
     .user-info {

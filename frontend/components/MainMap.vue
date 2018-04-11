@@ -232,24 +232,26 @@ export default {
     }
 
     .person-tooltip {
-      border-radius: 4px;
       border: none;
-	    background-color: #323232;
+      border-radius: 3px;
+	    background-color: #212121;
       box-shadow: 0 0 6px 0 rgba(0,0,0,0.12), 0 6px 6px 0 rgba(0,0,0,0.24);
     }
 
     .leaflet-tooltip-left.person-tooltip::before {
-      border-left-color: #323232;
+      border-left-color: #212121;
     }
+
     .leaflet-tooltip-right.person-tooltip::before {
-      border-right-color: #323232;
+      border-right-color: #212121;
     }
+
     .leaflet-tooltip-bottom.person-tooltip::before {
-      border-bottom-color: #323232;;
+      border-bottom-color: #212121;
     }
 
     .leaflet-tooltip-top.person-tooltip::before {
-      border-top-color: #323232;;
+      border-top-color: #212121;
     }
 
     .custom-pin-icon {

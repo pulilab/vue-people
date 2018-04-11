@@ -12,18 +12,18 @@ export default {
 </script>
 
 <style lang="less">
+  @import "../assets/style/variables.less";
+  @import "../assets/style/mixins.less";
 
-    .right-side {
-      position: absolute;
-      right: 32px;
-      top: 32px;
-      z-index: 10;
-      width: 33%;
-      height: calc(100% - 64px);
-      overflow-y: auto;
-      overflow-x: hidden;
-      background-color: #FFF;
-
-    }
-
+  .right-side {
+    position: absolute;
+    right: 32px;
+    top: 32px;
+    z-index: 10;
+    width: 33%;
+    height: calc(100% - 64px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: @color-white;
+  }
 </style>

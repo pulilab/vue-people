@@ -52,7 +52,7 @@ export default {
   height: @map-card-small-height;
   padding: 0 4px;
   background-color: rgba(255,255,255,.94);
-  border-radius: 2px;
+  border-radius: 3px;
 
   span {
     display: inline-block;
