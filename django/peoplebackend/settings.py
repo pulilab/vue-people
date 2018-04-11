@@ -131,3 +131,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
 
 SITE_ID = 1
+
+SOCIALACCOUNT_ADAPTER = 'people.adapter.MyGithubAccountAdapter'
+ACCOUNT_ADAPTER = 'people.adapter.MyAccountAdapter'
