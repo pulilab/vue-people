@@ -84,7 +84,9 @@ export default {
       tooltipOptions: {
         className: 'person-tooltip',
         // set permanent to true to be able to debug / develop the tooltip css
-        permanent: false
+        permanent: false,
+        direction: 'top',
+        offset: [0,-30]
       }
     };
   },
@@ -237,6 +239,13 @@ export default {
     }
     .leaflet-tooltip-right.person-tooltip::before {
       border-right-color: #323232;;
+    }
+    .leaflet-tooltip-bottom.person-tooltip::before {
+      border-bottom-color: #323232;;
+    }
+
+    .leaflet-tooltip-top.person-tooltip::before {
+      border-top-color: #323232;;
     }
 
     .custom-pin-icon {
