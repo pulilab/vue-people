@@ -1,11 +1,15 @@
 <template>
-  <div class="pin-count">
+  <div class="pin-count pa-4">
+    <div>
+      <v-avatar :size="40">
+        <v-icon>account_circle</v-icon>
+      </v-avatar>
+    </div>
 
-    <v-avatar :size="36">
-      <v-icon large>person</v-icon>
-    </v-avatar>
-
-    {{ count }} Users are shown in the current map
+    <div class="counter">
+      <b>{{ count }} users</b>
+      <small>are shown in the current map</small>
+    </div>
 
   </div>
 </template>
@@ -24,9 +28,33 @@ export default {
 </script>
 
 <style lang="less">
+  @import "../assets/style/variables.less";
+  @import "../assets/style/mixins.less";
+
   .pin-count {
     position: absolute;
-    bottom: 12px;
-    left: 12px;
+    bottom: 0;
+    left: 0;
+    display: flex;
+
+    .avatar {
+      .icon {
+        font-size: 48px;
+        color: @font-light-disabled;
+      }
+    }
+
+    .counter {
+      padding: 0 12px;
+
+      b {
+        display: block;
+      }
+
+      small {
+        font-size: @font-size-tiny;
+        color: @font-light-disabled;
+      }
+    }
   }
 </style>
