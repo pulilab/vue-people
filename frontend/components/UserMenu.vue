@@ -72,7 +72,8 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import { gitHubOauthLink } from '~/integrations/github/utilities';
+import { oauthLinkGenerator } from '~/utilities/auth';
+
 import UserAvatar from './UserAvatar.vue';
 
 export default {
@@ -92,7 +93,7 @@ export default {
       isAddMode: 'map/isAddMode'
     }),
     gitHubUrl() {
-      return gitHubOauthLink();
+      return oauthLinkGenerator('github');
     },
     showAddLocationButton() {
       return !this.positionSet && !this.isAddMode;

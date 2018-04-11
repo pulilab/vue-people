@@ -45,3 +45,7 @@ export const getTokensFromLocalStorage = () => {
     github
   };
 };
+
+export const oauthLinkGenerator = provider => {
+  return `/accounts/${provider}/login/`;
+};
