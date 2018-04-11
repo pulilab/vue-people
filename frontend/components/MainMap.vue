@@ -24,6 +24,7 @@
             :icon="iconGenerator(pin)"
             @click="openPersonDetails(pin)"
           >
+            <!-- TODO: Please position all tooltips to marker's top -->
             <l-tooltip :options="tooltipOptions">
               <user-avatar
                 :id="pin.id"
@@ -37,6 +38,7 @@
             :lat-lng="userMaker"
             :icon="iconGenerator(userProfile, true)"
             @click="openPersonDetails(userProfile)">
+            <!-- TODO: Please position all tooltips to marker's top -->
             <l-tooltip :options="tooltipOptions">
               <user-avatar
                 :dark="true"
@@ -44,15 +46,16 @@
             </l-tooltip>
           </l-marker>
 
+          <map-legend />
+
           <v-btn
             v-if="showCenterToUser"
-            class="home-button white"
+            class="home-button"
             icon
             light
             @click="centerToUser">
             <v-icon>gps_fixed</v-icon>
           </v-btn>
-          <map-legend />
           <l-control-zoom position="bottomright" />
         </l-map>
       </no-ssr>
@@ -210,18 +213,20 @@ export default {
 </script>
 
 <style lang="less">
+  @import "../assets/style/variables.less";
+  @import "../assets/style/mixins.less";
 
-.main-map {
+  .main-map {
     position: relative;
-    width:100%;
-    height: 100%;
     z-index: 1;
+    width: 100%;
+    height: 100%;
 
     .map-wrapper {
-        position: relative;
-        width:100%;
-        height: 100%;
-        z-index: 2;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
     }
 
     .person-tooltip {
@@ -229,14 +234,13 @@ export default {
       border: none;
 	    background-color: #323232;
       box-shadow: 0 0 6px 0 rgba(0,0,0,0.12), 0 6px 6px 0 rgba(0,0,0,0.24);
-
     }
 
     .leaflet-tooltip-left.person-tooltip::before {
-      border-left-color: #323232;;
+      border-left-color: #323232;
     }
     .leaflet-tooltip-right.person-tooltip::before {
-      border-right-color: #323232;;
+      border-right-color: #323232;
     }
 
     .custom-pin-icon {
@@ -245,21 +249,21 @@ export default {
 
       .center-circle {
         position: relative;
-        width: 26px;
-        height: 26px;
-        border-radius: 25px;
-        left: 3px;
-        top: 2px;
+        top: 3px;
+        left: 4px;
+        width: 24px;
+        height: 24px;
+        border-radius: 24px;
+        border: 1px solid @color-white;
       }
 
       .no-icon {
-        background: #FFF;
+        border: 0;
+        background: transparent;
 
         i {
-          color: #000;
-          font-size: 26px;
-          position: relative;
-          left: 0.5px;
+          color: @color-white;
+          font-size: 25.5px;
         }
       }
 
@@ -282,12 +286,20 @@ export default {
 
     .home-button {
       position: absolute;
+      bottom: 88px;
+      right: 16px;
       z-index: 5000;
-      bottom: 76px;
-      right: 2px;
+      width: 30px;
+      height: 30px;
+      margin: 0;
+      background-color: rgba(255,255,255,.94);
+      // elevation-4
+      -webkit-box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, .2), 0px 4px 5px 0px rgba(0, 0, 0, .14), 0px 1px 10px 0px rgba(0, 0, 0, .12) !important;
+      box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, .2), 0px 4px 5px 0px rgba(0, 0, 0, .14), 0px 1px 10px 0px rgba(0, 0, 0, .12) !important;
+
+      i {
+        font-size: 18px;
+      }
     }
-
-
-}
-
+  }
 </style>

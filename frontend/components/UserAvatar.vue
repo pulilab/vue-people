@@ -1,7 +1,6 @@
 <template>
   <div class="avatar-wrapper">
-    <v-avatar
-      class="mr-2">
+    <v-avatar>
       <v-icon
         v-show="!person.avatarUrl"
         :light="!dark"
@@ -15,8 +14,9 @@
 
     <div
       v-show="person.name"
-      :class="{dark}">
-      <div>
+      class="user-info mr-5"
+    >
+      <div class="user">
         <span>{{ person.name }}</span>
         <user-type :id="person.type" />
       </div>
@@ -60,16 +60,26 @@ export default {
 </script>
 
 <style lang="less">
+  @import "../assets/style/variables.less";
+  @import "../assets/style/mixins.less";
+
   .avatar-wrapper {
     width: 100%;
     display: inline-flex;
     align-items: center;
 
-    .dark {
-      color: #FFF;
+    .avatar {
+      margin-right: 12px;
+    }
+
+    .user-info {
+      .user {
+        font-size: @font-size-base;
+        font-weight: 500;
+      }
 
       .email {
-        color: rgba(255,255,255,0.5);
+        color: @font-dark-secondary;
       }
     }
   }

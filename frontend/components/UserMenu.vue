@@ -10,7 +10,7 @@
       <div>
         <v-btn
           v-show="showAddLocationButton"
-          color="success"
+          color="primary"
           @click="setAddMode(true)"
         >
           <v-icon>mdi-map-marker</v-icon>
@@ -115,13 +115,14 @@ export default {
 </script>
 
 <style lang="less">
+  @import "../assets/style/variables.less";
+  @import "../assets/style/mixins.less";
 
-.user-menu {
-  .logged-in {
-    display: flex;
-    height: 100%;
-    padding: 0 12px;
+  .user-menu {
+    .logged-in {
+      display: flex;
+      height: 100%;
+      padding: 0 12px;
+    }
   }
-}
-
 </style>

@@ -2,7 +2,8 @@
   <div class="main-container">
     <v-container
       fill-height
-      fluid>
+      fluid
+      pa-0>
       <v-layout
         row>
         <v-flex

@@ -27,10 +27,11 @@ export default {
 </script>
 
 <style lang="less">
+  @import "../assets/style/variables.less";
+  @import "../assets/style/mixins.less";
 
     .left-side {
       height: 100%;
       overflow-x: hidden;
     }
-
 </style>

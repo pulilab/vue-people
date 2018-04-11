@@ -1,6 +1,6 @@
 <template>
   <v-toolbar
-    class="tag-filter"
+    class="tag-filter elevation-8 ma-0 pa-0"
     floating
     light
   >
@@ -92,10 +92,15 @@ export default {
 </script>
 
 <style lang="less">
+  @import "../assets/style/variables.less";
+  @import "../assets/style/mixins.less";
+
   .tag-filter {
     position: absolute;
     top: 16px;
-    left: 0;
+    left: 16px;
     z-index: 10;
+    border-radius: 2px;
+    background-color: rgba(255,255,255,.94) !important;
   }
 </style>

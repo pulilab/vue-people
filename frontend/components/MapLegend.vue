@@ -1,5 +1,5 @@
 <template>
-  <div class="map-legend">
+  <div class="map-legend elevation-4">
     <user-type
       v-for="type in userTypes"
       :key="type.id"
@@ -41,27 +41,28 @@ export default {
 </script>
 
 <style lang="less">
+  @import "../assets/style/variables.less";
+  @import "../assets/style/mixins.less";
 
 .map-legend {
-      position: absolute;
-      z-index: 5000;
-      bottom: 16px;
-      left: 16px;
-      opacity: 0.9;
-      border-radius: 2px;
-      background-color: #FFFFFF;
-      box-shadow: 0 0 2px 0 rgba(0,0,0,0.12), 0 2px 2px 0 rgba(0,0,0,0.24);
-      padding: 0 9px;
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  z-index: 5000;
+  height: @map-card-small-height;
+  padding: 0 4px;
+  background-color: rgba(255,255,255,.94);
+  border-radius: 2px;
 
-      span {
-          display: inline-block;
-          color: rgba(0,0,0,0.54);
-          font-family: Roboto;
-          font-size: 12px;
-          line-height: 12px;
-          padding: 9px 0;
-          cursor: pointer;
-      }
-    }
+  span {
+    display: inline-block;
+    padding: 0;
+    font-family: @font-roboto;
+    color: @font-dark-primary;
+    font-size: @font-size-tiny;
+    line-height: @map-card-small-height;
+    cursor: pointer;
+  }
+}
 
 </style>
