@@ -16,19 +16,28 @@
       activator=".tag-filter"
       light
     >
-      <v-select
-        ref="tagSelect"
-        :items="tagList"
-        v-model="selectedTags"
-        label="Select"
-        prepend-icon="search"
-        light
-        solo
-        single-line
-        clearable
-        autocomplete
-        multiple
-      />
+      <v-layout
+        row
+        class="white">
+        <v-select
+          ref="tagSelect"
+          :items="tagList"
+          v-model="selectedTags"
+          label="Select"
+          prepend-icon="search"
+          light
+          solo
+          single-line
+          autocomplete
+          multiple
+        />
+        <v-btn
+          icon
+          light
+          @click="closeMenu">
+          <v-icon>done</v-icon>
+        </v-btn>
+      </v-layout>
     </v-menu>
     <div class="chips">
       <v-chip
@@ -77,12 +86,15 @@ export default {
       setSelectedTags: 'people/setSelectedTags'
     }),
     openMenu() {
-      this.dropdownOpen = !this.dropdownOpen;
+      this.dropdownOpen = true;
       this.$nextTick(() => {
         window.setTimeout(() => {
           this.$refs.tagSelect.focus();
         }, 100);
       });
+    },
+    closeMenu() {
+      this.dropdownOpen = false;
     },
     removeTag(tag) {
       this.setSelectedTags(this.selectedTags.filter(t => t !== tag));
