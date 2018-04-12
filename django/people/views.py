@@ -4,3 +4,6 @@ from rest_framework.views import APIView
 class TestView(APIView):
     def get(self, request, *args, **kwargs):
         return Response({"success": True})
+
+    def post(self, request, *args, **kwargs):
+        return Response({"success": True})
