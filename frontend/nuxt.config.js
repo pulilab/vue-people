@@ -28,6 +28,7 @@ const config = {
     gitHubClientSecret: process.env.GITHUB_SECRET || '',
   },
   plugins: [
+    { src: '~plugins/axios.js', ssr: true },
     { src: '~plugins/vuetify.js', ssr: true },
     { src: '~plugins/vee-validate.js', ssr: true },
     { src: '~plugins/vue-leaflet.js', ssr: false },
@@ -39,7 +40,9 @@ const config = {
     '@nuxtjs/proxy'
   ],
   proxy: {},
-  axios: {},
+  axios: {
+    credentials: true
+  },
   router: {
     middleware: 'auth'
   },
@@ -65,7 +68,7 @@ if (process.env.NODE_ENV !== 'production') {
     proxy: true
   };
   config.proxy = {
-    '/api/': { target: 'http://localhost/' },
+    '/api/': { target: 'https://localhost/', secure: false },
     '/accounts/': { target: 'http://localhost/' }
   };
 }
