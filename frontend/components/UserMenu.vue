@@ -36,6 +36,7 @@
           <v-icon>more_vert</v-icon>
         </v-btn>
         <v-list>
+          <!-- TODO: Why does this item get a '.primary--text' class?! -->
           <v-list-tile
             to="/user/"
             avatar

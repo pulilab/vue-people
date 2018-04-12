@@ -2,7 +2,8 @@
   <div class="repository-list">
     <v-progress-linear
       v-show="loading"
-      indeterminate />
+      indeterminate
+      class="ma-4" />
     <v-list
       v-show="!loading"
       class="px-4 pt-3 pb-2">
@@ -135,6 +136,10 @@ export default {
   @import "../assets/style/mixins.less";
 
   .repository-list {
+    .progress-linear {
+      width: calc(100% - 48px);
+    }
+
     .list {
       padding: 0;
       border-bottom: 1px solid @font-light-dividers;

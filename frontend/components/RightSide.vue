@@ -1,6 +1,5 @@
-
 <template>
-  <div class="right-side elevation-24">
+  <div class="right-side elevation-8">
     <nuxt-child class="full-height" />
   </div>
 </template>
@@ -17,13 +16,14 @@ export default {
 
   .right-side {
     position: absolute;
-    right: 32px;
-    top: 32px;
+    right: 16px;
+    top: 16px;
     z-index: 10;
     width: 33%;
-    height: calc(100% - 64px);
+    height: calc(100% - 32px);
     overflow-y: auto;
     overflow-x: hidden;
     background-color: @color-white;
+    border-radius: 3px;
   }
 </style>

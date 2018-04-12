@@ -2,16 +2,19 @@
   <div class="user-profile-form">
     <v-toolbar
       absolute
-      light>
+      light
+    >
       <v-layout
         class="top-bar"
-        row>
-        <v-flex>
+        row
+        align-center
+      >
+        <v-flex xs12>
           <user-avatar
             :id="userProfile.id"
           />
         </v-flex>
-        <v-flex class="pull-right">
+        <v-flex>
           <v-btn
             to="/"
             icon
@@ -24,7 +27,7 @@
     </v-toolbar>
 
     <div class="form-container">
-      <form class="form">
+      <form class="form px-4 pt-4 pb-5">
         <v-text-field
           v-validate="'required|max:254'"
           v-model="profile.name"
@@ -113,17 +116,19 @@
       </form>
     </div>
     <v-layout
-      class="actions"
+      class="user-profile-actions"
       align-center
-      row >
-      <div class="last-saved black--text">
-        last saved on:
+      row
+    >
+      <div class="last-saved caption">
+        Last saved on:
       </div>
       <v-spacer />
       <v-btn
         color="primary"
+        class="ma-0"
         @click.stop="save">
-        Save
+        Save changes
       </v-btn>
     </v-layout>
   </div>
@@ -182,38 +187,40 @@ export default {
 </script>
 
 <style lang="less">
-  .pull-right {
-    display: flex;
-    justify-content: flex-end;
-  }
+  @import "../assets/style/variables.less";
+  @import "../assets/style/mixins.less";
 
   .user-profile-form {
     height: 100%;
+    border-radius: 3px;
 
     .top-bar {
-      padding: 12px;
+      height: @map-card-height;
+      padding: 0 12px;
+      background-color: @color-white;
     }
 
     .form-container {
       height: calc(100% - 80px);
       position: relative;
-      top: 80px;
+      top: @map-card-height;
       width: 100%;
       overflow-y: auto;
-
-      .form {
-        padding: 24px 24px 80px 24px;;
-      }
     }
 
-     .actions {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 0 12px;
-        background-color: #FFF;
-      }
+    .user-profile-actions {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: @map-card-height;
+      padding: 0 12px;
+      border-top: 1px solid @font-dark-dividers;
+      background-color: @color-white;
 
+      .last-saved {
+        color: @font-dark-disabled;
+      }
+    }
   }
 </style>

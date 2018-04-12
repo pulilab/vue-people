@@ -58,10 +58,15 @@ export default {
     display: inline-block;
     padding: 0;
     font-family: @font-roboto;
-    color: @font-dark-primary;
+    color: @font-dark-secondary;
     font-size: @font-size-tiny;
     line-height: @map-card-small-height;
     cursor: pointer;
+    transition: @default-transition;
+
+    &:hover {
+      color: @font-dark-primary;
+    }
   }
 }
 

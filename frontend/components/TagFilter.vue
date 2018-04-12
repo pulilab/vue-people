@@ -17,6 +17,7 @@
       :close-on-content-click="false"
       activator=".tag-filter"
       light
+      content-class="menu-tag-filter"
     >
       <v-layout row>
         <v-select
@@ -160,5 +161,12 @@ export default {
     background-color: @color-white;
   }
 
+  .menu-tag-filter {
+    border-radius: 3px 3px 0 0;
 
+    + .menu__content--dropdown {
+      border-radius: 0 0 3px 3px;
+      transform: translate(0, -1px);
+    }
+  }
 </style>

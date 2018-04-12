@@ -103,6 +103,7 @@ export default {
 
       .email {
         color: @font-dark-secondary;
+        .text-truncate();
       }
     }
   }

@@ -32,7 +32,8 @@
 // TODO: Add breakpoints
 .container {
   .left-aside-wrapper {
-    width: 400px;
+    min-width: 320px;
+
   }
   .main-map-wrapper {
     width: 100%;
@@ -49,6 +50,31 @@
   font-size: @font-size-tiny;
   color: @color-white !important;
   background-color: @color-tag-pills !important;
+}
+
+.menu__content {
+  > .card,
+  .list {
+    background-color: darken(@color-brand-secondary, 10%);
+  }
+
+  .list__tile__action,
+  .list__tile__avatar {
+    min-width: 40px;
+  }
+
+  .list__tile__avatar,
+  .list__tile__content {
+    padding-right: 8px;
+  }
+}
+
+.input-group {
+  &.input-group--textarea {
+    .input-group__input {
+      border-width: 1px !important;
+    }
+  }
 }
 
 
