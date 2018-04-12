@@ -7,39 +7,41 @@
     <v-btn
       icon
       light
-      class="button-tag-filter"
+      class="open-tag-filter"
       @click="openMenu">
       <v-icon>filter_list</v-icon>
     </v-btn>
+
     <v-menu
       v-model="dropdownOpen"
       :close-on-content-click="false"
       activator=".tag-filter"
       light
     >
-      <v-layout
-        row
-        class="white">
+      <v-layout row>
         <v-select
           ref="tagSelect"
           :items="tagList"
           v-model="selectedTags"
-          label="Select"
+          label="Type here or select..."
           prepend-icon="search"
           light
           solo
           single-line
           autocomplete
           multiple
+          class="search-tag-filter"
         />
         <v-btn
           icon
           light
+          class="close-tag-filter"
           @click="closeMenu">
           <v-icon>done</v-icon>
         </v-btn>
       </v-layout>
     </v-menu>
+
     <div class="chips">
       <v-chip
         v-for="tag in selectedTags"
@@ -50,8 +52,6 @@
         {{ tag }}
       </v-chip>
     </div>
-
-
   </v-toolbar>
 </template>
 
@@ -113,21 +113,52 @@ export default {
     top: 16px;
     left: 16px;
     z-index: 10;
-    width: @map-card-height;
+    min-width: @map-card-height;
     text-align: center;
-    border-radius: 2px;
+    border-radius: 3px;
     background-color: rgba(255,255,255,.94) !important;
 
     .toolbar__content {
-      width: @map-card-height;
+      min-width: @map-card-height;
       height: @map-card-height;
     }
 
-    .button-tag-filter {
-      left: 6px;
-      width: 36px;
-      min-width: 36px;
-      height: 36px;
+    .open-tag-filter {
+      left: 8px;
+    }
+
+    .chips {
+      .chip {
+        margin: 0 0 0 8px;
+      }
     }
   }
+
+  .search-tag-filter {
+    height: @map-card-height;
+    border-radius: 3px 3px 0 0 !important;
+
+    label {
+      top: 17px !important;
+    }
+
+    .input-group__input {
+      border-radius: 3px 3px 0 0 !important;
+
+      .icon {
+        color: @font-dark-disabled;
+      }
+    }
+  }
+
+  .close-tag-filter {
+    position: absolute;
+    top: 8px;
+    right: 6px;
+    display: inline-block;
+    color: @color-brand-primary !important;
+    background-color: @color-white;
+  }
+
+
 </style>

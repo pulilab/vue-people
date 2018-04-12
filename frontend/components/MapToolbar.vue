@@ -33,7 +33,7 @@ export default {
     top: 16px;
     right: 16px;
     z-index: 10;
-    border-radius: 2px;
+    border-radius: 3px;
     background-color: rgba(255,255,255,.94) !important;
   }
 </style>

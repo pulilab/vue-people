@@ -61,12 +61,13 @@
     <v-snackbar
       :timeout="6000"
       :value="addMode"
-      color="pink"
+      color="warning"
       absolute
       bottom
       multi-line
     >
-      <span> Click on the map anywhere to select your position </span>
+      <v-icon class="mr-2">touch_app</v-icon>
+      <span class="body-2">Click on the map anywhere to select your position</span>
     </v-snackbar>
   </div>
 </template>

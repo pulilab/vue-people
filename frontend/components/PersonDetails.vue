@@ -123,6 +123,8 @@ export default {
     width: 100%;
 
     .toolbar {
+      background-color: @color-white !important;
+
       .toolbar__content {
         .btn {
           min-width: 0;
