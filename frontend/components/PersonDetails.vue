@@ -6,15 +6,28 @@
       extended
       absolute
       class="elevation-4 px-4 pb-4">
-      <v-btn
-        light
-        flat
-        nuxt
-        to="/"
-        class="btn-back">
-        <v-icon class="mr-1">arrow_back</v-icon>
-        back
-      </v-btn>
+      <v-layout align-center>
+        <v-flex xs12>
+          <v-btn
+            light
+            flat
+            nuxt
+            to="/"
+            class="btn-back ma-0">
+            <v-icon class="mr-1">arrow_back</v-icon>
+            back
+          </v-btn>
+        </v-flex>
+        <!-- TODO: on click center focus map on selected developer's pin -->
+        <v-flex>
+          <v-btn
+            icon
+            light
+            class="btn-center-focus ma-0">
+            <v-icon>filter_center_focus</v-icon>
+          </v-btn>
+        </v-flex>
+      </v-layout>
       <user-avatar
         v-if="person"
         slot="extension"
@@ -127,10 +140,13 @@ export default {
 
       .toolbar__content {
         .btn {
+          color: @font-dark-disabled;
+        }
+
+        .btn:not(.btn--icon) {
           min-width: 0;
           margin: 0;
           padding: 0 10px 0 6px;
-          color: @font-dark-disabled;
 
           .btn__content {
             padding: 0;
