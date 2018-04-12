@@ -7,6 +7,7 @@
     <v-btn
       icon
       light
+      class="button-tag-filter"
       @click="openMenu">
       <v-icon>filter_list</v-icon>
     </v-btn>
@@ -112,7 +113,21 @@ export default {
     top: 16px;
     left: 16px;
     z-index: 10;
+    width: @map-card-height;
+    text-align: center;
     border-radius: 2px;
     background-color: rgba(255,255,255,.94) !important;
+
+    .toolbar__content {
+      width: @map-card-height;
+      height: @map-card-height;
+    }
+
+    .button-tag-filter {
+      left: 6px;
+      width: 36px;
+      min-width: 36px;
+      height: 36px;
+    }
   }
 </style>
