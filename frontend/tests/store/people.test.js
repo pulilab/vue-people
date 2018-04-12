@@ -143,6 +143,11 @@ describe('actions', () => {
         gitHubLogin: 1
       }
     };
+
+    vuex.rootGetters = {
+      'user/getGithubToken': undefined
+    };
+
     githubQueries.gitHubUserRepositories = jest.fn().mockReturnValue('query');
     githubUtils.filterOutNonVue = jest.fn().mockReturnValue('filtered');
     githubUtils.gitHubGraphQlRequest = jest.fn().mockReturnValue({

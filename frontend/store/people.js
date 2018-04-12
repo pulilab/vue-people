@@ -58,10 +58,11 @@ export const actions = {
     commit('SET_CURRENT_PERSON_REPOSITORY_LIST', []);
     commit('SET_CURRENT_PERSON_CONTRIBUTED_LIST', []);
   },
-  async loadRepositories({commit, getters}) {
+  async loadRepositories({commit, getters, rootGetters}) {
     const user = getters.getCurrentPersonDetails;
+    const userToken = rootGetters['user/getGithubToken'];
     const query = gitHubUserRepositories(user.gitHubLogin);
-    const gh = gitHubGraphQlRequest(process.env.gitHubApiKey);
+    const gh = gitHubGraphQlRequest(userToken || process.env.gitHubApiKey);
     const { data } = await this.$axios.post(gh.url, query, gh.options);
     const repositories =  data.data.user.repositories.edges;
     const contributed = data.data.user.repositoriesContributedTo.edges;
