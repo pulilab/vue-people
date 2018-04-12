@@ -15,7 +15,7 @@
           @zoomend="mapZoomHandler"
           @click="addMarker">
           <l-tilelayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
+            url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'"/>
           <l-marker
             v-for="pin in pins"
             :key="pin.key"
@@ -58,6 +58,16 @@
         </l-map>
       </no-ssr>
     </div>
+    <v-snackbar
+      :timeout="6000"
+      :value="addMode"
+      color="pink"
+      absolute
+      bottom
+      multi-line
+    >
+      <span> Click on the map anywhere to select your position </span>
+    </v-snackbar>
   </div>
 </template>
 
