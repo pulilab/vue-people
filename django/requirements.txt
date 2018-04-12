@@ -2,8 +2,11 @@ Django
 gunicorn
 psycopg2
 djangorestframework
+coreapi
 django-redis-cache
 django-allauth
+django-taggit
+django-taggit-serializer
 redis
 
 pytest
