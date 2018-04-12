@@ -268,7 +268,7 @@ export default {
       }
 
       .no-icon {
-        top: 4px;
+        top: 5px;
         left: 5px;
         border: 0;
         background: transparent;
@@ -276,7 +276,7 @@ export default {
 
         i {
           color: @color-white;
-          font-size: 23px;
+          font-size: 22.5px;
         }
       }
 
