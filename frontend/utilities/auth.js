@@ -1,18 +1,20 @@
 import Cookie from 'js-cookie';
 
-export const saveTokens = (jwt, github) => {
-  if (process.SERVER_BUILD) return;
-  if (jwt) {
-    window.localStorage.setItem('jwt_token', jwt);
-    Cookie.set('jwt_token', jwt);
-  }
-  if (github) {
-    window.localStorage.setItem('github_token', github);
-    Cookie.set('github_token', github);
+export const safeSaveToken = (name, value) => {
+  if (value) {
+    window.localStorage.setItem(name, value);
+    Cookie.set(name, value);
   }
 };
 
-export const deleteTokens = (tokens=['jwt_token', 'github_token']) => {
+export const saveTokens = (sessionid, github, csrftoken) => {
+  if (process.SERVER_BUILD) return;
+  safeSaveToken('sessionid', sessionid);
+  safeSaveToken('github_token', github);
+  safeSaveToken('csrftoken', csrftoken);
+};
+
+export const deleteTokens = (tokens=['sessionid', 'github_token', 'csrftoken']) => {
   if (process.SERVER_BUILD) {
     return;
   }
@@ -29,20 +31,24 @@ export const getValueFromCookie = (req, value) => {
 
 export const getTokensFromCookie = (req) => {
   if (!req.headers.cookie) return;
-  const jwt = getValueFromCookie(req, 'jwt_token');
+  const sessionid = getValueFromCookie(req, 'sessionid');
   const github = getValueFromCookie(req, 'github_token');
+  const csrftoken = getValueFromCookie(req, 'csrftoken');
   return {
-    jwt,
-    github
+    sessionid,
+    github,
+    csrftoken
   };
 };
 
 export const getTokensFromLocalStorage = () => {
-  const jwt =  window.localStorage.getItem('jwt_token');
+  const sessionid =  window.localStorage.getItem('sessionid');
   const github = window.localStorage.getItem('github_token');
+  const csrftoken = window.localStorage.getItem('csrftoken');
   return {
-    jwt,
-    github
+    sessionid,
+    github,
+    csrftoken
   };
 };
 
