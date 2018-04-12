@@ -58,6 +58,16 @@
         </l-map>
       </no-ssr>
     </div>
+    <v-snackbar
+      :timeout="6000"
+      :value="addMode"
+      color="pink"
+      absolute
+      bottom
+      multi-line
+    >
+      <span> Click on the map anywhere to select your position </span>
+    </v-snackbar>
   </div>
 </template>
 
