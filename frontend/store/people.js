@@ -38,11 +38,20 @@ export const getters = {
     return state.current;
   },
   getPersonDetails: (state, getters, rootState, rootGetters) => id => {
-    const person = {...getters.getList.find(p => p.id === id)};
-    return person;
+    const loggedIn = rootGetters['user/getUserProfile'];
+    if (loggedIn && id === loggedIn.id) {
+      return loggedIn;
+    }
+    return {...getters.getList.find(p => p.id === id)};
+
   },
   getCurrentPersonDetails: (state, getters, rootState, rootGetters) => {
-    return getters.getPersonDetails(getters.getCurrentPerson);
+    const current = getters.getCurrentPerson;
+    const loggedIn = rootGetters['user/getUserProfile'];
+    if (loggedIn && current === loggedIn.id) {
+      return loggedIn;
+    }
+    return getters.getPersonDetails(current);
   },
   getCurrentPersonRepositories: (state, getters) => {
     return [...state.currentPersonRepositories].sort((a,b) =>
@@ -72,7 +81,7 @@ export const actions = {
   async loadRepositories({commit, getters, rootGetters}) {
     const user = getters.getCurrentPersonDetails;
     const userToken = rootGetters['user/getGithubToken'];
-    const query = gitHubUserRepositories(user.gitHubLogin);
+    const query = gitHubUserRepositories(user.github_login);
     const gh = gitHubGraphQlRequest(userToken || process.env.gitHubApiKey);
     const { data } = await this.$axios.post(gh.url, query, gh.options);
     const repositories =  data.data.user.repositories.edges;
