@@ -4,9 +4,7 @@
       v-show="isLoggedIn"
       class="logged-in"
     >
-      <user-avatar
-        :id="userProfile.id"
-      />
+      <user-avatar/>
       <div class="btn-location">
         <v-btn
           v-show="showAddLocationButton"
@@ -19,7 +17,7 @@
         <v-btn
           v-show="showConfirmButton"
           color="warning"
-          @click="setAddMode(false)"
+          @click="confirmLocation"
         >
           <v-icon class="mr-1">done</v-icon>
           Confirm Location
@@ -107,11 +105,16 @@ export default {
   methods: {
     ...mapActions({
       logout: 'user/logout',
-      setAddMode: 'map/setAddMode'
+      setAddMode: 'map/setAddMode',
+      saveLocation: 'user/saveLocation'
     }),
     doLogout() {
       this.menu = false;
       this.logout();
+    },
+    async confirmLocation() {
+      await this.saveLocation(this.userPosition);
+      this.setAddMode(false);
     }
   }
 };
