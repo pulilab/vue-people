@@ -1,27 +1,5 @@
 export const state = () => ({
-  userTypes: [
-    {
-      id: 1,
-      order: 2,
-      name: 'Vue dev',
-      class: 'dev',
-      disabled: false
-    },
-    {
-      id: 2,
-      order: 3,
-      name: 'Vue enthusiast',
-      class: 'enthusiast',
-      disabled: false
-    },
-    {
-      id: 3,
-      order: 1,
-      name: 'Vue core member',
-      class: 'core',
-      disabled: true
-    }
-  ],
+  userTypes: [],
   tags: ['vue', 'vuex'],
   organizations: ['Pulilab']
 });
@@ -42,5 +20,18 @@ export const getters = {
   getOrganizations: state => {
     return [...state.organizations];
   }
-}
-;
+};
+
+export const actions = {
+  async loadUserTypes({commit}) {
+    const { data } = await this.$axios.get('/api/user-type/');
+    commit('SET_USER_TYPES', data);
+  }
+};
+
+
+export const mutations = {
+  SET_USER_TYPES: (state, types) => {
+    return state.userTypes = types;
+  }
+};

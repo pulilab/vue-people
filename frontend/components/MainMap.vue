@@ -207,7 +207,7 @@ export default {
     },
     iconGenerator(pin, isMe) {
       if (process.browser) {
-        const type = isMe ? 'me' : pin.selected ? 'selected' : this.getUserType(pin.type).class;
+        const type = isMe ? 'me' : pin.selected ? 'selected' : this.getUserType(pin.type).name;
         const html = !pin.avatarUrl ?
           '<div class="no-icon center-circle"><i aria-hidden="true" class="icon mdi mdi-account-circle"></i></div>'
           : `<img src="${pin.avatarUrl}" alt="avatar" class="center-circle" />`;

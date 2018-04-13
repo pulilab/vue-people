@@ -43,7 +43,7 @@
           v-model="profile.type"
           :items="userTypes"
           label="Selecte usertype"
-          item-text="name"
+          item-text="verbose_name"
           item-value="id"
           item-disabled="disabled"
           light

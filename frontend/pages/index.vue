@@ -35,7 +35,10 @@ export default {
     }
   },
   async fetch({store}) {
-    await store.dispatch('people/loadPeople');
+    const peoplePromise =  store.dispatch('people/loadPeople');
+    const userTypePromise =  store.dispatch('loadUserTypes');
+
+    await Promise.all([peoplePromise, userTypePromise]);
   }
 };
 </script>
