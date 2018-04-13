@@ -27,7 +27,7 @@ export const getters = {
   },
   getFilteredPins: (state, getters, rootState, rootGetters) => {
     const tags = rootGetters['people/getSelectedTags'];
-    const list = rootGetters['people/getList'];
+    const list = rootGetters['people/getList'].filter(p => p.latlng);
     const filtered = tags.length > 0 ? list.filter(p => p.tags.some(t => tags.includes(t))) : list;
     return [...filtered.map(p => {
       const opacity = !getters.getFocusOn || p.type === getters.getFocusOn ? 1 : 0.5;
