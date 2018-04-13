@@ -10,9 +10,7 @@
         align-center
       >
         <v-flex xs12>
-          <user-avatar
-            :id="userProfile.id"
-          />
+          <user-avatar />
         </v-flex>
         <v-flex>
           <v-btn
@@ -68,18 +66,18 @@
         />
         <v-text-field
           v-validate="'url'"
-          v-model="profile.twitterUrl"
-          :error-messages="errors.collect('twitterUrl')"
+          v-model="profile.twitter_url"
+          :error-messages="errors.collect('twitter_url')"
           label="Twitter profile"
-          data-vv-name="twitterUrl"
+          data-vv-name="twitter_url"
           light
         />
         <v-text-field
           v-validate="'url'"
-          v-model="profile.websiteUrl"
-          :error-messages="errors.collect('websiteUrl')"
+          v-model="profile.website_url"
+          :error-messages="errors.collect('website_url')"
           label="Your website"
-          data-vv-name="websiteUrl"
+          data-vv-name="website_url"
           light
         />
         <v-select
@@ -103,12 +101,12 @@
 
         <v-text-field
           v-validate="'max:500'"
-          v-model="profile.about"
-          :error-messages="errors.collect('about')"
+          v-model="profile.bio"
+          :error-messages="errors.collect('bio')"
           :counter="500"
-          data-vv-name="about"
-          name="about"
-          label="About"
+          data-vv-name="bio"
+          name="bio"
+          label="Bio"
           textarea
           light
         />
@@ -148,12 +146,11 @@ export default {
       profile: {
         name: '',
         email: '',
-        githubUrl: '',
-        twitterUrl: '',
-        websiteUrl: '',
+        twitter_url: '',
+        website_url: '',
         organisation: '',
         tags: [],
-        about: ''
+        bio: ''
       }
     };
   },
