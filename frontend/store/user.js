@@ -85,10 +85,13 @@ export const actions = {
   },
   async updateUserProfile({commit, state, getters}, update) {
     const loc = getters.getUserPosition;
-    const location = {
-      type: "Point",
-      coordinates: [loc.lat, loc.lng]
-    };
+    let location = undefined;
+    if(loc) {
+      location = {
+        type: "Point",
+        coordinates: [loc.lat, loc.lng]
+      };
+    }
     const profile = {...state.savedProfile, ...update, location};
     const { data } = await this.$axios.post('/api/user/', profile);
     commit('SET_SAVED_PROFILE', data);
