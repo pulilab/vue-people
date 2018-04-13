@@ -1,22 +1,25 @@
 <template>
   <div class="avatar-wrapper">
-    <v-avatar
-      class="mr-2">
-      <v-icon
+    <v-avatar class="elevation-2">
+      <div
         v-show="!person.avatarUrl"
-        :light="!dark"
-      >
-        account_circle
-      </v-icon>
-      <img
+        class="no-avatar">
+        <v-icon>
+          account_circle
+        </v-icon>
+      </div>
+      <div
         v-show="person.avatarUrl"
-        :src="person.avatarUrl" >
+        class="has-avatar">
+        <img :src="person.avatarUrl" >
+      </div>
     </v-avatar>
 
     <div
       v-show="person.name"
-      :class="{dark}">
-      <div>
+      class="user-info mr-4"
+    >
+      <div class="user">
         <span>{{ person.name }}</span>
         <user-type :id="person.type" />
       </div>
@@ -60,16 +63,47 @@ export default {
 </script>
 
 <style lang="less">
+  @import "../assets/style/variables.less";
+  @import "../assets/style/mixins.less";
+
   .avatar-wrapper {
     width: 100%;
-    display: inline-flex;
+    display: flex;
     align-items: center;
 
-    .dark {
-      color: #FFF;
+    .avatar {
+      width: 40px !important;
+      height: 40px !important;
+      margin-right: 12px;
+
+      .no-avatar {
+        float: left;
+        width: 40px;
+        height: 40px;
+        background-color: @icon-dark-inactive;
+        border-radius: 40px;
+      }
+
+      .has-avatar {
+        width: 40px;
+        height: 40px;
+
+        img {
+          width: 40px;
+          height: 40px;
+        }
+      }
+    }
+
+    .user-info {
+      .user {
+        font-size: @font-size-base;
+        font-weight: 500;
+      }
 
       .email {
-        color: rgba(255,255,255,0.5);
+        color: @font-dark-secondary;
+        .text-truncate();
       }
     }
   }

@@ -7,21 +7,21 @@
       <user-avatar
         :id="userProfile.id"
       />
-      <div>
+      <div class="btn-location">
         <v-btn
           v-show="showAddLocationButton"
-          color="success"
+          color="primary"
           @click="setAddMode(true)"
         >
-          <v-icon>mdi-map-marker</v-icon>
+          <v-icon class="mr-1">add_location</v-icon>
           Add Location
         </v-btn>
         <v-btn
           v-show="showConfirmButton"
-          color="primary"
+          color="warning"
           @click="setAddMode(false)"
         >
-          <v-icon>mdi-checkr</v-icon>
+          <v-icon class="mr-1">done</v-icon>
           Confirm Location
         </v-btn>
       </div>
@@ -38,6 +38,7 @@
         <v-list>
           <v-list-tile
             to="/user/"
+            active-class=""
             avatar
             nuxt >
             <v-list-tile-avatar>
@@ -49,6 +50,7 @@
           </v-list-tile>
           <v-list-tile
             avatar
+            active-class=""
             @click="doLogout">
             <v-list-tile-avatar>
               <v-icon>mdi-logout</v-icon>
@@ -115,13 +117,20 @@ export default {
 </script>
 
 <style lang="less">
+  @import "../assets/style/variables.less";
+  @import "../assets/style/mixins.less";
 
-.user-menu {
-  .logged-in {
-    display: flex;
-    height: 100%;
-    padding: 0 12px;
+  .user-menu {
+    .logged-in {
+      display: flex;
+      height: 100%;
+      padding: 0 12px;
+    }
+
+    .btn-location {
+      .btn .btn__content {
+        padding-left: 10px;
+      }
+    }
   }
-}
-
 </style>

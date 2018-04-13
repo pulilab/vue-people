@@ -1,7 +1,145 @@
+// --------------------------------------------------
+// Import: core stuff
+// --------------------------------------------------
+
+@import "variables.less";
+@import "mixins.less";
+
+
+
+// --------------------------------------------------
+// Import: other stuff
+// --------------------------------------------------
+
 @import "../../node_modules/leaflet/dist/leaflet.css";
 @import "../../node_modules/mdi/css/materialdesignicons.css";
 
 
+
+// --------------------------------------------------
+// General layout
+// --------------------------------------------------
+
 .full-height {
   height: 100%;
+}
+
+// TODO: tablet & mobile - responsive or adaptive?
+.application {
+  // min-width: 1280px;
+}
+
+// TODO: Add breakpoints
+.container {
+  .left-aside-wrapper {
+    min-width: 340px;
+    max-width: 340px;
+
+  }
+  .main-map-wrapper {
+    width: 100%;
+  }
+}
+
+
+// --------------------------------------------------
+// Vuetify customisation
+// --------------------------------------------------
+
+.chip {
+  margin: 4px 8px 4px 0;
+  font-size: @font-size-tiny;
+  color: @color-white !important;
+  background-color: @color-tag-pills !important;
+}
+
+.menu__content {
+  > .card,
+  .list {
+    background-color: darken(@color-brand-secondary, 10%);
+  }
+
+  .list__tile__action,
+  .list__tile__avatar {
+    min-width: 40px;
+  }
+
+  .list__tile__avatar,
+  .list__tile__content {
+    padding-right: 8px;
+  }
+}
+
+.input-group {
+  &.input-group--textarea {
+    .input-group__input {
+      border-width: 1px !important;
+    }
+  }
+}
+
+
+
+// --------------------------------------------------
+// Leaflet customisation
+// --------------------------------------------------
+
+.leaflet-container {
+
+  .leaflet-tooltip-pane {
+    .avatar-wrapper {
+      padding: 6px 10px 6px 6px;
+
+      .avatar {
+
+        .no-avatar {
+          background-color: @icon-light-inactive;
+        }
+      }
+
+      .user-info {
+        margin-right: 0 !important;
+
+        .user {
+          color: @font-light-primary;
+        }
+        .email {
+          font-size: @font-size-small;
+          color: @font-light-disabled;
+        }
+      }
+    }
+  }
+
+  .leaflet-control-container {
+
+    .leaflet-right .leaflet-control {
+      margin-right: 16px;
+    }
+
+    .leaflet-bottom .leaflet-control {
+      margin-bottom: 16px;
+    }
+
+    .leaflet-bar {
+      border: 0;
+      // elevation-4
+      -webkit-box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, .2), 0px 4px 5px 0px rgba(0, 0, 0, .14), 0px 1px 10px 0px rgba(0, 0, 0, .12) !important;
+      box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, .2), 0px 4px 5px 0px rgba(0, 0, 0, .14), 0px 1px 10px 0px rgba(0, 0, 0, .12) !important;
+    }
+
+    .leaflet-bar a {
+      border-radius: 0 0 3px 3px;
+
+      &:first-child {
+        height: 31px !important;
+        border-radius: 3px 3px 0 0;
+      }
+    }
+
+    .leaflet-control-zoom-in,
+    .leaflet-control-zoom-out {
+      font-size: 18px !important;
+    }
+  }
 }

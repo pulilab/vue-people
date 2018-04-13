@@ -9,8 +9,11 @@
 </template>
 
 <style lang="less">
+  @import "../assets/style/variables.less";
+  @import "../assets/style/mixins.less";
+
   .vue-people {
-    height: 100vh;;
+    height: 100vh;
 
     .content {
       height: 100%;

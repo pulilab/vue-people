@@ -1,0 +1,37 @@
+// Text truncate
+// Requires inline-block or block for proper styling
+.text-truncate() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.no-text-truncate() {
+  overflow: visible;
+  text-overflow: inherit;
+  white-space: normal;
+}
+
+.clearfix() {
+  &::after {
+    display: table;
+    clear: both;
+    content: "";
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.placeholder(@color: #757575) {
+  &::-webkit-input-placeholder {
+    color: @color;
+  }
+  &::-moz-placeholder {
+    color: @color;
+  }
+  &:-ms-input-placeholder {
+    color: @color;
+  }
+}
