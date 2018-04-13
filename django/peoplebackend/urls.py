@@ -19,17 +19,17 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework.documentation import include_docs_urls
 
-from people.views import TestView, UserTypeViewSet
+from people.views import UserTypeViewSet, PersonViewSet
 
 router = DefaultRouter()
 router.register(r'api/user-type', UserTypeViewSet)
+router.register(r'api/person', PersonViewSet)
 urlpatterns = router.urls
 
 admin.site.site_header = 'Vue People Backend'
 urlpatterns += [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path('api/test', TestView.as_view()),
 ]
 
 if settings.DEBUG:  # pragma: no cover

@@ -2,6 +2,7 @@ Django
 gunicorn
 psycopg2
 djangorestframework
+djangorestframework-gis
 coreapi
 django-redis-cache
 django-allauth
