@@ -14,7 +14,9 @@ export const state = () => ({
 
 export const getters = {
   getUserProfile: state => {
-    return {type:1, ...profileMapper(state.gitHubProfile), ...state.savedProfile};
+    const profile =  {...profileMapper(state.gitHubProfile), ...state.savedProfile};
+    const type = profile.type ? profile.type : 1;
+    return {...profile, type};
   },
   getLoginStatus: (state, getters) => {
     const ghp = getters.getUserProfile;
@@ -60,7 +62,14 @@ export const actions = {
   },
   async loadSavedProfile({commit, state}) {
     if (!state.savedProfile) {
-      const { data } = await this.$axios.get('/api/test');
+      const { data } = await this.$axios.get('/api/person/2/');
+      if (data.location) {
+        data.location = {
+          lat: data.location.coordinates[0],
+          lng: data.location.coordinates[1]
+        };
+        commit('SET_USER_POSITION', data.location);
+      }
       commit('SET_SAVED_PROFILE', { ...data });
     }
   },
@@ -74,9 +83,10 @@ export const actions = {
     commit('SET_CSRF_TOKEN', null);
     deleteTokens();
   },
-  async saveUserProfile({commit}, profile) {
-    const { data } = await this.$axios.post('/api/test', profile);
-    commit('SET_SAVED_PROFILE', { ...data });
+  async updateUserProfile({commit, state}, update) {
+    const profile = {...state.savedProfile, ...update};
+    const { data } = await this.$axios.put('/api/person/2/', profile);
+    commit('SET_SAVED_PROFILE', data);
   },
   async setGithubToken({commit, dispatch}, token) {
     commit('SET_GITHUB_TOKEN', token);
@@ -92,6 +102,14 @@ export const actions = {
   },
   setCsrfToken({commit}, token) {
     commit('SET_CSRF_TOKEN', token);
+  },
+  async saveLocation({getters, dispatch}) {
+    const loc = getters.getUserPosition;
+    const location = {
+      type: "Point",
+      coordinates: [loc.lat, loc.lng]
+    };
+    await dispatch('updateUserProfile', {location});
   }
 };
 
