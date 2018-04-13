@@ -2,14 +2,17 @@
   <div class="repository-list">
     <v-progress-linear
       v-show="loading"
-      indeterminate />
-    <v-list v-show="!loading">
+      indeterminate
+      class="ma-4" />
+    <v-list
+      v-show="!loading"
+      class="px-4 pt-3 pb-2">
       <v-subheader>
         Repositories
       </v-subheader>
       <v-list-tile v-if="repositories.length === 0">
         <v-list-tile-content>
-          <v-list-tile-title >
+          <v-list-tile-title class="no-data">
             No  VUEJS repositories
           </v-list-tile-title>
         </v-list-tile-content>
@@ -26,7 +29,7 @@
               <v-flex
                 xs4
               >
-                <div class="text-xs-right">
+                <div class="github-stats text-xs-right">
                   <v-icon
                     small>
                     star
@@ -46,13 +49,15 @@
         </v-list-tile-content>
       </v-list-tile>
     </v-list>
-    <v-list v-show="!loading">
+    <v-list
+      v-show="!loading"
+      class="px-4 pt-3 pb-3">
       <v-subheader>
         Contribution
       </v-subheader>
       <v-list-tile v-if="contributed.length === 0">
         <v-list-tile-content>
-          <v-list-tile-title >
+          <v-list-tile-title class="no-data">
             No Contributions in VUEJS repositories
           </v-list-tile-title>
         </v-list-tile-content>
@@ -69,7 +74,7 @@
               <v-flex
                 xs4
               >
-                <div class="text-xs-right">
+                <div class="github-stats text-xs-right">
                   <v-icon
                     small>
                     star
@@ -126,6 +131,67 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less">
+  @import "../assets/style/variables.less";
+  @import "../assets/style/mixins.less";
 
+  .repository-list {
+    .progress-linear {
+      width: calc(100% - 48px);
+    }
+
+    .list {
+      padding: 0;
+      border-bottom: 1px solid @font-light-dividers;
+      background: @color-brand-secondary !important;
+
+      &:last-child {
+        border-bottom: 0;
+      }
+
+      .subheader {
+        height: auto;
+        margin-bottom: 12px;
+        padding: 0;
+        font-size: @font-size-tiny;
+        text-transform: uppercase;
+        color: @font-light-disabled;
+      }
+
+      .list__tile {
+        height: auto;
+        padding: 0;
+        font-size: @font-size-tiny;
+
+        .list__tile__content {
+          margin-bottom: 12px;
+        }
+
+        .list__tile__title {
+          font-weight: 500;
+
+          &.no-data {
+            font-weight: 400;
+            color: @font-light-dividers;
+          }
+
+          .github-stats {
+            font-size: @font-size-tiny - 1;
+            font-weight: 400;
+
+            .icon {
+              position: relative;
+              top: -1px;
+              font-size: @font-size-small - 1 !important;
+              color: #FFB300;
+            }
+          }
+        }
+
+        .list__tile__sub-title {
+          font-size: @font-size-tiny - 1;
+        }
+      }
+    }
+  }
 </style>

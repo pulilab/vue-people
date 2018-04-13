@@ -2,19 +2,14 @@
   <div class="main-container">
     <v-container
       fill-height
-      fluid>
+      fluid
+      pa-0>
       <v-layout
         row>
-        <v-flex
-          xs5
-          sm4
-          md3>
+        <v-flex class="left-aside-wrapper">
           <left-side />
         </v-flex>
-        <v-flex
-          xs7
-          sm8
-          md9>
+        <v-flex class="main-map-wrapper">
           <main-map/>
         </v-flex>
       </v-layout>

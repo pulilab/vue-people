@@ -35,16 +35,27 @@ export default {
 </script>
 
 <style lang="less">
+  @import "../assets/style/variables.less";
+  @import "../assets/style/mixins.less";
+
   .user-type {
     display: inline-block;
+
     &.dev .icon {
-      color:#F5515F;
+      color: @color-developer;
     }
+
     &.enthusiast .icon {
-      color:#F3881E;
+      color: @color-enthusiast;
     }
+
     &.core .icon {
-      color:#4A90E2;
+      color: @color-core-member;
+    }
+
+    i.mdi-vuejs {
+      position: relative;
+      top: -1px;
     }
   }
 
