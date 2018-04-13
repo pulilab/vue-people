@@ -1,5 +1,8 @@
+from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Type
+from taggit_serializer.serializers import (TagListSerializerField,
+                                           TaggitSerializer)
+from .models import Type, Person
 
 
 class UserTypeSerializer(serializers.ModelSerializer):
