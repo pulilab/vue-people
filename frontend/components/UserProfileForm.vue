@@ -80,11 +80,14 @@
           data-vv-name="website_url"
           light
         />
-        <v-select
-          :items="organisations"
-          v-model="profile.organisation"
+
+        <v-text-field
+          v-validate="'max:254'"
+          v-model="profile.company"
+          :counter="254"
+          :error-messages="errors.collect('organisation')"
+          data-vv-name="organisation"
           label="Organisation"
-          autocomplete
           light
         />
 
@@ -148,7 +151,7 @@ export default {
         email: '',
         twitter_url: '',
         website_url: '',
-        organisation: '',
+        company: '',
         tags: [],
         bio: ''
       }
@@ -159,7 +162,6 @@ export default {
       userProfile: 'user/getUserProfile',
       usLoggedIn: 'user/getLoginStatus',
       tagList: 'getTags',
-      organisations: 'getOrganizations',
       userTypes: 'getUserTypes'
     })
   },

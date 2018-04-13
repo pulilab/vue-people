@@ -16,11 +16,11 @@
     </v-avatar>
 
     <div
-      v-show="person.name"
+      v-show="name"
       class="user-info mr-4"
     >
       <div class="user">
-        <span>{{ person.name }}</span>
+        <span>{{ name }}</span>
         <user-type :id="person.type" />
       </div>
       <div class="email"> {{ person.email }} </div>
@@ -57,6 +57,13 @@ export default {
         return this.getPersonDetails(this.id);
       }
       return this.userProfile;
+    },
+    name() {
+      if (this.person && this.person.user) {
+        return this.person.user.first_name
+        + ' '
+        + this.person.user.last_name;
+      }
     }
   }
 };
