@@ -4,68 +4,83 @@
       light
       prominent
       extended
-      absolute>
-      <v-btn
-        light
-        icon
-        nuxt
-        to="/">
-        <v-icon>arrow_back</v-icon>
-        back
-      </v-btn>
+      absolute
+      class="elevation-4 px-4 pb-4">
+      <v-layout align-center>
+        <v-flex xs12>
+          <v-btn
+            light
+            flat
+            nuxt
+            to="/"
+            class="btn-back ma-0">
+            <v-icon class="mr-1">arrow_back</v-icon>
+            back
+          </v-btn>
+        </v-flex>
+        <v-flex>
+          <v-btn
+            icon
+            light
+            class="btn-center-focus ma-0"
+            @click="flyToPerson">
+            <v-icon>filter_center_focus</v-icon>
+          </v-btn>
+        </v-flex>
+      </v-layout>
       <user-avatar
         v-if="person"
         slot="extension"
         :id="person.id"
       />
     </v-toolbar>
-    <div class="person-info-container">
+    <div class="person-info-container pb-5">
       <div
         v-if="person"
         class="person-info">
-        <div class="item">
+        <div class="item px-4 py-3">
           <v-layout row>
             <v-btn
               :href="person.githubUrl"
-              icon
-              large
+              flat
               target="_blank">
-              <v-icon>mdi-github-circle</v-icon>
+              <v-icon class="mr-1">mdi-github-circle</v-icon>
+              Github
             </v-btn>
             <v-btn
               :href="person.twitterUrl"
-              icon
-              large
+              flat
               target="_blank">
-              <v-icon>mdi-twitter</v-icon>
+              <v-icon class="mr-1">mdi-twitter</v-icon>
+              Twitter
             </v-btn>
             <v-btn
               :href="person.websiteUrl"
-              icon
-              large
+              flat
               target="_blank">
-              <v-icon>mdi-web</v-icon>
+              <v-icon class="mr-1">mdi-web</v-icon>
+              Website
             </v-btn>
           </v-layout>
         </div>
-        <div class="item">
-          <div class="title">
+        <div class="item px-4 py-3">
+          <div class="caption">
             About
           </div>
           <div class="content">
             {{ person.about }}
           </div>
         </div>
-        <div class="item">
-          <div class="title" >
+        <div class="item px-4 py-3">
+          <div class="caption">
             Organisation
           </div>
           <div class="content">
             {{ person.organisation }}
           </div>
         </div>
-        <div class="item">
-          <div class="title" >
+        <div class="item px-4 py-3">
+          <div class="caption">
             Tags
           </div>
           <div class="content">
@@ -101,11 +116,17 @@ export default {
   },
   methods: {
     ...mapActions({
-      setCurrent: 'people/setCurrent'
+      setCurrent: 'people/setCurrent',
+      setCenter: 'map/setCenter',
+      setZoom: 'map/setZoom'
     }),
     async closeDetails() {
       await this.setCurrent(null);
       this.$router.push('/');
+    },
+    flyToPerson() {
+      this.setZoom(16);
+      this.setCenter(this.person.latlng);
     }
   }
 
@@ -113,24 +134,74 @@ export default {
 </script>
 
 <style lang="less">
+  @import "../assets/style/variables.less";
+  @import "../assets/style/mixins.less";
 
-.person-details {
-  position: relative;
-  width: 100%;
-
-  .person-info-container {
+  .person-details {
     position: relative;
-    height: calc(100% - 130px);
-    top: 130px;
     width: 100%;
-    max-width: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
 
-    .person-info {
+    .toolbar {
+      background-color: @color-white !important;
+
+      .toolbar__content {
+        .btn {
+          color: @font-dark-disabled;
+        }
+
+        .btn:not(.btn--icon) {
+          min-width: 0;
+          margin: 0;
+          padding: 0 10px 0 6px;
+
+          .btn__content {
+            padding: 0;
+          }
+        }
+      }
+    }
+
+    .person-info-container {
       position: relative;
+      height: calc(100% - 152px);
+      top: 152px;
+      width: 100%;
+      max-width: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+
+      .person-info {
+        position: relative;
+
+        .btn {
+          min-width: 0;
+          margin: 0 12px 0 0;
+          padding: 0;
+
+          .btn__content {
+            padding: 0 8px;
+            font-size: @font-size-tiny;
+            font-weight: 400;
+            text-transform: none;
+          }
+        }
+      }
+
+      .item {
+        border-bottom: 1px solid @font-light-dividers;
+
+        .caption {
+          margin-bottom: 12px;
+          font-weight: 500;
+          text-transform: uppercase;
+          color: @font-light-disabled;
+        }
+
+        .content {
+          flex-wrap: wrap;
+          font-size: @font-size-tiny;
+        }
+      }
     }
   }
-}
-
 </style>
