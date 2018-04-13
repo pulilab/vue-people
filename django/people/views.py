@@ -1,7 +1,7 @@
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework.viewsets import GenericViewSet
 
-from .serializers import UserTypeSerializer
+from .serializers import UserTypeSerializer, PersonSerializer
 from .models import Person, Type
 
 
@@ -14,3 +14,4 @@ class UserTypeViewSet(ListModelMixin, GenericViewSet):
 
 class PersonViewSet(ListModelMixin, RetrieveModelMixin, UpdateModelMixin, GenericViewSet):
     queryset = Person.objects.all()
+    serializer_class = PersonSerializer
