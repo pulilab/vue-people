@@ -22,6 +22,14 @@
           <v-icon class="mr-1">done</v-icon>
           Confirm Location
         </v-btn>
+        <v-btn
+          v-show="showEditLocation"
+          color="primary"
+          @click="setAddMode(true)"
+        >
+          <v-icon class="mr-1">edit_location</v-icon>
+          Edit Location
+        </v-btn>
       </div>
       <v-menu
         v-model="menu"
@@ -100,6 +108,9 @@ export default {
     },
     showConfirmButton() {
       return this.positionSet && this.isAddMode;
+    },
+    showEditLocation() {
+      return this.positionSet && !this.isAddMode;
     }
   },
   methods: {
