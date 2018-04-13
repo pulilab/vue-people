@@ -39,6 +39,12 @@ class Type(models.Model):
     order = models.IntegerField(default=0)
     disabled = models.BooleanField(default=False)
 
+    class Meta:
+        verbose_name = "User Type"
+
+    def __str__(self):
+        return self.verbose_name
+
 
 class Person(SoftDeleteModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
@@ -57,6 +63,9 @@ class Person(SoftDeleteModel):
     tags = TaggableManager(blank=True)
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
     modified = models.DateTimeField(auto_now=True, auto_now_add=False)
+
+    class Meta:
+        verbose_name_plural = "People"
 
     def __str__(self):
         return "{} ({}) {}".format(self.user.get_full_name(), self.company, self.user.email)
