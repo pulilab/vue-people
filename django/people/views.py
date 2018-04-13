@@ -21,3 +21,5 @@ class PersonViewSet(ListModelMixin, RetrieveModelMixin, UpdateModelMixin, Generi
 class UserTypeViewSet(ListModelMixin, GenericViewSet):
     queryset = Type.objects.all()
     serializer_class = UserTypeSerializer
+    permission_classes = []
+    authentication_classes = []
