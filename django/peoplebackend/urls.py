@@ -19,11 +19,12 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework.documentation import include_docs_urls
 
-from people.views import UserTypeViewSet, PersonViewSet
+from people.views import UserTypeViewSet, PersonViewSet, PeopleViewSet
 
 router = DefaultRouter()
 router.register(r'api/user-type', UserTypeViewSet)
-router.register(r'api/person', PersonViewSet)
+router.register(r'api/user', PersonViewSet)
+router.register(r'api/people', PeopleViewSet)
 urlpatterns = router.urls
 
 admin.site.site_header = 'Vue People Backend'
