@@ -11,24 +11,35 @@ export const state = () => ({
 });
 
 export const getters = {
-  getList: (state, getters) => {
+  getList: (state, getters, rootState, rootGetters) => {
+    const user = rootGetters['user/getUserProfile'];
     return [
-      ...state.list.map(p => ({
-        ...p,
-        selected: getters.getCurrentPerson === p.id,
-        latlng: {
-          lat: p.latitude,
-          lng: p.longitude
+      ...state.list.filter(p => !user || !user.id || p.id !== user.id)
+        .map(p => {
+          let latlng = undefined;
+          if (p.location && p.location.coordinates) {
+            latlng = {
+              lat: p.location.coordinates[0],
+              lng: p.location.coordinates[1]
+            };
+          }
+          const type = p.type ? p.type : 1;
+          return {
+            ...p,
+            selected: getters.getCurrentPerson === p.id,
+            latlng,
+            type
+          };
         }
-      })
-      )
+        )
     ];
   },
   getCurrentPerson: state => {
     return state.current;
   },
   getPersonDetails: (state, getters, rootState, rootGetters) => id => {
-    return {...getters.getList.find(p => p.id === id)};
+    const person = {...getters.getList.find(p => p.id === id)};
+    return person;
   },
   getCurrentPersonDetails: (state, getters, rootState, rootGetters) => {
     return getters.getPersonDetails(getters.getCurrentPerson);
@@ -50,7 +61,7 @@ export const getters = {
 
 export const actions = {
   async loadPeople ({commit}) {
-    const { data } = await this.$axios.get('/people.json');
+    const { data } = await this.$axios.get('/api/person/');
     commit('SET_PEOPLE_LIST', data);
   },
   setCurrent({commit}, id) {
