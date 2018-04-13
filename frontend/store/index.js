@@ -1,7 +1,6 @@
 export const state = () => ({
   userTypes: [],
-  tags: ['vue', 'vuex'],
-  organizations: ['Pulilab']
+  tags: []
 });
 
 
@@ -16,9 +15,6 @@ export const getters = {
   },
   getTags: state => {
     return [...state.tags];
-  },
-  getOrganizations: state => {
-    return [...state.organizations];
   }
 };
 
@@ -26,6 +22,10 @@ export const actions = {
   async loadUserTypes({commit}) {
     const { data } = await this.$axios.get('/api/user-type/');
     commit('SET_USER_TYPES', data);
+  },
+  async loadTags({commit}) {
+    const { data } = await this.$axios.get('/api/tags/');
+    commit('SET_TAGS', data);
   }
 };
 
@@ -33,5 +33,8 @@ export const actions = {
 export const mutations = {
   SET_USER_TYPES: (state, types) => {
     return state.userTypes = types;
+  },
+  SET_TAGS: (state, tags) => {
+    return state.tags = tags;
   }
 };

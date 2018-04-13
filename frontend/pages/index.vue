@@ -37,8 +37,9 @@ export default {
   async fetch({store}) {
     const peoplePromise =  store.dispatch('people/loadPeople');
     const userTypePromise =  store.dispatch('loadUserTypes');
+    const tagsPromise =  store.dispatch('loadTags');
 
-    await Promise.all([peoplePromise, userTypePromise]);
+    await Promise.all([peoplePromise, userTypePromise, tagsPromise]);
   }
 };
 </script>
