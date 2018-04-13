@@ -106,14 +106,14 @@ export default {
     ...mapActions({
       logout: 'user/logout',
       setAddMode: 'map/setAddMode',
-      saveLocation: 'user/saveLocation'
+      updateUserProfile: 'user/updateUserProfile'
     }),
     doLogout() {
       this.menu = false;
       this.logout();
     },
     async confirmLocation() {
-      await this.saveLocation(this.userPosition);
+      await this.updateUserProfile();
       this.setAddMode(false);
     }
   }
