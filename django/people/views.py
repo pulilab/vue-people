@@ -1,4 +1,5 @@
-from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin
+from rest_framework.generics import get_object_or_404
+from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin, CreateModelMixin
 from rest_framework.viewsets import GenericViewSet
 
 from .serializers import UserTypeSerializer, PersonSerializer
@@ -12,6 +13,9 @@ class UserTypeViewSet(ListModelMixin, GenericViewSet):
     authentication_classes = []
 
 
-class PersonViewSet(ListModelMixin, RetrieveModelMixin, UpdateModelMixin, GenericViewSet):
+class PeopleViewSet(ListModelMixin, GenericViewSet):
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
+    permission_classes = []
+    authentication_classes = []
+
