@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
     'rest_framework',
+    'rest_framework_gis',
     'taggit',
     'taggit_serializer',
     'people'
