@@ -151,6 +151,8 @@ REST_FRAMEWORK = {
 SOCIALACCOUNT_ADAPTER = 'people.adapter.MyGithubAccountAdapter'
 ACCOUNT_ADAPTER = 'people.adapter.MyAccountAdapter'
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 SOCIALACCOUNT_PROVIDERS = {
     'github': {
         'SCOPE': [
