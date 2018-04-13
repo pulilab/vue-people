@@ -36,7 +36,7 @@ class SoftDeleteModel(models.Model):
 class Type(models.Model):
     name = models.CharField(max_length=16)
     verbose_name = models.CharField(max_length=32)
-    order = models.IntegerField()
+    order = models.IntegerField(default=0)
     disabled = models.BooleanField(default=False)
 
 
