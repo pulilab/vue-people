@@ -61,7 +61,7 @@ export const getters = {
 
 export const actions = {
   async loadPeople ({commit}) {
-    const { data } = await this.$axios.get('/api/person/');
+    const { data } = await this.$axios.get('/api/people/');
     commit('SET_PEOPLE_LIST', data);
   },
   setCurrent({commit}, id) {

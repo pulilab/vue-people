@@ -85,7 +85,7 @@ export const actions = {
   },
   async updateUserProfile({commit, state}, update) {
     const profile = {...state.savedProfile, ...update};
-    const { data } = await this.$axios.put('/api/person/2/', profile);
+    const { data } = await this.$axios.post('/api/person/', profile);
     commit('SET_SAVED_PROFILE', data);
   },
   async setGithubToken({commit, dispatch}, token) {

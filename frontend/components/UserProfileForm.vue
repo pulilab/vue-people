@@ -176,10 +176,10 @@ export default {
   },
   methods: {
     ...mapActions({
-      saveUserProfile: 'user/saveUserProfile'
+      updateUserProfile: 'user/updateUserProfile'
     }),
     async save() {
-      await this.saveUserProfile(this.profile);
+      await this.updateUserProfile(this.profile);
       this.$router.push('/');
     }
   }
