@@ -16,12 +16,17 @@ Including another URLconf
 from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
-
-from people.views import TestView
+from rest_framework.routers import DefaultRouter
 from rest_framework.documentation import include_docs_urls
 
+from people.views import TestView, UserTypeViewSet
+
+router = DefaultRouter()
+router.register(r'api/user-type', UserTypeViewSet)
+urlpatterns = router.urls
+
 admin.site.site_header = 'Vue People Backend'
-urlpatterns = [
+urlpatterns += [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('api/test', TestView.as_view()),
