@@ -23,7 +23,7 @@ from people.views import UserTypeViewSet, PersonViewSet, PeopleViewSet
 
 router = DefaultRouter()
 router.register(r'api/user-type', UserTypeViewSet)
-router.register(r'api/person', PersonViewSet)
+router.register(r'api/user', PersonViewSet)
 router.register(r'api/people', PeopleViewSet)
 urlpatterns = router.urls
 
