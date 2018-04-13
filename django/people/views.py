@@ -26,3 +26,9 @@ class PersonViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, Update
     serializer_class = PersonSerializer
     permission_classes = [IsMeOrReadOnly]
 
+    def create(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def list(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
