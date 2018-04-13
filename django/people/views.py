@@ -1,9 +1,10 @@
 from rest_framework.generics import get_object_or_404
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin, CreateModelMixin
 from rest_framework.viewsets import GenericViewSet
+from taggit.models import Tag
 
 from .permission import IsMeOrReadOnly
-from .serializers import UserTypeSerializer, PersonSerializer
+from .serializers import UserTypeSerializer, PersonSerializer, TagSerialiser
 from .models import Person, Type
 
 
@@ -40,3 +41,10 @@ class PersonViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, Update
         self.check_object_permissions(self.request, obj)
 
         return obj
+
+
+class TagViewSet(ListModelMixin, GenericViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerialiser
+    permission_classes = []
+    authentication_classes = []
