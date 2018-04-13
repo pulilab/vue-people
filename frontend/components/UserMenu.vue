@@ -36,9 +36,9 @@
           <v-icon>more_vert</v-icon>
         </v-btn>
         <v-list>
-          <!-- TODO: Why does this item get a '.primary--text' class?! -->
           <v-list-tile
             to="/user/"
+            active-class=""
             avatar
             nuxt >
             <v-list-tile-avatar>
@@ -50,6 +50,7 @@
           </v-list-tile>
           <v-list-tile
             avatar
+            active-class=""
             @click="doLogout">
             <v-list-tile-avatar>
               <v-icon>mdi-logout</v-icon>
