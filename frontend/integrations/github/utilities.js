@@ -31,7 +31,7 @@ export const profileMapper = (ghp) => {
     email: ghp.email,
     githubUrl: ghp.url,
     websiteUrl: ghp.websiteUrl,
-    organisation: ghp.company,
+    company: ghp.company,
     about: ghp.bio
   } : {};
 };
