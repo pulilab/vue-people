@@ -5,6 +5,11 @@ from taggit_serializer.serializers import (TagListSerializerField,
 from .models import Type, Person
 
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ("last_login", "first_name", "last_name", "email")
+
 class UserTypeSerializer(serializers.ModelSerializer):
 
     class Meta:
