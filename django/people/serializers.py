@@ -24,3 +24,13 @@ class PersonSerializer(TaggitSerializer, serializers.ModelSerializer):
     class Meta:
         model = Person
         fields = "__all__"
+
+    def update(self, instance, validated_data):
+        user_data = validated_data.pop('user')
+        instance = super().update(instance, validated_data)
+        instance.user.first_name = user_data["first_name"]
+        instance.user.last_name = user_data["last_name"]
+        instance.user.email = user_data["email"]
+
+        return instance
+
