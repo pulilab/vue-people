@@ -32,3 +32,11 @@ class PersonViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, Update
     def list(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
 
+    def get_object(self):
+        queryset = self.filter_queryset(self.get_queryset())
+        filter_kwargs = {'user': self.request.user.pk}
+        obj = get_object_or_404(queryset, **filter_kwargs)
+
+        self.check_object_permissions(self.request, obj)
+
+        return obj
