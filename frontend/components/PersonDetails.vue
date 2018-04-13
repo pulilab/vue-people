@@ -18,12 +18,12 @@
             back
           </v-btn>
         </v-flex>
-        <!-- TODO: on click center focus map on selected developer's pin -->
         <v-flex>
           <v-btn
             icon
             light
-            class="btn-center-focus ma-0">
+            class="btn-center-focus ma-0"
+            @click="flyToPerson">
             <v-icon>filter_center_focus</v-icon>
           </v-btn>
         </v-flex>
@@ -116,11 +116,17 @@ export default {
   },
   methods: {
     ...mapActions({
-      setCurrent: 'people/setCurrent'
+      setCurrent: 'people/setCurrent',
+      setCenter: 'map/setCenter',
+      setZoom: 'map/setZoom'
     }),
     async closeDetails() {
       await this.setCurrent(null);
       this.$router.push('/');
+    },
+    flyToPerson() {
+      this.setZoom(16);
+      this.setCenter(this.person.latlng);
     }
   }
 
