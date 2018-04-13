@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
+from taggit.models import Tag
 from taggit_serializer.serializers import (TagListSerializerField,
                                            TaggitSerializer)
 from .models import Type, Person
@@ -35,3 +36,8 @@ class PersonSerializer(TaggitSerializer, serializers.ModelSerializer):
 
         return instance
 
+class TagSerialiser(serializers.ModelSerializer):
+
+    class Meta:
+        model = Tag
+        fields = "__all__"
