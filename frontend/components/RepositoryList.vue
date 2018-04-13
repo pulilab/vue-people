@@ -13,7 +13,7 @@
       <v-list-tile v-if="repositories.length === 0">
         <v-list-tile-content>
           <v-list-tile-title class="no-data">
-            No  VUEJS repositories
+            No public Vuejs repositories
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
@@ -58,7 +58,7 @@
       <v-list-tile v-if="contributed.length === 0">
         <v-list-tile-content>
           <v-list-tile-title class="no-data">
-            No Contributions in VUEJS repositories
+            No Contributions to public vuejs repositories
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
