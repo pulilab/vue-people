@@ -39,7 +39,7 @@ const config = {
   proxy: {},
   axios: {
     baseURL: 'http://django:8000/',
-    browserBaseURL: 'https://localhost/',
+    browserBaseURL: '/',
     credentials: true
   },
   router: {
