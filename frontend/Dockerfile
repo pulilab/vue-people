@@ -4,7 +4,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 COPY . /usr/src/app/
-RUN echo "env=production" >> .env
+RUN echo "NODE_ENV=production" >> .env
 RUN yarn
 RUN yarn build
 

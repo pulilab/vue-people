@@ -23,6 +23,8 @@ services:
     build: ./frontend
     expose:
       - "3000"
+    links:
+      - django
 
   nginx:
     restart: always

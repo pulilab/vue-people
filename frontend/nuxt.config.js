@@ -41,6 +41,8 @@ const config = {
   ],
   proxy: {},
   axios: {
+    baseURL: 'http://django:8000/',
+    browserBaseURL: 'https://localhost/',
     credentials: true
   },
   router: {
@@ -62,10 +64,10 @@ const config = {
   }
 };
 
-
 if (process.env.NODE_ENV !== 'production') {
   config.axios = {
-    proxy: true
+    proxy: true,
+    credentials: true
   };
   config.proxy = {
     '/api/': { target: 'https://localhost/', secure: false },
