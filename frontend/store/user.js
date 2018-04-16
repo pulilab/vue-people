@@ -1,9 +1,9 @@
-import  { deleteTokens } from '~/utilities/auth';
+import { deleteTokens } from '~/utilities/auth';
+import { apiReadParser, apiWriteParser } from '~/utilities/parsers';
 import { gitHubUserProfile } from '~/integrations/github/queries';
-import { gitHubGraphQlRequest, gitHubAccessTokenLink, profileMapper } from '~/integrations/github/utilities';
+import { gitHubGraphQlRequest, profileMapper } from '~/integrations/github/utilities';
 
 export const state = () => ({
-  user: null,
   gitHubProfile: null,
   savedProfile: null,
   position: null,
@@ -14,7 +14,7 @@ export const state = () => ({
 
 export const getters = {
   getUserProfile: state => {
-    const profile =  {...profileMapper(state.gitHubProfile), ...state.savedProfile};
+    const profile = {...profileMapper(state.gitHubProfile), ...state.savedProfile};
     const type = profile.type ? profile.type : 1;
     return {...profile, type};
   },
@@ -23,7 +23,7 @@ export const getters = {
     return !!(ghp && ghp.name && ghp.avatarUrl);
   },
   getUserPosition: state => {
-    if(state.position){
+    if (state.position) {
       return state.position;
     }
     return undefined;
@@ -43,72 +43,62 @@ export const getters = {
 };
 
 export const actions = {
-  async loadGitHubProfile({commit, dispatch, getters, state}) {
+  async loadGitHubProfile ({commit, dispatch, getters, state}) {
     if (!state.gitHubProfile) {
       const token = getters.getGithubToken;
       const gh = gitHubGraphQlRequest(token);
       try {
         const { data } = await this.$axios.post(gh.url, gitHubUserProfile(), gh.options);
-        commit('SET_USER_GITHUB_PROFILE', {...data.data.viewer });
-      } catch(e) {
+        commit('SET_USER_GITHUB_PROFILE', { ...data.data.viewer });
+      } catch (e) {
         if (e && e.response && e.response.status === 401) {
           dispatch('logout');
-        }
-        else {
+        } else {
           return Promise.reject(e);
         }
       }
     }
   },
-  async loadSavedProfile({commit, state}) {
+  async loadSavedProfile ({commit, state}) {
     if (!state.savedProfile) {
       const { data } = await this.$axios.get('/api/user/');
-      if (data.location) {
-        data.location = {
-          lat: data.location.coordinates[0],
-          lng: data.location.coordinates[1]
-        };
-        commit('SET_USER_POSITION', data.location);
+      const parsed = apiReadParser(data);
+      if (parsed.location) {
+        commit('SET_USER_POSITION', parsed.location);
       }
-      commit('SET_SAVED_PROFILE', { ...data });
+      commit('SET_SAVED_PROFILE', { ...parsed });
     }
   },
-  setUserPosition({commit}, position) {
+  setUserPosition ({commit}, position) {
     commit('SET_USER_POSITION', position);
   },
-  logout({commit}) {
+  logout ({commit}) {
     commit('SET_USER_GITHUB_PROFILE', null);
     commit('SET_GITHUB_TOKEN', null);
     commit('SET_SESSION_ID', null);
     commit('SET_CSRF_TOKEN', null);
     deleteTokens();
   },
-  async updateUserProfile({commit, state, getters}, update) {
-    const loc = getters.getUserPosition;
-    let location = undefined;
-    if (loc) {
-      location = {
-        type: "Point",
-        coordinates: [loc.lat, loc.lng]
-      };
-    }
-    const profile = {...state.savedProfile, ...update, location};
+  async updateUserProfile ({commit, state, getters}, update) {
+    const location = getters.getUserPosition;
+    const profile = apiWriteParser({...state.savedProfile, ...update, location});
     const { data } = await this.$axios.post('/api/user/', profile);
-    commit('SET_SAVED_PROFILE', data);
+    const parsed = apiReadParser(data);
+    commit('SET_SAVED_PROFILE', parsed);
   },
-  async setGithubToken({commit, dispatch}, token) {
+  async setGithubToken ({commit, dispatch}, token) {
     commit('SET_GITHUB_TOKEN', token);
     if (token) {
       await dispatch('loadGitHubProfile');
     }
   },
-  async setSessionId({commit, dispatch, getters}, token) {
+  async setSessionId ({commit, dispatch, getters}, token) {
     commit('SET_SESSION_ID', token);
     if (token) {
       await dispatch('loadSavedProfile');
     }
   },
-  setCsrfToken({commit}, token) {
+  setCsrfToken ({commit}, token) {
     commit('SET_CSRF_TOKEN', token);
   }
 };
@@ -133,4 +123,3 @@ export const mutations = {
     state.csrfToken = token;
   }
 };
-
