@@ -28,7 +28,8 @@ export const getters = {
             ...p,
             selected: getters.getCurrentPerson === p.id,
             latlng,
-            type
+            type,
+            location: undefined
           };
         }
         )
@@ -40,17 +41,13 @@ export const getters = {
   getPersonDetails: (state, getters, rootState, rootGetters) => id => {
     const loggedIn = rootGetters['user/getUserProfile'];
     if (loggedIn && id === loggedIn.id) {
-      return loggedIn;
+      return {...loggedIn};
     }
     return {...getters.getList.find(p => p.id === id)};
 
   },
   getCurrentPersonDetails: (state, getters, rootState, rootGetters) => {
     const current = getters.getCurrentPerson;
-    const loggedIn = rootGetters['user/getUserProfile'];
-    if (loggedIn && current === loggedIn.id) {
-      return loggedIn;
-    }
     return getters.getPersonDetails(current);
   },
   getCurrentPersonRepositories: (state, getters) => {
