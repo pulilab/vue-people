@@ -1,7 +1,8 @@
 import { state, getters, actions, mutations } from '~/store/people';
 import { mockAxios } from '../utils';
-import * as githubQueries from '~/integrations/github/queries';;
+import * as githubQueries from '~/integrations/github/queries';
 import * as githubUtils from '~/integrations/github/utilities';
+import * as parsersUtils from '~/utilities/parsers';
 
 test('people state is unique between calls', () => {
   const s = state();
@@ -22,14 +23,14 @@ describe('getters', () => {
       'user/getUserProfile': {id: 2}
     };
     s.list = [
-      {id: 1, location: {coordinates: [2, 3 ]} },
-      {id: 2, location: {coordinates: [4,5 ]}},
+      { id: 1, location: { lat: 2, lng: 3 } },
+      {id: 2, location: { lat: 4, lng: 5 }},
       {id: 3, type: 3}
     ];
     const result = getters.getList(s, {getCurrentPerson}, {}, rootGetters);
     expect(result).toEqual([
-      {id: 1, selected: true, latlng: { lat: 2, lng: 3}, type: 1},
-      {id: 3, selected: false, type: 3},
+      {id: 1, selected: true, latlng: { lat: 2, lng: 3 }, type: 1, location: undefined},
+      {id: 3, selected: false, type: 3, latlng: undefined, location: undefined}
     ]);
   });
 
@@ -38,7 +39,7 @@ describe('getters', () => {
   });
 
   test('getPersonDetails', () => {
-    const getList = [{id:1}, {id:2}];
+    const getList = [{id: 1}, {id: 2}];
     const rootGetters = {
       'user/getUserProfile': null
     };
@@ -46,11 +47,10 @@ describe('getters', () => {
     expect(result).toEqual(getList[0]);
     expect(result).not.toBe(getList[0]);
 
-    rootGetters['user/getUserProfile'] = { id: 1};
+    rootGetters['user/getUserProfile'] = { id: 1 };
     result = getters.getPersonDetails(s, {getList}, {}, rootGetters)(1);
     expect(result).toEqual(rootGetters['user/getUserProfile']);
     expect(result).not.toBe(rootGetters['user/getUserProfile']);
-
   });
 
   test('getCurrentPersonDetails', () => {
@@ -104,11 +104,10 @@ describe('getters', () => {
   });
 
   test('getSelectedTags', () => {
-    s.selectedTags = [1,2,3];
+    s.selectedTags = [1, 2, 3];
     const result = getters.getSelectedTags(s);
     expect(result).toEqual(s.selectedTags);
     expect(result).not.toBe(s.selectedTags);
-
   });
 });
 
@@ -121,10 +120,11 @@ describe('actions', () => {
   });
 
   test('loadPeople', async () => {
-    actions.$axios.get.mockReturnValue({data: 1});
+    actions.$axios.get.mockReturnValue({data: [1]});
+    parsersUtils.apiReadParser = jest.fn().mockReturnValue(1);
     await actions.loadPeople(vuex);
     expect(actions.$axios.get.mock.calls[0]).toEqual(['/api/people/']);
-    expect(vuex.commit.mock.calls[0]).toEqual(['SET_PEOPLE_LIST',1]);
+    expect(vuex.commit.mock.calls[0]).toEqual(['SET_PEOPLE_LIST', [1]]);
   });
 
   test('setCurrent', () => {
@@ -177,11 +177,9 @@ describe('actions', () => {
     actions.setSelectedTags(vuex, 1);
     expect(vuex.commit.mock.calls[0]).toEqual(['SET_SELECTED_TAGS', 1]);
   });
-
 });
 
 describe('mutations', () => {
-
   test('SET_PEOPLE_LIST', () => {
     const s = {};
     mutations.SET_PEOPLE_LIST(s, 1);
