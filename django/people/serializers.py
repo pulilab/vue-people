@@ -30,10 +30,10 @@ class PersonSerializer(TaggitSerializer, serializers.ModelSerializer):
     def update(self, instance, validated_data):
         user_data = validated_data.pop('user')
         instance = super().update(instance, validated_data)
-        instance.user.first_name = user_data["first_name"]
-        instance.user.last_name = user_data["last_name"]
-        instance.user.email = user_data["email"]
-
+        instance.user.first_name = user_data.get('first_name', instance.user.first_name)
+        instance.user.last_name = user_data.get('last_name', instance.user.last_name)
+        instance.user.email = user_data.get('email', instance.user.email)
+        instance.user.save()
         return instance
 
 class TagSerialiser(serializers.ModelSerializer):
