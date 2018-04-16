@@ -4,9 +4,7 @@
       v-show="isLoggedIn"
       class="logged-in"
     >
-      <user-avatar
-        :id="userProfile.id"
-      />
+      <user-avatar/>
       <div class="btn-location">
         <v-btn
           v-show="showAddLocationButton"
@@ -19,7 +17,7 @@
         <v-btn
           v-show="showConfirmButton"
           color="warning"
-          @click="setAddMode(false)"
+          @click="confirmLocation"
         >
           <v-icon class="mr-1">done</v-icon>
           Confirm Location
@@ -49,6 +47,18 @@
             </v-list-tile-content>
           </v-list-tile>
           <v-list-tile
+            v-show="showEditLocation"
+            avatar
+            active-class=""
+            @click="setAddMode(true)">
+            <v-list-tile-avatar>
+              <v-icon>edit_location</v-icon>
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>Edit your location</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile
             avatar
             active-class=""
             @click="doLogout">
@@ -74,14 +84,15 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import { gitHubOauthLink } from '~/integrations/github/utilities';
+import { oauthLinkGenerator } from '~/utilities/auth';
+
 import UserAvatar from './UserAvatar.vue';
 
 export default {
   components: {
     UserAvatar
   },
-  data() {
+  data () {
     return {
       menu: false
     };
@@ -93,24 +104,32 @@ export default {
       positionSet: 'user/isPositionSet',
       isAddMode: 'map/isAddMode'
     }),
-    gitHubUrl() {
-      return gitHubOauthLink();
+    gitHubUrl () {
+      return oauthLinkGenerator('github');
     },
-    showAddLocationButton() {
+    showAddLocationButton () {
       return !this.positionSet && !this.isAddMode;
     },
-    showConfirmButton() {
+    showConfirmButton () {
       return this.positionSet && this.isAddMode;
+    },
+    showEditLocation () {
+      return this.positionSet && !this.isAddMode;
     }
   },
   methods: {
     ...mapActions({
       logout: 'user/logout',
-      setAddMode: 'map/setAddMode'
+      setAddMode: 'map/setAddMode',
+      updateUserProfile: 'user/updateUserProfile'
     }),
-    doLogout() {
+    doLogout () {
       this.menu = false;
       this.logout();
+    },
+    async confirmLocation () {
+      await this.updateUserProfile();
+      this.setAddMode(false);
     }
   }
 };

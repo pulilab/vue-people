@@ -1,8 +1,10 @@
+/* eslint prefer-promise-reject-errors: 0 */
 import { state, getters, actions, mutations } from '~/store/user';
-import * as githubQueries from '~/integrations/github/queries';;
+import * as githubQueries from '~/integrations/github/queries';
 import * as githubUtils from '~/integrations/github/utilities';
 import * as authUtils from '~/utilities/auth';
-import { mockAxios } from '../utils';
+import * as parsersUtils from '~/utilities/parsers';
+import { mockAxios } from '../utils'; ;
 
 test('user state is unique between calls', () => {
   const s = state();
@@ -18,13 +20,16 @@ describe('getters', () => {
   });
 
   test('getUserProfile', () => {
-    s.savedProfile = { a: 1, b: 2, type: 2};
+    s.savedProfile = { a: 1, b: 2, type: 2 };
     expect(getters.getUserProfile(s)).toEqual(s.savedProfile);
     expect(getters.getUserProfile(s)).not.toBe(s.savedProfile);
+
+    s.savedProfile = { a: 1, b: 2 };
+    expect(getters.getUserProfile(s)).toEqual({ a: 1, b: 2, type: 1 });
   });
 
   test('getLoginStatus', () => {
-    let getUserProfile = undefined;
+    let getUserProfile;
     let result = getters.getLoginStatus(s, {getUserProfile});
     expect(result).toBe(false);
 
@@ -51,7 +56,7 @@ describe('getters', () => {
   });
 
   test('isPositionSet', () => {
-    let getUserPosition = undefined;
+    let getUserPosition;
     let result = getters.isPositionSet(s, {getUserPosition});
     expect(result).toBe(false);
 
@@ -63,6 +68,14 @@ describe('getters', () => {
   test('getGithubToken', () => {
     expect(getters.getGithubToken(s)).toEqual(s.githubToken);
   });
+
+  test('getSessionId', () => {
+    expect(getters.getSessionId(s)).toEqual(s.sessionId);
+  });
+
+  test('getCsrfToken', () => {
+    expect(getters.getCsrfToken(s)).toEqual(s.csrfToken);
+  });
 });
 
 describe('actions', () => {
@@ -72,6 +85,7 @@ describe('actions', () => {
     vuex.commit = jest.fn();
     vuex.dispatch = jest.fn();
     vuex.getters = {};
+    vuex.state = state();
     actions.$axios = mockAxios();
   });
 
@@ -80,7 +94,13 @@ describe('actions', () => {
     githubUtils.gitHubGraphQlRequest = jest.fn()
       .mockReturnValue({url: 'url', options: 'options'});
     githubQueries.gitHubUserProfile = jest.fn().mockReturnValue(1);
-    actions.$axios.post.mockReturnValue({data: { data: { viewer: { a: 1}}}});
+    actions.$axios.post.mockReturnValue({data: { data: { viewer: { a: 1 } } }});
+
+    vuex.state.gitHubProfile = 1;
+    await actions.loadGitHubProfile(vuex);
+    expect(actions.$axios.post.mock.calls.length).toEqual(0);
+
+    vuex.state.gitHubProfile = null;
     await actions.loadGitHubProfile(vuex);
     expect(actions.$axios.post.mock.calls[0]).toEqual(['url', 1, 'options']);
     expect(vuex.commit.mock.calls[0]).toEqual(['SET_USER_GITHUB_PROFILE', {a: 1}]);
@@ -98,7 +118,28 @@ describe('actions', () => {
     await expect(actions.loadGitHubProfile(vuex)).rejects;
     expect(vuex.dispatch.mock.calls.length).toEqual(1);
     expect(vuex.dispatch.mock.calls[0]).toEqual(['logout']);
+  });
 
+  test('loadSavedProfile', async () => {
+    const data = { viewer: { a: 1 } };
+    actions.$axios.get.mockReturnValue({ data });
+    parsersUtils.apiReadParser = jest.fn().mockReturnValue(data);
+    vuex.state.savedProfile = 1;
+    await actions.loadSavedProfile(vuex);
+    expect(vuex.commit.mock.calls.length).toEqual(0);
+
+    vuex.state.savedProfile = null;
+    await actions.loadSavedProfile(vuex);
+    expect(parsersUtils.apiReadParser.mock.calls[0]).toEqual([data]);
+    expect(vuex.commit.mock.calls[0]).toEqual(['SET_SAVED_PROFILE', data]);
+
+    data.location = {
+      coordinates: [1, 2]
+    };
+    actions.$axios.get.mockReturnValue({ data });
+    await actions.loadSavedProfile(vuex);
+    expect(vuex.commit.mock.calls[1]).toEqual(['SET_USER_POSITION', data.location]);
+    expect(vuex.commit.mock.calls[2]).toEqual(['SET_SAVED_PROFILE', data]);
   });
 
   test('setUserPosition', () => {
@@ -111,13 +152,23 @@ describe('actions', () => {
     actions.logout(vuex);
     expect(vuex.commit.mock.calls[0]).toEqual(['SET_USER_GITHUB_PROFILE', null]);
     expect(vuex.commit.mock.calls[1]).toEqual(['SET_GITHUB_TOKEN', null]);
+    expect(vuex.commit.mock.calls[2]).toEqual(['SET_SESSION_ID', null]);
+    expect(vuex.commit.mock.calls[3]).toEqual(['SET_CSRF_TOKEN', null]);
     expect(authUtils.deleteTokens.mock.calls.length).toEqual(1);
   });
 
-  test('saveUserProfile', () => {
+  test('updateUserProfile', async () => {
     const profile = {name: 1};
-    actions.saveUserProfile(vuex, profile);
-    expect(vuex.commit.mock.calls[0]).toEqual(['SET_SAVED_PROFILE', profile]);
+    const data = { viewer: { a: 1 } };
+    parsersUtils.apiWriteParser = jest.fn().mockReturnValue(data);
+    parsersUtils.apiReadParser = jest.fn().mockReturnValue(data);
+    actions.$axios.post.mockReturnValue({ data });
+    await actions.updateUserProfile(vuex, profile);
+    expect(actions.$axios.post.mock.calls[0]).toEqual([
+      '/api/user/',
+      data
+    ]);
+    expect(vuex.commit.mock.calls[0]).toEqual(['SET_SAVED_PROFILE', data]);
   });
 
   test('setGithubToken', async () => {
@@ -131,30 +182,27 @@ describe('actions', () => {
     expect(vuex.dispatch.mock.calls[0]).toEqual(['loadGitHubProfile']);
   });
 
-  test('gitHubLogin', async () => {
-    process.env.gitHubClientId = 1;
-    process.env.gitHubClientSecret = 2;
-    actions.$axios.post.mockReturnValue({data: {}});
-    githubUtils.gitHubAccessTokenLink = jest.fn()
-      .mockReturnValue({url: 'url', options: 'options'});
-    await expect(actions.gitHubLogin(vuex, 2)).rejects.toMatch('wrong or stale github code');
-    expect(actions.$axios.post.mock.calls[0])
-      .toEqual(['url', {client_id: '1', client_secret: '2', code: 2}, 'options']);
+  test('setSessionId', async () => {
+    await actions.setSessionId(vuex, null);
+    expect(vuex.commit.mock.calls[0]).toEqual(['SET_SESSION_ID', null]);
+    expect(vuex.dispatch.mock.calls.length).toEqual(0);
 
-    actions.$axios.post.mockReturnValue({data: {access_token: 'token'}});
-    await actions.gitHubLogin(vuex, 2);
-    expect(actions.$axios.post.mock.calls[1])
-      .toEqual(['url', {client_id: '1', client_secret: '2', code: 2}, 'options']);
-    expect(vuex.dispatch.mock.calls[0]).toEqual(['setGithubToken', 'token']);
-    process.env.gitHubClientId = undefined;
-    process.env.gitHubClientSecret = undefined;
+    await actions.setSessionId(vuex, 1);
+    expect(vuex.commit.mock.calls[1]).toEqual(['SET_SESSION_ID', 1]);
+    expect(vuex.dispatch.mock.calls.length).toEqual(1);
+    expect(vuex.dispatch.mock.calls[0]).toEqual(['loadSavedProfile']);
   });
 
+  test('setCsrfToken', async () => {
+    await actions.setCsrfToken(vuex, null);
+    expect(vuex.commit.mock.calls[0]).toEqual(['SET_CSRF_TOKEN', null]);
 
+    await actions.setCsrfToken(vuex, 1);
+    expect(vuex.commit.mock.calls[1]).toEqual(['SET_CSRF_TOKEN', 1]);
+  });
 });
 
 describe('mutations', () => {
-
   test('SET_USER_GITHUB_PROFILE', () => {
     const s = {};
     mutations.SET_USER_GITHUB_PROFILE(s, 1);
@@ -179,4 +227,15 @@ describe('mutations', () => {
     expect(s.githubToken).toEqual(1);
   });
 
+  test('SET_SESSION_ID', () => {
+    const s = {};
+    mutations.SET_SESSION_ID(s, 1);
+    expect(s.sessionId).toEqual(1);
+  });
+
+  test('SET_CSRF_TOKEN', () => {
+    const s = {};
+    mutations.SET_CSRF_TOKEN(s, 1);
+    expect(s.csrfToken).toEqual(1);
+  });
 });

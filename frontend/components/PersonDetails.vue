@@ -41,21 +41,21 @@
         <div class="item px-4 py-3">
           <v-layout row>
             <v-btn
-              :href="person.githubUrl"
+              :href="person.github_url"
               flat
               target="_blank">
               <v-icon class="mr-1">mdi-github-circle</v-icon>
               Github
             </v-btn>
             <v-btn
-              :href="person.twitterUrl"
+              :href="person.twitter_url"
               flat
               target="_blank">
               <v-icon class="mr-1">mdi-twitter</v-icon>
               Twitter
             </v-btn>
             <v-btn
-              :href="person.websiteUrl"
+              :href="person.website_url"
               flat
               target="_blank">
               <v-icon class="mr-1">mdi-web</v-icon>
@@ -68,7 +68,7 @@
             About
           </div>
           <div class="content">
-            {{ person.about }}
+            {{ person.bio }}
           </div>
         </div>
         <div class="item px-4 py-3">
@@ -76,7 +76,7 @@
             Organisation
           </div>
           <div class="content">
-            {{ person.organisation }}
+            {{ person.company }}
           </div>
         </div>
         <div class="item px-4 py-3">
@@ -120,11 +120,11 @@ export default {
       setCenter: 'map/setCenter',
       setZoom: 'map/setZoom'
     }),
-    async closeDetails() {
+    async closeDetails () {
       await this.setCurrent(null);
       this.$router.push('/');
     },
-    flyToPerson() {
+    flyToPerson () {
       this.setZoom(16);
       this.setCenter(this.person.latlng);
     }

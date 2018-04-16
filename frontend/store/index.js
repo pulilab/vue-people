@@ -1,46 +1,39 @@
 export const state = () => ({
-  userTypes: [
-    {
-      id: 1,
-      order: 2,
-      name: 'Vue dev',
-      class: 'dev',
-      disabled: false
-    },
-    {
-      id: 2,
-      order: 3,
-      name: 'Vue enthusiast',
-      class: 'enthusiast',
-      disabled: false
-    },
-    {
-      id: 3,
-      order: 1,
-      name: 'Vue core member',
-      class: 'core',
-      disabled: true
-    }
-  ],
-  tags: ['vue', 'vuex'],
-  organizations: ['Pulilab']
+  userTypes: [],
+  tags: []
 });
-
 
 export const getters = {
   getUserTypes: state => {
     return [...state.userTypes
       .map(s => ({...s}))
-      .sort((a,b) => a.order - b.order)];
+      .sort((a, b) => a.order - b.order)];
   },
   getUserType: (state, getters) => id => {
     return {...getters.getUserTypes.find(ut => ut.id === id)};
   },
   getTags: state => {
     return [...state.tags];
-  },
-  getOrganizations: state => {
-    return [...state.organizations];
   }
-}
-;
+};
+
+export const actions = {
+  async loadUserTypes ({commit}) {
+    const { data } = await this.$axios.get('/api/user-type/');
+    commit('SET_USER_TYPES', data);
+  },
+  async loadTags ({commit}) {
+    const { data } = await this.$axios.get('/api/tags/');
+    const tags = data.map(t => t.name);
+    commit('SET_TAGS', tags);
+  }
+};
+
+export const mutations = {
+  SET_USER_TYPES: (state, types) => {
+    state.userTypes = types;
+  },
+  SET_TAGS: (state, tags) => {
+    state.tags = tags;
+  }
+};

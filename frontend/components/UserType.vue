@@ -1,10 +1,10 @@
 <template>
-  <div :class="['user-type', type.class, 'mx-2']">
+  <div :class="['user-type', type.name, 'mx-2']">
     <v-icon small>mdi-vuejs</v-icon>
     <span
       v-show="showText"
       class="ml-1">
-      {{ type.name }}
+      {{ type.verbose_name }}
     </span>
   </div>
 </template>
@@ -27,7 +27,7 @@ export default {
     ...mapGetters({
       getUserType: 'getUserType'
     }),
-    type() {
+    type () {
       return this.getUserType(this.id);
     }
   }

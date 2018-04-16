@@ -38,10 +38,10 @@ export default {
       isUserPositionSet: 'user/isPositionSet',
       isLoggedIn: 'user/getLoginStatus'
     }),
-    showGoToAddPerson() {
+    showGoToAddPerson () {
       return this.addMode && this.isUserPositionSet;
     },
-    showAddMarkerButton() {
+    showAddMarkerButton () {
       return !this.addMode && this.isLoggedIn && !this.isUserPositionSet;
     }
   },
@@ -49,7 +49,7 @@ export default {
     ...mapActions({
       setAddMode: 'map/setAddMode'
     }),
-    confirmMarkerPosition() {
+    confirmMarkerPosition () {
       this.setAddMode(false);
     }
   }

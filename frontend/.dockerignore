@@ -1,0 +1,8 @@
+node_modules/
+.nuxt/
+cypress/
+coverage/
+tests/
+cypress.json
+yarn-error.log
+jest.config.js

@@ -27,11 +27,6 @@ describe('getters', () => {
     expect(getters.getCenter(s)).not.toBe(s.center);
   });
 
-  test('getAutoCentered', () => {
-    s.autoCentered = true;
-    expect(getters.getAutoCentered(s)).toEqual(s.autoCentered);
-  });
-
   test('getFocusOn', () => {
     s.focusOn = 1;
     expect(getters.getFocusOn(s)).toEqual(s.focusOn);
@@ -42,17 +37,25 @@ describe('getters', () => {
       getFocusOn: 1
     };
     const rootGetters = {
-      'people/getList': [{id: 1, type: 1}, {id: 2, type: 2}],
+      'people/getList': [
+        {id: 1, type: 1, latlng: {}},
+        {id: 2, type: 2, latlng: {}},
+        {id: 3, type: 2}
+      ],
       'people/getSelectedTags': []
     };
     let result = getters.getFilteredPins(null, g, null, rootGetters);
-    expect(result[0]).toEqual({id: 1, type: 1, key: 2, options: {opacity: 1}});
-    expect(result[1]).toEqual({id: 2, type: 2, key: 2.5, options: {opacity: 0.5}});
+    expect(result[0]).toEqual({id: 1, type: 1, key: 2, options: {opacity: 1}, latlng: {}});
+    expect(result[1]).toEqual({id: 2, type: 2, key: 2.5, options: {opacity: 0.5}, latlng: {}});
+    expect(result.length).toEqual(2);
 
     rootGetters['people/getSelectedTags'] = ['vuex'];
-    rootGetters['people/getList'] = [{id: 1, type: 1, tags:['vuex']}, {id: 2, type: 2, tags: []}];
+    rootGetters['people/getList'] = [
+      {id: 1, type: 1, tags: ['vuex'], latlng: {}},
+      {id: 2, type: 2, tags: [], latlng: {}}
+    ];
     result = getters.getFilteredPins(null, g, null, rootGetters);
-    expect(result[0]).toEqual({id: 1, type: 1, key: 2, options: {opacity: 1}, tags:['vuex']});
+    expect(result[0]).toEqual({id: 1, type: 1, key: 2, options: {opacity: 1}, tags: ['vuex'], latlng: {}});
     expect(result.length).toEqual(1);
   });
 
@@ -60,7 +63,6 @@ describe('getters', () => {
     s.shownPins = 3;
     expect(getters.getShownPins(s)).toEqual(s.shownPins);
   });
-
 });
 
 describe('actions', () => {
@@ -85,11 +87,6 @@ describe('actions', () => {
     expect(vuex.commit.mock.calls[0]).toEqual(['SET_CENTER', 1]);
   });
 
-  test('setAutoCentered', () => {
-    actions.setAutoCentered(vuex, 1);
-    expect(vuex.commit.mock.calls[0]).toEqual(['SET_AUTO_CENTERED', 1]);
-  });
-
   test('setFocusOn', () => {
     actions.setFocusOn(vuex, 1);
     expect(vuex.commit.mock.calls[0]).toEqual(['SET_FOCUS_ON', 1]);
@@ -99,11 +96,9 @@ describe('actions', () => {
     actions.setShownPins(vuex, 1);
     expect(vuex.commit.mock.calls[0]).toEqual(['SET_SHOWN_PINS', 1]);
   });
-
 });
 
 describe('mutations', () => {
-
   test('SET_ADD_MODE', () => {
     const s = {};
     mutations.SET_ADD_MODE(s, 1);
@@ -122,12 +117,6 @@ describe('mutations', () => {
     expect(s.center).toEqual(1);
   });
 
-  test('SET_AUTO_CENTERED', () => {
-    const s = {};
-    mutations.SET_AUTO_CENTERED(s, true);
-    expect(s.autoCentered).toEqual(true);
-  });
-
   test('SET_FOCUS_ON', () => {
     const s = {};
     mutations.SET_FOCUS_ON(s, 1);
@@ -139,5 +128,4 @@ describe('mutations', () => {
     mutations.SET_SHOWN_PINS(s, 1);
     expect(s.shownPins).toEqual(1);
   });
-
 });

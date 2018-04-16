@@ -1,6 +1,6 @@
 import { gitHubUserRepositories } from '~/integrations/github/queries';
 import { gitHubGraphQlRequest, filterOutNonVue } from '~/integrations/github/utilities';
-
+import { apiReadParser } from '~/utilities/parsers';
 
 export const state = () => ({
   list: [],
@@ -11,35 +11,51 @@ export const state = () => ({
 });
 
 export const getters = {
-  getList: (state, getters) => {
+  getList: (state, getters, rootState, rootGetters) => {
+    const user = rootGetters['user/getUserProfile'];
     return [
-      ...state.list.map(p => ({
-        ...p,
-        selected: getters.getCurrentPerson === p.id,
-        latlng: {
-          lat: p.latitude,
-          lng: p.longitude
+      ...state.list.filter(p => !user || !user.id || p.id !== user.id)
+        .map(p => {
+          let latlng;
+          if (p.location && p.location.lat) {
+            latlng = {
+              lat: p.location.lat,
+              lng: p.location.lng
+            };
+          }
+          const type = p.type ? p.type : 1;
+          return {
+            ...p,
+            selected: getters.getCurrentPerson === p.id,
+            latlng,
+            type,
+            location: undefined
+          };
         }
-      })
-      )
+        )
     ];
   },
   getCurrentPerson: state => {
     return state.current;
   },
   getPersonDetails: (state, getters, rootState, rootGetters) => id => {
+    const loggedIn = rootGetters['user/getUserProfile'];
+    if (loggedIn && id === loggedIn.id) {
+      return {...loggedIn};
+    }
     return {...getters.getList.find(p => p.id === id)};
   },
   getCurrentPersonDetails: (state, getters, rootState, rootGetters) => {
-    return getters.getPersonDetails(getters.getCurrentPerson);
+    const current = getters.getCurrentPerson;
+    return getters.getPersonDetails(current);
   },
   getCurrentPersonRepositories: (state, getters) => {
-    return [...state.currentPersonRepositories].sort((a,b) =>
+    return [...state.currentPersonRepositories].sort((a, b) =>
       b.node.stargazers.totalCount - a.node.stargazers.totalCount
     );
   },
   getCurrentPersonContributed: (state, getters) => {
-    return [...state.currentPersonContributed].sort((a,b) =>
+    return [...state.currentPersonContributed].sort((a, b) =>
       b.node.stargazers.totalCount - a.node.stargazers.totalCount
     );
   },
@@ -50,25 +66,27 @@ export const getters = {
 
 export const actions = {
   async loadPeople ({commit}) {
-    const { data } = await this.$axios.get('/people.json');
-    commit('SET_PEOPLE_LIST', data);
+    const { data } = await this.$axios.get('/api/people/');
+    const parsed = data.map(d => apiReadParser(d));
+    commit('SET_PEOPLE_LIST', parsed);
   },
-  setCurrent({commit}, id) {
+  setCurrent ({commit}, id) {
     commit('SET_CURRENT', id);
     commit('SET_CURRENT_PERSON_REPOSITORY_LIST', []);
     commit('SET_CURRENT_PERSON_CONTRIBUTED_LIST', []);
   },
-  async loadRepositories({commit, getters}) {
+  async loadRepositories ({commit, getters, rootGetters}) {
     const user = getters.getCurrentPersonDetails;
-    const query = gitHubUserRepositories(user.gitHubLogin);
-    const gh = gitHubGraphQlRequest(process.env.gitHubApiKey);
+    const userToken = rootGetters['user/getGithubToken'];
+    const query = gitHubUserRepositories(user.github_login);
+    const gh = gitHubGraphQlRequest(userToken || process.env.gitHubApiKey);
     const { data } = await this.$axios.post(gh.url, query, gh.options);
-    const repositories =  data.data.user.repositories.edges;
+    const repositories = data.data.user.repositories.edges;
     const contributed = data.data.user.repositoriesContributedTo.edges;
     commit('SET_CURRENT_PERSON_REPOSITORY_LIST', filterOutNonVue(repositories));
     commit('SET_CURRENT_PERSON_CONTRIBUTED_LIST', filterOutNonVue(contributed));
   },
-  setSelectedTags({commit}, value) {
+  setSelectedTags ({commit}, value) {
     commit('SET_SELECTED_TAGS', value);
   }
 };
@@ -90,4 +108,3 @@ export const mutations = {
     state.selectedTags = [...tags];
   }
 };
-

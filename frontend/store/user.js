@@ -1,25 +1,29 @@
-import  { deleteTokens } from '~/utilities/auth';
+import { deleteTokens } from '~/utilities/auth';
+import { apiReadParser, apiWriteParser } from '~/utilities/parsers';
 import { gitHubUserProfile } from '~/integrations/github/queries';
-import { gitHubGraphQlRequest, gitHubAccessTokenLink, profileMapper } from '~/integrations/github/utilities';
+import { gitHubGraphQlRequest, profileMapper } from '~/integrations/github/utilities';
 
 export const state = () => ({
-  user: null,
   gitHubProfile: null,
   savedProfile: null,
   position: null,
-  githubToken: null
+  githubToken: null,
+  sessionId: null,
+  csrfToken: null
 });
 
 export const getters = {
   getUserProfile: state => {
-    return {type:1, ...profileMapper(state.gitHubProfile), ...state.savedProfile};
+    const profile = {...profileMapper(state.gitHubProfile), ...state.savedProfile};
+    const type = profile.type ? profile.type : 1;
+    return {...profile, type};
   },
   getLoginStatus: (state, getters) => {
     const ghp = getters.getUserProfile;
     return !!(ghp && ghp.name && ghp.avatarUrl);
   },
   getUserPosition: state => {
-    if(state.position){
+    if (state.position) {
       return state.position;
     }
     return undefined;
@@ -29,55 +33,73 @@ export const getters = {
   },
   getGithubToken: state => {
     return state.githubToken;
+  },
+  getSessionId: state => {
+    return state.sessionId;
+  },
+  getCsrfToken: state => {
+    return state.csrfToken;
   }
 };
 
 export const actions = {
-  async loadGitHubProfile({commit, dispatch, getters}) {
-    const token = getters.getGithubToken;
-    const gh = gitHubGraphQlRequest(token);
-    try {
-      const { data } = await this.$axios.post(gh.url, gitHubUserProfile(), gh.options);
-      commit('SET_USER_GITHUB_PROFILE', {...data.data.viewer });
-    } catch(e) {
-      if (e && e.response && e.response.status === 401) {
-        dispatch('logout');
-      }
-      else {
-        return Promise.reject(e);
+  async loadGitHubProfile ({commit, dispatch, getters, state}) {
+    if (!state.gitHubProfile) {
+      const token = getters.getGithubToken;
+      const gh = gitHubGraphQlRequest(token);
+      try {
+        const { data } = await this.$axios.post(gh.url, gitHubUserProfile(), gh.options);
+        commit('SET_USER_GITHUB_PROFILE', { ...data.data.viewer });
+      } catch (e) {
+        if (e && e.response && e.response.status === 401) {
+          dispatch('logout');
+        } else {
+          return Promise.reject(e);
+        }
       }
     }
   },
-  setUserPosition({commit}, position) {
+  async loadSavedProfile ({commit, state}) {
+    if (!state.savedProfile) {
+      const { data } = await this.$axios.get('/api/user/');
+      const parsed = apiReadParser(data);
+      if (parsed.location) {
+        commit('SET_USER_POSITION', parsed.location);
+      }
+      commit('SET_SAVED_PROFILE', { ...parsed });
+    }
+  },
+  setUserPosition ({commit}, position) {
     commit('SET_USER_POSITION', position);
   },
-  logout({commit}) {
+  logout ({commit}) {
     commit('SET_USER_GITHUB_PROFILE', null);
     commit('SET_GITHUB_TOKEN', null);
+    commit('SET_SESSION_ID', null);
+    commit('SET_CSRF_TOKEN', null);
     deleteTokens();
   },
-  saveUserProfile({commit}, profile) {
-    commit('SET_SAVED_PROFILE', { ...profile });
+  async updateUserProfile ({commit, state, getters}, update) {
+    const location = getters.getUserPosition;
+    const profile = apiWriteParser({...state.savedProfile, ...update, location});
+    const { data } = await this.$axios.post('/api/user/', profile);
+    const parsed = apiReadParser(data);
+    commit('SET_SAVED_PROFILE', parsed);
   },
-  async setGithubToken({commit, dispatch}, token) {
+  async setGithubToken ({commit, dispatch}, token) {
     commit('SET_GITHUB_TOKEN', token);
     if (token) {
       await dispatch('loadGitHubProfile');
     }
   },
-  async gitHubLogin({commit, dispatch}, code) {
-    const payload = {
-      client_id: process.env.gitHubClientId,
-      client_secret: process.env.gitHubClientSecret,
-      code,
-    };
-    const gh = gitHubAccessTokenLink();
-    const { data } = await this.$axios.post(gh.url, payload, gh.options);
-    if ( data.access_token ) {
-      await dispatch('setGithubToken', data.access_token);
-    } else  {
-      return Promise.reject('wrong or stale github code');
+  async setSessionId ({commit, dispatch, getters}, token) {
+    commit('SET_SESSION_ID', token);
+    if (token) {
+      await dispatch('loadSavedProfile');
     }
+  },
+  setCsrfToken ({commit}, token) {
+    commit('SET_CSRF_TOKEN', token);
   }
 };
 
@@ -93,6 +115,11 @@ export const mutations = {
   },
   SET_GITHUB_TOKEN: (state, token) => {
     state.githubToken = token;
+  },
+  SET_SESSION_ID: (state, token) => {
+    state.sessionId = token;
+  },
+  SET_CSRF_TOKEN: (state, token) => {
+    state.csrfToken = token;
   }
 };
-

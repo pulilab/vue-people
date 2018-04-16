@@ -11,10 +11,10 @@ export default {
   components: {
     UserProfileForm
   },
-  async fetch({query, store}) {
-    const code = query.code;
-    if ( code ) {
-      await store.dispatch('user/gitHubLogin', code);
+  async fetch ({query, store}) {
+    const token = query.token;
+    if (token) {
+      await store.dispatch('user/setGithubToken', token);
     }
   }
 };

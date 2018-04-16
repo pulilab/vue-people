@@ -8,7 +8,7 @@ from .models import Person
 
 class MyAccountAdapter(DefaultAccountAdapter):
     def get_login_redirect_url(self, request):
-        if not request.sociallogin:
+        if not hasattr(request, 'sociallogin'):
             return '/'
         path = "/user?token={}"
         return path.format(request.sociallogin.token.token)

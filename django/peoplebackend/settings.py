@@ -24,7 +24,7 @@ SECRET_KEY = '485d&-w(+xpu%&b6lv5!t0a^3h9%ia3i28p@#x8z27l5ov&p!13'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['django:8000', 'django', 'localhost']
 
 # Application definition
 
@@ -151,3 +151,15 @@ REST_FRAMEWORK = {
 
 SOCIALACCOUNT_ADAPTER = 'people.adapter.MyGithubAccountAdapter'
 ACCOUNT_ADAPTER = 'people.adapter.MyAccountAdapter'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+SOCIALACCOUNT_PROVIDERS = {
+    'github': {
+        'SCOPE': [
+            'read:user',
+            'user:email',
+            'public_repo'
+        ],
+    }
+}

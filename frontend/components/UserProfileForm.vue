@@ -10,9 +10,7 @@
         align-center
       >
         <v-flex xs12>
-          <user-avatar
-            :id="userProfile.id"
-          />
+          <user-avatar />
         </v-flex>
         <v-flex>
           <v-btn
@@ -43,7 +41,7 @@
           v-model="profile.type"
           :items="userTypes"
           label="Selecte usertype"
-          item-text="name"
+          item-text="verbose_name"
           item-value="id"
           item-disabled="disabled"
           light
@@ -68,25 +66,28 @@
         />
         <v-text-field
           v-validate="'url'"
-          v-model="profile.twitterUrl"
-          :error-messages="errors.collect('twitterUrl')"
+          v-model="profile.twitter_url"
+          :error-messages="errors.collect('twitter_url')"
           label="Twitter profile"
-          data-vv-name="twitterUrl"
+          data-vv-name="twitter_url"
           light
         />
         <v-text-field
           v-validate="'url'"
-          v-model="profile.websiteUrl"
-          :error-messages="errors.collect('websiteUrl')"
+          v-model="profile.website_url"
+          :error-messages="errors.collect('website_url')"
           label="Your website"
-          data-vv-name="websiteUrl"
+          data-vv-name="website_url"
           light
         />
-        <v-select
-          :items="organisations"
-          v-model="profile.organisation"
+
+        <v-text-field
+          v-validate="'max:254'"
+          v-model="profile.company"
+          :counter="254"
+          :error-messages="errors.collect('organisation')"
+          data-vv-name="organisation"
           label="Organisation"
-          autocomplete
           light
         />
 
@@ -103,12 +104,12 @@
 
         <v-text-field
           v-validate="'max:500'"
-          v-model="profile.about"
-          :error-messages="errors.collect('about')"
+          v-model="profile.bio"
+          :error-messages="errors.collect('bio')"
           :counter="500"
-          data-vv-name="about"
-          name="about"
-          label="About"
+          data-vv-name="bio"
+          name="bio"
+          label="Bio"
           textarea
           light
         />
@@ -143,17 +144,16 @@ export default {
   components: {
     UserAvatar
   },
-  data() {
+  data () {
     return {
       profile: {
         name: '',
         email: '',
-        githubUrl: '',
-        twitterUrl: '',
-        websiteUrl: '',
-        organisation: '',
+        twitter_url: '',
+        website_url: '',
+        company: '',
         tags: [],
-        about: ''
+        bio: ''
       }
     };
   },
@@ -162,24 +162,23 @@ export default {
       userProfile: 'user/getUserProfile',
       usLoggedIn: 'user/getLoginStatus',
       tagList: 'getTags',
-      organisations: 'getOrganizations',
       userTypes: 'getUserTypes'
     })
   },
   watch: {
     userProfile: {
       immediate: true,
-      handler(p) {
+      handler (p) {
         this.profile = {...p};
       }
     }
   },
   methods: {
     ...mapActions({
-      saveUserProfile: 'user/saveUserProfile'
+      updateUserProfile: 'user/updateUserProfile'
     }),
-    async save() {
-      await this.saveUserProfile(this.profile);
+    async save () {
+      await this.updateUserProfile(this.profile);
       this.$router.push('/');
     }
   }

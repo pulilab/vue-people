@@ -2,7 +2,7 @@
 
 > vue people
 
-## Build Setup
+## Fronted Build Setup
 
 ``` bash
 # install dependencies
@@ -22,6 +22,31 @@ $ yarn start
 
 # generate static project
 $ yarn generate
+```
+
+## Specific Dev environment configurations
+> NEVER RUN THIS ON THE PRODUCTION SERVER
+
+```bash
+# Copy dummy self signed certs to Nginx folder:
+$ cp nginx/dev_certs/cert.pem nginx/certs/cert.pem
+$ cp nginx/dev_certs/chain.pem nginx/certs/chain.pem
+$ cp nginx/dev_certs/key.pem nginx/certs/key.pem
+
+# Tell node to ignore self signed certificate:
+$ echo "NODE_TLS_REJECT_UNAUTHORIZED = '0'" >> .env
+```
+
+## Backend build setup
+
+```bash
+# Build docker service with docker-compose
+$ docker-compose build
+$ docker-compose up -d
+
+# Perform standard django initialization
+$ docker-compose exec django python manage.py migrate
+$ docker-compose exec django python manage.py createsuperuser
 ```
 
 ## Deploy

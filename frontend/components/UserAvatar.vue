@@ -2,16 +2,16 @@
   <div class="avatar-wrapper">
     <v-avatar class="elevation-2">
       <div
-        v-show="!person.avatarUrl"
+        v-show="!person.avatar_url"
         class="no-avatar">
         <v-icon>
           account_circle
         </v-icon>
       </div>
       <div
-        v-show="person.avatarUrl"
+        v-show="person.avatar_url"
         class="has-avatar">
-        <img :src="person.avatarUrl" >
+        <img :src="person.avatar_url" >
       </div>
     </v-avatar>
 
@@ -50,9 +50,9 @@ export default {
   computed: {
     ...mapGetters({
       getPersonDetails: 'people/getPersonDetails',
-      userProfile: 'user/getUserProfile',
+      userProfile: 'user/getUserProfile'
     }),
-    person() {
+    person () {
       if (this.id !== null && this.id !== undefined) {
         return this.getPersonDetails(this.id);
       }

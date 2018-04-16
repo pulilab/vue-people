@@ -1,7 +1,7 @@
 const result = require('dotenv').config();
 
 if (result.error) {
-  console.log('\x1b[31m%s\x1b[0m','Missing .env file, follow the README instructions');
+  console.log('\x1b[31m%s\x1b[0m', 'Missing .env file, follow the README instructions');
   throw result.error;
 }
 
@@ -23,15 +23,13 @@ const config = {
     '~/assets/style/main.less'
   ],
   env: {
-    gitHubApiKey: process.env.GITHUB_KEY || '',
-    gitHubClientId: process.env.GITHUB_CLIENT_ID || '',
-    gitHubClientSecret: process.env.GITHUB_SECRET || '',
+    gitHubApiKey: process.env.GITHUB_KEY || ''
   },
   plugins: [
+    { src: '~plugins/axios.js', ssr: true },
     { src: '~plugins/vuetify.js', ssr: true },
     { src: '~plugins/vee-validate.js', ssr: true },
     { src: '~plugins/vue-leaflet.js', ssr: false },
-    { src: '~plugins/vuex-geolocation.js', ssr: false },
     { src: '~plugins/store-tokens.js', ssr: false }
   ],
   modules: [
@@ -39,7 +37,11 @@ const config = {
     '@nuxtjs/proxy'
   ],
   proxy: {},
-  axios: {},
+  axios: {
+    baseURL: 'http://django:8000/',
+    browserBaseURL: 'https://localhost/',
+    credentials: true
+  },
   router: {
     middleware: 'auth'
   },
@@ -59,14 +61,14 @@ const config = {
   }
 };
 
-
 if (process.env.NODE_ENV !== 'production') {
   config.axios = {
-    proxy: true
+    proxy: true,
+    credentials: true
   };
   config.proxy = {
-    '/api/': { target: 'http://0.0.0.0:8000' }
+    '/api/': { target: 'https://localhost/', secure: false },
+    '/accounts/': { target: 'http://localhost/' }
   };
 }
-
 module.exports = config;

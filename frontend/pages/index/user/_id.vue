@@ -9,7 +9,7 @@ export default {
   components: {
     PersonDetails
   },
-  async fetch({store, params}) {
+  async fetch ({store, params}) {
     await store.dispatch('people/setCurrent', parseInt(params.id, 10));
   }
 };
@@ -17,4 +17,3 @@ export default {
 
 <style lang="less">
 </style>
-
