@@ -39,6 +39,6 @@ jobs:
               && docker-compose down \
               && git pull \
               && docker-compose build \
-              && docker-compose up -d'
-              && docker-compose exec django python manage.py migrate
+              && docker-compose up -d
+              && docker-compose exec django python manage.py migrate'
             fi
