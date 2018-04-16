@@ -18,17 +18,19 @@ describe('getters', () => {
 
   test('getList', () => {
     const getCurrentPerson = 1;
-    s.list = [{id: 1, latitude: 2, longitude: 3}, {id: 2, latitude: 4, longitude: 5}];
-    expect(getters.getList(s, {getCurrentPerson})).toEqual(
-      [{id: 1, latitude: 2, longitude: 3, selected: true, latlng: {
-        lat: 2,
-        lng: 3
-      }},
-      {id: 2, latitude: 4, longitude: 5, selected: false, latlng: {
-        lat: 4,
-        lng: 5
-      }}]
-    );
+    const rootGetters = {
+      'user/getUserProfile': {id: 2}
+    };
+    s.list = [
+      {id: 1, location: {coordinates: [2, 3 ]} },
+      {id: 2, location: {coordinates: [4,5 ]}},
+      {id: 3, type: 3}
+    ];
+    const result = getters.getList(s, {getCurrentPerson}, {}, rootGetters);
+    expect(result).toEqual([
+      {id: 1, selected: true, latlng: { lat: 2, lng: 3}, type: 1},
+      {id: 3, selected: false, type: 3},
+    ]);
   });
 
   test('getCurrentPerson', () => {
@@ -37,9 +39,18 @@ describe('getters', () => {
 
   test('getPersonDetails', () => {
     const getList = [{id:1}, {id:2}];
-    const result = getters.getPersonDetails(s, {getList})(1);
+    const rootGetters = {
+      'user/getUserProfile': null
+    };
+    let result = getters.getPersonDetails(s, {getList}, {}, rootGetters)(1);
     expect(result).toEqual(getList[0]);
     expect(result).not.toBe(getList[0]);
+
+    rootGetters['user/getUserProfile'] = { id: 1};
+    result = getters.getPersonDetails(s, {getList}, {}, rootGetters)(1);
+    expect(result).toEqual(rootGetters['user/getUserProfile']);
+    expect(result).not.toBe(rootGetters['user/getUserProfile']);
+
   });
 
   test('getCurrentPersonDetails', () => {
@@ -112,7 +123,7 @@ describe('actions', () => {
   test('loadPeople', async () => {
     actions.$axios.get.mockReturnValue({data: 1});
     await actions.loadPeople(vuex);
-    expect(actions.$axios.get.mock.calls[0]).toEqual(['/people.json']);
+    expect(actions.$axios.get.mock.calls[0]).toEqual(['/api/people/']);
     expect(vuex.commit.mock.calls[0]).toEqual(['SET_PEOPLE_LIST',1]);
   });
 

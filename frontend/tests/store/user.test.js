@@ -21,6 +21,9 @@ describe('getters', () => {
     s.savedProfile = { a: 1, b: 2, type: 2};
     expect(getters.getUserProfile(s)).toEqual(s.savedProfile);
     expect(getters.getUserProfile(s)).not.toBe(s.savedProfile);
+
+    s.savedProfile = { a: 1, b: 2};
+    expect(getters.getUserProfile(s)).toEqual({ a: 1, b: 2, type: 1});
   });
 
   test('getLoginStatus', () => {
@@ -127,6 +130,15 @@ describe('actions', () => {
     vuex.state.savedProfile = null;
     await actions.loadSavedProfile(vuex);
     expect(vuex.commit.mock.calls[0]).toEqual(['SET_SAVED_PROFILE', data]);
+
+    data.location = {
+      coordinates: [1,2]
+    };
+    actions.$axios.get.mockReturnValue({ data });
+    await actions.loadSavedProfile(vuex);
+    expect(vuex.commit.mock.calls[1]).toEqual(['SET_USER_POSITION', {lat: 1, lng: 2}]);
+    expect(vuex.commit.mock.calls[2]).toEqual(['SET_SAVED_PROFILE', data]);
+
   });
 
   test('setUserPosition', () => {
@@ -144,12 +156,27 @@ describe('actions', () => {
     expect(authUtils.deleteTokens.mock.calls.length).toEqual(1);
   });
 
-  test('saveUserProfile', async () => {
+  test('updateUserProfile', async () => {
     const profile = {name: 1};
     const data = { viewer: { a: 1} };
+    vuex.state.savedProfile = { saved: 1};
     actions.$axios.post.mockReturnValue({ data });
-    await actions.saveUserProfile(vuex, profile);
+    await actions.updateUserProfile(vuex, profile);
+    expect(actions.$axios.post.mock.calls[0]).toEqual([
+      '/api/user/',
+      {saved: 1, name: 1, location: undefined}
+    ]);
     expect(vuex.commit.mock.calls[0]).toEqual(['SET_SAVED_PROFILE', data]);
+
+    vuex.getters.getUserPosition = { lat: 1, lng: 2};
+    await actions.updateUserProfile(vuex, profile);
+    expect(actions.$axios.post.mock.calls[1]).toEqual([
+      '/api/user/',
+      {saved: 1, name: 1, location: { type: 'Point', coordinates: [1,2]}}
+    ]);
+    expect(vuex.commit.mock.calls[0]).toEqual(['SET_SAVED_PROFILE', data]);
+
+
   });
 
   test('setGithubToken', async () => {

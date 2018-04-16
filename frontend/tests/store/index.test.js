@@ -43,11 +43,6 @@ describe('getters', ()  => {
     expect(result).not.toBe(s.tags);
   });
 
-  test('getOrganizations', () => {
-    const result = getters.getOrganizations(s);
-    expect(result).toEqual(s.organizations);
-    expect(result).not.toBe(s.organizations);
-  });
 });
 
 
@@ -69,6 +64,13 @@ describe('actions', () => {
     expect(vuex.commit.mock.calls[0]).toEqual(['SET_USER_TYPES', 1]);
   });
 
+  test('loadTags', async () => {
+    actions.$axios.get.mockReturnValue({ data: [{name: 1, id: 2}] });
+    await actions.loadTags(vuex);
+    expect(actions.$axios.get.mock.calls[0]).toEqual(['/api/tags/']);
+    expect(vuex.commit.mock.calls[0]).toEqual(['SET_TAGS', [1]]);
+  });
+
 });
 
 
@@ -77,5 +79,11 @@ describe('mutations', () => {
     const state = {};
     mutations.SET_USER_TYPES(state, 1);
     expect(state.userTypes).toEqual(1);
+  });
+
+  test('SET_TAGS', () => {
+    const state = {};
+    mutations.SET_TAGS(state, 1);
+    expect(state.tags).toEqual(1);
   });
 });
