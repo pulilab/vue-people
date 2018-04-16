@@ -68,6 +68,18 @@
       <v-icon class="mr-2">touch_app</v-icon>
       <span class="body-2">Click on the map anywhere to select your position</span>
     </v-snackbar>
+
+    <v-snackbar
+      :timeout="6000"
+      :value="centerOnNext"
+      color="warning"
+      absolute
+      bottom
+      multi-line
+    >
+      <v-icon class="mr-2">add_location</v-icon>
+      <span class="body-2">...waiting for location</span>
+    </v-snackbar>
   </div>
 </template>
 
@@ -78,6 +90,7 @@ import UserAvatar from './UserAvatar.vue';
 import MapLegend from './MapLegend.vue';
 import TagFilter from './TagFilter.vue';
 import { debounce } from '~/utilities/common';
+import VuexGeolocation from 'vuex-geolocation';
 
 import NoSSR from 'vue-no-ssr';
 export default {
@@ -98,7 +111,8 @@ export default {
         permanent: false,
         direction: 'top',
         offset: [0, -30]
-      }
+      },
+      centerOnNext: false
     };
   },
   computed: {
@@ -115,7 +129,6 @@ export default {
       userPosition: 'user/getUserPosition',
       zoom: 'map/getZoom',
       center: 'map/getCenter',
-      autoCentered: 'map/getAutoCentered',
       getUserType: 'getUserType',
       userProfile: 'user/getUserProfile'
     }),
@@ -140,7 +153,9 @@ export default {
     userLocation: {
       immediate: true,
       handler (loc) {
-        this.autoCenter();
+        if (loc && loc.lat) {
+          this.centerToUser();
+        }
       }
     },
     shownMarkerCount: {
@@ -161,7 +176,6 @@ export default {
       setUserPosition: 'user/setUserPosition',
       setZoom: 'map/setZoom',
       setCenter: 'map/setCenter',
-      setAutoCentered: 'map/setAutoCentered',
       setShownPins: 'map/setShownPins'
     }),
     addMarker (event) {
@@ -182,21 +196,18 @@ export default {
       this.setZoom(e.target.getZoom());
     }, 200),
     centerToUser () {
+      if (!this.$store.state.geolocation) {
+        VuexGeolocation.sync(this.$store);
+      }
       if (this.$refs.mainMap && this.userLocation && this.userLocation.lat) {
         this.$refs.mainMap.mapObject.flyTo(this.userLocation, 13);
-        return true;
+        this.centerOnNext = false;
+      } else {
+        this.centerOnNext = true;
       }
     },
     mapReady () {
-      this.autoCenter();
       this.updateBounds();
-    },
-    autoCenter () {
-      if (!this.autoCentered) {
-        if (this.centerToUser()) {
-          this.setAutoCentered(true);
-        }
-      }
     },
     updateBounds () {
       this.mapBounds = this.$refs.mainMap.mapObject.getBounds();

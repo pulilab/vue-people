@@ -27,11 +27,6 @@ describe('getters', () => {
     expect(getters.getCenter(s)).not.toBe(s.center);
   });
 
-  test('getAutoCentered', () => {
-    s.autoCentered = true;
-    expect(getters.getAutoCentered(s)).toEqual(s.autoCentered);
-  });
-
   test('getFocusOn', () => {
     s.focusOn = 1;
     expect(getters.getFocusOn(s)).toEqual(s.focusOn);
@@ -92,11 +87,6 @@ describe('actions', () => {
     expect(vuex.commit.mock.calls[0]).toEqual(['SET_CENTER', 1]);
   });
 
-  test('setAutoCentered', () => {
-    actions.setAutoCentered(vuex, 1);
-    expect(vuex.commit.mock.calls[0]).toEqual(['SET_AUTO_CENTERED', 1]);
-  });
-
   test('setFocusOn', () => {
     actions.setFocusOn(vuex, 1);
     expect(vuex.commit.mock.calls[0]).toEqual(['SET_FOCUS_ON', 1]);
@@ -125,12 +115,6 @@ describe('mutations', () => {
     const s = {};
     mutations.SET_CENTER(s, 1);
     expect(s.center).toEqual(1);
-  });
-
-  test('SET_AUTO_CENTERED', () => {
-    const s = {};
-    mutations.SET_AUTO_CENTERED(s, true);
-    expect(s.autoCentered).toEqual(true);
   });
 
   test('SET_FOCUS_ON', () => {

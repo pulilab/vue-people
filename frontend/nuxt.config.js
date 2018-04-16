@@ -23,16 +23,13 @@ const config = {
     '~/assets/style/main.less'
   ],
   env: {
-    gitHubApiKey: process.env.GITHUB_KEY || '',
-    gitHubClientId: process.env.GITHUB_CLIENT_ID || '',
-    gitHubClientSecret: process.env.GITHUB_SECRET || ''
+    gitHubApiKey: process.env.GITHUB_KEY || ''
   },
   plugins: [
     { src: '~plugins/axios.js', ssr: true },
     { src: '~plugins/vuetify.js', ssr: true },
     { src: '~plugins/vee-validate.js', ssr: true },
     { src: '~plugins/vue-leaflet.js', ssr: false },
-    { src: '~plugins/vuex-geolocation.js', ssr: false },
     { src: '~plugins/store-tokens.js', ssr: false }
   ],
   modules: [

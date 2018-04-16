@@ -2,7 +2,6 @@ export const state = () => ({
   addMode: false,
   zoom: 3,
   center: {lat: 0, lng: 0},
-  autoCentered: false,
   focusOn: null,
   shownPins: 0
 });
@@ -16,9 +15,6 @@ export const getters = {
   },
   getCenter: (state) => {
     return { ...state.center };
-  },
-  getAutoCentered: (state) => {
-    return state.autoCentered;
   },
   getFocusOn: (state) => {
     return state.focusOn;
@@ -55,9 +51,6 @@ export const actions = {
   setCenter ({commit}, value) {
     commit('SET_CENTER', value);
   },
-  setAutoCentered ({commit}, value) {
-    commit('SET_AUTO_CENTERED', value);
-  },
   setFocusOn ({commit}, value) {
     commit('SET_FOCUS_ON', value);
   },
@@ -75,9 +68,6 @@ export const mutations = {
   },
   SET_CENTER: (state, value) => {
     state.center = value;
-  },
-  SET_AUTO_CENTERED: (state, value) => {
-    state.autoCentered = value;
   },
   SET_FOCUS_ON: (state, value) => {
     state.focusOn = value;
