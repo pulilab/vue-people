@@ -1,5 +1,3 @@
-import { root } from "postcss";
-
 export const state = () => ({
   addMode: false,
   zoom: 3,
@@ -16,8 +14,8 @@ export const getters = {
   getZoom: (state) => {
     return state.zoom;
   },
-  getCenter: (state,) => {
-    return {...state.center };
+  getCenter: (state) => {
+    return { ...state.center };
   },
   getAutoCentered: (state) => {
     return state.autoCentered;
@@ -48,22 +46,22 @@ export const getters = {
 };
 
 export const actions = {
-  setAddMode({commit}, value) {
+  setAddMode ({commit}, value) {
     commit('SET_ADD_MODE', value);
   },
-  setZoom({commit}, value) {
+  setZoom ({commit}, value) {
     commit('SET_ZOOM', value);
   },
-  setCenter({commit}, value) {
+  setCenter ({commit}, value) {
     commit('SET_CENTER', value);
   },
-  setAutoCentered({commit}, value) {
+  setAutoCentered ({commit}, value) {
     commit('SET_AUTO_CENTERED', value);
   },
-  setFocusOn({commit}, value) {
+  setFocusOn ({commit}, value) {
     commit('SET_FOCUS_ON', value);
   },
-  setShownPins({commit}, value) {
+  setShownPins ({commit}, value) {
     commit('SET_SHOWN_PINS', value);
   }
 };
@@ -88,4 +86,3 @@ export const mutations = {
     state.shownPins = value;
   }
 };
-

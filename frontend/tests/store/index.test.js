@@ -7,8 +7,7 @@ test('store state is unique between calls', () => {
   expect(s).toEqual(state());
 });
 
-
-describe('getters', ()  => {
+describe('getters', () => {
   let s = null;
 
   beforeEach(() => {
@@ -16,12 +15,12 @@ describe('getters', ()  => {
   });
 
   test('getUserTypes', () => {
-    const userType =  {
+    const userType = {
       name: 'core',
       disabled: true,
       id: 3,
       verbose_name: 'Vue core member',
-      order: 1,
+      order: 1
     };
     s.userTypes = [userType, {...userType, order: 2, id: 2}];
     const result = getters.getUserTypes(s);
@@ -31,7 +30,7 @@ describe('getters', ()  => {
   });
 
   test('getUserType', () => {
-    const getUserTypes = [{id: 1}, {id:2}];
+    const getUserTypes = [{id: 1}, {id: 2}];
     const result = getters.getUserType(s, {getUserTypes})(1);
     expect(result).toEqual(getUserTypes[0]);
     expect(result).not.toBe(getUserTypes[0]);
@@ -42,9 +41,7 @@ describe('getters', ()  => {
     expect(result).toEqual(s.tags);
     expect(result).not.toBe(s.tags);
   });
-
 });
-
 
 describe('actions', () => {
   const vuex = {};
@@ -70,9 +67,7 @@ describe('actions', () => {
     expect(actions.$axios.get.mock.calls[0]).toEqual(['/api/tags/']);
     expect(vuex.commit.mock.calls[0]).toEqual(['SET_TAGS', [1]]);
   });
-
 });
-
 
 describe('mutations', () => {
   test('SET_USER_TYPES', () => {

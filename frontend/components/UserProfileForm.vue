@@ -144,7 +144,7 @@ export default {
   components: {
     UserAvatar
   },
-  data() {
+  data () {
     return {
       profile: {
         name: '',
@@ -168,7 +168,7 @@ export default {
   watch: {
     userProfile: {
       immediate: true,
-      handler(p) {
+      handler (p) {
         this.profile = {...p};
       }
     }
@@ -177,7 +177,7 @@ export default {
     ...mapActions({
       updateUserProfile: 'user/updateUserProfile'
     }),
-    async save() {
+    async save () {
       await this.updateUserProfile(this.profile);
       this.$router.push('/');
     }

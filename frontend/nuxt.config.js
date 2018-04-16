@@ -1,7 +1,7 @@
 const result = require('dotenv').config();
 
 if (result.error) {
-  console.log('\x1b[31m%s\x1b[0m','Missing .env file, follow the README instructions');
+  console.log('\x1b[31m%s\x1b[0m', 'Missing .env file, follow the README instructions');
   throw result.error;
 }
 
@@ -25,7 +25,7 @@ const config = {
   env: {
     gitHubApiKey: process.env.GITHUB_KEY || '',
     gitHubClientId: process.env.GITHUB_CLIENT_ID || '',
-    gitHubClientSecret: process.env.GITHUB_SECRET || '',
+    gitHubClientSecret: process.env.GITHUB_SECRET || ''
   },
   plugins: [
     { src: '~plugins/axios.js', ssr: true },
@@ -74,5 +74,4 @@ if (process.env.NODE_ENV !== 'production') {
     '/accounts/': { target: 'http://localhost/' }
   };
 }
-
 module.exports = config;

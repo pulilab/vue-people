@@ -3,12 +3,11 @@ export const state = () => ({
   tags: []
 });
 
-
 export const getters = {
   getUserTypes: state => {
     return [...state.userTypes
       .map(s => ({...s}))
-      .sort((a,b) => a.order - b.order)];
+      .sort((a, b) => a.order - b.order)];
   },
   getUserType: (state, getters) => id => {
     return {...getters.getUserTypes.find(ut => ut.id === id)};
@@ -19,23 +18,22 @@ export const getters = {
 };
 
 export const actions = {
-  async loadUserTypes({commit}) {
+  async loadUserTypes ({commit}) {
     const { data } = await this.$axios.get('/api/user-type/');
     commit('SET_USER_TYPES', data);
   },
-  async loadTags({commit}) {
+  async loadTags ({commit}) {
     const { data } = await this.$axios.get('/api/tags/');
     const tags = data.map(t => t.name);
     commit('SET_TAGS', tags);
   }
 };
 
-
 export const mutations = {
   SET_USER_TYPES: (state, types) => {
-    return state.userTypes = types;
+    state.userTypes = types;
   },
   SET_TAGS: (state, tags) => {
-    return state.tags = tags;
+    state.tags = tags;
   }
 };

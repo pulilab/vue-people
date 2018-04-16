@@ -22,14 +22,6 @@
           <v-icon class="mr-1">done</v-icon>
           Confirm Location
         </v-btn>
-        <v-btn
-          v-show="showEditLocation"
-          color="primary"
-          @click="setAddMode(true)"
-        >
-          <v-icon class="mr-1">edit_location</v-icon>
-          Edit Location
-        </v-btn>
       </div>
       <v-menu
         v-model="menu"
@@ -52,6 +44,18 @@
             </v-list-tile-avatar>
             <v-list-tile-content>
               <v-list-tile-title>Edit profile</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile
+            v-show="showEditLocation"
+            avatar
+            active-class=""
+            @click="setAddMode(true)">
+            <v-list-tile-avatar>
+              <v-icon>edit_location</v-icon>
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>Edit your location</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
           <v-list-tile
@@ -88,7 +92,7 @@ export default {
   components: {
     UserAvatar
   },
-  data() {
+  data () {
     return {
       menu: false
     };
@@ -100,16 +104,16 @@ export default {
       positionSet: 'user/isPositionSet',
       isAddMode: 'map/isAddMode'
     }),
-    gitHubUrl() {
+    gitHubUrl () {
       return oauthLinkGenerator('github');
     },
-    showAddLocationButton() {
+    showAddLocationButton () {
       return !this.positionSet && !this.isAddMode;
     },
-    showConfirmButton() {
+    showConfirmButton () {
       return this.positionSet && this.isAddMode;
     },
-    showEditLocation() {
+    showEditLocation () {
       return this.positionSet && !this.isAddMode;
     }
   },
@@ -119,11 +123,11 @@ export default {
       setAddMode: 'map/setAddMode',
       updateUserProfile: 'user/updateUserProfile'
     }),
-    doLogout() {
+    doLogout () {
       this.menu = false;
       this.logout();
     },
-    async confirmLocation() {
+    async confirmLocation () {
       await this.updateUserProfile();
       this.setAddMode(false);
     }

@@ -47,7 +47,6 @@
           <map-legend />
 
           <v-btn
-            v-if="showCenterToUser"
             class="home-button"
             icon
             light
@@ -73,7 +72,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState} from 'vuex';
+import { mapGetters, mapActions, mapState } from 'vuex';
 import MapToolbar from './MapToolbar.vue';
 import UserAvatar from './UserAvatar.vue';
 import MapLegend from './MapLegend.vue';
@@ -91,21 +90,21 @@ export default {
   },
   data () {
     return {
-      mapOptions: { zoomControl: false , attributionControl: false },
+      mapOptions: { zoomControl: false, attributionControl: false },
       mapBounds: null,
       tooltipOptions: {
         className: 'person-tooltip',
         // set permanent to true to be able to debug / develop the tooltip css
         permanent: false,
         direction: 'top',
-        offset: [0,-30]
+        offset: [0, -30]
       }
     };
   },
   computed: {
     ...mapState({
       userLocation: s => {
-        if(s.geolocation){
+        if (s.geolocation) {
           return {lat: s.geolocation.lat, lng: s.geolocation.lng};
         }
       }
@@ -120,17 +119,14 @@ export default {
       getUserType: 'getUserType',
       userProfile: 'user/getUserProfile'
     }),
-    userMaker() {
+    userMaker () {
       return this.userPosition;
     },
-    showCenterToUser() {
-      return this.userLocation && this.userLocation.lat;
-    },
-    shownMarkerCount() {
+    shownMarkerCount () {
       if (this.mapBounds && this.pins) {
         let count = this.pins.reduce((prev, c) => {
           const contains = this.mapBounds.contains(L.latLng(c.latlng.lat, c.latlng.lng));
-          return contains ? prev += 1 : prev;
+          return contains ? prev + 1 : prev;
         }, 0);
         if (this.userPosition && this.mapBounds.contains(L.latLng(this.userPosition))) {
           return count + 1;
@@ -143,13 +139,13 @@ export default {
   watch: {
     userLocation: {
       immediate: true,
-      handler(loc) {
+      handler (loc) {
         this.autoCenter();
       }
     },
     shownMarkerCount: {
       immediate: true,
-      handler(count) {
+      handler (count) {
         // this is to update VUEX consequently
         this.setShownPins(count);
       }
@@ -168,50 +164,50 @@ export default {
       setAutoCentered: 'map/setAutoCentered',
       setShownPins: 'map/setShownPins'
     }),
-    addMarker(event) {
-      if(this.addMode) {
+    addMarker (event) {
+      if (this.addMode) {
         this.setUserPosition(event.latlng);
       }
     },
-    openPersonDetails(pin) {
+    openPersonDetails (pin) {
       if (!this.addMode) {
         this.$router.push(`/user/${pin.id}/`);
       }
     },
-    mapMoveHandler: debounce(function(e) {
+    mapMoveHandler: debounce(function (e) {
       this.setCenter(e.target.getCenter());
       this.updateBounds();
     }, 200),
-    mapZoomHandler: debounce(function(e) {
+    mapZoomHandler: debounce(function (e) {
       this.setZoom(e.target.getZoom());
     }, 200),
-    centerToUser() {
+    centerToUser () {
       if (this.$refs.mainMap && this.userLocation && this.userLocation.lat) {
         this.$refs.mainMap.mapObject.flyTo(this.userLocation, 13);
         return true;
       }
     },
-    mapReady() {
+    mapReady () {
       this.autoCenter();
       this.updateBounds();
     },
-    autoCenter() {
-      if(!this.autoCentered) {
+    autoCenter () {
+      if (!this.autoCentered) {
         if (this.centerToUser()) {
           this.setAutoCentered(true);
         }
       }
     },
-    updateBounds() {
+    updateBounds () {
       this.mapBounds = this.$refs.mainMap.mapObject.getBounds();
     },
-    iconGenerator(pin, isMe) {
+    iconGenerator (pin, isMe) {
       if (process.browser) {
         const type = isMe ? 'me' : pin.selected ? 'selected' : this.getUserType(pin.type).name;
-        const html = !pin.avatar_url ?
-          '<div class="no-icon center-circle"><i aria-hidden="true" class="icon mdi mdi-account-circle"></i></div>'
+        const html = !pin.avatar_url
+          ? '<div class="no-icon center-circle"><i aria-hidden="true" class="icon mdi mdi-account-circle"></i></div>'
           : `<img src="${pin.avatar_url}" alt="avatar" class="center-circle" />`;
-        const icon = new L.divIcon({
+        const icon = new L.divIcon({ // eslint-disable-line
           className: `custom-pin-icon ${type}`,
           html,
           iconSize: [33, 52]
@@ -243,7 +239,7 @@ export default {
     .person-tooltip {
       border: none;
       border-radius: 3px;
-	    background-color: #212121;
+      background-color: #212121;
       box-shadow: 0 0 6px 0 rgba(0,0,0,0.12), 0 6px 6px 0 rgba(0,0,0,0.24);
     }
 

@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions} from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import { debounce } from '~/utilities/common';
 import UserType from './UserType';
 
@@ -23,13 +23,13 @@ export default {
   computed: {
     ...mapGetters({
       userTypes: 'getUserTypes'
-    }),
+    })
   },
   methods: {
     ...mapActions({
-      setFocusOn: 'map/setFocusOn',
+      setFocusOn: 'map/setFocusOn'
     }),
-    legendEnter: debounce(function(id) {
+    legendEnter: debounce(function (id) {
       this.setFocusOn(id);
     }, 300),
     legendLeave: debounce(function () {

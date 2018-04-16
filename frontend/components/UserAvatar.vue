@@ -16,11 +16,11 @@
     </v-avatar>
 
     <div
-      v-show="name"
+      v-show="person.name"
       class="user-info mr-4"
     >
       <div class="user">
-        <span>{{ name }}</span>
+        <span>{{ person.name }}</span>
         <user-type :id="person.type" />
       </div>
       <div class="email"> {{ person.email }} </div>
@@ -50,20 +50,13 @@ export default {
   computed: {
     ...mapGetters({
       getPersonDetails: 'people/getPersonDetails',
-      userProfile: 'user/getUserProfile',
+      userProfile: 'user/getUserProfile'
     }),
-    person() {
+    person () {
       if (this.id !== null && this.id !== undefined) {
         return this.getPersonDetails(this.id);
       }
       return this.userProfile;
-    },
-    name() {
-      if (this.person && this.person.user) {
-        return this.person.user.first_name
-        + ' '
-        + this.person.user.last_name;
-      }
     }
   }
 };

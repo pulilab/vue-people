@@ -11,9 +11,9 @@ export default {
   components: {
     UserProfileForm
   },
-  async fetch({query, store}) {
+  async fetch ({query, store}) {
     const token = query.token;
-    if ( token ) {
+    if (token) {
       await store.dispatch('user/setGithubToken', token);
     }
   }

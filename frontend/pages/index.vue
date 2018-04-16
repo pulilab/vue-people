@@ -34,10 +34,10 @@ export default {
       return !!(this.$route.name === 'index-user');
     }
   },
-  async fetch({store}) {
-    const peoplePromise =  store.dispatch('people/loadPeople');
-    const userTypePromise =  store.dispatch('loadUserTypes');
-    const tagsPromise =  store.dispatch('loadTags');
+  async fetch ({store}) {
+    const peoplePromise = store.dispatch('people/loadPeople');
+    const userTypePromise = store.dispatch('loadUserTypes');
+    const tagsPromise = store.dispatch('loadTags');
 
     await Promise.all([peoplePromise, userTypePromise, tagsPromise]);
   }

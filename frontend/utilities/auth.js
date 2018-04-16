@@ -14,19 +14,19 @@ export const saveTokens = (sessionid, github, csrftoken) => {
   safeSaveToken('csrftoken', csrftoken);
 };
 
-export const deleteTokens = (tokens=['sessionid', 'github_token', 'csrftoken']) => {
+export const deleteTokens = (tokens = ['sessionid', 'github_token', 'csrftoken']) => {
   if (process.SERVER_BUILD) {
     return;
   }
   if (process.client) {
-    tokens.forEach(t =>window.localStorage.removeItem(t));
+    tokens.forEach(t => window.localStorage.removeItem(t));
   }
-  tokens.forEach(t=> Cookie.remove(t));
+  tokens.forEach(t => Cookie.remove(t));
 };
 
 export const getValueFromCookie = (req, value) => {
   let result = req.headers.cookie.split(';').find(c => c.trim().startsWith(`${value}=`));
-  return  result ? result.split('=')[1] : null;
+  return result ? result.split('=')[1] : null;
 };
 
 export const getTokensFromCookie = (req) => {
@@ -42,7 +42,7 @@ export const getTokensFromCookie = (req) => {
 };
 
 export const getTokensFromLocalStorage = () => {
-  const sessionid =  window.localStorage.getItem('sessionid');
+  const sessionid = window.localStorage.getItem('sessionid');
   const github = window.localStorage.getItem('github_token');
   const csrftoken = window.localStorage.getItem('csrftoken');
   return {

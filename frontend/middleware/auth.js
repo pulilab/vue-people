@@ -5,10 +5,10 @@ export default async function ({store, req}) {
   if (tokens && tokens.sessionid) {
     await store.dispatch('user/setSessionId', tokens.sessionid);
   }
-  if(tokens && tokens.github) {
+  if (tokens && tokens.github) {
     await store.dispatch('user/setGithubToken', tokens.github);
   }
-  if(tokens && tokens.csrftoken) {
+  if (tokens && tokens.csrftoken) {
     await store.dispatch('user/setCsrfToken', tokens.csrftoken);
   }
 }

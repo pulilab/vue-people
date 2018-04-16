@@ -56,11 +56,11 @@ describe('getters', () => {
 
     rootGetters['people/getSelectedTags'] = ['vuex'];
     rootGetters['people/getList'] = [
-      {id: 1, type: 1, tags:['vuex'],  latlng: {}},
-      {id: 2, type: 2, tags: [],  latlng: {}}
+      {id: 1, type: 1, tags: ['vuex'], latlng: {}},
+      {id: 2, type: 2, tags: [], latlng: {}}
     ];
     result = getters.getFilteredPins(null, g, null, rootGetters);
-    expect(result[0]).toEqual({id: 1, type: 1, key: 2, options: {opacity: 1}, tags:['vuex'],  latlng: {}});
+    expect(result[0]).toEqual({id: 1, type: 1, key: 2, options: {opacity: 1}, tags: ['vuex'], latlng: {}});
     expect(result.length).toEqual(1);
   });
 
@@ -68,7 +68,6 @@ describe('getters', () => {
     s.shownPins = 3;
     expect(getters.getShownPins(s)).toEqual(s.shownPins);
   });
-
 });
 
 describe('actions', () => {
@@ -107,11 +106,9 @@ describe('actions', () => {
     actions.setShownPins(vuex, 1);
     expect(vuex.commit.mock.calls[0]).toEqual(['SET_SHOWN_PINS', 1]);
   });
-
 });
 
 describe('mutations', () => {
-
   test('SET_ADD_MODE', () => {
     const s = {};
     mutations.SET_ADD_MODE(s, 1);
@@ -147,5 +144,4 @@ describe('mutations', () => {
     mutations.SET_SHOWN_PINS(s, 1);
     expect(s.shownPins).toEqual(1);
   });
-
 });

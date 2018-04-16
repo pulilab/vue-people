@@ -120,11 +120,11 @@ export default {
       setCenter: 'map/setCenter',
       setZoom: 'map/setZoom'
     }),
-    async closeDetails() {
+    async closeDetails () {
       await this.setCurrent(null);
       this.$router.push('/');
     },
-    flyToPerson() {
+    flyToPerson () {
       this.setZoom(16);
       this.setCenter(this.person.latlng);
     }

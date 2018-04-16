@@ -101,7 +101,7 @@
 import {mapActions, mapGetters} from 'vuex';
 
 export default {
-  data() {
+  data () {
     return {
       loading: true
     };
@@ -116,7 +116,7 @@ export default {
   watch: {
     current: {
       immediate: true,
-      async handler(test) {
+      async handler (test) {
         this.loading = true;
         await this.loadRepositories();
         this.loading = false;

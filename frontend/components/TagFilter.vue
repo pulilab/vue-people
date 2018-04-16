@@ -72,14 +72,14 @@ export default {
       getSelectedTags: 'people/getSelectedTags'
     }),
     selectedTags: {
-      get() {
+      get () {
         return this.getSelectedTags;
       },
-      set(selected) {
+      set (selected) {
         this.setSelectedTags(selected);
       }
     },
-    showTagsChips() {
+    showTagsChips () {
       return !this.dropdownOpen && this.selectedTags.length > 0;
     }
   },
@@ -87,7 +87,7 @@ export default {
     ...mapActions({
       setSelectedTags: 'people/setSelectedTags'
     }),
-    openMenu() {
+    openMenu () {
       this.dropdownOpen = true;
       this.$nextTick(() => {
         window.setTimeout(() => {
@@ -95,10 +95,10 @@ export default {
         }, 100);
       });
     },
-    closeMenu() {
+    closeMenu () {
       this.dropdownOpen = false;
     },
-    removeTag(tag) {
+    removeTag (tag) {
       this.setSelectedTags(this.selectedTags.filter(t => t !== tag));
     }
   }

@@ -27,7 +27,7 @@ export default {
     ...mapGetters({
       getUserType: 'getUserType'
     }),
-    type() {
+    type () {
       return this.getUserType(this.id);
     }
   }

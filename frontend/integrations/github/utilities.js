@@ -3,7 +3,7 @@ export const gitHubGraphQlRequest = (token) => {
   const headers = {
     'Authorization': `bearer ${token}`
   };
-  return { url , options: { headers }};
+  return { url, options: { headers } };
 };
 
 export const filterOutNonVue = (repositories) => {
@@ -14,19 +14,17 @@ export const filterOutNonVue = (repositories) => {
   });
 };
 
-
 export const gitHubAccessTokenLink = () => {
   const url = 'https://github.com/login/oauth/access_token';
   const headers = {
     'Accept': `application/json`
   };
-  return { url , options: { headers }};
+  return { url, options: { headers } };
 };
-
 
 export const profileMapper = (ghp) => {
   return ghp ? {
-    name:  ghp.name,
+    name: ghp.name,
     avatarUrl: ghp.avatarUrl,
     email: ghp.email,
     githubUrl: ghp.url,
