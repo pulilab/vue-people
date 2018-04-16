@@ -86,7 +86,7 @@ export const actions = {
   async updateUserProfile({commit, state, getters}, update) {
     const loc = getters.getUserPosition;
     let location = undefined;
-    if(loc) {
+    if (loc) {
       location = {
         type: "Point",
         coordinates: [loc.lat, loc.lng]
