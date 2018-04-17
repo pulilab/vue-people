@@ -68,7 +68,7 @@ if (process.env.NODE_ENV !== 'production') {
   };
   config.proxy = {
     '/api/': { target: 'https://localhost/', secure: false },
-    '/accounts/': { target: 'http://localhost/' }
+    '/accounts/': { target: 'https://localhost/', secure: false, cors: true }
   };
 }
 module.exports = config;
