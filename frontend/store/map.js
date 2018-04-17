@@ -25,13 +25,15 @@ export const getters = {
     const filtered = tags.length > 0 ? list.filter(p => p.tags.some(t => tags.includes(t))) : list;
     return [...filtered.map(p => {
       const opacity = !getters.getFocusOn || p.type === getters.getFocusOn ? 1 : 0.5;
+      const zIndexOffset = opacity === 0.5 ? -1000 : 0;
       // this is important, otherwise the v-for that draws them do not force repaint the marker, and the marker is not reactive
       const key = p.id + opacity;
       return {
         ...p,
         key,
         options: {
-          opacity
+          opacity,
+          zIndexOffset
         }
       };
     })];
