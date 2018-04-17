@@ -3,7 +3,7 @@
     <map-toolbar />
     <tag-filter />
     <div
-      class="map-wrapper">
+      :class="['map-wrapper', {addMode}]">
       <no-ssr>
         <l-map
           v-if="center"
@@ -245,6 +245,12 @@ export default {
       z-index: 2;
       width: 100%;
       height: 100%;
+
+      &.addMode {
+        .leaflet-container {
+          cursor: pointer;
+        }
+      }
     }
 
     .person-tooltip {
