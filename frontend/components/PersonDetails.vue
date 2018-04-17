@@ -125,8 +125,8 @@ export default {
       this.$router.push('/');
     },
     flyToPerson () {
-      this.setZoom(16);
-      this.setCenter(this.person.latlng);
+      this.setZoom(13);
+      this.setCenter({...this.person.latlng});
     }
   }
 
