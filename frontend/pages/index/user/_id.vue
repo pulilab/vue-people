@@ -11,6 +11,9 @@ export default {
   },
   async fetch ({store, params}) {
     await store.dispatch('people/setCurrent', parseInt(params.id, 10));
+  },
+  destroyed () {
+    this.$store.dispatch('people/setCurrent', null);
   }
 };
 </script>
