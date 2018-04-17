@@ -45,8 +45,19 @@ describe('getters', () => {
       'people/getSelectedTags': []
     };
     let result = getters.getFilteredPins(null, g, null, rootGetters);
-    expect(result[0]).toEqual({id: 1, type: 1, key: 2, options: {opacity: 1}, latlng: {}});
-    expect(result[1]).toEqual({id: 2, type: 2, key: 2.5, options: {opacity: 0.5}, latlng: {}});
+    expect(result[0]).toEqual({id: 1,
+      type: 1,
+      key: 2,
+      options: {opacity: 1, zIndexOffset: 0},
+      latlng: {}
+    });
+    expect(result[1]).toEqual({
+      id: 2,
+      type: 2,
+      key: 2.5,
+      options: {opacity: 0.5, zIndexOffset: -1000},
+      latlng: {}
+    });
     expect(result.length).toEqual(2);
 
     rootGetters['people/getSelectedTags'] = ['vuex'];
@@ -55,7 +66,7 @@ describe('getters', () => {
       {id: 2, type: 2, tags: [], latlng: {}}
     ];
     result = getters.getFilteredPins(null, g, null, rootGetters);
-    expect(result[0]).toEqual({id: 1, type: 1, key: 2, options: {opacity: 1}, tags: ['vuex'], latlng: {}});
+    expect(result[0]).toEqual({id: 1, type: 1, key: 2, options: {opacity: 1, zIndexOffset: 0}, tags: ['vuex'], latlng: {}});
     expect(result.length).toEqual(1);
   });
 
