@@ -73,10 +73,13 @@ export const actions = {
     commit('SET_USER_POSITION', position);
   },
   logout ({commit}) {
+    // do not wait for logout endpoint, it will fail the last redirect on dev but work in the real env.
+    this.$axios.get('/accounts/logout/');
     commit('SET_USER_GITHUB_PROFILE', null);
     commit('SET_GITHUB_TOKEN', null);
     commit('SET_SESSION_ID', null);
     commit('SET_CSRF_TOKEN', null);
+    commit('SET_USER_POSITION', null);
     deleteTokens();
   },
   async updateUserProfile ({commit, state, getters}, update) {
