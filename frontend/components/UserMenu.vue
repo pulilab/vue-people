@@ -5,24 +5,22 @@
       class="logged-in"
     >
       <user-avatar/>
-      <div class="btn-location">
-        <v-btn
-          v-show="showAddLocationButton"
-          color="primary"
-          @click="setAddMode(true)"
-        >
-          <v-icon class="mr-1">add_location</v-icon>
-          Add Location
-        </v-btn>
-        <v-btn
-          v-show="showConfirmButton"
-          color="warning"
-          @click="confirmLocation"
-        >
-          <v-icon class="mr-1">done</v-icon>
-          Confirm Location
-        </v-btn>
-      </div>
+      <v-btn
+        v-show="showAddLocationButton"
+        color="primary"
+        @click="setAddMode(true)"
+      >
+        <v-icon class="mr-1">add_location</v-icon>
+        Add Location
+      </v-btn>
+      <v-btn
+        v-show="showConfirmButton"
+        color="warning"
+        @click="confirmLocation"
+      >
+        <v-icon class="mr-1">done</v-icon>
+        Confirm Location
+      </v-btn>
       <v-menu
         v-model="menu"
         bottom
@@ -72,13 +70,19 @@
         </v-list>
       </v-menu>
     </div>
-    <v-btn
+
+    <div
       v-show="!isLoggedIn"
-      :href="gitHubUrl"
-      color="primary">
-      <v-icon>mdi-github-circle</v-icon>
-      Login with GitHub
-    </v-btn>
+      class="logged-out"
+    >
+      <v-btn
+        :href="gitHubUrl"
+        color="primary"
+      >
+        <v-icon class="mr-1">mdi-github-circle</v-icon>
+        Login with GitHub
+      </v-btn>
+    </div>
   </div>
 </template>
 
@@ -140,16 +144,11 @@ export default {
   @import "../assets/style/mixins.less";
 
   .user-menu {
-    .logged-in {
+    .logged-in,
+    .logged-out {
       display: flex;
       height: 100%;
       padding: 0 12px;
-    }
-
-    .btn-location {
-      .btn .btn__content {
-        padding-left: 10px;
-      }
     }
   }
 </style>

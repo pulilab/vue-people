@@ -20,6 +20,8 @@ export default {
     top: 16px;
     z-index: 10;
     width: 33%;
+    min-width: 420px;
+    max-width: 540px;
     height: calc(100% - 32px);
     overflow-y: auto;
     overflow-x: hidden;

@@ -181,7 +181,7 @@ export default {
 
             .icon {
               position: relative;
-              top: -1px;
+              top: -2px;
               font-size: @font-size-small - 1 !important;
               color: #FFB300;
             }

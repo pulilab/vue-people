@@ -65,7 +65,7 @@
       bottom
       multi-line
     >
-      <v-icon class="mr-2">touch_app</v-icon>
+      <v-icon class="mr-2">pin_drop</v-icon>
       <span class="body-2">Click on the map anywhere to select your position</span>
     </v-snackbar>
 
