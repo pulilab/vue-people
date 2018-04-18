@@ -77,7 +77,6 @@
     >
       <v-btn
         :href="gitHubUrl"
-        color="primary"
       >
         <v-icon class="mr-1">mdi-github-circle</v-icon>
         Login with GitHub
@@ -149,6 +148,12 @@ export default {
       display: flex;
       height: 100%;
       padding: 0 12px;
+    }
+
+    .logged-out {
+      .btn {
+        background-color: @color-github !important;
+      }
     }
   }
 </style>
