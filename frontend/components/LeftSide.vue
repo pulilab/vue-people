@@ -8,7 +8,7 @@
       class="intro-text pa-4"
     >
       <img
-        src="/static/logo-vuepeople.svg"
+        src="~/assets/images/logo-vuepeople.svg"
         alt="VuePeople logo"
         class="logo"
       >
@@ -33,7 +33,7 @@
     <div class="credit">
       <span>
         <img
-          src="/static/logo-pulilab.svg"
+          src="~/assets/images/logo-pulilab.svg"
           alt="Pulilab logo"
           class="logo"
         >
@@ -71,10 +71,12 @@ export default {
   }
 
   .intro-text {
+    height: 100%;
+
     .logo {
       width: auto;
       height: 50px;
-      margin-bottom: 36px;
+      margin-bottom: 24px;
     }
 
     h3 {
@@ -88,18 +90,27 @@ export default {
   }
 
   .credit {
+    z-index: 100;
     position: absolute;
-    bottom: 24px;
-    left: 24px;
-    width: calc(100% - 48px);
+    bottom: 0;
+    left: 0;
     display: flex;
     align-items: center;
+    width: 100%;
+    padding: 24px;
+    border-top: 1px solid rgba(0,0,0,.12);
+    background-color: @color-brand-secondary;
     color: @font-light-disabled;
+
+    > span {
+      height: 36px;
+      line-height: 36px;
+    }
 
     .logo {
       width: 36px;
       height: 36px;
-      margin-right: 10px;
+      margin-right: 12px;
     }
   }
 </style>
