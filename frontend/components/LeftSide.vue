@@ -74,11 +74,14 @@ export default {
     .logo {
       width: auto;
       height: 50px;
+      margin-bottom: 36px;
     }
+
     h3 {
       font-size: @font-size-base + 2;
       color: @font-light-primary;
     }
+
     p {
       color: @font-light-disabled;
     }
