@@ -12,8 +12,8 @@
         alt="VuePeople logo"
         class="logo"
       >
-      <h3 class="subheading mb-3">
-        About vuepeople.com
+      <h3 class="title mb-3">
+        About veupeople.com
       </h3>
       <p>
         VuePeople lists and connects Vue.JS developers around the world. <br>
@@ -30,7 +30,7 @@
       <!-- Remove this component as it is now, and implement a new counter in the MapLegend component, check design: https://sketch.cloud/s/LJM1l/p/vuepeople-app-v1/map-component-logged-out -->
       <!-- <pin-count /> -->
     </div>
-    <div class="credit">
+    <div class="credit elevation-6">
       <span>
         <img
           src="~/assets/images/logo-pulilab.svg"
@@ -67,7 +67,7 @@ export default {
     position: relative;
     height: 100%;
     overflow-x: hidden;
-    background-color: @color-brand-secondary;
+    background-color: @color-white;
   }
 
   .intro-text {
@@ -75,18 +75,18 @@ export default {
 
     .logo {
       width: auto;
-      height: 48px;
-      margin-bottom: 24px;
+      height: 56px;
+      margin-bottom: 48px;
     }
 
     h3 {
-      font-size: @font-size-base + 2;
-      color: @font-light-primary;
+      color: @font-dark-primary;
+      letter-spacing: -0.25px !important;
     }
 
     p {
       margin-bottom: 24px;
-      color: @font-light-disabled;
+      color: @font-dark-secondary;
 
       a {
         display: block;
@@ -102,10 +102,9 @@ export default {
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 24px;
-    border-top: 1px solid rgba(0,0,0,.12);
-    background-color: @color-brand-secondary;
-    color: @font-light-disabled;
+    padding: 14px 24px;
+    background-color: @color-white;
+    color: @font-dark-secondary;
 
     > span {
       height: 36px;

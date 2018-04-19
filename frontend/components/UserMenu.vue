@@ -147,10 +147,15 @@ export default {
     .logged-out {
       display: flex;
       height: 100%;
+    }
+
+    .logged-in {
       padding: 0 12px;
     }
 
     .logged-out {
+      padding: 0 4px;
+
       .btn {
         background-color: @color-github !important;
       }

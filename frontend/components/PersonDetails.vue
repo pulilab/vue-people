@@ -140,6 +140,7 @@ export default {
   .person-details {
     position: relative;
     width: 100%;
+    background-color: @color-brand-secondary;
 
     .toolbar {
       background-color: @color-white !important;
