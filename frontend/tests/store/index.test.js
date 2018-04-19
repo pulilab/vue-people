@@ -31,8 +31,15 @@ describe('getters', () => {
 
   test('getUserType', () => {
     const getUserTypes = [{id: 1}, {id: 2}];
-    const result = getters.getUserType(s, {getUserTypes})(1);
-    expect(result).toEqual(getUserTypes[0]);
+    const rootGetters = {
+      'map/getShownPins': {1: 2}
+    };
+    let result = getters.getUserType(s, {getUserTypes}, null, rootGetters)(1);
+    expect(result).toEqual({id: 1, count: 2});
+    expect(result).not.toBe(getUserTypes[0]);
+
+    result = getters.getUserType(s, {getUserTypes}, null, {})(2);
+    expect(result).toEqual({id: 2, count: 0});
     expect(result).not.toBe(getUserTypes[0]);
   });
 
