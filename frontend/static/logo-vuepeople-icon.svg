@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="256px" height="256px" viewBox="0 0 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 2</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#F6F6F6" offset="0%"></stop>
+            <stop stop-color="#DFDFDF" offset="100%"></stop>
+        </linearGradient>
+        <polygon id="path-2" points="73.4895094 169.094611 53.0648948 133.706136 32.6402802 169.094611 0 169.094611 53.0648948 77.1534348 106.12979 169.094611"></polygon>
+        <filter x="0.0%" y="0.0%" width="100.0%" height="100.0%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Logo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(-206.000000, -161.000000)" id="Group-2">
+            <g transform="translate(206.000000, 161.000000)">
+                <path d="M89.2522667,0 L166.747733,0 C192.448,0 205.294933,0 219.1296,4.37333333 C234.2336,9.87093333 246.129067,21.7664 251.626667,36.8704 C256,50.7029333 256,63.5541333 256,89.2522667 L256,166.747733 C256,192.448 256,205.294933 251.626667,219.1296 C246.129067,234.2336 234.2336,246.129067 219.1296,251.624533 C205.294933,256 192.448,256 166.747733,256 L89.2522667,256 C63.552,256 50.7029333,256 36.8704,251.624533 C21.7664,246.129067 9.87093333,234.2336 4.37333333,219.1296 C0,205.294933 0,192.448 0,166.747733 L0,89.2522667 C0,63.5541333 0,50.7029333 4.37333333,36.8704 C9.87093333,21.7664 21.7664,9.87093333 36.8704,4.37333333 C50.7029333,0 63.552,0 89.2522667,0 L89.2522667,0" id="Green-Blue-Icon" fill="url(#linearGradient-1)"></path>
+                <g id="Group-7" transform="translate(43.000000, 27.000000)" fill-rule="nonzero">
+                    <g id="Group" transform="translate(0.000000, 58.000000)">
+                        <ellipse id="Oval" fill="#4A90E2" cx="33.3945055" cy="21.3250446" rx="20.9578115" ry="20.9328412"></ellipse>
+                        <polygon id="Shape" fill="#4A90E2" points="33.4082984 82.0368892 0 48.5738262 0 115.499952 66.8165969 115.499952 66.8165969 48.5738262"></polygon>
+                        <polygon id="path18" fill="#3A71B0" transform="translate(33.408298, 77.515731) rotate(-180.000000) translate(-33.408298, -77.515731) " points="46.2671126 106.457636 33.4082984 84.1779582 20.5494843 106.457636 0 106.457636 33.4082984 48.5738262 66.8165969 106.457636"></polygon>
+                    </g>
+                    <g id="Group" transform="translate(103.000000, 58.000000)">
+                        <ellipse id="Oval" fill="#FB8D20" cx="33.3945055" cy="21.3250446" rx="20.9578115" ry="20.9328412"></ellipse>
+                        <polygon id="Shape" fill="#FB8D20" points="33.4082984 82.0368892 0 48.5738262 0 115.499952 66.8165969 115.499952 66.8165969 48.5738262"></polygon>
+                        <polygon id="path18" fill="#C7701A" transform="translate(33.408298, 77.515731) rotate(-180.000000) translate(-33.408298, -77.515731) " points="46.2671126 106.457636 33.4082984 84.1779582 20.5494843 106.457636 0 106.457636 33.4082984 48.5738262 66.8165969 106.457636"></polygon>
+                    </g>
+                    <g id="Group" transform="translate(31.635541, 0.901961)">
+                        <ellipse id="Oval" fill="#4DBA87" cx="53.0429864" cy="33.8721605" rx="33.2888567" ry="33.2491946"></ellipse>
+                        <polygon id="Shape" fill="#42B883" points="53.0648948 130.305316 0 77.1534348 0 183.457198 106.12979 183.457198 106.12979 77.1534348"></polygon>
+                        <g id="path18" transform="translate(53.064895, 123.124023) rotate(-180.000000) translate(-53.064895, -123.124023) ">
+                            <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+                            <use fill="#435466" fill-rule="evenodd" xlink:href="#path-2"></use>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
