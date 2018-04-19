@@ -13,18 +13,18 @@
         class="logo"
       >
       <h3 class="subheading mb-3">
-        Connect with Vuepeople <br>
-        of the world.
+        About vuepeople.com
       </h3>
-      <p>Use this tool to present yourself and your work to the world, and to discover likeminded near you.</p>
       <p>
-        We’ve created this place so you can follow the community as it grows. This is still work in progress. Suggest the next feature to <br>
-        <a href="mailto:family@vuepeople.org">family@vuepeople.org</a>
+        VuePeople lists and connects Vue.JS developers around the world. <br>
+        The aim of this site is for Vue.JS developers to use this tool to present themselves and their work to the world, and to provide a platform to connect with like-minded individuals.
+      </p>
+      <p>
+        We’ve created this place so you can follow the Vue.JS community as it grows. As the site is still a work in progress, we are happy to receive your feedback and next feature suggestions at <a href="mailto:family@vuepeople.org">family@vuepeople.org</a>
       </p>
 
       <p>
-        We credit inspiration to <br>
-        <a href="http://people.django.com">http://people.django.com</a>
+        We credit inspiration to <a href="http://people.django.com">http://people.django.com</a>
       </p>
       <!-- TODO -->
       <!-- Remove this component as it is now, and implement a new counter in the MapLegend component, check design: https://sketch.cloud/s/LJM1l/p/vuepeople-app-v1/map-component-logged-out -->
@@ -38,7 +38,7 @@
           class="logo"
         >
       </span>
-      <span>Presented by <a href="http://pulilab.com">Pulilab</a></span>
+      <span>Created with love by <a href="http://pulilab.com">Pulilab</a></span>
     </div>
   </div>
 </template>
@@ -85,12 +85,17 @@ export default {
     }
 
     p {
+      margin-bottom: 24px;
       color: @font-light-disabled;
+
+      a {
+        display: block;
+      }
     }
   }
 
   .credit {
-    z-index: 100;
+    z-index: 10;
     position: absolute;
     bottom: 0;
     left: 0;
