@@ -1,37 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="180px" height="184px" viewBox="0 0 180 184" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
-    <title>Icon only</title>
-    <desc>Created with Sketch.</desc>
-    <defs>
-        <polygon id="path-1" points="73.4895094 169.094611 53.0648948 133.706136 32.6402802 169.094611 0 169.094611 53.0648948 77.1534348 106.12979 169.094611"></polygon>
-        <filter x="0.0%" y="0.0%" width="100.0%" height="100.0%" filterUnits="objectBoundingBox" id="filter-2">
-            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
-            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
-        </filter>
-    </defs>
-    <g id="Logo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Logo-2" transform="translate(-422.000000, -276.000000)" fill-rule="nonzero">
-            <g id="Icon-only" transform="translate(422.000000, 275.000000)">
-                <g id="Group" transform="translate(0.000000, 55.000000)">
-                    <ellipse id="Oval" fill="#4A90E2" cx="33.3945055" cy="21.3250446" rx="20.9578115" ry="20.9328412"></ellipse>
-                    <path d="M52.5530352,62.8607694 L66.8165969,48.5738262 L66.8165969,62.8607694 L52.5530352,62.8607694 Z M30.2004357,115.499952 L0,115.499952 L0,48.5738262 L30.2004357,78.823768 L30.2004357,115.499952 Z" id="Combined-Shape" fill="#4A90E2"></path>
-                    <path d="M30.2004357,65.2954369 L30.2004357,100.899636 L2.98427949e-13,48.5738262 L20.5494843,48.5738262 L30.2004357,65.2954369 Z M38.0213403,62.8607694 L46.2671126,48.5738262 L66.8165969,48.5738262 L58.5707252,62.8607694 L38.0213403,62.8607694 Z" id="Combined-Shape" fill="#3A71B0"></path>
-                </g>
-                <g id="Group" transform="translate(113.000000, 55.000000)">
-                    <ellipse id="Oval" fill="#FB8D20" cx="33.3945055" cy="21.3250446" rx="20.9578115" ry="20.9328412"></ellipse>
-                    <path d="M36.2004357,79.2401749 L66.8165969,48.5738262 L66.8165969,115.499952 L36.2004357,115.499952 L36.2004357,79.2401749 Z M0,62.8607694 L0,48.5738262 L14.2635617,62.8607694 L0,62.8607694 Z" id="Combined-Shape" fill="#FB8D20"></path>
-                    <path d="M28.7952566,62.8607694 L8.24587164,62.8607694 L2.98427949e-13,48.5738262 L20.5494843,48.5738262 L28.7952566,62.8607694 Z M36.2004357,66.0157389 L46.2671126,48.5738262 L66.8165969,48.5738262 L36.2004357,101.619929 L36.2004357,66.0157389 Z" id="Combined-Shape" fill="#C7701A"></path>
-                </g>
-                <g id="Group" transform="translate(36.635541, 0.901961)">
-                    <ellipse id="Oval" fill="#4DBA87" cx="53.0429864" cy="33.8721605" rx="33.2888567" ry="33.2491946"></ellipse>
-                    <polygon id="Shape" fill="#42B883" points="53.0648948 130.305316 0 77.1534348 0 183.457198 106.12979 183.457198 106.12979 77.1534348"></polygon>
-                    <g id="path18" transform="translate(53.064895, 123.124023) rotate(-180.000000) translate(-53.064895, -123.124023) ">
-                        <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
-                        <use fill="#435466" fill-rule="evenodd" xlink:href="#path-1"></use>
-                    </g>
-                </g>
-            </g>
-        </g>
-    </g>
+<svg version="1.1" viewBox="0 0 180 184" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>Icon only</title>
+<desc>Created with Sketch.</desc>
+<defs>
+<polygon id="a" points="73.49 169.09 53.065 133.71 32.64 169.09 0 169.09 53.065 77.153 106.13 169.09"/>
+<filter id="b" x="0%" y="0%" width="100%" height="100%">
+<feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"/>
+<feColorMatrix in="shadowOffsetOuter1" values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0"/>
+</filter>
+</defs>
+<g fill="none" fill-rule="evenodd">
+<g transform="translate(-422 -276)" fill-rule="nonzero">
+<g transform="translate(422 275)">
+<g transform="translate(0 55)">
+<ellipse cx="33.395" cy="21.325" rx="20.958" ry="20.933" fill="#4A90E2"/>
+<path d="m52.553 62.861l14.264-14.287v14.287h-14.264zm-22.353 52.639h-30.2v-66.926l30.2 30.25v36.676z" fill="#4A90E2"/>
+<path d="m30.2 65.295v35.604l-30.2-52.326h20.549l9.651 16.722zm7.8209-2.4347l8.2458-14.287h20.549l-8.2459 14.287h-20.549z" fill="#3A71B0"/>
+</g>
+<g transform="translate(113 55)">
+<ellipse cx="33.395" cy="21.325" rx="20.958" ry="20.933" fill="#FB8D20"/>
+<path d="m36.2 79.24l30.616-30.666v66.926h-30.616v-36.26zm-36.2-16.379v-14.287l14.264 14.287h-14.264z" fill="#FB8D20"/>
+<path d="m28.795 62.861h-20.549l-8.2459-14.287h20.549l8.2458 14.287zm7.4052 3.155l10.067-17.442h20.549l-30.616 53.046v-35.604z" fill="#C7701A"/>
+</g>
+<g transform="translate(36.636 .90196)">
+<ellipse cx="53.043" cy="33.872" rx="33.289" ry="33.249" fill="#4DBA87"/>
+<polygon points="53.065 130.31 0 77.153 0 183.46 106.13 183.46 106.13 77.153" fill="#42B883"/>
+<g transform="translate(53.065 123.12) rotate(180) translate(-53.065 -123.12)">
+<use fill="black" filter="url(#b)" xlink:href="#a"/>
+<use fill="#435466" fill-rule="evenodd" xlink:href="#a"/>
+</g>
+</g>
+</g>
+</g>
+</g>
 </svg>
