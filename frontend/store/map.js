@@ -3,7 +3,7 @@ export const state = () => ({
   zoom: 3,
   center: {lat: 0, lng: 0},
   focusOn: null,
-  shownPins: 0
+  shownPins: null
 });
 
 export const getters = {
