@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 180 184" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>Icon only</title>
+<desc>Created with Sketch.</desc>
+<defs>
+<polygon id="a" points="73.49 169.09 53.065 133.71 32.64 169.09 0 169.09 53.065 77.153 106.13 169.09"/>
+<filter id="b" x="0%" y="0%" width="100%" height="100%">
+<feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"/>
+<feColorMatrix in="shadowOffsetOuter1" values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0"/>
+</filter>
+</defs>
+<g fill="none" fill-rule="evenodd">
+<g transform="translate(-422 -276)" fill-rule="nonzero">
+<g transform="translate(422 275)">
+<g transform="translate(0 55)">
+<ellipse cx="33.395" cy="21.325" rx="20.958" ry="20.933" fill="#4A90E2"/>
+<path d="m52.553 62.861l14.264-14.287v14.287h-14.264zm-22.353 52.639h-30.2v-66.926l30.2 30.25v36.676z" fill="#4A90E2"/>
+<path d="m30.2 65.295v35.604l-30.2-52.326h20.549l9.651 16.722zm7.8209-2.4347l8.2458-14.287h20.549l-8.2459 14.287h-20.549z" fill="#3A71B0"/>
+</g>
+<g transform="translate(113 55)">
+<ellipse cx="33.395" cy="21.325" rx="20.958" ry="20.933" fill="#FB8D20"/>
+<path d="m36.2 79.24l30.616-30.666v66.926h-30.616v-36.26zm-36.2-16.379v-14.287l14.264 14.287h-14.264z" fill="#FB8D20"/>
+<path d="m28.795 62.861h-20.549l-8.2459-14.287h20.549l8.2458 14.287zm7.4052 3.155l10.067-17.442h20.549l-30.616 53.046v-35.604z" fill="#C7701A"/>
+</g>
+<g transform="translate(36.636 .90196)">
+<ellipse cx="53.043" cy="33.872" rx="33.289" ry="33.249" fill="#4DBA87"/>
+<polygon points="53.065 130.31 0 77.153 0 183.46 106.13 183.46 106.13 77.153" fill="#42B883"/>
+<g transform="translate(53.065 123.12) rotate(180) translate(-53.065 -123.12)">
+<use fill="black" filter="url(#b)" xlink:href="#a"/>
+<use fill="#435466" fill-rule="evenodd" xlink:href="#a"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</svg>
