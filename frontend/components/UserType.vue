@@ -6,6 +6,11 @@
       class="ml-1">
       {{ type.verbose_name }}
     </span>
+    <span
+      v-show="showCount"
+      class="ml-1">
+      ({{ type.count }})
+    </span>
   </div>
 </template>
 
@@ -19,6 +24,10 @@ export default {
       required: true
     },
     showText: {
+      type: Boolean,
+      default: false
+    },
+    showCount: {
       type: Boolean,
       default: false
     }

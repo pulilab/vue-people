@@ -9,8 +9,11 @@ export const getters = {
       .map(s => ({...s}))
       .sort((a, b) => a.order - b.order)];
   },
-  getUserType: (state, getters) => id => {
-    return {...getters.getUserTypes.find(ut => ut.id === id)};
+  getUserType: (state, getters, rootState, rootGetters) => id => {
+    const pinCount = rootGetters['map/getShownPins'];
+    const type = getters.getUserTypes.find(ut => ut.id === id);
+    const count = pinCount ? pinCount[type.id] : 0;
+    return { ...type, count };
   },
   getTags: state => {
     return [...state.tags];

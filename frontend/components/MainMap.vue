@@ -130,21 +130,26 @@ export default {
       zoom: 'map/getZoom',
       center: 'map/getCenter',
       getUserType: 'getUserType',
-      userProfile: 'user/getUserProfile'
+      userProfile: 'user/getUserProfile',
+      userTypes: 'getUserTypes'
     }),
     userMaker () {
       return this.userPosition;
     },
     shownMarkerCount () {
       if (this.mapBounds && this.pins) {
-        let count = this.pins.reduce((prev, c) => {
+        const countInit = this.userTypes.reduce((p, c) => {
+          p[c.id] = 0;
+          return p;
+        }, {});
+
+        return this.pins.reduce((prev, c) => {
           const contains = this.mapBounds.contains(L.latLng(c.latlng.lat, c.latlng.lng));
-          return contains ? prev + 1 : prev;
-        }, 0);
-        if (this.userPosition && this.mapBounds.contains(L.latLng(this.userPosition))) {
-          return count + 1;
-        }
-        return count;
+          if (contains) {
+            prev[c.type] += 1;
+          }
+          return prev;
+        }, countInit);
       }
       return 0;
     }

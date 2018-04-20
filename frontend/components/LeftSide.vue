@@ -12,8 +12,9 @@
         alt="VuePeople logo"
         class="logo"
       >
+
       <h3 class="title mb-3">
-        About veupeople.com
+        About vuepeople.org
       </h3>
       <p>
         VuePeople lists and connects Vue.JS developers around the world. <br>
@@ -26,9 +27,6 @@
       <p>
         We credit inspiration to <a href="http://people.django.com">http://people.django.com</a>
       </p>
-      <!-- TODO -->
-      <!-- Remove this component as it is now, and implement a new counter in the MapLegend component, check design: https://sketch.cloud/s/LJM1l/p/vuepeople-app-v1/map-component-logged-out -->
-      <!-- <pin-count /> -->
     </div>
     <div class="credit elevation-6">
       <span>
@@ -44,13 +42,9 @@
 </template>
 
 <script>
-// import PinCount from './PinCount.vue';
 
 export default {
   name: 'LeftSide',
-  components: {
-    // PinCount
-  },
   computed: {
     showRootContent () {
       return this.$route && this.$route.name !== 'index-user-id';

@@ -5,6 +5,7 @@
       :key="type.id"
       :id="type.id"
       :show-text="true"
+      :show-count="true"
       @mouseenter.native="legendEnter(type.id)"
       @mouseleave.native="legendLeave"
     />
