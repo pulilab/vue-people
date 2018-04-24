@@ -24,7 +24,7 @@
           ref="tagSelect"
           :items="tagList"
           v-model="selectedTags"
-          label="Type here or select..."
+          label="Type here to filter by tag."
           prepend-icon="search"
           light
           solo
