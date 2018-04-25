@@ -1,7 +1,13 @@
 <template>
   <div class="main-map">
-    <map-toolbar />
-    <tag-filter />
+
+    <v-slide-y-transition>
+      <map-toolbar v-show="showFloatingUI" />
+    </v-slide-y-transition>
+    <v-slide-y-transition>
+      <tag-filter v-show="showFloatingUI" />
+    </v-slide-y-transition>
+
     <div
       :class="['map-wrapper', {addMode}]">
       <no-ssr>
@@ -16,15 +22,20 @@
           @click="addMarker">
           <l-tilelayer
             url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'"/>
+
           <l-marker
             v-for="pin in pins"
+            v-show="showFloatingUI"
             :key="pin.key"
             :options="pin.options"
             :lat-lng="pin.latlng"
             :icon="iconGenerator(pin)"
             @click="openPersonDetails(pin)"
           >
-            <l-tooltip :options="tooltipOptions">
+            <l-tooltip
+              v-if="showFloatingUI"
+              :options="tooltipOptions"
+            >
               <user-avatar
                 :id="pin.id"
                 :dark="true"
@@ -34,26 +45,36 @@
 
           <l-marker
             v-if="userMaker"
+            v-show="showFloatingUI"
             :lat-lng="userMaker"
             :icon="iconGenerator(userProfile, true)"
             @click="openPersonDetails(userProfile)">
-            <l-tooltip :options="tooltipOptions">
+            <l-tooltip
+              v-if="showFloatingUI"
+              :options="tooltipOptions"
+            >
               <user-avatar
                 :dark="true"
               />
             </l-tooltip>
           </l-marker>
 
-          <map-legend />
+          <map-legend
+            v-show="showFloatingUI"
+          />
 
           <v-btn
+            v-show="showFloatingUI"
             class="home-button"
             icon
             light
             @click="centerToUser">
             <v-icon>gps_fixed</v-icon>
           </v-btn>
-          <l-control-zoom position="bottomright" />
+          <l-control-zoom
+            v-if="showFloatingUI"
+            position="bottomright"
+          />
         </l-map>
       </no-ssr>
     </div>
@@ -131,7 +152,8 @@ export default {
       center: 'map/getCenter',
       getUserType: 'getUserType',
       userProfile: 'user/getUserProfile',
-      userTypes: 'getUserTypes'
+      userTypes: 'getUserTypes',
+      goToMap: 'getGoToMap'
     }),
     userMaker () {
       return this.userPosition;
@@ -152,6 +174,9 @@ export default {
         }, countInit);
       }
       return 0;
+    },
+    showFloatingUI () {
+      return !((this.$mq === 'sm' || this.$mq === 'xs') && !this.goToMap);
     }
   },
   watch: {
@@ -168,6 +193,16 @@ export default {
       handler (count) {
         // this is to update VUEX consequently
         this.setShownPins(count);
+      }
+    },
+    goToMap: {
+      immdiate: false,
+      handler (showMap) {
+        if (showMap) {
+          setTimeout(() => {
+            this.$refs.mainMap.mapObject.invalidateSize();
+          }, 400);
+        }
       }
     }
   },
