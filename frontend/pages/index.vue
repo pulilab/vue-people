@@ -44,7 +44,7 @@ export default {
       return !!(this.$route.name === 'index-user');
     },
     hideLeft () {
-      return this.goToMap && (this.$mq === 'xs' || this.$mq === 'sm');
+      return this.goToMap && (this.$mq === 'xs' || this.$mq === 'sm') && this.$route.name !== 'index-user-id';
     }
   },
   async fetch ({store}) {
