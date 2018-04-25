@@ -1,5 +1,5 @@
 <template>
-  <div :class="['user-menu', {'short-menu': showShortMenu, 'long-menu': showLongTopMenu}]">
+  <div :class="['user-menu', {'short-menu': showShortMenu, 'long-menu': showLongMenu}]">
     <div
       :class="{'logged-in': isLoggedIn, 'logged-out': !isLoggedIn}"
     >
@@ -39,8 +39,7 @@
 
       <v-menu
         v-model="menu"
-        :min-width="showLongTopMenu ? '94vw': undefined"
-        :nudge-bottom="showLongTopMenu ? 45 : 0"
+        :content-class="menuContentClass"
         transition="slide-y-transition"
         bottom
       >
@@ -147,11 +146,14 @@ export default {
     showShortButtons () {
       return this.$mq === 'sm' || this.$mq === 'xs';
     },
-    showLongTopMenu () {
+    showLongMenu () {
       return this.menu && (this.$mq === 'sm' || this.$mq === 'xs');
     },
     showShortMenu () {
       return !this.menu && (this.$mq === 'sm' || this.$mq === 'xs');
+    },
+    menuContentClass () {
+      return this.showLongMenu ? 'menu-user-menu-mobile' : 'menu-user-menu';
     }
   },
   methods: {
