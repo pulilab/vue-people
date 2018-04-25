@@ -3,8 +3,10 @@ import VueMq from 'vue-mq';
 
 Vue.use(VueMq, {
   breakpoints: {
-    sm: 450,
-    md: 1250,
-    lg: Infinity
+    xs: 320,
+    sm: 480,
+    md: 768,
+    lg: 1024,
+    xl: Infinity
   }
 });
