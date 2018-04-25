@@ -27,6 +27,15 @@
       <p>
         We credit inspiration to <a href="http://people.django.com">http://people.django.com</a>
       </p>
+      <v-btn
+        v-show="$mq === 'sm'"
+        block
+        color="primary"
+        @click="setGoToMap(true)"
+      >
+        Go to map
+        <v-icon class="ml-2">mdi-arrow-right</v-icon>
+      </v-btn>
     </div>
     <div class="credit elevation-6">
       <span>
@@ -42,13 +51,22 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 
 export default {
   name: 'LeftSide',
   computed: {
     showRootContent () {
       return this.$route && this.$route.name !== 'index-user-id';
+    },
+    showGoToMapButton () {
+      return this.$mq === 'sm' || this.$mq === 'xs';
     }
+  },
+  methods: {
+    ...mapActions({
+      setGoToMap: 'setGoToMap'
+    })
   }
 };
 </script>
