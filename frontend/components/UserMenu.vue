@@ -1,30 +1,49 @@
 <template>
-  <div class="user-menu">
+  <div :class="['user-menu', {'short-menu': !showLongTopMenu, 'long-menu': showLongTopMenu}]">
     <div
-      v-show="isLoggedIn"
-      class="logged-in"
+      :class="{'logged-in': isLoggedIn, 'logged-out': !isLoggedIn}"
     >
-      <user-avatar/>
+      <template v-if="isLoggedIn" >
+        <user-avatar/>
+        <v-btn
+          v-show="showAddLocationButton"
+          color="primary"
+          @click="setAddMode(true)"
+        >
+          <v-icon class="mr-1">add_location</v-icon>
+          <span v-show="!showShortButtons">Add Location</span>
+        </v-btn>
+        <v-btn
+          v-show="showConfirmButton"
+          color="warning"
+          @click="confirmLocation"
+        >
+          <v-icon class="mr-1">done</v-icon>
+          <span v-show="!showShortButtons">Confirm Location</span>
+        </v-btn>
+      </template>
+
       <v-btn
-        v-show="showAddLocationButton"
-        color="primary"
-        @click="setAddMode(true)"
+        v-show="!isLoggedIn"
+        :href="gitHubUrl"
+        class="login-btn"
       >
-        <v-icon class="mr-1">add_location</v-icon>
-        Add Location
+        <v-icon class="mr-1">mdi-github-circle</v-icon>
+        <span v-show="!showShortButtons">
+          Login with GitHub
+        </span>
+        <span v-show="showShortButtons">
+          Login
+        </span>
       </v-btn>
-      <v-btn
-        v-show="showConfirmButton"
-        color="warning"
-        @click="confirmLocation"
-      >
-        <v-icon class="mr-1">done</v-icon>
-        Confirm Location
-      </v-btn>
+
       <v-menu
         v-model="menu"
+        :min-width="showLongTopMenu ? '94vw': undefined"
+        :nudge-bottom="showLongTopMenu ? 45 : 0"
+        transition="slide-y-transition"
         bottom
-        left>
+      >
         <v-btn
           slot="activator"
           icon
@@ -33,6 +52,7 @@
         </v-btn>
         <v-list>
           <v-list-tile
+            v-if="isLoggedIn"
             to="/user/"
             active-class=""
             avatar
@@ -45,6 +65,7 @@
             </v-list-tile-content>
           </v-list-tile>
           <v-list-tile
+            v-if="isLoggedIn"
             v-show="showEditLocation"
             avatar
             active-class=""
@@ -56,7 +77,21 @@
               <v-list-tile-title>Edit your location</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
+
           <v-list-tile
+            avatar
+            active-class=""
+            @click="setGoToMap(false)">
+            <v-list-tile-avatar>
+              <img src="/logo-icon_only.svg" >
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>About vuepeople.org</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+
+          <v-list-tile
+            v-if="isLoggedIn"
             avatar
             active-class=""
             @click="doLogout">
@@ -67,20 +102,10 @@
               <v-list-tile-title>Logout</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
+
         </v-list>
       </v-menu>
-    </div>
 
-    <div
-      v-show="!isLoggedIn"
-      class="logged-out"
-    >
-      <v-btn
-        :href="gitHubUrl"
-      >
-        <v-icon class="mr-1">mdi-github-circle</v-icon>
-        Login with GitHub
-      </v-btn>
     </div>
   </div>
 </template>
@@ -118,13 +143,20 @@ export default {
     },
     showEditLocation () {
       return this.positionSet && !this.isAddMode;
+    },
+    showShortButtons () {
+      return this.$mq === 'sm' || this.$mq === 'xs';
+    },
+    showLongTopMenu () {
+      return this.menu && (this.$mq === 'sm' || this.$mq === 'xs');
     }
   },
   methods: {
     ...mapActions({
       logout: 'user/logout',
       setAddMode: 'map/setAddMode',
-      updateUserProfile: 'user/updateUserProfile'
+      updateUserProfile: 'user/updateUserProfile',
+      setGoToMap: 'setGoToMap'
     }),
     doLogout () {
       this.menu = false;
@@ -156,9 +188,19 @@ export default {
     .logged-out {
       padding: 0 4px;
 
-      .btn {
+      .login-btn {
         background-color: @color-github !important;
       }
+    }
+
+    &.short-menu {
+      .user-info {
+        display: none;
+      }
+    }
+
+    &.long-menu {
+      width: 92vw;
     }
   }
 </style>
