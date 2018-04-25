@@ -1,5 +1,5 @@
 <template>
-  <div :class="['user-menu', {'short-menu': !showLongTopMenu, 'long-menu': showLongTopMenu}]">
+  <div :class="['user-menu', {'short-menu': showShortMenu, 'long-menu': showLongTopMenu}]">
     <div
       :class="{'logged-in': isLoggedIn, 'logged-out': !isLoggedIn}"
     >
@@ -149,6 +149,9 @@ export default {
     },
     showLongTopMenu () {
       return this.menu && (this.$mq === 'sm' || this.$mq === 'xs');
+    },
+    showShortMenu () {
+      return !this.menu && (this.$mq === 'sm' || this.$mq === 'xs');
     }
   },
   methods: {
