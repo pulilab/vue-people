@@ -1,6 +1,7 @@
 export const state = () => ({
   userTypes: [],
-  tags: []
+  tags: [],
+  goToMap: false
 });
 
 export const getters = {
@@ -17,6 +18,9 @@ export const getters = {
   },
   getTags: state => {
     return [...state.tags];
+  },
+  getGoToMap: state => {
+    return state.goToMap;
   }
 };
 
@@ -29,6 +33,9 @@ export const actions = {
     const { data } = await this.$axios.get('/api/tags/');
     const tags = data.map(t => t.name);
     commit('SET_TAGS', tags);
+  },
+  setGoToMap ({commit}, value) {
+    commit('SET_GO_TO_MAP', value);
   }
 };
 
@@ -38,5 +45,8 @@ export const mutations = {
   },
   SET_TAGS: (state, tags) => {
     state.tags = tags;
+  },
+  SET_GO_TO_MAP: (state, value) => {
+    state.goToMap = value;
   }
 };

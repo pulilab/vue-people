@@ -48,6 +48,11 @@ describe('getters', () => {
     expect(result).toEqual(s.tags);
     expect(result).not.toBe(s.tags);
   });
+
+  test('getGoToMap', () => {
+    const result = getters.getGoToMap(s);
+    expect(result).toEqual(s.goToMap);
+  });
 });
 
 describe('actions', () => {
@@ -74,6 +79,11 @@ describe('actions', () => {
     expect(actions.$axios.get.mock.calls[0]).toEqual(['/api/tags/']);
     expect(vuex.commit.mock.calls[0]).toEqual(['SET_TAGS', [1]]);
   });
+
+  test('setGoToMap', () => {
+    actions.setGoToMap(vuex, true);
+    expect(vuex.commit.mock.calls[0]).toEqual(['SET_GO_TO_MAP', true]);
+  });
 });
 
 describe('mutations', () => {
@@ -87,5 +97,11 @@ describe('mutations', () => {
     const state = {};
     mutations.SET_TAGS(state, 1);
     expect(state.tags).toEqual(1);
+  });
+
+  test('SET_GO_TO_MAP', () => {
+    const state = {};
+    mutations.SET_GO_TO_MAP(state, 1);
+    expect(state.goToMap).toEqual(1);
   });
 });
