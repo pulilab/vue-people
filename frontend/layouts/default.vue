@@ -1,12 +1,22 @@
 <template>
   <v-app
-    class="vue-people"
+    :class="['vue-people', mobileClass]"
     dark>
     <v-content>
       <nuxt/>
     </v-content>
   </v-app>
 </template>
+
+<script>
+export default {
+  computed: {
+    mobileClass () {
+      return `viewport-${this.$mq}`;
+    }
+  }
+};
+</script>
 
 <style lang="less">
   @import "../assets/style/variables.less";
