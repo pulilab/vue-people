@@ -5,10 +5,16 @@
       fluid
       pa-0>
       <v-layout
-        row>
-        <v-flex class="left-aside-wrapper">
-          <left-side />
-        </v-flex>
+        row
+      >
+        <v-slide-x-transition>
+          <v-flex
+            v-if="!hideLeft"
+            class="left-aside-wrapper"
+          >
+            <left-side />
+          </v-flex>
+        </v-slide-x-transition>
         <v-flex class="main-map-wrapper">
           <main-map/>
         </v-flex>
@@ -19,6 +25,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import MainMap from '~/components/MainMap.vue';
 import LeftSide from '~/components/LeftSide.vue';
 import RightSide from '~/components/RightSide.vue';
@@ -30,8 +37,14 @@ export default {
     RightSide
   },
   computed: {
+    ...mapGetters({
+      goToMap: 'getGoToMap'
+    }),
     showRight () {
       return !!(this.$route.name === 'index-user');
+    },
+    hideLeft () {
+      return this.goToMap && (this.$mq === 'xs' || this.$mq === 'sm');
     }
   },
   async fetch ({store}) {
