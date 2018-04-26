@@ -43,13 +43,13 @@
         transition="slide-y-transition"
         bottom
       >
-        <!-- TODO -->
-        <!-- When '.menu-user-menu-mobile' is open we should switch activator to a close btn, just like on the design -->
+
         <v-btn
           slot="activator"
           icon
           light>
-          <v-icon>more_vert</v-icon>
+          <v-icon v-show="!showLongMenu">more_vert</v-icon>
+          <v-icon v-show="showLongMenu">close</v-icon>
         </v-btn>
         <v-list>
           <v-list-tile
