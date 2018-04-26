@@ -84,57 +84,57 @@ export default {
     height: 100%;
     overflow-x: hidden;
     background-color: @color-white;
-  }
 
-  .intro-text {
-    height: 100%;
+    .intro-text {
+      height: 100%;
 
-    .logo {
-      width: auto;
-      height: 56px;
-      margin-bottom: 40px;
-    }
+      .logo {
+        width: auto;
+        height: 56px;
+        margin-bottom: 40px;
+      }
 
-    h3 {
-      color: @font-dark-primary;
-      letter-spacing: -0.25px !important;
-    }
+      h3 {
+        color: @font-dark-primary;
+        letter-spacing: -0.25px !important;
+      }
 
-    p {
-      margin-bottom: 24px;
-      color: @font-dark-secondary;
+      p {
+        margin-bottom: 24px;
+        color: @font-dark-secondary;
 
-      a {
-        white-space: nowrap;
+        a {
+          white-space: nowrap;
+        }
+      }
+
+      .btn-gotomap {
+        float: left;
       }
     }
 
-    .btn-gotomap {
-      float: left;
-    }
-  }
+    .credit {
+      z-index: 10;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 14px 24px;
+      background-color: @color-white;
+      color: @font-dark-secondary;
 
-  .credit {
-    z-index: 10;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding: 14px 24px;
-    background-color: @color-white;
-    color: @font-dark-secondary;
+      > span {
+        height: 36px;
+        line-height: 36px;
+      }
 
-    > span {
-      height: 36px;
-      line-height: 36px;
-    }
-
-    .logo {
-      width: 36px;
-      height: 36px;
-      margin-right: 12px;
+      .logo {
+        width: 36px;
+        height: 36px;
+        margin-right: 12px;
+      }
     }
   }
 </style>
