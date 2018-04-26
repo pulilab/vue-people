@@ -193,10 +193,16 @@ export default {
     height: 100%;
     border-radius: 3px;
 
-    .top-bar {
-      height: @map-card-height;
-      padding: 0 12px;
-      background-color: @color-white;
+    .toolbar {
+      .toolbar__content {
+        height: @map-card-height !important;
+      }
+
+      .top-bar {
+        height: @map-card-height;
+        padding: 0 12px;
+        background-color: @color-white;
+      }
     }
 
     .form-container {
