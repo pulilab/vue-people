@@ -214,7 +214,7 @@ export default {
   }
 
   .menu-user-menu-mobile {
-    top: @map-card-height + 16 - 3 !important;
+    top: @map-card-height + 16 !important;
     left: 16px !important;
     width: calc(100vw - 32px) !important;
     min-width: calc(100vw - 32px) !important;
