@@ -172,7 +172,7 @@ export default {
 
           &.no-data {
             font-weight: 400;
-            color: @font-light-dividers;
+            color: rgba(255,255,255,.3);
           }
 
           .github-stats {

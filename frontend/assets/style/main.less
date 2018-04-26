@@ -68,6 +68,18 @@
   .list__tile__content {
     padding-right: 8px;
   }
+
+  // custom menu avatar
+  .list__tile__avatar {
+    &.vueman .avatar img {
+      position: relative;
+      top: -3px;
+      left: -1px;
+      width: 14px;
+      height: 23px;
+      border-radius: 0;
+    }
+  }
 }
 
 .input-group {
@@ -112,7 +124,6 @@
   }
 
   .leaflet-control-container {
-
     .leaflet-right .leaflet-control {
       margin-right: 16px;
     }
@@ -140,6 +151,15 @@
     .leaflet-control-zoom-in,
     .leaflet-control-zoom-out {
       font-size: 18px !important;
+    }
+  }
+
+  // Responsive
+  .viewport-sm & {
+    .leaflet-control-container {
+      .leaflet-bottom .leaflet-control {
+        margin-bottom: 62px;
+      }
     }
   }
 }

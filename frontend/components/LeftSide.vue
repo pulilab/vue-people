@@ -16,25 +16,29 @@
       <h3 class="title mb-3">
         About vuepeople.org
       </h3>
+
       <p>
         VuePeople lists and connects Vue.JS developers around the world. <br>
         The aim of this site is for Vue.JS developers to use this tool to present themselves and their work to the world, and to provide a platform to connect with like-minded individuals.
       </p>
+
       <p>
         We’ve created this place so you can follow the Vue.JS community as it grows. As the site is still a work in progress, we are happy to receive your feedback and next feature suggestions at <a href="mailto:family@vuepeople.org">family@vuepeople.org</a>
       </p>
 
       <p>
-        We credit inspiration to <a href="http://people.django.com">http://people.django.com</a>
+        We credit inspiration to <a href="http://people.django.com">people.django.com</a>
       </p>
+
       <v-btn
         v-show="$mq === 'sm'"
         block
         color="primary"
+        class="btn-gotomap my-3"
         @click="setGoToMap(true)"
       >
         Go to map
-        <v-icon class="ml-2">mdi-arrow-right</v-icon>
+        <v-icon class="ml-1">mdi-arrow-right</v-icon>
       </v-btn>
     </div>
     <div class="credit elevation-6">
@@ -88,7 +92,7 @@ export default {
     .logo {
       width: auto;
       height: 56px;
-      margin-bottom: 48px;
+      margin-bottom: 40px;
     }
 
     h3 {
@@ -101,8 +105,12 @@ export default {
       color: @font-dark-secondary;
 
       a {
-        display: block;
+        white-space: nowrap;
       }
+    }
+
+    .btn-gotomap {
+      float: left;
     }
   }
 

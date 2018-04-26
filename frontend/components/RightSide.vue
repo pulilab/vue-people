@@ -27,5 +27,12 @@ export default {
     overflow-x: hidden;
     background-color: @color-white;
     border-radius: 3px;
+
+    // Responsive
+    .viewport-sm & {
+      width: calc(100vw - 32px);
+      min-width: calc(100vw - 32px);
+      max-width: calc(100vw - 32px);
+    }
   }
 </style>

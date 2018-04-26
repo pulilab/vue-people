@@ -129,7 +129,7 @@
         color="primary"
         class="ma-0"
         @click.stop="save">
-        Save changes
+        Save<span class="trim"> changes</span>
       </v-btn>
     </v-layout>
   </div>
@@ -205,6 +205,7 @@ export default {
       top: @map-card-height;
       width: 100%;
       overflow-y: auto;
+      padding-bottom: 48px;
     }
 
     .user-profile-actions {
@@ -219,6 +220,13 @@ export default {
 
       .last-saved {
         color: @font-dark-disabled;
+      }
+    }
+
+    // Responsive
+    .viewport-sm & {
+      .trim {
+        display: none;
       }
     }
   }

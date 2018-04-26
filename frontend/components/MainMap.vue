@@ -378,5 +378,12 @@ export default {
         font-size: 18px;
       }
     }
+
+    // Responsive
+    .viewport-sm & {
+      .home-button {
+        bottom: 134px;
+      }
+    }
   }
 </style>

@@ -43,6 +43,8 @@
       </v-layout>
     </v-menu>
 
+    <!-- TODO -->
+    <!-- This part should match the design otherwise with multiple tags this card's with becomes unmanagable... so we need a counter here with the active tags selected, and in the dropdown the selected tags must come first in the list. -->
     <div class="chips">
       <v-chip
         v-for="tag in selectedTags"
@@ -121,16 +123,21 @@ export default {
 
     .toolbar__content {
       min-width: @map-card-height;
-      height: @map-card-height;
+      height: @map-card-height !important;
     }
 
     .open-tag-filter {
-      left: 8px;
+      left: 14px;
+      margin: 0 !important;
     }
 
     .chips {
       .chip {
         margin: 0 0 0 8px;
+
+        &:first-child {
+          margin-left: 24px;
+        }
       }
     }
   }
@@ -167,6 +174,16 @@ export default {
     + .menu__content--dropdown {
       border-radius: 0 0 3px 3px;
       transform: translate(0, -1px);
+    }
+  }
+
+  // Responsive
+  .viewport-sm & {
+    .menu-tag-filter,
+    .menu-tag-filter + .menu__content--dropdown {
+      width: calc(100vw - 32px) !important;
+      min-width: calc(100vw - 32px) !important;
+      max-width: calc(100vw - 32px) !important;
     }
   }
 </style>
