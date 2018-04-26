@@ -291,6 +291,18 @@ export default {
           cursor: pointer;
         }
       }
+
+      // Ugly fix to avoid uninitialised tooltip to appear under the map
+      .vue2leaflet-map {
+        .avatar-wrapper {
+          opacity: 0
+        }
+        .leaflet-pane {
+          .avatar-wrapper {
+            opacity: 1
+          }
+        }
+      }
     }
 
     .person-tooltip {
