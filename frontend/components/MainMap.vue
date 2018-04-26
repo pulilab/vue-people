@@ -86,7 +86,7 @@
       bottom
       multi-line
     >
-      <v-icon class="mr-2">pin_drop</v-icon>
+      <v-icon class="mr-3">pin_drop</v-icon>
       <span class="body-2">Click on the map anywhere to select your position</span>
     </v-snackbar>
 
@@ -98,7 +98,7 @@
       bottom
       multi-line
     >
-      <v-icon class="mr-2">add_location</v-icon>
+      <v-icon class="mr-3">add_location</v-icon>
       <span class="body-2">...waiting for location</span>
     </v-snackbar>
   </div>
