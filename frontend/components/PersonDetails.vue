@@ -1,4 +1,6 @@
 <template>
+  <!-- TODO -->
+  <!-- It would be nice if we could hide the cards on map when this is open/active, just like other cases (eg. about us section) -->
   <div class="person-details">
     <v-toolbar
       light
@@ -148,16 +150,19 @@ export default {
       .toolbar__content {
         .btn {
           color: @font-dark-disabled;
-        }
 
-        .btn:not(.btn--icon) {
-          min-width: 0;
-          margin: 0;
-          padding: 0 10px 0 6px;
+          &:not(.btn--icon) {
+            min-width: 0;
+            margin: 0;
+            padding: 0 10px 0 6px;
 
-          .btn__content {
-            padding: 0;
+            .btn__content {
+              padding: 0;
+            }
           }
+
+          &.btn-back {}
+          &.btn-center-focus {}
         }
       }
     }
@@ -202,6 +207,13 @@ export default {
           flex-wrap: wrap;
           font-size: @font-size-tiny;
         }
+      }
+    }
+
+    // Responsive
+    .viewport-sm & {
+      .btn-center-focus {
+        display: none;
       }
     }
   }
