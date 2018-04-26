@@ -22,7 +22,7 @@
       <v-layout row>
         <v-select
           ref="tagSelect"
-          :items="tagList"
+          :items="tags"
           v-model="selectedTags"
           label="Type here to filter by tag."
           prepend-icon="search"
@@ -43,9 +43,10 @@
       </v-layout>
     </v-menu>
 
-    <!-- TODO -->
-    <!-- This part should match the design otherwise with multiple tags this card's with becomes unmanagable... so we need a counter here with the active tags selected, and in the dropdown the selected tags must come first in the list. -->
-    <div class="chips">
+    <div
+      v-show="showTagsChips"
+      class="chips"
+    >
       <v-chip
         v-for="tag in selectedTags"
         :key="tag"
@@ -54,6 +55,11 @@
       >
         {{ tag }}
       </v-chip>
+    </div>
+    <div
+      v-show="showTagsBadge"
+      class="badge ml-2">
+      {{ selectedTags.length }}
     </div>
   </v-toolbar>
 </template>
@@ -73,6 +79,9 @@ export default {
       tagList: 'getTags',
       getSelectedTags: 'people/getSelectedTags'
     }),
+    tags () {
+      return Array.from(new Set([...this.getSelectedTags, ...this.tagList]));
+    },
     selectedTags: {
       get () {
         return this.getSelectedTags;
@@ -81,8 +90,11 @@ export default {
         this.setSelectedTags(selected);
       }
     },
+    showTagsBadge () {
+      return this.$mq === 'sm' || this.$mq === 'xs';
+    },
     showTagsChips () {
-      return !this.dropdownOpen && this.selectedTags.length > 0;
+      return !this.dropdownOpen && this.selectedTags.length > 0 && !this.showTagsBadge;
     }
   },
   methods: {
@@ -139,6 +151,10 @@ export default {
           margin-left: 24px;
         }
       }
+    }
+    .badge {
+      background-color: green
+
     }
   }
 
