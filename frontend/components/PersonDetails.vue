@@ -1,6 +1,4 @@
 <template>
-  <!-- TODO -->
-  <!-- It would be nice if we could hide the cards on map when this is open/active, just like other cases (eg. about us section) -->
   <div class="person-details">
     <v-toolbar
       light
