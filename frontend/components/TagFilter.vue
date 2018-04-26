@@ -56,9 +56,11 @@
         {{ tag }}
       </v-chip>
     </div>
+    <!-- TODO -->
+    <!-- Show only if one tag's selected at least -->
     <div
       v-show="showTagsBadge"
-      class="badge ml-2">
+      class="badge">
       {{ selectedTags.length }}
     </div>
   </v-toolbar>
@@ -152,9 +154,16 @@ export default {
         }
       }
     }
-    .badge {
-      background-color: green
 
+    .badge {
+      position: relative;
+      margin: 0 20px !important;
+      padding: 0 8px;
+      background-color: @color-brand-primary;
+      font-size: @font-size-small;
+      font-weight: 700;
+      color: @color-white;
+      border-radius: 3px;
     }
   }
 
