@@ -34,7 +34,7 @@
         v-show="$mq === 'sm'"
         block
         color="primary"
-        class="btn-gotomap my-3"
+        class="btn-gotomap"
         @click="setGoToMap(true)"
       >
         Go to map
@@ -83,6 +83,7 @@ export default {
     position: relative;
     height: 100%;
     overflow-x: hidden;
+    overflow-y: auto;
     background-color: @color-white;
 
     .intro-text {
@@ -110,12 +111,13 @@ export default {
 
       .btn-gotomap {
         float: left;
+        margin: 8px 0 48px;
       }
     }
 
     .credit {
       z-index: 10;
-      position: absolute;
+      position: sticky;
       bottom: 0;
       left: 0;
       display: flex;
