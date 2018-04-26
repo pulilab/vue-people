@@ -37,6 +37,8 @@
         </span>
       </v-btn>
 
+      <v-spacer v-show="!isLoggedIn" />
+
       <v-menu
         v-model="menu"
         :content-class="menuContentClass"

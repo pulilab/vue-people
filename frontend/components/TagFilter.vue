@@ -157,7 +157,7 @@ export default {
 
     .badge {
       position: relative;
-      margin: 0 20px !important;
+      margin: 0 20px 0 24px !important;
       padding: 0 8px;
       background-color: @color-brand-primary;
       font-size: @font-size-small;
