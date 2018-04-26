@@ -34,7 +34,7 @@
         :id="person.id"
       />
     </v-toolbar>
-    <div class="person-info-container pb-5">
+    <div class="person-info-container">
       <div
         v-if="person"
         class="person-info">
@@ -173,6 +173,7 @@ export default {
       max-width: 100%;
       overflow-y: auto;
       overflow-x: hidden;
+      padding-bottom: 80px;
 
       .person-info {
         position: relative;
