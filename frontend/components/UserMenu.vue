@@ -5,37 +5,41 @@
     >
       <template v-if="isLoggedIn" >
         <user-avatar/>
-        <v-btn
-          v-show="showAddLocationButton"
-          color="primary"
-          @click="setAddMode(true)"
-        >
-          <v-icon class="mr-1">add_location</v-icon>
-          <span v-show="!showShortButtons">Add Location</span>
-        </v-btn>
-        <v-btn
-          v-show="showConfirmButton"
-          color="warning"
-          @click="confirmLocation"
-        >
-          <v-icon class="mr-1">done</v-icon>
-          <span v-show="!showShortButtons">Confirm Location</span>
-        </v-btn>
+        <div class="location-actions">
+          <v-btn
+            v-show="showAddLocationButton"
+            color="primary"
+            @click="setAddMode(true)"
+          >
+            <v-icon class="mr-1">add_location</v-icon>
+            <span v-show="!showShortButtons">Add Location</span>
+          </v-btn>
+          <v-btn
+            v-show="showConfirmButton"
+            color="warning"
+            @click="confirmLocation"
+          >
+            <v-icon class="mr-1">done</v-icon>
+            <span v-show="!showShortButtons">Confirm Location</span>
+          </v-btn>
+        </div>
       </template>
 
-      <v-btn
-        v-show="!isLoggedIn"
-        :href="gitHubUrl"
-        class="login-btn"
-      >
-        <v-icon class="mr-1">mdi-github-circle</v-icon>
-        <span v-show="!showShortButtons">
-          Login with GitHub
-        </span>
-        <span v-show="showShortButtons">
-          Login
-        </span>
-      </v-btn>
+      <div>
+        <v-btn
+          v-show="!isLoggedIn"
+          :href="gitHubUrl"
+          class="login-btn"
+        >
+          <v-icon class="mr-1">mdi-github-circle</v-icon>
+          <span v-show="!showShortButtons">
+            Login with GitHub
+          </span>
+          <span v-show="showShortButtons">
+            Login
+          </span>
+        </v-btn>
+      </div>
 
       <v-spacer v-show="!isLoggedIn" />
 
@@ -182,6 +186,14 @@ export default {
   @import "../assets/style/mixins.less";
 
   .user-menu {
+    .location-actions {
+      margin-left: 12px;
+
+      .btn {
+        min-width: auto;
+      }
+    }
+
     .logged-in,
     .logged-out {
       display: flex;

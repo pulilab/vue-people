@@ -98,8 +98,10 @@
       bottom
       multi-line
     >
-      <v-icon class="mr-3">add_location</v-icon>
-      <span class="body-2">...waiting for location</span>
+      <div>
+        <v-icon class="mr-3">my_location</v-icon>
+        <span class="body-2">...waiting for location</span>
+      </div>
     </v-snackbar>
   </div>
 </template>

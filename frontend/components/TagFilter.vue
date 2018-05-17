@@ -146,12 +146,10 @@ export default {
     }
 
     .chips {
+      margin: 0 16px 0 24px;
+
       .chip {
         margin: 0 0 0 8px;
-
-        &:first-child {
-          margin-left: 24px;
-        }
       }
     }
 

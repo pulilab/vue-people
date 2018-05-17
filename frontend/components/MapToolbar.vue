@@ -33,16 +33,12 @@ export default {
     top: 16px;
     right: 16px;
     z-index: 20;
+    height: @map-card-height !important;
     border-radius: 3px;
     background-color: rgba(255,255,255,.94) !important;
 
-    // Responsive
-    .viewport-sm & {
-      height: @map-card-height;
-
-      .toolbar__content {
-        height: @map-card-height !important;
-      }
+    .toolbar__content {
+      height: @map-card-height !important;
     }
   }
 </style>

@@ -129,7 +129,7 @@
         color="primary"
         class="ma-0"
         @click.stop="save">
-        Save<span class="trim"> changes</span>
+        Save<span class="trim">&nbsp;changes</span>
       </v-btn>
     </v-layout>
   </div>
@@ -226,6 +226,10 @@ export default {
 
       .last-saved {
         color: @font-dark-disabled;
+      }
+
+      .trim {
+        display: inline-block;
       }
     }
 
