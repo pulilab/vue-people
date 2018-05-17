@@ -106,6 +106,16 @@ export default {
         .text-truncate();
       }
     }
-  }
 
+    // Responsive
+    .viewport-sm & {
+      .avatar {
+        margin: 0;
+      }
+
+      .user-info {
+        margin-left: 12px;
+      }
+    }
+  }
 </style>

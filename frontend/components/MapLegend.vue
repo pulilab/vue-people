@@ -69,6 +69,13 @@ export default {
       color: @font-dark-primary;
     }
   }
+
+  // Responsive
+  .viewport-sm & {
+    display: flex;
+    justify-content: space-around;
+    width: calc(100vw - 32px);
+  }
 }
 
 </style>

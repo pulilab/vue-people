@@ -129,7 +129,7 @@
         color="primary"
         class="ma-0"
         @click.stop="save">
-        Save changes
+        Save<span class="trim"> changes</span>
       </v-btn>
     </v-layout>
   </div>
@@ -193,10 +193,16 @@ export default {
     height: 100%;
     border-radius: 3px;
 
-    .top-bar {
-      height: @map-card-height;
-      padding: 0 12px;
-      background-color: @color-white;
+    .toolbar {
+      .toolbar__content {
+        height: @map-card-height !important;
+      }
+
+      .top-bar {
+        height: @map-card-height;
+        padding: 0 12px;
+        background-color: @color-white;
+      }
     }
 
     .form-container {
@@ -205,6 +211,7 @@ export default {
       top: @map-card-height;
       width: 100%;
       overflow-y: auto;
+      padding-bottom: 48px;
     }
 
     .user-profile-actions {
@@ -219,6 +226,13 @@ export default {
 
       .last-saved {
         color: @font-dark-disabled;
+      }
+    }
+
+    // Responsive
+    .viewport-sm & {
+      .trim {
+        display: none;
       }
     }
   }

@@ -22,7 +22,7 @@
       <v-layout row>
         <v-select
           ref="tagSelect"
-          :items="tagList"
+          :items="tags"
           v-model="selectedTags"
           label="Type here to filter by tag."
           prepend-icon="search"
@@ -43,7 +43,10 @@
       </v-layout>
     </v-menu>
 
-    <div class="chips">
+    <div
+      v-show="showTagsChips"
+      class="chips"
+    >
       <v-chip
         v-for="tag in selectedTags"
         :key="tag"
@@ -52,6 +55,13 @@
       >
         {{ tag }}
       </v-chip>
+    </div>
+    <!-- TODO -->
+    <!-- Show only if one tag's selected at least -->
+    <div
+      v-show="showTagsBadge"
+      class="badge">
+      {{ selectedTags.length }}
     </div>
   </v-toolbar>
 </template>
@@ -71,6 +81,9 @@ export default {
       tagList: 'getTags',
       getSelectedTags: 'people/getSelectedTags'
     }),
+    tags () {
+      return Array.from(new Set([...this.getSelectedTags, ...this.tagList]));
+    },
     selectedTags: {
       get () {
         return this.getSelectedTags;
@@ -79,8 +92,11 @@ export default {
         this.setSelectedTags(selected);
       }
     },
+    showTagsBadge () {
+      return this.$mq === 'sm' || this.$mq === 'xs';
+    },
     showTagsChips () {
-      return !this.dropdownOpen && this.selectedTags.length > 0;
+      return !this.dropdownOpen && this.selectedTags.length > 0 && !this.showTagsBadge;
     }
   },
   methods: {
@@ -121,17 +137,33 @@ export default {
 
     .toolbar__content {
       min-width: @map-card-height;
-      height: @map-card-height;
+      height: @map-card-height !important;
     }
 
     .open-tag-filter {
-      left: 8px;
+      left: 14px;
+      margin: 0 !important;
     }
 
     .chips {
       .chip {
         margin: 0 0 0 8px;
+
+        &:first-child {
+          margin-left: 24px;
+        }
       }
+    }
+
+    .badge {
+      position: relative;
+      margin: 0 20px 0 24px !important;
+      padding: 0 8px;
+      background-color: @color-brand-primary;
+      font-size: @font-size-small;
+      font-weight: 700;
+      color: @color-white;
+      border-radius: 3px;
     }
   }
 
@@ -167,6 +199,16 @@ export default {
     + .menu__content--dropdown {
       border-radius: 0 0 3px 3px;
       transform: translate(0, -1px);
+    }
+  }
+
+  // Responsive
+  .viewport-sm & {
+    .menu-tag-filter,
+    .menu-tag-filter + .menu__content--dropdown {
+      width: calc(100vw - 32px) !important;
+      min-width: calc(100vw - 32px) !important;
+      max-width: calc(100vw - 32px) !important;
     }
   }
 </style>

@@ -59,6 +59,30 @@ export default {
 
 <style lang="less">
   .main-container {
+    position: relative;
     height: 100%;
+
+    .left-aside-wrapper {
+      z-index: 2;
+      min-width: 320px;
+      max-width: 320px;
+    }
+
+    .main-map-wrapper {
+      z-index: 1;
+      width: 100%;
+    }
+
+    // Responsive
+    .viewport-sm & {
+      .left-aside-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 320px;
+        height: 100%;
+        display: block;
+      }
+    }
   }
 </style>

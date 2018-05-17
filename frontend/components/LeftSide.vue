@@ -16,25 +16,29 @@
       <h3 class="title mb-3">
         About vuepeople.org
       </h3>
+
       <p>
         VuePeople lists and connects Vue.JS developers around the world. <br>
         The aim of this site is for Vue.JS developers to use this tool to present themselves and their work to the world, and to provide a platform to connect with like-minded individuals.
       </p>
+
       <p>
         We’ve created this place so you can follow the Vue.JS community as it grows. As the site is still a work in progress, we are happy to receive your feedback and next feature suggestions at <a href="mailto:family@vuepeople.org">family@vuepeople.org</a>
       </p>
 
       <p>
-        We credit inspiration to <a href="http://people.django.com">http://people.django.com</a>
+        We credit inspiration to <a href="http://people.django.com">people.django.com</a>
       </p>
+
       <v-btn
         v-show="$mq === 'sm'"
         block
         color="primary"
+        class="btn-gotomap"
         @click="setGoToMap(true)"
       >
         Go to map
-        <v-icon class="ml-2">mdi-arrow-right</v-icon>
+        <v-icon class="ml-1">mdi-arrow-right</v-icon>
       </v-btn>
     </div>
     <div class="credit elevation-6">
@@ -79,54 +83,66 @@ export default {
     position: relative;
     height: 100%;
     overflow-x: hidden;
+    overflow-y: auto;
     background-color: @color-white;
-  }
 
-  .intro-text {
-    height: 100%;
+    .intro-text {
+      height: 100%;
 
-    .logo {
-      width: auto;
-      height: 56px;
-      margin-bottom: 48px;
-    }
+      .logo {
+        width: auto;
+        height: 56px;
+        margin-bottom: 40px;
+      }
 
-    h3 {
-      color: @font-dark-primary;
-      letter-spacing: -0.25px !important;
-    }
+      h3 {
+        color: @font-dark-primary;
+        letter-spacing: -0.25px !important;
+      }
 
-    p {
-      margin-bottom: 24px;
-      color: @font-dark-secondary;
+      p {
+        margin-bottom: 24px;
+        color: @font-dark-secondary;
 
-      a {
-        display: block;
+        a {
+          white-space: nowrap;
+        }
+      }
+
+      .btn-gotomap {
+        float: left;
+        margin: 8px 0 48px;
       }
     }
-  }
 
-  .credit {
-    z-index: 10;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding: 14px 24px;
-    background-color: @color-white;
-    color: @font-dark-secondary;
+    .credit {
+      z-index: 10;
+      position: sticky;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 14px 24px;
+      background-color: @color-white;
+      color: @font-dark-secondary;
 
-    > span {
-      height: 36px;
-      line-height: 36px;
+      > span {
+        height: 36px;
+        line-height: 36px;
+      }
+
+      .logo {
+        width: 36px;
+        height: 36px;
+        margin-right: 12px;
+      }
     }
 
-    .logo {
-      width: 36px;
-      height: 36px;
-      margin-right: 12px;
+    // Responsive
+    .viewport-sm & {
+      // elevation 8
+      box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, .2), 0px 8px 10px 1px rgba(0, 0, 0, .14), 0px 3px 14px 2px rgba(0, 0, 0, .12) !important;
     }
   }
 </style>

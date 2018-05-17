@@ -37,17 +37,21 @@
         </span>
       </v-btn>
 
+      <v-spacer v-show="!isLoggedIn" />
+
       <v-menu
         v-model="menu"
         :content-class="menuContentClass"
         transition="slide-y-transition"
         bottom
       >
+
         <v-btn
           slot="activator"
           icon
           light>
-          <v-icon>more_vert</v-icon>
+          <v-icon v-show="!showLongMenu">more_vert</v-icon>
+          <v-icon v-show="showLongMenu">close</v-icon>
         </v-btn>
         <v-list>
           <v-list-tile
@@ -81,8 +85,8 @@
             avatar
             active-class=""
             @click="setGoToMap(false)">
-            <v-list-tile-avatar>
-              <img src="/logo-icon_only.svg" >
+            <v-list-tile-avatar class="vueman">
+              <img src="/icon-vueman.svg" >
             </v-list-tile-avatar>
             <v-list-tile-content>
               <v-list-tile-title>About vuepeople.org</v-list-tile-title>
@@ -101,10 +105,8 @@
               <v-list-tile-title>Logout</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
-
         </v-list>
       </v-menu>
-
     </div>
   </div>
 </template>
@@ -198,6 +200,10 @@ export default {
       }
     }
 
+    .menu {
+      width: 48px;
+    }
+
     &.short-menu {
       .user-info {
         display: none;
@@ -205,7 +211,16 @@ export default {
     }
 
     &.long-menu {
-      width: 92vw;
+      width: calc(100vw - 32px);
     }
+  }
+
+  .menu-user-menu-mobile {
+    top: @map-card-height + 16 !important;
+    left: 16px !important;
+    width: calc(100vw - 32px) !important;
+    min-width: calc(100vw - 32px) !important;
+    max-width: calc(100vw - 32px) !important;
+    border-radius: 0 0 3px 3px !important;
   }
 </style>

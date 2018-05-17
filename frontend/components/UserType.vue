@@ -67,5 +67,4 @@ export default {
       top: -1px;
     }
   }
-
 </style>
