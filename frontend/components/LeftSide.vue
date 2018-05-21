@@ -31,7 +31,7 @@
       </p>
 
       <v-btn
-        v-show="$mq === 'sm'"
+        v-show="showGoToMapButton"
         block
         color="primary"
         class="btn-gotomap"
