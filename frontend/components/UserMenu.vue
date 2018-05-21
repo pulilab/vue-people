@@ -152,14 +152,23 @@ export default {
     showShortButtons () {
       return this.$mq === 'sm' || this.$mq === 'xs';
     },
+    mobileMode () {
+      return this.$mq === 'sm' || this.$mq === 'xs';
+    },
     showLongMenu () {
-      return this.menu && (this.$mq === 'sm' || this.$mq === 'xs');
+      return this.menu && this.mobileMode;
     },
     showShortMenu () {
-      return !this.menu && (this.$mq === 'sm' || this.$mq === 'xs');
+      return !this.menu && this.mobileMode;
     },
     menuContentClass () {
       return this.showLongMenu ? 'menu-user-menu-mobile' : 'menu-user-menu';
+    }
+  },
+  mounted () {
+    if (this.mobileMode) {
+      // this address the edge case where the classes are not updated on the first load
+      this.$forceUpdate();
     }
   },
   methods: {
