@@ -1,5 +1,5 @@
 import logging
-
+from django.conf import settings
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from allauth.account.adapter import DefaultAccountAdapter
 
@@ -10,7 +10,12 @@ class MyAccountAdapter(DefaultAccountAdapter):
     def get_login_redirect_url(self, request):
         if not hasattr(request, 'sociallogin'):
             return '/'
-        path = "/user?token={}"
+
+        path = settings.LOGIN_REDIRECT_URL
+        if settings.DEBUG:
+            path = settings.LOGIN_REDIRECT_URL_DEV
+
+
         return path.format(request.sociallogin.token.token)
 
 class MyGithubAccountAdapter(DefaultSocialAccountAdapter):
