@@ -36,6 +36,5 @@ export const apiWriteParser = data => {
     r.user.first_name = data.name;
     data.name = undefined;
   }
-  console.log(r);
   return {...data, ...r};
 };

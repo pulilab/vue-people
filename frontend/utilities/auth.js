@@ -2,19 +2,19 @@ import Cookie from 'js-cookie';
 
 export const safeSaveToken = (name, value) => {
   if (value) {
-    window.localStorage.setItem(name, value);
+    if (process.client) {
+      window.localStorage.setItem(name, value);
+    }
     Cookie.set(name, value);
   }
 };
 
-export const saveTokens = (sessionid, github, csrftoken) => {
+export const saveTokens = (github) => {
   if (process.SERVER_BUILD) return;
-  safeSaveToken('sessionid', sessionid);
   safeSaveToken('github_token', github);
-  safeSaveToken('csrftoken', csrftoken);
 };
 
-export const deleteTokens = (tokens = ['sessionid', 'github_token', 'csrftoken']) => {
+export const deleteTokens = (tokens = ['github_token', 'csrftoken']) => {
   if (process.SERVER_BUILD) {
     return;
   }
@@ -31,22 +31,18 @@ export const getValueFromCookie = (req, value) => {
 
 export const getTokensFromCookie = (req) => {
   if (!req.headers.cookie) return;
-  const sessionid = getValueFromCookie(req, 'sessionid');
   const github = getValueFromCookie(req, 'github_token');
   const csrftoken = getValueFromCookie(req, 'csrftoken');
   return {
-    sessionid,
     github,
     csrftoken
   };
 };
 
 export const getTokensFromLocalStorage = () => {
-  const sessionid = window.localStorage.getItem('sessionid');
   const github = window.localStorage.getItem('github_token');
   const csrftoken = window.localStorage.getItem('csrftoken');
   return {
-    sessionid,
     github,
     csrftoken
   };

@@ -1,6 +1,7 @@
 export const isDjangoAPIRequest = (url) => {
   const pieces = url.split('/').filter(p => p !== '');
-  return !!(pieces && pieces[0] === 'api');
+  const djangoPaths = ['api'];
+  return !!(pieces && djangoPaths.includes(pieces[0]));
 };
 
 export default function ({ $axios, store: { getters } }) {

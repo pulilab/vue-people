@@ -2,6 +2,7 @@ module.exports = {
   verbose: true,
   bail: true,
   collectCoverage: true,
+  restoreMocks: true,
   collectCoverageFrom: [
     '**/store/**/*.js'
   ],

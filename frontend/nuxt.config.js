@@ -41,7 +41,8 @@ const config = {
   axios: {
     baseURL: 'http://django:8000/',
     browserBaseURL: '/',
-    credentials: true
+    credentials: true,
+    retry: false
   },
   router: {
     middleware: 'auth'

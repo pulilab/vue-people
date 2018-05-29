@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '485d&-w(+xpu%&b6lv5!t0a^3h9%ia3i28p@#x8z27l5ov&p!13'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.environ.get('DEBUG', False))
 
 ALLOWED_HOSTS = ['django:8000', 'django', 'localhost', 'vuepeople.pulilab.com']
 
@@ -164,4 +164,5 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-ACCOUNT_LOGOUT_ON_GET=True
+LOGIN_REDIRECT_URL = '/user?token={}'
+LOGIN_REDIRECT_URL_DEV = 'http://localhost:3000/user?token={}'
