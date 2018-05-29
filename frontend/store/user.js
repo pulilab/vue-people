@@ -78,10 +78,9 @@ export const actions = {
     deleteTokens();
     commit('SET_USER_GITHUB_PROFILE', null);
     commit('SET_GITHUB_TOKEN', null);
-    commit('SET_SESSION_ID', null);
+    commit('SET_SAVED_PROFILE', null);
     commit('SET_CSRF_TOKEN', null);
     commit('SET_USER_POSITION', null);
-    commit('SET_SAVED_PROFILE', null);
   },
   async updateUserProfile ({commit, state, getters}, update) {
     const location = getters.getUserPosition;

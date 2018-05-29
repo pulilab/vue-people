@@ -164,8 +164,9 @@ describe('actions', () => {
     actions.logout(vuex);
     expect(vuex.commit.mock.calls[0]).toEqual(['SET_USER_GITHUB_PROFILE', null]);
     expect(vuex.commit.mock.calls[1]).toEqual(['SET_GITHUB_TOKEN', null]);
-    expect(vuex.commit.mock.calls[2]).toEqual(['SET_SESSION_ID', null]);
+    expect(vuex.commit.mock.calls[2]).toEqual(['SET_SAVED_PROFILE', null]);
     expect(vuex.commit.mock.calls[3]).toEqual(['SET_CSRF_TOKEN', null]);
+    expect(vuex.commit.mock.calls[4]).toEqual(['SET_USER_POSITION', null]);
     expect(authUtils.deleteTokens.mock.calls.length).toEqual(1);
   });
 
