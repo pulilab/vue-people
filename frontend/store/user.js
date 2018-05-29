@@ -1,4 +1,4 @@
-import { deleteTokens } from '~/utilities/auth';
+import { deleteTokens, saveTokens } from '~/utilities/auth';
 import { apiReadParser, apiWriteParser } from '~/utilities/parsers';
 import { gitHubUserProfile } from '~/integrations/github/queries';
 import { gitHubGraphQlRequest, profileMapper } from '~/integrations/github/utilities';
@@ -8,7 +8,6 @@ export const state = () => ({
   savedProfile: null,
   position: null,
   githubToken: null,
-  sessionId: null,
   csrfToken: null
 });
 
@@ -20,7 +19,8 @@ export const getters = {
   },
   getLoginStatus: (state, getters) => {
     const ghp = getters.getUserProfile;
-    return !!(ghp && ghp.name && ghp.avatarUrl);
+    const csrfToken = getters.getCsrfToken;
+    return !!(ghp && ghp.name && ghp.avatar_url && csrfToken);
   },
   getUserPosition: state => {
     if (state.position) {
@@ -33,9 +33,6 @@ export const getters = {
   },
   getGithubToken: state => {
     return state.githubToken;
-  },
-  getSessionId: state => {
-    return state.sessionId;
   },
   getCsrfToken: state => {
     return state.csrfToken;
@@ -59,28 +56,32 @@ export const actions = {
       }
     }
   },
-  async loadSavedProfile ({commit, state}) {
-    if (!state.savedProfile) {
-      const { data } = await this.$axios.get('/api/user/');
-      const parsed = apiReadParser(data);
-      if (parsed.location) {
-        commit('SET_USER_POSITION', parsed.location);
+  async loadSavedProfile ({commit, state, dispatch}) {
+    if (!state.savedProfile && state.csrfToken) {
+      try {
+        const { data } = await this.$axios.get('/api/user/');
+        const parsed = apiReadParser(data);
+        if (parsed.location) {
+          commit('SET_USER_POSITION', parsed.location);
+        }
+        commit('SET_SAVED_PROFILE', { ...parsed });
+      } catch (e) {
+        console.error('Invalid credentials');
+        dispatch('logout');
       }
-      commit('SET_SAVED_PROFILE', { ...parsed });
     }
   },
   setUserPosition ({commit}, position) {
     commit('SET_USER_POSITION', position);
   },
   logout ({commit}) {
-    // do not wait for logout endpoint, it will fail the last redirect on dev but work in the real env.
-    this.$axios.get('/accounts/logout/');
+    deleteTokens();
     commit('SET_USER_GITHUB_PROFILE', null);
     commit('SET_GITHUB_TOKEN', null);
     commit('SET_SESSION_ID', null);
     commit('SET_CSRF_TOKEN', null);
     commit('SET_USER_POSITION', null);
-    deleteTokens();
+    commit('SET_SAVED_PROFILE', null);
   },
   async updateUserProfile ({commit, state, getters}, update) {
     const location = getters.getUserPosition;
@@ -91,18 +92,16 @@ export const actions = {
   },
   async setGithubToken ({commit, dispatch}, token) {
     commit('SET_GITHUB_TOKEN', token);
+    saveTokens(token);
     if (token) {
       await dispatch('loadGitHubProfile');
     }
   },
-  async setSessionId ({commit, dispatch, getters}, token) {
-    commit('SET_SESSION_ID', token);
+  async setCsrfToken ({commit, dispatch}, token) {
+    commit('SET_CSRF_TOKEN', token);
     if (token) {
       await dispatch('loadSavedProfile');
     }
-  },
-  setCsrfToken ({commit}, token) {
-    commit('SET_CSRF_TOKEN', token);
   }
 };
 
@@ -118,9 +117,6 @@ export const mutations = {
   },
   SET_GITHUB_TOKEN: (state, token) => {
     state.githubToken = token;
-  },
-  SET_SESSION_ID: (state, token) => {
-    state.sessionId = token;
   },
   SET_CSRF_TOKEN: (state, token) => {
     state.csrfToken = token;
