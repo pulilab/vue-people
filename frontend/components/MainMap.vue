@@ -15,6 +15,7 @@
           v-if="center"
           ref="mainMap"
           :zoom="zoom"
+          :max-zoom="maxZoom"
           :options="mapOptions"
           :center="center"
           @moveend="mapMoveHandler"
@@ -150,7 +151,7 @@ export default {
       pins: 'map/getFilteredPins',
       addMode: 'map/isAddMode',
       userPosition: 'user/getUserPosition',
-      zoom: 'map/getZoom',
+      storedZoom: 'map/getZoom',
       center: 'map/getCenter',
       getUserType: 'getUserType',
       userProfile: 'user/getUserProfile',
@@ -179,6 +180,15 @@ export default {
     },
     showFloatingUI () {
       return !((this.$mq === 'sm' || this.$mq === 'xs') && !this.goToMap);
+    },
+    maxZoom () {
+      return this.addMode ? 13 : undefined;
+    },
+    zoom () {
+      if (this.maxZoom) {
+        return this.storedZoom > this.maxZoom ? this.maxZoom : this.storedZoom;
+      }
+      return this.storedZoom;
     }
   },
   watch: {
@@ -235,7 +245,8 @@ export default {
       this.updateBounds();
     }, 200),
     mapZoomHandler: debounce(function (e) {
-      this.setZoom(e.target.getZoom());
+      const value = parseInt(e.target.getZoom(), 10);
+      this.setZoom(value);
     }, 200),
     centerToUser () {
       if (!this.$store.state.geolocation) {
