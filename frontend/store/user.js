@@ -1,4 +1,4 @@
-import { deleteTokens, saveTokens } from '~/utilities/auth';
+import { deleteTokens } from '~/utilities/auth';
 import { apiReadParser, apiWriteParser } from '~/utilities/parsers';
 import { gitHubUserProfile } from '~/integrations/github/queries';
 import { gitHubGraphQlRequest, profileMapper } from '~/integrations/github/utilities';
@@ -91,7 +91,6 @@ export const actions = {
   },
   async setGithubToken ({commit, dispatch}, token) {
     commit('SET_GITHUB_TOKEN', token);
-    saveTokens(token);
     if (token) {
       await dispatch('loadGitHubProfile');
     }
