@@ -26,10 +26,6 @@
         We’ve created this place so you can follow the Vue.JS community as it grows. As the site is still a work in progress, we are happy to receive your feedback and next feature suggestions at <a href="mailto:family@vuepeople.org">family@vuepeople.org</a>
       </p>
 
-      <p>
-        We credit inspiration to <a href="http://people.django.com">people.django.com</a>
-      </p>
-
       <v-btn
         v-show="showGoToMapButton"
         block
@@ -87,7 +83,7 @@ export default {
     background-color: @color-white;
 
     .intro-text {
-      height: 100%;
+      height: calc(100% - 64px);
 
       .logo {
         width: auto;
@@ -120,6 +116,7 @@ export default {
       position: sticky;
       bottom: 0;
       left: 0;
+      height: 64px;
       display: flex;
       align-items: center;
       width: 100%;
