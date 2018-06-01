@@ -1,6 +1,6 @@
 from rest_framework.generics import get_object_or_404
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin, CreateModelMixin
-from rest_framework.viewsets import GenericViewSet
+from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from taggit.models import Tag
 
 from .permission import IsMeOrReadOnly
@@ -22,7 +22,7 @@ class PeopleViewSet(ListModelMixin, GenericViewSet):
     authentication_classes = []
 
 
-class PersonViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin, GenericViewSet):
+class PersonViewSet(ModelViewSet):
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
     permission_classes = [IsMeOrReadOnly]
@@ -32,6 +32,9 @@ class PersonViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, Update
 
     def list(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
+
+    def perform_destroy(self, person):
+        person.user.delete()
 
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())
