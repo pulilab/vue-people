@@ -65,22 +65,24 @@ $ docker-compose up -d
 ## SSL certificates
 
 ```bash
+# Set the Domain variable
+
 
 # Pull the docker image for certbot:
 $ docker pull deliverous/certbot
 
 # Obtain the certificates
-$ docker run -it --rm -v /home/USERNAME/vue-people/nginx/certs:/etc/letsencrypt:rw -v /home/USERNAME/vue-people/nginx/certs-data:/data/letsencrypt:rw  deliverous/certbot  certonly --webroot --webroot-path=/data/letsencrypt -d DOMAIN
+$ docker run -it --rm -v /home/$(whoami)/vue-people/nginx/certs:/etc/letsencrypt:rw -v /home/$(whoami)/vue-people/nginx/certs-data:/data/letsencrypt:rw  deliverous/certbot  certonly --webroot --webroot-path=/data/letsencrypt -d $DOMAIN
 
 # copy the certbot certs:
-$ sudo cp /home/USERNAME/vue-people/nginx/certs/live/DOMAIN/privkey.pem /home/USERNAME/vue-people/nginx/certs/key.pem
-$ sudo cp /home/USERNAME/vue-people/nginx/certs/live/DOMAIN/fullchain.pem /home/USERNAME/vue-people/nginx/certs/chain.pem
-$ sudo cp /home/USERNAME/vue-people/nginx/certs/live/DOMAIN/cert.pem /home/USERNAME/vue-people/nginx/certs/cert.pem
+$ sudo cp /home/$(whoami)/vue-people/nginx/certs/live/$DOMAIN/privkey.pem /home/$(whoami)/vue-people/nginx/certs/key.pem
+$ sudo cp /home/$(whoami)/vue-people/nginx/certs/live/$DOMAIN/fullchain.pem /home/$(whoami)/vue-people/nginx/certs/chain.pem
+$ sudo cp /home/$(whoami)/vue-people/nginx/certs/live/$DOMAIN/cert.pem /home/$(whoami)/vue-people/nginx/certs/cert.pem
 
 # own the certificates:
-$ sudo chown people:people cert.pem chain.pem key.pem
+$ sudo chown $(whoami):$(whoami) cert.pem chain.pem key.pem
 
 # refresh certificates
-$ docker run -it --rm -v /home/USERNAME/vue-people/nginx/certs:/etc/letsencrypt:rw -v /home/USERNAME/vue-people/nginx/certs-data:/data/letsencrypt:rw  deliverous/certbot renew --webroot --webroot-path=/data/letsencrypt -d DOMAIN
+$ docker run -it --rm -v /home/$(whoami)/vue-people/nginx/certs:/etc/letsencrypt:rw -v /home/$(whoami)/vue-people/nginx/certs-data:/data/letsencrypt:rw  deliverous/certbot renew --webroot --webroot-path=/data/letsencrypt -d $DOMAIN
 
 ```
