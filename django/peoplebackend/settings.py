@@ -24,7 +24,7 @@ SECRET_KEY = '485d&-w(+xpu%&b6lv5!t0a^3h9%ia3i28p@#x8z27l5ov&p!13'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DEBUG', False))
 
-ALLOWED_HOSTS = ['django:8000', 'django', 'localhost', 'vuepeople.pulilab.com']
+ALLOWED_HOSTS = ['django:8000', 'django', 'localhost', 'vuepeople.pulilab.com', 'www.vuepeople.org', 'vuepeople.org']
 
 # Application definition
 
