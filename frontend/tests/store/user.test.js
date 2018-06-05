@@ -20,12 +20,19 @@ describe('getters', () => {
   });
 
   test('getUserProfile', () => {
+    jest.spyOn(parsersUtils, 'latLngParser').mockReturnValue(undefined);
+
     s.savedProfile = { a: 1, b: 2, type: 2 };
     expect(getters.getUserProfile(s)).toEqual(s.savedProfile);
     expect(getters.getUserProfile(s)).not.toBe(s.savedProfile);
 
     s.savedProfile = { a: 1, b: 2 };
-    expect(getters.getUserProfile(s)).toEqual({ a: 1, b: 2, type: 1 });
+    expect(getters.getUserProfile(s)).toEqual({ a: 1, b: 2, type: 1, latlng: undefined });
+    expect(parsersUtils.latLngParser).toHaveBeenCalled();
+
+    parsersUtils.latLngParser.mockReturnValue(1);
+    expect(getters.getUserProfile(s)).toEqual({ a: 1, b: 2, type: 1, latlng: 1 });
+    expect(parsersUtils.latLngParser).toHaveBeenCalled();
   });
 
   test('getLoginStatus', () => {
