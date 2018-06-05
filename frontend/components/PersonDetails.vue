@@ -42,6 +42,7 @@
           <v-layout row>
             <v-btn
               :href="person.github_url"
+              :disabled="!person.github_url"
               flat
               target="_blank">
               <v-icon class="mr-1">mdi-github-circle</v-icon>
@@ -49,6 +50,7 @@
             </v-btn>
             <v-btn
               :href="person.twitter_url"
+              :disabled="!person.twitter_url"
               flat
               target="_blank">
               <v-icon class="mr-1">mdi-twitter</v-icon>
@@ -56,6 +58,7 @@
             </v-btn>
             <v-btn
               :href="person.website_url"
+              :disabled="!person.website_url"
               flat
               target="_blank">
               <v-icon class="mr-1">mdi-web</v-icon>
@@ -167,13 +170,12 @@ export default {
 
     .person-info-container {
       position: relative;
-      height: calc(100% - 152px);
+      height: calc(100% - 216px);
       top: 152px;
       width: 100%;
       max-width: 100%;
       overflow-y: auto;
       overflow-x: hidden;
-      padding-bottom: 80px;
 
       .person-info {
         position: relative;

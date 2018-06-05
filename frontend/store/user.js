@@ -1,5 +1,5 @@
 import { deleteTokens } from '~/utilities/auth';
-import { apiReadParser, apiWriteParser } from '~/utilities/parsers';
+import { apiReadParser, apiWriteParser, latLngParser } from '~/utilities/parsers';
 import { gitHubUserProfile } from '~/integrations/github/queries';
 import { gitHubGraphQlRequest, profileMapper } from '~/integrations/github/utilities';
 
@@ -15,7 +15,8 @@ export const getters = {
   getUserProfile: state => {
     const profile = {...profileMapper(state.gitHubProfile), ...state.savedProfile};
     const type = profile.type ? profile.type : 1;
-    return {...profile, type};
+    const latlng = latLngParser(profile);
+    return {...profile, type, latlng};
   },
   getLoginStatus: (state, getters) => {
     const ghp = getters.getUserProfile;

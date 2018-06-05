@@ -1,6 +1,10 @@
 # vue-people
 
-> vue people
+> VuePeople lists and connects Vue.JS developers around the world.
+
+## Status
+
+CircleCi: [![CircleCI](https://circleci.com/gh/pulilab/vue-people/tree/master.svg?style=svg)](https://circleci.com/gh/pulilab/vue-people/tree/master)
 
 ## Fronted Build Setup
 
@@ -19,9 +23,6 @@ $ yarn dev
 # build for production and launch server
 $ yarn build
 $ yarn start
-
-# generate static project
-$ yarn generate
 ```
 
 ## Specific Dev environment configurations
@@ -35,6 +36,11 @@ $ cp nginx/dev_certs/key.pem nginx/certs/key.pem
 
 # Tell node to ignore self signed certificate:
 $ echo "NODE_TLS_REJECT_UNAUTHORIZED = '0'" >> .env
+```
+
+```bash
+# start django in debug mode
+DEBUG=True docker-compose up -d
 ```
 
 ## Backend build setup
