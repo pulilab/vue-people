@@ -4,17 +4,24 @@
     dark>
     <v-content>
       <nuxt/>
+      <AppDialogs />
     </v-content>
   </v-app>
 </template>
 
 <script>
+import AppDialogs from '~/components/AppDialogs.vue';
+
 export default {
+  components: {
+    AppDialogs
+  },
   computed: {
     mobileClass () {
       return `viewport-${this.$mq}`;
     }
   }
+
 };
 </script>
 
