@@ -101,6 +101,19 @@
             v-if="isLoggedIn"
             avatar
             active-class=""
+            @click="doOptOut">
+            <v-list-tile-avatar>
+              <v-icon>mdi-account-minus</v-icon>
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>Opt-out</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+
+          <v-list-tile
+            v-if="isLoggedIn"
+            avatar
+            active-class=""
             @click="doLogout">
             <v-list-tile-avatar>
               <v-icon>mdi-logout</v-icon>
@@ -176,11 +189,16 @@ export default {
       logout: 'user/logout',
       setAddMode: 'map/setAddMode',
       updateUserProfile: 'user/updateUserProfile',
-      setGoToMap: 'setGoToMap'
+      setGoToMap: 'setGoToMap',
+      setOptOutDialogOpen: 'layout/setOptOutDialogOpen'
     }),
     doLogout () {
       this.menu = false;
       this.logout();
+    },
+    doOptOut () {
+      this.menu = false;
+      this.setOptOutDialogOpen(true);
     },
     async confirmLocation () {
       await this.updateUserProfile();
