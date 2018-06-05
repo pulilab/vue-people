@@ -23,7 +23,13 @@
       </p>
 
       <p>
-        We’ve created this place so you can follow the Vue.JS community as it grows. As the site is still a work in progress, we are happy to receive your feedback and next feature suggestions at <a href="mailto:family@vuepeople.org">family@vuepeople.org</a>
+        We’ve created this place so you can follow the Vue.JS community as it grows.
+        As the site is still a work in progress, we are happy to receive your feedback and next feature,
+        either as a ticket, or as a pull request here:
+        <a
+          href="https://github.com/pulilab/vue-people"
+          target="_blank">https://github.com/pulilab/vue-people
+        </a>
       </p>
 
       <v-btn
