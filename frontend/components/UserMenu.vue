@@ -78,7 +78,7 @@
             active-class=""
             @click="setAddMode(true)">
             <v-list-tile-avatar>
-              <v-icon>edit_location</v-icon>
+              <v-icon>pin_drop</v-icon>
             </v-list-tile-avatar>
             <v-list-tile-content>
               <v-list-tile-title>Edit your location</v-list-tile-title>
@@ -103,7 +103,7 @@
             active-class=""
             @click="doOptOut">
             <v-list-tile-avatar>
-              <v-icon>mdi-account-minus</v-icon>
+              <v-icon>sentiment_very_dissatisfied</v-icon>
             </v-list-tile-avatar>
             <v-list-tile-content>
               <v-list-tile-title>Opt-out</v-list-tile-title>
