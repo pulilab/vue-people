@@ -170,13 +170,12 @@ export default {
 
     .person-info-container {
       position: relative;
-      height: calc(100% - 152px);
+      height: calc(100% - 216px);
       top: 152px;
       width: 100%;
       max-width: 100%;
       overflow-y: auto;
       overflow-x: hidden;
-      padding-bottom: 80px;
 
       .person-info {
         position: relative;

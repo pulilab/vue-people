@@ -83,13 +83,14 @@ export default {
 
   .left-side {
     position: relative;
-    height: 100%;
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: hidden;
+    height: 100%;
     background-color: @color-white;
 
     .intro-text {
       height: calc(100% - 64px);
+      overflow-y: auto;
 
       .logo {
         width: auto;
