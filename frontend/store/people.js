@@ -1,6 +1,6 @@
 import { gitHubUserRepositories } from '~/integrations/github/queries';
 import { gitHubGraphQlRequest, filterOutNonVue } from '~/integrations/github/utilities';
-import { apiReadParser } from '~/utilities/parsers';
+import { apiReadParser, latLngParser } from '~/utilities/parsers';
 
 export const state = () => ({
   list: [],
@@ -16,13 +16,7 @@ export const getters = {
     return [
       ...state.list.filter(p => !user || !user.id || p.id !== user.id)
         .map(p => {
-          let latlng;
-          if (p.location && p.location.lat) {
-            latlng = {
-              lat: p.location.lat,
-              lng: p.location.lng
-            };
-          }
+          const latlng = latLngParser(p);
           const type = p.type ? p.type : 1;
           return {
             ...p,

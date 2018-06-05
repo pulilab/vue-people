@@ -38,3 +38,12 @@ export const apiWriteParser = data => {
   }
   return {...data, ...r};
 };
+
+export const latLngParser = p => {
+  if (p.location && p.location.lat) {
+    return {
+      lat: p.location.lat,
+      lng: p.location.lng
+    };
+  }
+};

@@ -18,6 +18,7 @@ describe('getters', () => {
   });
 
   test('getList', () => {
+    jest.spyOn(parsersUtils, 'latLngParser');
     const getCurrentPerson = 1;
     const rootGetters = {
       'user/getUserProfile': {id: 2}
@@ -32,6 +33,7 @@ describe('getters', () => {
       {id: 1, selected: true, latlng: { lat: 2, lng: 3 }, type: 1, location: undefined},
       {id: 3, selected: false, type: 3, latlng: undefined, location: undefined}
     ]);
+    expect(parsersUtils.latLngParser).toHaveBeenCalledTimes(2);
   });
 
   test('getCurrentPerson', () => {
