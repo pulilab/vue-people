@@ -78,7 +78,7 @@
             active-class=""
             @click="setAddMode(true)">
             <v-list-tile-avatar>
-              <v-icon>edit_location</v-icon>
+              <v-icon>pin_drop</v-icon>
             </v-list-tile-avatar>
             <v-list-tile-content>
               <v-list-tile-title>Edit your location</v-list-tile-title>
@@ -94,6 +94,19 @@
             </v-list-tile-avatar>
             <v-list-tile-content>
               <v-list-tile-title>About vuepeople.org</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+
+          <v-list-tile
+            v-if="isLoggedIn"
+            avatar
+            active-class=""
+            @click="doOptOut">
+            <v-list-tile-avatar>
+              <v-icon>sentiment_very_dissatisfied</v-icon>
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>Opt-out</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
 
@@ -176,11 +189,16 @@ export default {
       logout: 'user/logout',
       setAddMode: 'map/setAddMode',
       updateUserProfile: 'user/updateUserProfile',
-      setGoToMap: 'setGoToMap'
+      setGoToMap: 'setGoToMap',
+      setOptOutDialogOpen: 'layout/setOptOutDialogOpen'
     }),
     doLogout () {
       this.menu = false;
       this.logout();
+    },
+    doOptOut () {
+      this.menu = false;
+      this.setOptOutDialogOpen(true);
     },
     async confirmLocation () {
       await this.updateUserProfile();

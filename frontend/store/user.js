@@ -67,7 +67,7 @@ export const actions = {
         }
         commit('SET_SAVED_PROFILE', { ...parsed });
       } catch (e) {
-        console.error('Invalid credentials');
+        console.error('Invalid credentials', e);
         dispatch('logout');
       }
     }
@@ -101,6 +101,11 @@ export const actions = {
     if (token) {
       await dispatch('loadSavedProfile');
     }
+  },
+  async optOut ({dispatch, getters}) {
+    const profileId = getters.getUserProfile.id;
+    await this.$axios.delete(`/api/user/${profileId}/`);
+    dispatch('logout');
   }
 };
 

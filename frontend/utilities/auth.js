@@ -9,9 +9,10 @@ export const safeSaveToken = (name, value) => {
   }
 };
 
-export const saveTokens = (github) => {
+export const saveTokens = (github, cookieAccepted) => {
   if (process.SERVER_BUILD) return;
   safeSaveToken('github_token', github);
+  safeSaveToken('cookie_accepted', cookieAccepted);
 };
 
 export const deleteTokens = (tokens = ['github_token', 'csrftoken']) => {
@@ -33,9 +34,11 @@ export const getTokensFromCookie = (req) => {
   if (!req.headers.cookie) return;
   const github = getValueFromCookie(req, 'github_token');
   const csrftoken = getValueFromCookie(req, 'csrftoken');
+  const cookieAccepted = getValueFromCookie(req, 'cookie_accepted');
   return {
     github,
-    csrftoken
+    csrftoken,
+    cookieAccepted
   };
 };
 
