@@ -202,6 +202,14 @@ describe('actions', () => {
     await actions.setCsrfToken(vuex, 1);
     expect(vuex.commit.mock.calls[1]).toEqual(['SET_CSRF_TOKEN', 1]);
   });
+
+  test('optOut', async () => {
+    vuex.getters.getUserProfile = {id: 1};
+    actions.$axios.delete.mockResolvedValue(true);
+    await actions.optOut(vuex);
+    expect(actions.$axios.delete).toHaveBeenLastCalledWith('/api/user/1/');
+    expect(vuex.dispatch).toHaveBeenLastCalledWith('logout');
+  });
 });
 
 describe('mutations', () => {
