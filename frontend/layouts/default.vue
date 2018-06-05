@@ -4,17 +4,20 @@
     dark>
     <v-content>
       <nuxt/>
-      <AppDialogs />
+      <app-dialogs />
+      <cookie-warning/>
     </v-content>
   </v-app>
 </template>
 
 <script>
 import AppDialogs from '~/components/AppDialogs.vue';
+import CookieWarning from '~/components/CookieWarning.vue';
 
 export default {
   components: {
-    AppDialogs
+    AppDialogs,
+    CookieWarning
   },
   computed: {
     mobileClass () {

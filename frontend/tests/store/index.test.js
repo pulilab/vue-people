@@ -1,5 +1,6 @@
 import { state, getters, actions, mutations } from '~/store/index';
 import { mockAxios } from '../utils';
+import * as authUtilities from '~/utilities/auth';
 
 test('store state is unique between calls', () => {
   const s = state();
@@ -53,6 +54,11 @@ describe('getters', () => {
     const result = getters.getGoToMap(s);
     expect(result).toEqual(s.goToMap);
   });
+
+  test('getShowCookieWarning', () => {
+    const result = getters.getShowCookieWarning(s);
+    expect(result).toEqual(s.showCookieWarning);
+  });
 });
 
 describe('actions', () => {
@@ -84,6 +90,18 @@ describe('actions', () => {
     actions.setGoToMap(vuex, true);
     expect(vuex.commit.mock.calls[0]).toEqual(['SET_GO_TO_MAP', true]);
   });
+
+  test('setShowCookieWarning', () => {
+    actions.setShowCookieWarning(vuex, true);
+    expect(vuex.commit).toHaveBeenLastCalledWith('SET_SHOW_COOKIE_WARNING', true);
+  });
+
+  test('acceptCookieWarning', () => {
+    jest.spyOn(authUtilities, 'saveTokens').mockReturnValue(undefined);
+    actions.acceptCookieWarning(vuex);
+    expect(vuex.dispatch).toHaveBeenLastCalledWith('setShowCookieWarning', false);
+    expect(authUtilities.saveTokens).toHaveBeenLastCalledWith(null, true);
+  });
 });
 
 describe('mutations', () => {
@@ -103,5 +121,11 @@ describe('mutations', () => {
     const state = {};
     mutations.SET_GO_TO_MAP(state, 1);
     expect(state.goToMap).toEqual(1);
+  });
+
+  test('SET_SHOW_COOKIE_WARNING', () => {
+    const state = {};
+    mutations.SET_SHOW_COOKIE_WARNING(state, 1);
+    expect(state.showCookieWarning).toEqual(1);
   });
 });

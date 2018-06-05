@@ -1,7 +1,10 @@
+import { saveTokens } from '~/utilities/auth';
+
 export const state = () => ({
   userTypes: [],
   tags: [],
-  goToMap: false
+  goToMap: false,
+  showCookieWarning: true
 });
 
 export const getters = {
@@ -21,6 +24,9 @@ export const getters = {
   },
   getGoToMap: state => {
     return state.goToMap;
+  },
+  getShowCookieWarning: state => {
+    return state.showCookieWarning;
   }
 };
 
@@ -36,6 +42,13 @@ export const actions = {
   },
   setGoToMap ({commit}, value) {
     commit('SET_GO_TO_MAP', value);
+  },
+  setShowCookieWarning ({commit}, value) {
+    commit('SET_SHOW_COOKIE_WARNING', value);
+  },
+  acceptCookieWarning ({commit, dispatch}) {
+    saveTokens(null, true);
+    dispatch('setShowCookieWarning', false);
   }
 };
 
@@ -48,5 +61,8 @@ export const mutations = {
   },
   SET_GO_TO_MAP: (state, value) => {
     state.goToMap = value;
+  },
+  SET_SHOW_COOKIE_WARNING: (state, value) => {
+    state.showCookieWarning = value;
   }
 };

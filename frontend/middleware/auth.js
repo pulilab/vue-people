@@ -8,4 +8,8 @@ export default async function ({store, req}) {
   if (tokens && tokens.csrftoken) {
     await store.dispatch('user/setCsrfToken', tokens.csrftoken);
   }
+  if (tokens && tokens.cookieAccepted) {
+    const showCookies = tokens.cookieAccepted !== 'true';
+    await store.dispatch('setShowCookieWarning', showCookies);
+  }
 }
