@@ -158,8 +158,7 @@ SOCIALACCOUNT_PROVIDERS = {
     'github': {
         'SCOPE': [
             'read:user',
-            'user:email',
-            'public_repo'
+            'user:email'
         ],
     }
 }
