@@ -10,13 +10,26 @@
       <v-subheader>
         Repositories
       </v-subheader>
-      <v-list-tile v-if="repositories.length === 0">
+      <v-list-tile v-show="showNoRepositories">
         <v-list-tile-content>
           <v-list-tile-title class="no-data">
             No public Vuejs repositories
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
+
+      <v-list-tile v-show="showFetchError">
+        <v-list-tile-content>
+          <v-list-tile-title class="fetch-error">
+            <v-icon
+              small>
+              warning
+            </v-icon>
+            Failed to load this user repositories
+          </v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+
       <v-list-tile
         v-for="r in repositories"
         :key="r.node.id">
@@ -49,16 +62,30 @@
         </v-list-tile-content>
       </v-list-tile>
     </v-list>
+
     <v-list
       v-show="!loading"
       class="px-4 pt-3 pb-3">
       <v-subheader>
         Contribution
       </v-subheader>
-      <v-list-tile v-if="contributed.length === 0">
+
+      <v-list-tile v-show="showNoContributed">
         <v-list-tile-content>
           <v-list-tile-title class="no-data">
             No Contributions to public vuejs repositories
+          </v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+
+      <v-list-tile v-show="showFetchError">
+        <v-list-tile-content>
+          <v-list-tile-title class="fetch-error">
+            <v-icon
+              small>
+              warning
+            </v-icon>
+            Failed to load this user contributions
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
@@ -103,7 +130,8 @@ import {mapActions, mapGetters} from 'vuex';
 export default {
   data () {
     return {
-      loading: true
+      loading: true,
+      success: true
     };
   },
   computed: {
@@ -111,14 +139,24 @@ export default {
       current: 'people/getCurrentPerson',
       repositories: 'people/getCurrentPersonRepositories',
       contributed: 'people/getCurrentPersonContributed'
-    })
+    }),
+    showFetchError () {
+      return !this.loading && !this.success;
+    },
+    showNoContributed () {
+      return !this.showFetchError && this.contributed.length === 0;
+    },
+    showNoRepositories () {
+      return !this.showFetchError && this.repositories.length === 0;
+    }
   },
   watch: {
     current: {
       immediate: true,
       async handler (test) {
         this.loading = true;
-        await this.loadRepositories();
+        this.success = true;
+        this.success = await this.loadRepositories();
         this.loading = false;
       }
     }
@@ -173,6 +211,14 @@ export default {
           &.no-data {
             font-weight: 400;
             color: rgba(255,255,255,.3);
+          }
+
+          &.fetch-error {
+            .icon {
+              position: relative;
+              top: -2px;
+              color: #FFD600;
+            }
           }
 
           .github-stats {
