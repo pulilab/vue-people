@@ -7,6 +7,8 @@ from .models import Type, Person
 
 
 class UserSerializer(serializers.ModelSerializer):
+    email = CustomEmailField()
+
     class Meta:
         model = User
         fields = ("last_login", "first_name", "last_name", "email")
