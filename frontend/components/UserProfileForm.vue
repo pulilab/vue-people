@@ -30,9 +30,9 @@
           v-validate="'required|max:254'"
           v-model="profile.name"
           :counter="254"
-          :error-messages="errors.collect('name')"
+          :error-messages="errors.collect('Name')"
           label="Name"
-          data-vv-name="name"
+          data-vv-name="Name"
           required
           light
         />
@@ -54,9 +54,9 @@
           <v-text-field
             v-validate="'email'"
             v-model="profile.email"
-            :error-messages="errors.collect('email')"
+            :error-messages="errors.collect('E-Mail')"
             label="E-mail"
-            data-vv-name="email"
+            data-vv-name="E-Mail"
             light
           />
 
@@ -83,25 +83,25 @@
           v-validate="'url'"
           v-if="false"
           v-model="profile.githubUrl"
-          :error-messages="errors.collect('githubUrl')"
+          :error-messages="errors.collect('GitHub Profile')"
           label="GitHub profile"
-          data-vv-name="githubUrl"
+          data-vv-name="GitHub Profile"
           light
         />
         <v-text-field
           v-validate="'url'"
           v-model="profile.twitter_url"
-          :error-messages="errors.collect('twitter_url')"
+          :error-messages="errors.collect('Twitter profile')"
           label="Twitter profile"
-          data-vv-name="twitter_url"
+          data-vv-name="Twitter profile"
           light
         />
         <v-text-field
           v-validate="'url'"
           v-model="profile.website_url"
-          :error-messages="errors.collect('website_url')"
+          :error-messages="errors.collect('Your website')"
           label="Your website"
-          data-vv-name="website_url"
+          data-vv-name="Your website"
           light
         />
 
@@ -109,8 +109,8 @@
           v-validate="'max:254'"
           v-model="profile.company"
           :counter="254"
-          :error-messages="errors.collect('organisation')"
-          data-vv-name="organisation"
+          :error-messages="errors.collect('Organisation')"
+          data-vv-name="Organisation"
           label="Organisation"
           light
         />
@@ -129,10 +129,10 @@
         <v-text-field
           v-validate="'max:500'"
           v-model="profile.bio"
-          :error-messages="errors.collect('bio')"
+          :error-messages="errors.collect('Bio')"
           :counter="500"
-          data-vv-name="bio"
-          name="bio"
+          data-vv-name="Bio"
+          name="Bio"
           label="Bio"
           textarea
           light
