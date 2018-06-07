@@ -25,7 +25,7 @@
               small>
               warning
             </v-icon>
-            Failed to load this user repositories
+            Failed to load this user's repositories
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
@@ -85,7 +85,7 @@
               small>
               warning
             </v-icon>
-            Failed to load this user contributions
+            Failed to load this user's contributions
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
