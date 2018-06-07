@@ -55,6 +55,21 @@
           data-vv-name="email"
           light
         />
+
+        <v-switch
+          :label="switchLabel"
+          v-model="profile.publicEmail"
+          light
+          color="primary"
+        />
+
+        <v-flex>
+          <div class="email-privacy-hint">
+            <span v-show="profile.publicEmail">Your email will be visible in the map and in your user detail</span>
+            <span v-show="!profile.publicEmail">Your email will only be stored in the database and never shown</span>
+          </div>
+        </v-flex>
+
         <v-text-field
           v-validate="'url'"
           v-if="false"
@@ -122,7 +137,7 @@
       row
     >
       <div class="last-saved caption">
-        Last saved on:
+        Last saved on: {{ profile.modified }}
       </div>
       <v-spacer />
       <v-btn
@@ -149,11 +164,13 @@ export default {
       profile: {
         name: '',
         email: '',
+        publicEmail: false,
         twitter_url: '',
         website_url: '',
         company: '',
         tags: [],
-        bio: ''
+        bio: '',
+        modified: null
       }
     };
   },
@@ -163,7 +180,10 @@ export default {
       usLoggedIn: 'user/getLoginStatus',
       tagList: 'getTags',
       userTypes: 'getUserTypes'
-    })
+    }),
+    switchLabel () {
+      return this.profile.publicEmail ? 'public' : 'private';
+    }
   },
   watch: {
     userProfile: {
@@ -212,6 +232,10 @@ export default {
       width: 100%;
       overflow-y: auto;
       padding-bottom: 48px;
+
+      .email-privacy-hint {
+        color: rgba(0, 0, 0, .54);
+      }
     }
 
     .user-profile-actions {
