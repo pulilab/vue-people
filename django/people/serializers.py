@@ -1,9 +1,28 @@
 from django.contrib.auth.models import User
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 from rest_framework import serializers
 from taggit.models import Tag
 from taggit_serializer.serializers import (TagListSerializerField,
                                            TaggitSerializer)
 from .models import Type, Person
+
+
+class CustomEmailField(serializers.Field):
+    def get_attribute(self, obj):
+        return obj
+
+    def to_representation(self, obj):  # GET
+        person = obj.person_set.first()
+        if person.public_email or obj == self.context['request'].user:
+            return obj.email
+        else:
+            return ""
+
+    def to_internal_value(self, data):  # POST
+        if data and not validate_email(data):
+            raise ValidationError("Wrong email format")
+        return data
 
 
 class UserSerializer(serializers.ModelSerializer):
