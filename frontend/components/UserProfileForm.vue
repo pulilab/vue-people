@@ -62,7 +62,7 @@
 
           <v-switch
             :label="switchLabel"
-            v-model="profile.publicEmail"
+            v-model="profile.public_email"
             light
             color="primary"
           />
@@ -173,7 +173,7 @@ export default {
       profile: {
         name: '',
         email: '',
-        publicEmail: false,
+        public_email: false,
         twitter_url: '',
         website_url: '',
         company: '',
@@ -191,7 +191,7 @@ export default {
       userTypes: 'getUserTypes'
     }),
     switchLabel () {
-      return this.profile.publicEmail ? 'public' : 'private';
+      return this.profile.public_email ? 'public' : 'private';
     }
   },
   watch: {
