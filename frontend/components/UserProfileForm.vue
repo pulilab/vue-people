@@ -146,7 +146,7 @@
       row
     >
       <div class="last-saved caption">
-        Last saved on: {{ profile.modified }}
+        Last saved on: {{ lastModified }}
       </div>
       <v-spacer />
       <v-btn
@@ -162,6 +162,7 @@
 <script>
 import {mapGetters, mapActions} from 'vuex';
 import UserAvatar from './UserAvatar.vue';
+import { format } from 'date-fns';
 
 export default {
   name: 'UserProfileForm',
@@ -192,6 +193,9 @@ export default {
     }),
     switchLabel () {
       return this.profile.public_email ? 'public' : 'private';
+    },
+    lastModified () {
+      return this.profile.modified ? format(this.profile.modified, 'YYYY-MM-DD HH:mm') : '';
     }
   },
   watch: {
