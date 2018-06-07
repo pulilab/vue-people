@@ -47,26 +47,35 @@
           light
         />
 
-        <v-text-field
-          v-validate="'email'"
-          v-model="profile.email"
-          :error-messages="errors.collect('email')"
-          label="E-mail"
-          data-vv-name="email"
-          light
-        />
+        <v-layout
+          row
+          class="email-group"
+        >
+          <v-text-field
+            v-validate="'email'"
+            v-model="profile.email"
+            :error-messages="errors.collect('email')"
+            label="E-mail"
+            data-vv-name="email"
+            light
+          />
 
-        <v-switch
-          :label="switchLabel"
-          v-model="profile.publicEmail"
-          light
-          color="primary"
-        />
+          <v-switch
+            :label="switchLabel"
+            v-model="profile.publicEmail"
+            light
+            color="primary"
+          />
+        </v-layout>
 
         <v-flex>
           <div class="email-privacy-hint">
-            <span v-show="profile.publicEmail">Your email will be visible in the map and in your user detail</span>
-            <span v-show="!profile.publicEmail">Your email will only be stored in the database and never shown</span>
+            <span v-show="profile.publicEmail">
+              <v-icon small>info</v-icon>
+              Your email will be visible in the map and in your user detail.</span>
+            <span v-show="!profile.publicEmail">
+              <v-icon small>info</v-icon>
+              Your email will only be stored in the database and never shown.</span>
           </div>
         </v-flex>
 
@@ -233,8 +242,31 @@ export default {
       overflow-y: auto;
       padding-bottom: 48px;
 
+      .email-group {
+        .input-group--text-field {}
+        .switch {
+          max-width: 90px;
+          padding-top: 18px;
+          margin-left: 16px;
+
+          label {
+            font-size: @font-size-tiny;
+            font-weight: 500;
+            color: @font-dark-primary;
+          }
+        }
+      }
+
       .email-privacy-hint {
-        color: rgba(0, 0, 0, .54);
+        padding: 0 0 18px;
+        font-size: @font-size-tiny;
+        color: @font-dark-secondary;
+
+        .icon {
+          position: relative;
+          top: -1px;
+          color: @font-dark-disabled;
+        }
       }
     }
 
