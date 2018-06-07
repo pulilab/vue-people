@@ -86,6 +86,7 @@
           </v-list-tile>
 
           <v-list-tile
+            v-show="mobileMode"
             avatar
             active-class=""
             @click="setGoToMap(false)">
