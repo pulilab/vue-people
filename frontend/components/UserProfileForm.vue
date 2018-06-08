@@ -75,7 +75,7 @@
               Your email will be visible in the map and in your user detail.</span>
             <span v-show="!profile.publicEmail">
               <v-icon small>info</v-icon>
-              Your email will only be stored in the database and never shown.</span>
+              Your email will only be stored in the database and only displayed to you.</span>
           </div>
         </v-flex>
 
