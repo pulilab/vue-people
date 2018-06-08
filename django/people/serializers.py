@@ -20,8 +20,8 @@ class CustomEmailField(serializers.Field):
             return ""
 
     def to_internal_value(self, data):  # POST
-        if data and not validate_email(data):
-            raise ValidationError("Wrong email format")
+        if data:
+            validate_email(data)
         return data
 
 
