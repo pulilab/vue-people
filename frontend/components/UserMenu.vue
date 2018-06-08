@@ -44,6 +44,7 @@
       <v-spacer v-show="!isLoggedIn" />
 
       <v-menu
+        v-show="showMenu"
         v-model="menu"
         :content-class="menuContentClass"
         transition="slide-y-transition"
@@ -177,6 +178,9 @@ export default {
     },
     menuContentClass () {
       return this.showLongMenu ? 'menu-user-menu-mobile' : 'menu-user-menu';
+    },
+    showMenu () {
+      return this.isLoggedIn || this.mobileMode;
     }
   },
   mounted () {
