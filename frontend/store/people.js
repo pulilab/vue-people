@@ -1,5 +1,5 @@
 import { gitHubUserRepositories } from '~/integrations/github/queries';
-import { gitHubGraphQlRequest, filterOutNonVue } from '~/integrations/github/utilities';
+import { gitHubGraphQlRequest, filterOutNonVueAndZeroStars } from '~/integrations/github/utilities';
 import { apiReadParser, latLngParser } from '~/utilities/parsers';
 
 export const state = () => ({
@@ -74,11 +74,19 @@ export const actions = {
     const userToken = rootGetters['user/getGithubToken'];
     const query = gitHubUserRepositories(user.github_login);
     const gh = gitHubGraphQlRequest(userToken || process.env.gitHubApiKey);
-    const { data } = await this.$axios.post(gh.url, query, gh.options);
-    const repositories = data.data.user.repositories.edges;
-    const contributed = data.data.user.repositoriesContributedTo.edges;
-    commit('SET_CURRENT_PERSON_REPOSITORY_LIST', filterOutNonVue(repositories));
-    commit('SET_CURRENT_PERSON_CONTRIBUTED_LIST', filterOutNonVue(contributed));
+    try {
+      const { data } = await this.$axios.post(gh.url, query, gh.options);
+      if (data && data.data && data.data.user) {
+        const repositories = data.data.user.repositories.edges;
+        const contributed = data.data.user.repositoriesContributedTo.edges;
+        commit('SET_CURRENT_PERSON_REPOSITORY_LIST', filterOutNonVueAndZeroStars(repositories));
+        commit('SET_CURRENT_PERSON_CONTRIBUTED_LIST', filterOutNonVueAndZeroStars(contributed));
+        return true;
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return false;
   },
   setSelectedTags ({commit}, value) {
     commit('SET_SELECTED_TAGS', value);

@@ -16,6 +16,7 @@
           ref="mainMap"
           :zoom="zoom"
           :max-zoom="maxZoom"
+          :world-copy-jump="true"
           :options="mapOptions"
           :center="center"
           @moveend="mapMoveHandler"

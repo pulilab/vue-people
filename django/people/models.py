@@ -63,6 +63,7 @@ class Person(SoftDeleteModel):
     tags = TaggableManager(blank=True)
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
     modified = models.DateTimeField(auto_now=True, auto_now_add=False)
+    public_email = models.BooleanField(default=True)
 
     class Meta:
         verbose_name_plural = "People"

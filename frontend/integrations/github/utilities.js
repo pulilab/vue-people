@@ -6,9 +6,10 @@ export const gitHubGraphQlRequest = (token) => {
   return { url, options: { headers } };
 };
 
-export const filterOutNonVue = (repositories) => {
+export const filterOutNonVueAndZeroStars = (repositories) => {
   return repositories.filter(r => {
-    return r.node.languages.edges.reduce((prev, curr) => {
+    return r.node.stargazers.totalCount > 0 &&
+    r.node.languages.edges.reduce((prev, curr) => {
       return prev || curr.node.name === 'Vue';
     }, false);
   });

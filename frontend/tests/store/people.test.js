@@ -162,17 +162,36 @@ describe('actions', () => {
     };
 
     githubQueries.gitHubUserRepositories = jest.fn().mockReturnValue('query');
-    githubUtils.filterOutNonVue = jest.fn().mockReturnValue('filtered');
+    githubUtils.filterOutNonVueAndZeroStars = jest.fn().mockReturnValue('filtered');
     githubUtils.gitHubGraphQlRequest = jest.fn().mockReturnValue({
       url: 'url',
       options: 'options'
     });
-    await actions.loadRepositories(vuex);
+    let result = await actions.loadRepositories(vuex);
     expect(actions.$axios.post.mock.calls[0]).toEqual(['url', 'query', 'options']);
-    expect(githubUtils.filterOutNonVue.mock.calls[0]).toEqual(['repoEdges']);
-    expect(githubUtils.filterOutNonVue.mock.calls[1]).toEqual(['contributedEdges']);
+    expect(githubUtils.filterOutNonVueAndZeroStars.mock.calls[0]).toEqual(['repoEdges']);
+    expect(githubUtils.filterOutNonVueAndZeroStars.mock.calls[1]).toEqual(['contributedEdges']);
     expect(vuex.commit.mock.calls[0]).toEqual(['SET_CURRENT_PERSON_REPOSITORY_LIST', 'filtered']);
     expect(vuex.commit.mock.calls[1]).toEqual(['SET_CURRENT_PERSON_CONTRIBUTED_LIST', 'filtered']);
+    expect(result).toBe(true);
+
+    actions.$axios.post.mockReturnValue({});
+    result = await actions.loadRepositories(vuex);
+    expect(result).toBe(false);
+
+    actions.$axios.post.mockReturnValue({data: {}});
+    result = await actions.loadRepositories(vuex);
+    expect(result).toBe(false);
+
+    actions.$axios.post.mockReturnValue({data: {data: {}}});
+    result = await actions.loadRepositories(vuex);
+    expect(result).toBe(false);
+
+    jest.spyOn(console, 'error').mockReturnValue(undefined);
+    actions.$axios.post.mockRejectedValue('error');
+    result = await actions.loadRepositories(vuex);
+    expect(result).toBe(false);
+    expect(console.error).toHaveBeenCalledWith('error');
   });
 
   test('setSelectedTags', () => {
