@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core.validators import validate_email
 from rest_framework import serializers
 from taggit.models import Tag
 from taggit_serializer.serializers import (TagListSerializerField,
@@ -6,7 +7,26 @@ from taggit_serializer.serializers import (TagListSerializerField,
 from .models import Type, Person
 
 
+class CustomEmailField(serializers.Field):
+    def get_attribute(self, obj):
+        return obj
+
+    def to_representation(self, obj):  # GET
+        person = obj.person_set.first()
+        if person.public_email or obj == self.context['request'].user:
+            return obj.email
+        else:
+            return ""
+
+    def to_internal_value(self, data):  # POST
+        if data:
+            validate_email(data)
+        return data
+
+
 class UserSerializer(serializers.ModelSerializer):
+    email = CustomEmailField()
+
     class Meta:
         model = User
         fields = ("last_login", "first_name", "last_name", "email")
