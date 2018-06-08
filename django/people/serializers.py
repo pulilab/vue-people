@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from django.core.validators import validate_email
-from django.core.exceptions import ValidationError
 from rest_framework import serializers
 from taggit.models import Tag
 from taggit_serializer.serializers import (TagListSerializerField,
