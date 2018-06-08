@@ -1,5 +1,5 @@
 import { gitHubUserRepositories } from '~/integrations/github/queries';
-import { gitHubGraphQlRequest, filterOutNonVue } from '~/integrations/github/utilities';
+import { gitHubGraphQlRequest, filterOutNonVueAndZeroStars } from '~/integrations/github/utilities';
 import { apiReadParser, latLngParser } from '~/utilities/parsers';
 
 export const state = () => ({
@@ -79,8 +79,8 @@ export const actions = {
       if (data && data.data && data.data.user) {
         const repositories = data.data.user.repositories.edges;
         const contributed = data.data.user.repositoriesContributedTo.edges;
-        commit('SET_CURRENT_PERSON_REPOSITORY_LIST', filterOutNonVue(repositories));
-        commit('SET_CURRENT_PERSON_CONTRIBUTED_LIST', filterOutNonVue(contributed));
+        commit('SET_CURRENT_PERSON_REPOSITORY_LIST', filterOutNonVueAndZeroStars(repositories));
+        commit('SET_CURRENT_PERSON_CONTRIBUTED_LIST', filterOutNonVueAndZeroStars(contributed));
         return true;
       }
     } catch (e) {
