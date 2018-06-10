@@ -25,25 +25,27 @@
           <l-tilelayer
             url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'"/>
 
-          <l-marker
-            v-for="pin in pins"
-            v-show="showFloatingUI"
-            :key="pin.key"
-            :options="pin.options"
-            :lat-lng="pin.latlng"
-            :icon="iconGenerator(pin)"
-            @click="openPersonDetails(pin)"
-          >
-            <l-tooltip
-              v-if="showFloatingUI"
-              :options="tooltipOptions"
+          <v-marker-cluster>
+            <l-marker
+              v-for="pin in pins"
+              v-show="showFloatingUI"
+              :key="pin.key"
+              :options="pin.options"
+              :lat-lng="pin.latlng"
+              :icon="iconGenerator(pin)"
+              @click="openPersonDetails(pin)"
             >
-              <user-avatar
-                :id="pin.id"
-                :dark="true"
-              />
-            </l-tooltip>
-          </l-marker>
+              <l-tooltip
+                v-if="showFloatingUI"
+                :options="tooltipOptions"
+              >
+                <user-avatar
+                  :id="pin.id"
+                  :dark="true"
+                />
+              </l-tooltip>
+            </l-marker>
+          </v-marker-cluster>
 
           <l-marker
             v-if="userMaker"
@@ -170,10 +172,7 @@ export default {
         }, {});
 
         return this.pins.reduce((prev, c) => {
-          const contains = this.mapBounds.contains(L.latLng(c.latlng.lat, c.latlng.lng));
-          if (contains) {
-            prev[c.type] += 1;
-          }
+          prev[c.type] += 1;
           return prev;
         }, countInit);
       }
