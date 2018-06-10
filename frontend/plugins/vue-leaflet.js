@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vue2Leaflet from 'vue2-leaflet';
+import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster'
 
 import L from 'leaflet';
 delete L.Icon.Default.prototype._getIconUrl;
@@ -15,3 +16,4 @@ Vue.component('l-tilelayer', Vue2Leaflet.LTileLayer);
 Vue.component('l-marker', Vue2Leaflet.LMarker);
 Vue.component('l-tooltip', Vue2Leaflet.LTooltip);
 Vue.component('l-control-zoom', Vue2Leaflet.LControlZoom);
+Vue.component('v-marker-cluster', Vue2LeafletMarkerCluster)
