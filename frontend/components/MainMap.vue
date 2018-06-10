@@ -32,10 +32,11 @@
             :options="pin.options"
             :lat-lng="pin.latlng"
             :icon="iconGenerator(pin)"
+            @mouseenter="markerHoverHandler(pin, $event)"
             @click="openPersonDetails(pin)"
           >
             <l-tooltip
-              v-if="showFloatingUI"
+              v-if="showFloatingUI && hoveredMarker === pin.id"
               :options="tooltipOptions"
             >
               <user-avatar
@@ -137,6 +138,7 @@ export default {
         direction: 'top',
         offset: [0, -30]
       },
+      hoveredMarker: null,
       centerOnNext: false
     };
   },
@@ -279,6 +281,15 @@ export default {
         });
         return icon;
       }
+    },
+    markerHoverHandler (pin, event) {
+      this.hoveredMarker = pin.id;
+      const m = event.target;
+      window.setTimeout(() => {
+        if (!m.isTooltipOpen()) {
+          m.toggleTooltip();
+        }
+      }, 300);
     }
   }
 };
