@@ -28,10 +28,8 @@ export const apiWriteParser = data => {
       coordinates: [data.location.lat, data.location.lng]
     };
   }
-  if (data.email) {
-    r.user.email = data.email;
-    data.email = undefined;
-  }
+  r.user.email = data.email ? data.email : '';
+  data.email = undefined;
   if (data.name) {
     r.user.first_name = data.name;
     data.name = undefined;
