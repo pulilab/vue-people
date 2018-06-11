@@ -25,7 +25,7 @@
           <l-tilelayer
             url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'"/>
 
-          <v-marker-cluster>
+          <v-marker-cluster :options="clusterOptions">
             <l-marker
               v-for="pin in pins"
               v-show="showFloatingUI"
@@ -139,6 +139,12 @@ export default {
         permanent: false,
         direction: 'top',
         offset: [0, -30]
+      },
+      clusterOptions: {
+        polygonOptions: {
+          stroke: false,
+          fillColor: '#42B883'
+        }
       },
       hoveredMarker: null,
       centerOnNext: false
