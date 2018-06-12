@@ -258,6 +258,7 @@ export default {
           className: `custom-pin-icon ${type}`,
           html,
           iconSize: [33, 52],
+          iconAnchor: [16.5, 52]
         });
         return icon;
       }
