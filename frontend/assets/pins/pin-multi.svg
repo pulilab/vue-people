@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="37px" height="61px" viewBox="0 0 37 61" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>Pin - Group</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-68.1%" y="-285.9%" width="236.1%" height="671.8%" filterUnits="objectBoundingBox" id="filter-1">
+            <feGaussianBlur stdDeviation="3" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <filter x="-22.7%" y="-238.2%" width="145.4%" height="576.5%" filterUnits="objectBoundingBox" id="filter-2">
+            <feGaussianBlur stdDeviation="1" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <filter x="-68.1%" y="-285.9%" width="236.1%" height="671.8%" filterUnits="objectBoundingBox" id="filter-3">
+            <feGaussianBlur stdDeviation="3" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <filter x="-22.7%" y="-238.2%" width="145.4%" height="576.5%" filterUnits="objectBoundingBox" id="filter-4">
+            <feGaussianBlur stdDeviation="1" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <filter x="-42.9%" y="-180.0%" width="185.7%" height="460.0%" filterUnits="objectBoundingBox" id="filter-5">
+            <feGaussianBlur stdDeviation="3" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <filter x="-14.3%" y="-150.0%" width="128.6%" height="400.0%" filterUnits="objectBoundingBox" id="filter-6">
+            <feGaussianBlur stdDeviation="1" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+    </defs>
+    <g id="VuePeople-updates-1.1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Map---component-(grouping-pins-v3)" transform="translate(-676.000000, -462.000000)">
+            <g id="Google-map" transform="translate(30.000000, 130.000000)">
+                <g id="Pins---group" transform="translate(648.000000, 117.000000)">
+                    <g id="Pin---Group" transform="translate(0.000000, 216.000000)">
+                        <g id="pin" transform="translate(14.000000, 14.000000)">
+                            <ellipse id="Oval-2" fill-opacity="0.3" fill="#000000" filter="url(#filter-1)" cx="9.12962963" cy="32.4259259" rx="6.61111111" ry="1.57407407"></ellipse>
+                            <ellipse id="Oval-2" fill-opacity="0.1" fill="#000000" filter="url(#filter-2)" cx="9.12962963" cy="32.7407407" rx="6.61111111" ry="1"></ellipse>
+                            <path d="M16.6230919,14.4477876 L16.6231286,14.4477304 C16.5211667,14.6064777 15.5747485,15.7890112 15.2915806,16.1605375 C14.4733736,17.2340538 13.7266721,18.3312912 13.0186233,19.5535931 C10.7529283,23.4648538 9.41498316,27.7488064 9.41498316,32.4484127 L8.41498316,32.4484127 C8.41498316,27.7478 7.08157563,23.4630299 4.82374146,19.5516334 C4.11827501,18.3295068 3.37422055,17.2323453 2.55927614,16.1594959 C2.27425491,15.7842742 1.33355579,14.6052854 1.23251754,14.4477876 C-0.151654875,12.293375 -0.5,10.9431785 -0.5,8.57495591 C-0.5,3.57645457 3.7562659,-0.5 8.91498316,-0.5 C14.0426825,-0.5 18.3804512,3.60352136 18.3804512,8.57495591 C18.3804512,10.9050314 18.0160053,12.2797699 16.6230919,14.4477876 Z" id="Imported-Layers" stroke="#C7701A" fill="#FB8D20" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </g>
+                        <g id="pin" transform="translate(0.000000, 14.000000)">
+                            <ellipse id="Oval-2" fill-opacity="0.3" fill="#000000" filter="url(#filter-3)" cx="9.12962963" cy="32.4259259" rx="6.61111111" ry="1.57407407"></ellipse>
+                            <ellipse id="Oval-2" fill-opacity="0.1" fill="#000000" filter="url(#filter-4)" cx="9.12962963" cy="32.7407407" rx="6.61111111" ry="1"></ellipse>
+                            <path d="M16.6230919,14.4477876 L16.6231286,14.4477304 C16.5211667,14.6064777 15.5747485,15.7890112 15.2915806,16.1605375 C14.4733736,17.2340538 13.7266721,18.3312912 13.0186233,19.5535931 C10.7529283,23.4648538 9.41498316,27.7488064 9.41498316,32.4484127 L8.41498316,32.4484127 C8.41498316,27.7478 7.08157563,23.4630299 4.82374146,19.5516334 C4.11827501,18.3295068 3.37422055,17.2323453 2.55927614,16.1594959 C2.27425491,15.7842742 1.33355579,14.6052854 1.23251754,14.4477876 C-0.151654875,12.293375 -0.5,10.9431785 -0.5,8.57495591 C-0.5,3.57645457 3.7562659,-0.5 8.91498316,-0.5 C14.0426825,-0.5 18.3804512,3.60352136 18.3804512,8.57495591 C18.3804512,10.9050314 18.0160053,12.2797699 16.6230919,14.4477876 Z" id="Imported-Layers" stroke="#3A71B0" fill="#4A90E2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </g>
+                        <g id="pin" stroke-linecap="round" stroke-linejoin="round" transform="translate(2.000000, 0.000000)">
+                            <ellipse id="Oval-2" fill-opacity="0.3" fill="#000000" filter="url(#filter-5)" cx="14.5" cy="51.5" rx="10.5" ry="2.5"></ellipse>
+                            <ellipse id="Oval-2" fill-opacity="0.1" fill="#000000" filter="url(#filter-6)" cx="14.5" cy="52" rx="10.5" ry="1"></ellipse>
+                            <path d="M26.1539336,22.7875054 L26.1539704,22.7874482 C26.0017546,23.0244372 24.5116868,24.8862516 24.0527079,25.4884481 C22.7461615,27.2026828 21.5534107,28.9553656 20.4221361,30.9082807 C16.7994136,37.1621727 14.6590909,44.0152496 14.6590909,51.5357143 L13.6590909,51.5357143 C13.6590909,44.0138352 11.5260691,37.1595855 7.9159614,30.9055554 C6.78881367,28.9529223 5.60028746,27.2003554 4.29894232,25.4871743 C3.83718566,24.8792858 2.35592711,23.0228079 2.20497546,22.7875054 C0.0390635698,19.4163446 -0.5,17.3269175 -0.5,13.6190476 C-0.5,5.84559596 6.12549852,-0.5 14.1590909,-0.5 C22.1441862,-0.5 28.8983636,5.88943973 28.8983636,13.6190476 C28.8983636,17.2658133 28.3341601,19.3940644 26.1539336,22.7875054 Z" id="Imported-Layers" stroke="#C2404B" fill="#F5515F"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
