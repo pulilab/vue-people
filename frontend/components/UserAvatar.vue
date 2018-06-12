@@ -97,13 +97,21 @@ export default {
 
     .user-info {
       .user {
+        display: flex;
+        align-items: center;
         font-size: @font-size-base;
         font-weight: 500;
+
+        > span {
+          max-width: calc(100vw - 472px);
+          .text-truncate();
+        }
       }
 
       .email {
-        color: @font-dark-secondary;
+        max-width: calc(100vw - 440px);
         .text-truncate();
+        color: @font-dark-secondary;
       }
     }
 
@@ -115,6 +123,16 @@ export default {
 
       .user-info {
         margin-left: 12px;
+
+        .user {
+          > span {
+            max-width: calc(100vw - 140px);
+          }
+        }
+
+        .email {
+          max-width: calc(100vw - 108px);
+        }
       }
     }
   }
