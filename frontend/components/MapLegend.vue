@@ -47,12 +47,7 @@ export default {
     color: @font-dark-secondary;
     font-size: @font-size-tiny;
     line-height: @map-card-small-height;
-    cursor: pointer;
     transition: @default-transition;
-
-    &:hover {
-      color: @font-dark-primary;
-    }
   }
 
   // Responsive
