@@ -139,12 +139,6 @@ export default {
         direction: 'top',
         offset: [0, -30]
       },
-      clusterOptions: {
-        polygonOptions: {
-          stroke: false,
-          fillColor: '#42B883'
-        }
-      },
       hoveredMarker: null,
       centerOnNext: false
     };
@@ -182,6 +176,22 @@ export default {
         return this.storedZoom > this.maxZoom ? this.maxZoom : this.storedZoom;
       }
       return this.storedZoom;
+    },
+    clusterOptions () {
+      return {
+        polygonOptions: {
+          stroke: false,
+          fillColor: '#42B883'
+        },
+        iconCreateFunction: cluster => {
+          const html = `<span>${cluster.getChildCount()}</span>`;
+          return L.divIcon({
+            className: `custom-cluster-icon`,
+            html,
+            iconSize: [36, 52],
+            iconAnchor: [18, 52]
+          });
+        } };
     }
   },
   watch: {
@@ -191,13 +201,6 @@ export default {
         if (loc && loc.lat) {
           this.centerToUser();
         }
-      }
-    },
-    shownMarkerCount: {
-      immediate: true,
-      handler (count) {
-        // this is to update VUEX consequently
-        this.setShownPins(count);
       }
     },
     goToMap: {
@@ -254,7 +257,7 @@ export default {
         const icon = new L.divIcon({ // eslint-disable-line
           className: `custom-pin-icon ${type}`,
           html,
-          iconSize: [33, 52]
+          iconSize: [33, 52],
         });
         return icon;
       }
@@ -372,6 +375,18 @@ export default {
       }
       &.me {
         background-image: url('~/assets/pins/pin-me.svg');
+      }
+    }
+
+    .custom-cluster-icon {
+      background-image: url('~/assets/pins/pin-multi.svg');
+
+      span {
+        display: inline-block;
+        text-align: center;
+        width: 36px;
+        margin-top: 5px;
+        font-weight: 600;
       }
     }
 
