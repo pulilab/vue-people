@@ -62,6 +62,10 @@ export default {
       color: @color-core-member;
     }
 
+    &.library .icon {
+      color: @color-library;
+    }
+
     i.mdi-vuejs {
       position: relative;
       top: -1px;
