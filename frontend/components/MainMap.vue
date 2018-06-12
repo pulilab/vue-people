@@ -215,8 +215,7 @@ export default {
     ...mapActions({
       setUserPosition: 'user/setUserPosition',
       setZoom: 'map/setZoom',
-      setCenter: 'map/setCenter',
-      setShownPins: 'map/setShownPins'
+      setCenter: 'map/setCenter'
     }),
     addMarker (event) {
       if (this.addMode) {
@@ -230,7 +229,6 @@ export default {
     },
     mapMoveHandler: debounce(function (e) {
       this.setCenter(e.target.getCenter());
-      this.updateBounds();
     }, 200),
     mapZoomHandler: debounce(function (e) {
       const value = parseInt(e.target.getZoom(), 10);
