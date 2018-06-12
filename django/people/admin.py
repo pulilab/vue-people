@@ -9,7 +9,7 @@ admin.site.register(Type)
 class PersonAdmin(admin.ModelAdmin):
     list_display = ('github_login','user_email', 'type')
     ordering =('github_login', 'type')
-    search_fields = ('github_login', 'user__first_name', 'user__last_name', 'user__email', 'organisation')
+    search_fields = ('github_login', 'user__first_name', 'user__last_name', 'user__email', 'company')
     list_filter = ('type', 'public_email')
     fields = ('is_active', 'bio', 'company', 'github_url', 'twitter_url', 'website_url', 'type', 'public_email')
 
