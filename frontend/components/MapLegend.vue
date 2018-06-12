@@ -6,15 +6,12 @@
       :id="type.id"
       :show-text="true"
       :show-count="true"
-      @mouseenter.native="legendEnter(type.id)"
-      @mouseleave.native="legendLeave"
     />
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
-import { debounce } from '~/utilities/common';
+import { mapGetters } from 'vuex';
 import UserType from './UserType';
 
 export default {
@@ -25,19 +22,7 @@ export default {
     ...mapGetters({
       userTypes: 'getUserTypes'
     })
-  },
-  methods: {
-    ...mapActions({
-      setFocusOn: 'map/setFocusOn'
-    }),
-    legendEnter: debounce(function (id) {
-      this.setFocusOn(id);
-    }, 300),
-    legendLeave: debounce(function () {
-      this.setFocusOn(null);
-    }, 300)
   }
-
 };
 </script>
 
@@ -62,12 +47,7 @@ export default {
     color: @font-dark-secondary;
     font-size: @font-size-tiny;
     line-height: @map-card-small-height;
-    cursor: pointer;
     transition: @default-transition;
-
-    &:hover {
-      color: @font-dark-primary;
-    }
   }
 
   // Responsive

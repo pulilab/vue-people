@@ -1,9 +1,7 @@
 export const state = () => ({
   addMode: false,
   zoom: 3,
-  center: {lat: 0, lng: 0},
-  focusOn: null,
-  shownPins: null
+  center: {lat: 0, lng: 0}
 });
 
 export const getters = {
@@ -16,30 +14,31 @@ export const getters = {
   getCenter: (state) => {
     return { ...state.center };
   },
-  getFocusOn: (state) => {
-    return state.focusOn;
-  },
   getFilteredPins: (state, getters, rootState, rootGetters) => {
     const tags = rootGetters['people/getSelectedTags'];
     const list = rootGetters['people/getList'].filter(p => p.latlng);
     const filtered = tags.length > 0 ? list.filter(p => p.tags.some(t => tags.includes(t))) : list;
     return [...filtered.map(p => {
-      const opacity = !getters.getFocusOn || p.type === getters.getFocusOn ? 1 : 0.5;
-      const zIndexOffset = opacity === 0.5 ? -1000 : 0;
-      // this is important, otherwise the v-for that draws them do not force repaint the marker, and the marker is not reactive
-      const key = p.id + opacity;
       return {
         ...p,
-        key,
-        options: {
-          opacity,
-          zIndexOffset
-        }
+        key: p.id,
+        options: {}
       };
     })];
   },
-  getShownPins: (state) => {
-    return state.shownPins;
+  getShownPins: (state, getters, rootState, rootGetters) => {
+    const pins = getters.getFilteredPins;
+    const countInit = rootGetters.getUserTypes.reduce((p, c) => {
+      p[c.id] = 0;
+      return p;
+    }, {});
+    if (pins) {
+      return pins.reduce((prev, c) => {
+        prev[c.type] += 1;
+        return prev;
+      }, countInit);
+    }
+    return countInit;
   }
 };
 
@@ -52,12 +51,6 @@ export const actions = {
   },
   setCenter ({commit}, value) {
     commit('SET_CENTER', value);
-  },
-  setFocusOn ({commit}, value) {
-    commit('SET_FOCUS_ON', value);
-  },
-  setShownPins ({commit}, value) {
-    commit('SET_SHOWN_PINS', value);
   }
 };
 
@@ -70,11 +63,5 @@ export const mutations = {
   },
   SET_CENTER: (state, value) => {
     state.center = value;
-  },
-  SET_FOCUS_ON: (state, value) => {
-    state.focusOn = value;
-  },
-  SET_SHOWN_PINS: (state, value) => {
-    state.shownPins = value;
   }
 };

@@ -25,26 +25,28 @@
           <l-tilelayer
             url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'"/>
 
-          <l-marker
-            v-for="pin in pins"
-            v-show="showFloatingUI"
-            :key="pin.key"
-            :options="pin.options"
-            :lat-lng="pin.latlng"
-            :icon="iconGenerator(pin)"
-            @mouseenter="markerHoverHandler(pin, $event)"
-            @click="openPersonDetails(pin)"
-          >
-            <l-tooltip
-              v-if="showFloatingUI && hoveredMarker === pin.id"
-              :options="tooltipOptions"
+          <v-marker-cluster :options="clusterOptions">
+            <l-marker
+              v-for="pin in pins"
+              v-show="showFloatingUI"
+              :key="pin.key"
+              :options="pin.options"
+              :lat-lng="pin.latlng"
+              :icon="iconGenerator(pin)"
+              @mouseenter="markerHoverHandler(pin, $event)"
+              @click="openPersonDetails(pin)"
             >
-              <user-avatar
-                :id="pin.id"
-                :dark="true"
-              />
-            </l-tooltip>
-          </l-marker>
+              <l-tooltip
+                v-if="showFloatingUI && hoveredMarker === pin.id"
+                :options="tooltipOptions"
+              >
+                <user-avatar
+                  :id="pin.id"
+                  :dark="true"
+                />
+              </l-tooltip>
+            </l-marker>
+          </v-marker-cluster>
 
           <l-marker
             v-if="userMaker"
@@ -130,7 +132,6 @@ export default {
   data () {
     return {
       mapOptions: { zoomControl: false, attributionControl: false },
-      mapBounds: null,
       tooltipOptions: {
         className: 'person-tooltip',
         // set permanent to true to be able to debug / develop the tooltip css
@@ -164,23 +165,6 @@ export default {
     userMaker () {
       return this.userPosition;
     },
-    shownMarkerCount () {
-      if (this.mapBounds && this.pins) {
-        const countInit = this.userTypes.reduce((p, c) => {
-          p[c.id] = 0;
-          return p;
-        }, {});
-
-        return this.pins.reduce((prev, c) => {
-          const contains = this.mapBounds.contains(L.latLng(c.latlng.lat, c.latlng.lng));
-          if (contains) {
-            prev[c.type] += 1;
-          }
-          return prev;
-        }, countInit);
-      }
-      return 0;
-    },
     showFloatingUI () {
       return !((this.$mq === 'sm' || this.$mq === 'xs') && !this.goToMap);
     },
@@ -192,6 +176,22 @@ export default {
         return this.storedZoom > this.maxZoom ? this.maxZoom : this.storedZoom;
       }
       return this.storedZoom;
+    },
+    clusterOptions () {
+      return {
+        polygonOptions: {
+          stroke: false,
+          fillColor: '#42B883'
+        },
+        iconCreateFunction: cluster => {
+          const html = `<span>${cluster.getChildCount()}</span>`;
+          return L.divIcon({
+            className: `custom-cluster-icon`,
+            html,
+            iconSize: [36, 52],
+            iconAnchor: [18, 52]
+          });
+        } };
     }
   },
   watch: {
@@ -201,13 +201,6 @@ export default {
         if (loc && loc.lat) {
           this.centerToUser();
         }
-      }
-    },
-    shownMarkerCount: {
-      immediate: true,
-      handler (count) {
-        // this is to update VUEX consequently
-        this.setShownPins(count);
       }
     },
     goToMap: {
@@ -221,17 +214,11 @@ export default {
       }
     }
   },
-  mounted () {
-    this.$nextTick(() => {
-      this.$refs.mainMap.mapObject.whenReady(this.mapReady.bind(this));
-    });
-  },
   methods: {
     ...mapActions({
       setUserPosition: 'user/setUserPosition',
       setZoom: 'map/setZoom',
-      setCenter: 'map/setCenter',
-      setShownPins: 'map/setShownPins'
+      setCenter: 'map/setCenter'
     }),
     addMarker (event) {
       if (this.addMode) {
@@ -245,7 +232,6 @@ export default {
     },
     mapMoveHandler: debounce(function (e) {
       this.setCenter(e.target.getCenter());
-      this.updateBounds();
     }, 200),
     mapZoomHandler: debounce(function (e) {
       const value = parseInt(e.target.getZoom(), 10);
@@ -262,12 +248,6 @@ export default {
         this.centerOnNext = true;
       }
     },
-    mapReady () {
-      this.updateBounds();
-    },
-    updateBounds () {
-      this.mapBounds = this.$refs.mainMap.mapObject.getBounds();
-    },
     iconGenerator (pin, isMe) {
       if (process.browser) {
         const type = isMe ? 'me' : pin.selected ? 'selected' : this.getUserType(pin.type).name;
@@ -277,7 +257,8 @@ export default {
         const icon = new L.divIcon({ // eslint-disable-line
           className: `custom-pin-icon ${type}`,
           html,
-          iconSize: [33, 52]
+          iconSize: [33, 52],
+          iconAnchor: [16.5, 52]
         });
         return icon;
       }
@@ -395,6 +376,18 @@ export default {
       }
       &.me {
         background-image: url('~/assets/pins/pin-me.svg');
+      }
+    }
+
+    .custom-cluster-icon {
+      background-image: url('~/assets/pins/pin-multi.svg');
+
+      span {
+        display: inline-block;
+        text-align: center;
+        width: 36px;
+        margin-top: 5px;
+        font-weight: 600;
       }
     }
 

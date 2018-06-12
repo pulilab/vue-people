@@ -27,11 +27,6 @@ describe('getters', () => {
     expect(getters.getCenter(s)).not.toBe(s.center);
   });
 
-  test('getFocusOn', () => {
-    s.focusOn = 1;
-    expect(getters.getFocusOn(s)).toEqual(s.focusOn);
-  });
-
   test('getFilteredPins', () => {
     const g = {
       getFocusOn: 1
@@ -47,15 +42,15 @@ describe('getters', () => {
     let result = getters.getFilteredPins(null, g, null, rootGetters);
     expect(result[0]).toEqual({id: 1,
       type: 1,
-      key: 2,
-      options: {opacity: 1, zIndexOffset: 0},
+      key: 1,
+      options: {},
       latlng: {}
     });
     expect(result[1]).toEqual({
       id: 2,
       type: 2,
-      key: 2.5,
-      options: {opacity: 0.5, zIndexOffset: -1000},
+      key: 2,
+      options: {},
       latlng: {}
     });
     expect(result.length).toEqual(2);
@@ -66,13 +61,17 @@ describe('getters', () => {
       {id: 2, type: 2, tags: [], latlng: {}}
     ];
     result = getters.getFilteredPins(null, g, null, rootGetters);
-    expect(result[0]).toEqual({id: 1, type: 1, key: 2, options: {opacity: 1, zIndexOffset: 0}, tags: ['vuex'], latlng: {}});
+    expect(result[0]).toEqual({id: 1, type: 1, key: 1, options: {}, tags: ['vuex'], latlng: {}});
     expect(result.length).toEqual(1);
   });
 
   test('getShownPins', () => {
-    s.shownPins = 3;
-    expect(getters.getShownPins(s)).toEqual(s.shownPins);
+    const getFilteredPins = [{type: 1}, {type: 1}, {type: 2}];
+    const getUserTypes = [{id: 1}, {id: 2}];
+    expect(getters.getShownPins(null, {getFilteredPins}, null, {getUserTypes}))
+      .toEqual({1: 2, 2: 1});
+    expect(getters.getShownPins(null, {}, null, {getUserTypes}))
+      .toEqual({1: 0, 2: 0});
   });
 });
 
@@ -97,16 +96,6 @@ describe('actions', () => {
     actions.setCenter(vuex, 1);
     expect(vuex.commit.mock.calls[0]).toEqual(['SET_CENTER', 1]);
   });
-
-  test('setFocusOn', () => {
-    actions.setFocusOn(vuex, 1);
-    expect(vuex.commit.mock.calls[0]).toEqual(['SET_FOCUS_ON', 1]);
-  });
-
-  test('setShownPins', () => {
-    actions.setShownPins(vuex, 1);
-    expect(vuex.commit.mock.calls[0]).toEqual(['SET_SHOWN_PINS', 1]);
-  });
 });
 
 describe('mutations', () => {
@@ -126,17 +115,5 @@ describe('mutations', () => {
     const s = {};
     mutations.SET_CENTER(s, 1);
     expect(s.center).toEqual(1);
-  });
-
-  test('SET_FOCUS_ON', () => {
-    const s = {};
-    mutations.SET_FOCUS_ON(s, 1);
-    expect(s.focusOn).toEqual(1);
-  });
-
-  test('SET_SHOWN_PINS', () => {
-    const s = {};
-    mutations.SET_SHOWN_PINS(s, 1);
-    expect(s.shownPins).toEqual(1);
   });
 });
