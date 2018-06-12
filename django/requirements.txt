@@ -9,6 +9,7 @@ django-allauth
 django-taggit
 django-taggit-serializer
 redis
+django-simplefeedback
 
 pytest
 pytest-django
