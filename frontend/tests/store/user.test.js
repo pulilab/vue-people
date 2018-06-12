@@ -159,7 +159,7 @@ describe('actions', () => {
 
   test('setGithubToken', () => {
     actions.setGithubToken(vuex, 1);
-    expect(vuex.commit).toHaveBeenLastCalledWith('SET_GITHUB_TOKEN', 1a);
+    expect(vuex.commit).toHaveBeenLastCalledWith('SET_GITHUB_TOKEN', 1);
   });
 
   test('setCsrfToken', async () => {
