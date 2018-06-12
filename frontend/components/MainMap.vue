@@ -132,7 +132,6 @@ export default {
   data () {
     return {
       mapOptions: { zoomControl: false, attributionControl: false },
-      mapBounds: null,
       tooltipOptions: {
         className: 'person-tooltip',
         // set permanent to true to be able to debug / develop the tooltip css
@@ -171,20 +170,6 @@ export default {
     }),
     userMaker () {
       return this.userPosition;
-    },
-    shownMarkerCount () {
-      if (this.mapBounds && this.pins) {
-        const countInit = this.userTypes.reduce((p, c) => {
-          p[c.id] = 0;
-          return p;
-        }, {});
-
-        return this.pins.reduce((prev, c) => {
-          prev[c.type] += 1;
-          return prev;
-        }, countInit);
-      }
-      return 0;
     },
     showFloatingUI () {
       return !((this.$mq === 'sm' || this.$mq === 'xs') && !this.goToMap);
@@ -226,11 +211,6 @@ export default {
       }
     }
   },
-  mounted () {
-    this.$nextTick(() => {
-      this.$refs.mainMap.mapObject.whenReady(this.mapReady.bind(this));
-    });
-  },
   methods: {
     ...mapActions({
       setUserPosition: 'user/setUserPosition',
@@ -266,12 +246,6 @@ export default {
       } else {
         this.centerOnNext = true;
       }
-    },
-    mapReady () {
-      this.updateBounds();
-    },
-    updateBounds () {
-      this.mapBounds = this.$refs.mainMap.mapObject.getBounds();
     },
     iconGenerator (pin, isMe) {
       if (process.browser) {
