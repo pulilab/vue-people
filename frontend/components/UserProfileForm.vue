@@ -61,7 +61,7 @@
           />
 
           <v-switch
-            :label="switchLabel"
+            :label="publicEmailSwitchLabel"
             v-model="profile.public_email"
             light
             color="primary"
@@ -78,6 +78,25 @@
               Your email will only be stored in the database and only displayed to you.</span>
           </div>
         </v-flex>
+
+        <v-layout
+          row
+          class="opt-in-group"
+        >
+
+          <v-switch
+            :label="optInSwitchLabel"
+            v-model="profile.news_opt_in"
+            light
+            color="primary"
+          />
+
+          <div class="opt-in-text">
+            <!-- this is not the definitive copy -->
+            Opt in to receive occasional news about conferences, vue-meetups and job opportunities in "my" locality
+          </div>
+
+        </v-layout>
 
         <v-text-field
           v-validate="'url'"
@@ -175,6 +194,7 @@ export default {
         name: '',
         email: '',
         public_email: false,
+        news_opt_in: false,
         twitter_url: '',
         website_url: '',
         company: '',
@@ -191,8 +211,11 @@ export default {
       tagList: 'getTags',
       userTypes: 'getUserTypes'
     }),
-    switchLabel () {
+    publicEmailSwitchLabel () {
       return this.profile.public_email ? 'public' : 'private';
+    },
+    optInSwitchLabel () {
+      return this.profile.news_opt_in ? 'yes' : 'no';
     },
     lastModified () {
       return this.profile.modified ? format(this.profile.modified, 'YYYY-MM-DD HH:mm') : '';
@@ -270,6 +293,13 @@ export default {
           position: relative;
           top: -1px;
           color: @font-dark-disabled;
+        }
+      }
+
+      .opt-in-group {
+        .opt-in-text {
+          color: @font-dark-secondary;
+          font-size: @font-size-tiny;
         }
       }
     }
