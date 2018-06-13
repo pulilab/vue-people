@@ -49,70 +49,77 @@
 
         <v-layout
           row
-          class="email-group"
+          class="switch-row email-group"
         >
-          <v-text-field
-            v-validate="'email'"
-            v-model="profile.email"
-            :error-messages="errors.collect('E-Mail')"
-            label="E-mail"
-            data-vv-name="E-Mail"
-            light
-          />
+          <v-flex>
+            <v-text-field
+              v-validate="'email'"
+              v-model="profile.email"
+              :error-messages="errors.collect('E-Mail')"
+              label="E-mail"
+              data-vv-name="E-Mail"
+              light
+            />
+          </v-flex>
 
-          <v-switch
-            :label="publicEmailSwitchLabel"
-            v-model="profile.public_email"
-            light
-            color="primary"
-          />
+          <v-flex>
+            <v-switch
+              :label="publicEmailSwitchLabel"
+              v-model="profile.public_email"
+              light
+              hide-details
+              color="primary"
+            />
+          </v-flex>
         </v-layout>
 
-        <v-flex>
-          <div class="email-privacy-hint">
-            <span v-show="profile.publicEmail">
-              <v-icon small>info</v-icon>
-              Your email will be visible in the map and in your user detail.</span>
-            <span v-show="!profile.publicEmail">
-              <v-icon small>info</v-icon>
-              Your email will only be stored in the database and only displayed to you.</span>
-          </div>
-        </v-flex>
+        <div class="email-privacy-hint">
+          <span v-show="profile.publicEmail">
+            <v-icon small>info</v-icon>
+            Your email will be visible in the map and in your user detail.</span>
+          <span v-show="!profile.publicEmail">
+            <v-icon small>info</v-icon>
+            Your email will only be stored in the database and only displayed to you.</span>
+        </div>
 
         <v-layout
           row
-          class="opt-in-group"
+          class="switch-row"
         >
-
-          <v-switch
-            :label="optInSwitchLabel"
-            v-model="profile.news_opt_in"
-            light
-            color="primary"
-          />
-
-          <div class="opt-in-text">
-            Receive occasional news about conferences, VueJS meetups and job opportunities in my area
-          </div>
-
+          <v-flex>
+            <div class="switch-custom-label">
+              Receive occasional news about conferences, VueJS meetups and job opportunities in my area
+            </div>
+          </v-flex>
+          <v-flex>
+            <v-switch
+              :label="optInSwitchLabel"
+              v-model="profile.news_opt_in"
+              light
+              hide-details
+              color="primary"
+            />
+          </v-flex>
         </v-layout>
 
         <v-layout
           row
-          class="hireable-group"
+          class="switch-row"
         >
-
-          <v-switch
-            :label="hireableSwitchLabel"
-            v-model="profile.show_hireable"
-            light
-            color="primary"
-          />
-
-          <div class="hireable-text">
-            Show my Github “Jobs profile” setting
-          </div>
-
+          <v-flex>
+            <div class="switch-custom-label">
+              Show my Github “Jobs profile” setting
+            </div>
+          </v-flex>
+          <v-flex>
+            <v-switch
+              :label="hireableSwitchLabel"
+              v-model="profile.show_hireable"
+              light
+              hide-details
+              color="primary"
+            />
+          </v-flex>
         </v-layout>
 
         <v-text-field
@@ -124,6 +131,7 @@
           data-vv-name="GitHub Profile"
           light
         />
+
         <v-text-field
           v-validate="'url'"
           v-model="profile.twitter_url"
@@ -132,6 +140,7 @@
           data-vv-name="Twitter profile"
           light
         />
+
         <v-text-field
           v-validate="'url'"
           v-model="profile.website_url"
@@ -290,23 +299,37 @@ export default {
       overflow-y: auto;
       padding-bottom: 48px;
 
-      .email-group {
-        .input-group--text-field {}
-        .switch {
-          max-width: 90px;
-          padding-top: 18px;
-          margin-left: 16px;
+      .switch-row {
+        margin: 16px 0;
 
-          label {
-            font-size: @font-size-tiny;
-            font-weight: 500;
-            color: @font-dark-primary;
+        .flex {
+          &:first-child {
+            flex-grow: 1;
+          }
+
+          &:last-child {
+            min-width: 110px;
+            max-width: 110px;
+            padding-left: 16px;
+          }
+        }
+
+        .switch-custom-label {
+          margin-top: 7px;
+          font-size: @font-size-tiny;
+          color: @font-dark-primary;
+        }
+
+        &.email-group {
+          margin: 0;
+
+          .switch {
+            padding-top: 18px;
           }
         }
       }
 
       .email-privacy-hint {
-        padding: 0 0 18px;
         font-size: @font-size-tiny;
         color: @font-dark-secondary;
 
@@ -314,20 +337,6 @@ export default {
           position: relative;
           top: -1px;
           color: @font-dark-disabled;
-        }
-      }
-
-      .opt-in-group {
-        .opt-in-text {
-          color: @font-dark-secondary;
-          font-size: @font-size-tiny;
-        }
-      }
-
-      .hireable-group {
-        .hireable-text {
-          color: @font-dark-secondary;
-          font-size: @font-size-tiny;
         }
       }
     }
