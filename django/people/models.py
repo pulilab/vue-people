@@ -47,7 +47,7 @@ class Type(models.Model):
 
 
 class Person(SoftDeleteModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
     company = models.CharField(max_length=128, blank=True, null=True)
     hireable = models.NullBooleanField()
