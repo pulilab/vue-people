@@ -36,7 +36,7 @@ jobs:
               ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no \
               ${SERVER_USER}@167.99.245.180 \
               'cd ~/vue-people/ \
-              && docker-compose exec postgis pg_dump -U postgres postgres > ~/backups/latest_db_bk.sql \
+              && docker-compose exec -T postgis pg_dump -U postgres postgres > ~/backups/latest_db_bk.sql \
               && docker-compose down \
               && docker-compose -f docker-compose-wip.yml up -d \
               && git pull \
