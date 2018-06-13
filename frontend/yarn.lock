@@ -7843,9 +7843,9 @@ vue-custom-element@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/vue-custom-element/-/vue-custom-element-2.1.0.tgz#bf1b8a031d60cdd43055ecbc4f70726aa904bdbc"
 
-vue-django-feedback@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/vue-django-feedback/-/vue-django-feedback-1.4.0.tgz#d2edb5b344a76264fbc1b510a684f150fcc9c0fe"
+vue-django-feedback@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/vue-django-feedback/-/vue-django-feedback-1.5.0.tgz#6c9876a60431184cb27a31d9c51b672a7ddb2444"
   dependencies:
     axios "^0.17.1"
     document-register-element "^1.7.2"
