@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'rest_framework_gis',
     'taggit',
     'taggit_serializer',
+    'simple-feedback',
     'people'
 ]
 
