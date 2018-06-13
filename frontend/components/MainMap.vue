@@ -381,6 +381,9 @@ export default {
       &.me {
         background-image: url('~/assets/pins/pin-me.svg');
       }
+      &.library {
+        background-image: url('~/assets/pins/pin-library.svg');
+      }
     }
 
     .custom-cluster-icon {

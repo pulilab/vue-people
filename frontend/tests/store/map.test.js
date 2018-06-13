@@ -68,8 +68,23 @@ describe('getters', () => {
   test('getShownPins', () => {
     const getFilteredPins = [{type: 1}, {type: 1}, {type: 2}];
     const getUserTypes = [{id: 1}, {id: 2}];
-    expect(getters.getShownPins(null, {getFilteredPins}, null, {getUserTypes}))
+    const getUserProfile = {type: 1};
+    expect(getters.getShownPins(
+      null,
+      { getFilteredPins },
+      null,
+      { getUserTypes, 'user/getUserProfile': getUserProfile }
+    ))
       .toEqual({1: 2, 2: 1});
+
+    getUserProfile.latlng = [];
+    expect(getters.getShownPins(
+      null,
+      { getFilteredPins },
+      null,
+      { getUserTypes, 'user/getUserProfile': getUserProfile }
+    ))
+      .toEqual({1: 3, 2: 1});
     expect(getters.getShownPins(null, {}, null, {getUserTypes}))
       .toEqual({1: 0, 2: 0});
   });

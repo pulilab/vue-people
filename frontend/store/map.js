@@ -27,12 +27,14 @@ export const getters = {
     })];
   },
   getShownPins: (state, getters, rootState, rootGetters) => {
-    const pins = getters.getFilteredPins;
+    let pins = getters.getFilteredPins;
+    const user = rootGetters['user/getUserProfile'];
     const countInit = rootGetters.getUserTypes.reduce((p, c) => {
       p[c.id] = 0;
       return p;
     }, {});
     if (pins) {
+      pins = user.latlng ? [...pins, user] : [...pins];
       return pins.reduce((prev, c) => {
         prev[c.type] += 1;
         return prev;

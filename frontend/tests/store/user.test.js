@@ -1,7 +1,5 @@
 /* eslint prefer-promise-reject-errors: 0 */
 import { state, getters, actions, mutations } from '~/store/user';
-import * as githubQueries from '~/integrations/github/queries';
-import * as githubUtils from '~/integrations/github/utilities';
 import * as authUtils from '~/utilities/auth';
 import * as parsersUtils from '~/utilities/parsers';
 import { mockAxios } from '../utils'; ;
@@ -97,37 +95,6 @@ describe('actions', () => {
     actions.$axios = mockAxios();
   });
 
-  test('loadGitHubProfile', async () => {
-    vuex.getters.getGithubToken = 'ghToken';
-    githubUtils.gitHubGraphQlRequest = jest.fn()
-      .mockReturnValue({url: 'url', options: 'options'});
-    githubQueries.gitHubUserProfile = jest.fn().mockReturnValue(1);
-    actions.$axios.post.mockReturnValue({data: { data: { viewer: { a: 1 } } }});
-
-    vuex.state.gitHubProfile = 1;
-    await actions.loadGitHubProfile(vuex);
-    expect(actions.$axios.post.mock.calls.length).toEqual(0);
-
-    vuex.state.gitHubProfile = null;
-    await actions.loadGitHubProfile(vuex);
-    expect(actions.$axios.post.mock.calls[0]).toEqual(['url', 1, 'options']);
-    expect(vuex.commit.mock.calls[0]).toEqual(['SET_USER_GITHUB_PROFILE', {a: 1}]);
-
-    actions.$axios.post = jest.fn(() => Promise.reject());
-    await expect(actions.loadGitHubProfile(vuex)).rejects;
-
-    actions.$axios.post = jest.fn(() => Promise.reject({response: {}}));
-    await expect(actions.loadGitHubProfile(vuex)).rejects;
-
-    actions.$axios.post = jest.fn(() => Promise.reject({response: {status: 400}}));
-    await expect(actions.loadGitHubProfile(vuex)).rejects;
-
-    actions.$axios.post = jest.fn(() => Promise.reject({response: {status: 401}}));
-    await expect(actions.loadGitHubProfile(vuex)).rejects;
-    expect(vuex.dispatch.mock.calls.length).toEqual(1);
-    expect(vuex.dispatch.mock.calls[0]).toEqual(['logout']);
-  });
-
   test('loadSavedProfile', async () => {
     const data = { viewer: { a: 1 } };
     actions.$axios.get.mockReturnValue({ data });
@@ -169,11 +136,10 @@ describe('actions', () => {
   test('logout', () => {
     authUtils.deleteTokens = jest.fn();
     actions.logout(vuex);
-    expect(vuex.commit.mock.calls[0]).toEqual(['SET_USER_GITHUB_PROFILE', null]);
-    expect(vuex.commit.mock.calls[1]).toEqual(['SET_GITHUB_TOKEN', null]);
-    expect(vuex.commit.mock.calls[2]).toEqual(['SET_SAVED_PROFILE', null]);
-    expect(vuex.commit.mock.calls[3]).toEqual(['SET_CSRF_TOKEN', null]);
-    expect(vuex.commit.mock.calls[4]).toEqual(['SET_USER_POSITION', null]);
+    expect(vuex.commit.mock.calls[0]).toEqual(['SET_GITHUB_TOKEN', null]);
+    expect(vuex.commit.mock.calls[1]).toEqual(['SET_SAVED_PROFILE', null]);
+    expect(vuex.commit.mock.calls[2]).toEqual(['SET_CSRF_TOKEN', null]);
+    expect(vuex.commit.mock.calls[3]).toEqual(['SET_USER_POSITION', null]);
     expect(authUtils.deleteTokens.mock.calls.length).toEqual(1);
   });
 
@@ -191,15 +157,9 @@ describe('actions', () => {
     expect(vuex.commit.mock.calls[0]).toEqual(['SET_SAVED_PROFILE', data]);
   });
 
-  test('setGithubToken', async () => {
-    await actions.setGithubToken(vuex, null);
-    expect(vuex.commit.mock.calls[0]).toEqual(['SET_GITHUB_TOKEN', null]);
-    expect(vuex.dispatch.mock.calls.length).toEqual(0);
-
-    await actions.setGithubToken(vuex, 1);
-    expect(vuex.commit.mock.calls[1]).toEqual(['SET_GITHUB_TOKEN', 1]);
-    expect(vuex.dispatch.mock.calls.length).toEqual(1);
-    expect(vuex.dispatch.mock.calls[0]).toEqual(['loadGitHubProfile']);
+  test('setGithubToken', () => {
+    actions.setGithubToken(vuex, 1);
+    expect(vuex.commit).toHaveBeenLastCalledWith('SET_GITHUB_TOKEN', 1);
   });
 
   test('setCsrfToken', async () => {
@@ -220,11 +180,6 @@ describe('actions', () => {
 });
 
 describe('mutations', () => {
-  test('SET_USER_GITHUB_PROFILE', () => {
-    const s = {};
-    mutations.SET_USER_GITHUB_PROFILE(s, 1);
-    expect(s.gitHubProfile).toEqual(1);
-  });
 
   test('SET_USER_POSITION', () => {
     const s = {};
