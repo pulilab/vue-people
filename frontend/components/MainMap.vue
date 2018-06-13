@@ -137,7 +137,7 @@ export default {
         // set permanent to true to be able to debug / develop the tooltip css
         permanent: false,
         direction: 'top',
-        offset: [0, -30]
+        offset: [0, -55]
       },
       hoveredMarker: null,
       centerOnNext: false
@@ -384,16 +384,16 @@ export default {
 
       span {
         display: inline-block;
-        text-align: center;
         width: 36px;
-        margin-top: 5px;
+        margin-top: 6px;
         font-weight: 600;
+        text-align: center;
       }
     }
 
     .home-button {
       position: absolute;
-      bottom: 88px;
+      bottom: 139px;
       right: 16px;
       z-index: 5000;
       width: 30px;
@@ -405,13 +405,6 @@ export default {
 
       i {
         font-size: 18px;
-      }
-    }
-
-    // Responsive
-    .viewport-sm & {
-      .home-button {
-        bottom: 134px;
       }
     }
   }
