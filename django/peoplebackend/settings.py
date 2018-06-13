@@ -145,7 +145,7 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
+        'people.authentication.CsrfExemptSessionAuthentication',
         # 'rest_framework.authentication.BasicAuthentication'
     )
 }
