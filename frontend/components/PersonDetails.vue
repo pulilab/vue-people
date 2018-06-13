@@ -166,6 +166,18 @@ export default {
           &.btn-center-focus {}
         }
       }
+
+      .user-info {
+        .user {
+          > span {
+            max-width: 188px;
+          }
+        }
+
+        .email {
+          max-width: 220px;
+        }
+      }
     }
 
     .person-info-container {
