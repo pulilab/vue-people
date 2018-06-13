@@ -2,7 +2,8 @@
   <div class="feedback-button-wrapper">
     <vue-django-feedback
       :name="userProfile.name"
-      :email="userProfile.email" />
+      :email="userProfile.email"
+      :csrf-token="csrfToken" />
   </div>
 </template>
 
@@ -11,7 +12,8 @@ import { mapGetters } from 'vuex';
 export default {
   computed: {
     ...mapGetters({
-      userProfile: 'user/getUserProfile'
+      userProfile: 'user/getUserProfile',
+      csrfToken: 'user/getCsrfToken'
     })
   }
 };
