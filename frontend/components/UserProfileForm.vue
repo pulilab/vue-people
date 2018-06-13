@@ -92,8 +92,25 @@
           />
 
           <div class="opt-in-text">
-            <!-- this is not the definitive copy -->
-            Opt in to receive occasional news about conferences, vue-meetups and job opportunities in "my" locality
+            Receive occasional news about conferences, VueJS meetups and job opportunities in my area
+          </div>
+
+        </v-layout>
+
+        <v-layout
+          row
+          class="hireable-group"
+        >
+
+          <v-switch
+            :label="hireableSwitchLabel"
+            v-model="profile.show_hireable"
+            light
+            color="primary"
+          />
+
+          <div class="hireable-text">
+            Show my Github “Jobs profile” setting
           </div>
 
         </v-layout>
@@ -195,6 +212,7 @@ export default {
         email: '',
         public_email: false,
         news_opt_in: false,
+        show_hireable: false,
         twitter_url: '',
         website_url: '',
         company: '',
@@ -216,6 +234,9 @@ export default {
     },
     optInSwitchLabel () {
       return this.profile.news_opt_in ? 'yes' : 'no';
+    },
+    hireableSwitchLabel () {
+      return this.profile.show_hireable ? 'yes' : 'no';
     },
     lastModified () {
       return this.profile.modified ? format(this.profile.modified, 'YYYY-MM-DD HH:mm') : '';
@@ -298,6 +319,13 @@ export default {
 
       .opt-in-group {
         .opt-in-text {
+          color: @font-dark-secondary;
+          font-size: @font-size-tiny;
+        }
+      }
+
+      .hireable-group {
+        .hireable-text {
           color: @font-dark-secondary;
           font-size: @font-size-tiny;
         }
