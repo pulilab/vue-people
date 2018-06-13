@@ -108,6 +108,8 @@
         <span class="body-2">...waiting for location</span>
       </div>
     </v-snackbar>
+
+    <feedback-button v-if="showFloatingUI" />
   </div>
 </template>
 
@@ -117,6 +119,7 @@ import MapToolbar from './MapToolbar.vue';
 import UserAvatar from './UserAvatar.vue';
 import MapLegend from './MapLegend.vue';
 import TagFilter from './TagFilter.vue';
+import FeedbackButton from './FeedbackButton.vue';
 import { debounce } from '~/utilities/common';
 import VuexGeolocation from 'vuex-geolocation';
 
@@ -127,7 +130,8 @@ export default {
     MapToolbar,
     UserAvatar,
     MapLegend,
-    TagFilter
+    TagFilter,
+    FeedbackButton
   },
   data () {
     return {

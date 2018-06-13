@@ -6,7 +6,6 @@
       <nuxt/>
       <app-dialogs />
       <cookie-warning/>
-      <feedback-button />
     </v-content>
   </v-app>
 </template>
@@ -14,13 +13,11 @@
 <script>
 import AppDialogs from '~/components/AppDialogs.vue';
 import CookieWarning from '~/components/CookieWarning.vue';
-import FeedbackButton from '~/components/FeedbackButton.vue';
 
 export default {
   components: {
     AppDialogs,
-    CookieWarning,
-    FeedbackButton
+    CookieWarning
   },
   computed: {
     mobileClass () {
