@@ -12,8 +12,7 @@ class CustomEmailField(serializers.Field):
         return obj
 
     def to_representation(self, obj):  # GET
-        person = obj.person_set.first()
-        if person.public_email or obj == self.context['request'].user:
+        if obj.person.public_email or obj == self.context['request'].user:
             return obj.email
         else:
             return ""
