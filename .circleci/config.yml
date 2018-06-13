@@ -38,8 +38,10 @@ jobs:
               'cd ~/vue-people/ \
               && docker-compose exec postgis pg_dump -U postgres postgres > ~/backups/latest_db_bk.sql \
               && docker-compose down \
+              && docker-compose -f docker-compose-wip.yml up -d \
               && git pull \
               && docker-compose build \
+              && docker-compose -f docker-compose-wip.yml down \
               && docker-compose up -d \
               && docker-compose exec -T django python manage.py migrate'
             fi
