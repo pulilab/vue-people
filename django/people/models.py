@@ -65,7 +65,8 @@ class Person(SoftDeleteModel):
     modified = models.DateTimeField(auto_now=True, auto_now_add=False)
     public_email = models.BooleanField(default=True)
     news_opt_in = models.BooleanField(default=True)
-    show_hireable = models.BooleanField(default=False)
+    show_hireable = models.BooleanField(default=True)
+
     class Meta:
         verbose_name_plural = "People"
 
