@@ -33,7 +33,8 @@
               :options="pin.options"
               :lat-lng="pin.latlng"
               :icon="iconGenerator(pin)"
-              @mouseenter="markerHoverHandler(pin, $event)"
+              @mouseenter="markerHoverHandler(pin, true, $event)"
+              @mouseleave="markerHoverHandler(pin, false, $event)"
               @click="openPersonDetails(pin)"
             >
               <l-tooltip
@@ -265,14 +266,18 @@ export default {
         return icon;
       }
     },
-    markerHoverHandler (pin, event) {
-      this.hoveredMarker = pin.id;
-      const m = event.target;
-      window.setTimeout(() => {
-        if (!m.isTooltipOpen()) {
-          m.toggleTooltip();
-        }
-      }, 300);
+    markerHoverHandler (pin, isEnter, event) {
+      if (isEnter) {
+        this.hoveredMarker = pin.id;
+        const m = event.target;
+        window.setTimeout(() => {
+          if (m && !m.isTooltipOpen()) {
+            m.toggleTooltip();
+          }
+        }, 100);
+      } else {
+        this.hoveredMarker = null;
+      }
     }
   }
 };
