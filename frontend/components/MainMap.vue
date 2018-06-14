@@ -118,6 +118,7 @@ import UserAvatar from './UserAvatar.vue';
 import MapLegend from './MapLegend.vue';
 import TagFilter from './TagFilter.vue';
 import { debounce } from '~/utilities/common';
+import debounce from 'lodash/debounce';
 import VuexGeolocation from 'vuex-geolocation';
 
 import NoSSR from 'vue-no-ssr';
