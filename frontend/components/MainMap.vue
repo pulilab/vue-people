@@ -19,8 +19,8 @@
           :world-copy-jump="true"
           :options="mapOptions"
           :center="center"
-          @moveend="mapMoveHandler"
-          @zoomend="mapZoomHandler"
+          @update:center="mapMoveHandler"
+          @update:zoom="mapZoomHandler"
           @click="addMarker">
           <l-tilelayer
             url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'"/>
@@ -232,13 +232,13 @@ export default {
         this.$router.push(`/user/${pin.id}/`);
       }
     },
-    mapMoveHandler: debounce(function (e) {
-      this.setCenter(e.target.getCenter());
-    }, 200),
-    mapZoomHandler: debounce(function (e) {
-      const value = parseInt(e.target.getZoom(), 10);
+    mapMoveHandler: debounce(function (center) {
+      this.setCenter(center);
+    }, 500),
+    mapZoomHandler: debounce(function (zoom) {
+      const value = parseInt(zoom, 10);
       this.setZoom(value);
-    }, 200),
+    }, 500),
     centerToUser () {
       if (!this.$store.state.geolocation) {
         VuexGeolocation.sync(this.$store);
