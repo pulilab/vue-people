@@ -5,6 +5,8 @@ WORKDIR /usr/src/app
 
 COPY . /usr/src/app/
 RUN echo "NODE_ENV=production" >> .env
+RUN apk update && apk upgrade && \
+    apk add --no-cache bash git openssh
 RUN yarn
 RUN yarn build
 
