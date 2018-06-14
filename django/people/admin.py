@@ -15,4 +15,7 @@ class PersonAdmin(admin.ModelAdmin):
 
     def user_email(self, obj):
         return obj.user.email
-    user_email.short_description = 'Email'
+    user_email.short_description = 'Email'    def has_location(self, obj):
+        return obj.location is not None
+    has_location.boolean = True
+    has_location.short_description = 'Has location'
