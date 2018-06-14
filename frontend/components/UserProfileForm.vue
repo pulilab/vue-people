@@ -70,10 +70,10 @@
 
         <v-flex>
           <div class="email-privacy-hint">
-            <span v-show="profile.publicEmail">
+            <span v-show="profile.public_email">
               <v-icon small>info</v-icon>
               Your email will be visible in the map and in your user detail.</span>
-            <span v-show="!profile.publicEmail">
+            <span v-show="!profile.public_email">
               <v-icon small>info</v-icon>
               Your email will only be stored in the database and only displayed to you.</span>
           </div>
