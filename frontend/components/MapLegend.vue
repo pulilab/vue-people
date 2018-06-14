@@ -54,7 +54,7 @@ export default {
   .viewport-sm & {
     display: flex;
     justify-content: space-around;
-    width: calc(100vw - 32px);
+    width: calc(100vw - 78px);
   }
 }
 

@@ -32,6 +32,7 @@ admin.site.site_header = 'Vue People Backend'
 urlpatterns += [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
+    path('api/', include("simple-feedback.urls")),
 ]
 
 if settings.DEBUG:  # pragma: no cover

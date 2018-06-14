@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'rest_framework_gis',
     'taggit',
     'taggit_serializer',
+    'simple-feedback',
     'people'
 ]
 
@@ -145,7 +146,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-        # 'rest_framework.authentication.BasicAuthentication'
+        #'rest_framework.authentication.BasicAuthentication'
     )
 }
 
