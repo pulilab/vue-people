@@ -63,6 +63,13 @@ const config = {
   }
 };
 
+if (process.env.ANALYTICS_ID) {
+  config.modules.push('@nuxtjs/google-analytics');
+  config['google-analytics'] = {
+    id: process.env.ANALYTICS_ID
+  };
+}
+
 if (process.env.NODE_ENV !== 'production') {
   config.axios = {
     proxy: true,
