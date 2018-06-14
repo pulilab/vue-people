@@ -239,11 +239,11 @@ export default {
     },
     mapMoveHandler: debounce(function (center) {
       this.setCenter(center);
-    }, 500),
+    }, 0),
     mapZoomHandler: debounce(function (zoom) {
       const value = parseInt(zoom, 10);
       this.setZoom(value);
-    }, 500),
+    }, 0),
     centerToUser () {
       if (!this.$store.state.geolocation) {
         VuexGeolocation.sync(this.$store);

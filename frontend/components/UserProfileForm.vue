@@ -49,35 +49,78 @@
 
         <v-layout
           row
-          class="email-group"
+          class="switch-row email-group"
         >
-          <v-text-field
-            v-validate="'email'"
-            v-model="profile.email"
-            :error-messages="errors.collect('E-Mail')"
-            label="E-mail"
-            data-vv-name="E-Mail"
-            light
-          />
+          <v-flex>
+            <v-text-field
+              v-validate="'email'"
+              v-model="profile.email"
+              :error-messages="errors.collect('E-Mail')"
+              label="E-mail"
+              data-vv-name="E-Mail"
+              light
+            />
+          </v-flex>
 
-          <v-switch
-            :label="switchLabel"
-            v-model="profile.public_email"
-            light
-            color="primary"
-          />
+          <v-flex>
+            <v-switch
+              :label="publicEmailSwitchLabel"
+              v-model="profile.public_email"
+              light
+              hide-details
+              color="primary"
+            />
+          </v-flex>
         </v-layout>
 
-        <v-flex>
-          <div class="email-privacy-hint">
-            <span v-show="profile.public_email">
-              <v-icon small>info</v-icon>
-              Your email will be visible in the map and in your user detail.</span>
-            <span v-show="!profile.public_email">
-              <v-icon small>info</v-icon>
-              Your email will only be stored in the database and only displayed to you.</span>
-          </div>
-        </v-flex>
+        <div class="email-privacy-hint">
+          <span v-show="profile.public_email">
+            <v-icon small>info</v-icon>
+            Your email will be visible in the map and in your user detail.</span>
+          <span v-show="!profile.public_email">
+            <v-icon small>info</v-icon>
+            Your email will only be stored in the database and only displayed to you.</span>
+        </div>
+
+        <v-layout
+          row
+          class="switch-row"
+        >
+          <v-flex>
+            <div class="switch-custom-label">
+              Receive occasional news about conferences, VueJS meetups and job opportunities in my area
+            </div>
+          </v-flex>
+          <v-flex>
+            <v-switch
+              :label="optInSwitchLabel"
+              v-model="profile.news_opt_in"
+              light
+              hide-details
+              color="primary"
+            />
+          </v-flex>
+        </v-layout>
+
+        <v-layout
+          row
+          class="switch-row"
+        >
+          <v-flex>
+            <div class="switch-custom-label">
+              Show my Github “Jobs profile” setting
+            </div>
+          </v-flex>
+          <v-flex>
+            <v-switch
+              :label="hireableSwitchLabel"
+              v-model="profile.show_hireable"
+              light
+              hide-details
+              color="primary"
+            />
+          </v-flex>
+        </v-layout>
 
         <v-text-field
           v-validate="'url'"
@@ -88,6 +131,7 @@
           data-vv-name="GitHub Profile"
           light
         />
+
         <v-text-field
           v-validate="'url'"
           v-model="profile.twitter_url"
@@ -96,6 +140,7 @@
           data-vv-name="Twitter profile"
           light
         />
+
         <v-text-field
           v-validate="'url'"
           v-model="profile.website_url"
@@ -175,6 +220,8 @@ export default {
         name: '',
         email: '',
         public_email: false,
+        news_opt_in: false,
+        show_hireable: false,
         twitter_url: '',
         website_url: '',
         company: '',
@@ -191,8 +238,14 @@ export default {
       tagList: 'getTags',
       userTypes: 'getUserTypes'
     }),
-    switchLabel () {
+    publicEmailSwitchLabel () {
       return this.profile.public_email ? 'public' : 'private';
+    },
+    optInSwitchLabel () {
+      return this.profile.news_opt_in ? 'yes' : 'no';
+    },
+    hireableSwitchLabel () {
+      return this.profile.show_hireable ? 'yes' : 'no';
     },
     lastModified () {
       return this.profile.modified ? format(this.profile.modified, 'YYYY-MM-DD HH:mm') : '';
@@ -246,23 +299,37 @@ export default {
       overflow-y: auto;
       padding-bottom: 48px;
 
-      .email-group {
-        .input-group--text-field {}
-        .switch {
-          max-width: 90px;
-          padding-top: 18px;
-          margin-left: 16px;
+      .switch-row {
+        margin: 16px 0;
 
-          label {
-            font-size: @font-size-tiny;
-            font-weight: 500;
-            color: @font-dark-primary;
+        .flex {
+          &:first-child {
+            flex-grow: 1;
+          }
+
+          &:last-child {
+            min-width: 110px;
+            max-width: 110px;
+            padding-left: 16px;
+          }
+        }
+
+        .switch-custom-label {
+          margin-top: 7px;
+          font-size: @font-size-tiny;
+          color: @font-dark-primary;
+        }
+
+        &.email-group {
+          margin: 0;
+
+          .switch {
+            padding-top: 18px;
           }
         }
       }
 
       .email-privacy-hint {
-        padding: 0 0 18px;
         font-size: @font-size-tiny;
         color: @font-dark-secondary;
 

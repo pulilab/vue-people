@@ -66,9 +66,18 @@
             </v-btn>
           </v-layout>
         </div>
-        <div class="item px-4 py-3">
+        <div
+          v-if="showHireableBadge"
+          class="item px-4 py-3"
+        >
           <div class="caption">
             About
+            <span class="hireable">
+              <v-icon small>
+                how_to_reg
+              </v-icon>
+              hireable
+            </span>
           </div>
           <div class="content">
             {{ person.bio }}
@@ -115,7 +124,10 @@ export default {
   computed: {
     ...mapGetters({
       person: 'people/getCurrentPersonDetails'
-    })
+    }),
+    showHireableBadge () {
+      return this.person.show_hireable && this.person.hireable;
+    }
   },
   methods: {
     ...mapActions({
@@ -214,6 +226,24 @@ export default {
           font-weight: 500;
           text-transform: uppercase;
           color: @font-light-disabled;
+
+          .hireable {
+            float: right;
+            display: inline-block;
+            padding: 0 8px 0 8px;
+            height: 18px;
+            line-height: 19px;
+            background-color: #00C853;
+            font-size: @font-size-tiny - 1;
+            font-weight: 700;
+            color: @color-white;
+            border-radius: 20px;
+
+            .icon {
+              position: relative;
+              top: -1px;
+            }
+          }
         }
 
         .content {
