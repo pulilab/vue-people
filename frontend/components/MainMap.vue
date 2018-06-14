@@ -19,8 +19,8 @@
           :world-copy-jump="true"
           :options="mapOptions"
           :center="center"
-          @moveend="mapMoveHandler"
-          @zoomend="mapZoomHandler"
+          @update:center="mapMoveHandler"
+          @update:zoom="mapZoomHandler"
           @click="addMarker">
           <l-tilelayer
             url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'"/>
@@ -33,7 +33,8 @@
               :options="pin.options"
               :lat-lng="pin.latlng"
               :icon="iconGenerator(pin)"
-              @mouseenter="markerHoverHandler(pin, $event)"
+              @mouseenter="markerHoverHandler(pin, true, $event)"
+              @mouseleave="markerHoverHandler(pin, false, $event)"
               @click="openPersonDetails(pin)"
             >
               <l-tooltip
@@ -119,8 +120,8 @@ import MapToolbar from './MapToolbar.vue';
 import UserAvatar from './UserAvatar.vue';
 import MapLegend from './MapLegend.vue';
 import TagFilter from './TagFilter.vue';
+import debounce from 'lodash/debounce';
 import FeedbackButton from './FeedbackButton.vue';
-import { debounce } from '~/utilities/common';
 import VuexGeolocation from 'vuex-geolocation';
 
 import NoSSR from 'vue-no-ssr';
@@ -183,6 +184,8 @@ export default {
     },
     clusterOptions () {
       return {
+        disableClusteringAtZoom: 13,
+        spiderfyOnMaxZoom: false,
         polygonOptions: {
           stroke: false,
           fillColor: '#42B883'
@@ -234,13 +237,13 @@ export default {
         this.$router.push(`/user/${pin.id}/`);
       }
     },
-    mapMoveHandler: debounce(function (e) {
-      this.setCenter(e.target.getCenter());
-    }, 200),
-    mapZoomHandler: debounce(function (e) {
-      const value = parseInt(e.target.getZoom(), 10);
+    mapMoveHandler: debounce(function (center) {
+      this.setCenter(center);
+    }, 500),
+    mapZoomHandler: debounce(function (zoom) {
+      const value = parseInt(zoom, 10);
       this.setZoom(value);
-    }, 200),
+    }, 500),
     centerToUser () {
       if (!this.$store.state.geolocation) {
         VuexGeolocation.sync(this.$store);
@@ -267,14 +270,18 @@ export default {
         return icon;
       }
     },
-    markerHoverHandler (pin, event) {
-      this.hoveredMarker = pin.id;
-      const m = event.target;
-      window.setTimeout(() => {
-        if (!m.isTooltipOpen()) {
-          m.toggleTooltip();
-        }
-      }, 300);
+    markerHoverHandler (pin, isEnter, event) {
+      if (isEnter) {
+        this.hoveredMarker = pin.id;
+        const m = event.target;
+        window.setTimeout(() => {
+          if (m && !m.isTooltipOpen()) {
+            m.toggleTooltip();
+          }
+        }, 100);
+      } else {
+        this.hoveredMarker = null;
+      }
     }
   }
 };
