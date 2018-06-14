@@ -180,6 +180,8 @@ export default {
     },
     clusterOptions () {
       return {
+        disableClusteringAtZoom: 13,
+        spiderfyOnMaxZoom: false,
         polygonOptions: {
           stroke: false,
           fillColor: '#42B883'
