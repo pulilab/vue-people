@@ -66,7 +66,10 @@
             </v-btn>
           </v-layout>
         </div>
-        <div class="item px-4 py-3">
+        <div
+          v-if="showHireableBadge"
+          class="item px-4 py-3"
+        >
           <div class="caption">
             About
             <span class="hireable">
@@ -121,7 +124,10 @@ export default {
   computed: {
     ...mapGetters({
       person: 'people/getCurrentPersonDetails'
-    })
+    }),
+    showHireableBadge () {
+      return this.person.show_hireable && this.person.hireable;
+    }
   },
   methods: {
     ...mapActions({
