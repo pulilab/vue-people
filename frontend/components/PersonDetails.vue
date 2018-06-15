@@ -66,13 +66,13 @@
             </v-btn>
           </v-layout>
         </div>
-        <div
-          v-if="showHireableBadge"
-          class="item px-4 py-3"
-        >
+        <div class="item px-4 py-3">
           <div class="caption">
             About
-            <span class="hireable">
+            <span
+              v-if="showHireableBadge"
+              class="hireable"
+            >
               <v-icon small>
                 how_to_reg
               </v-icon>

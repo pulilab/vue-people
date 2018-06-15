@@ -2,8 +2,6 @@ version: "3"
 
 services:
   django:
-    environment:
-      - DEBUG
     restart: always
     build: ./django
     expose:
