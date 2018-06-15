@@ -16,15 +16,11 @@
       :class="['map-wrapper', {addMode}]">
       <no-ssr>
         <l-map
-          v-if="center"
           ref="mainMap"
           :zoom="zoom"
           :max-zoom="maxZoom"
           :world-copy-jump="true"
           :options="mapOptions"
-          :center="center"
-          @update:center="mapMoveHandler"
-          @update:zoom="mapZoomHandler"
           @click="addMarker">
           <l-tilelayer
             url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'"/>
@@ -126,7 +122,6 @@ import MapToolbar from './MapToolbar.vue';
 import UserAvatar from './UserAvatar.vue';
 import MapLegend from './MapLegend.vue';
 import TagFilter from './TagFilter.vue';
-import debounce from 'lodash/debounce';
 import FeedbackButton from './FeedbackButton.vue';
 import VuexGeolocation from 'vuex-geolocation';
 
@@ -142,6 +137,7 @@ export default {
   },
   data () {
     return {
+      zoom: 3,
       mapOptions: { zoomControl: false, attributionControl: false },
       tooltipOptions: {
         className: 'person-tooltip',
@@ -166,8 +162,6 @@ export default {
       pins: 'map/getFilteredPins',
       addMode: 'map/isAddMode',
       userPosition: 'user/getUserPosition',
-      storedZoom: 'map/getZoom',
-      center: 'map/getCenter',
       getUserType: 'getUserType',
       userProfile: 'user/getUserProfile',
       userTypes: 'getUserTypes',
@@ -176,17 +170,11 @@ export default {
     userMaker () {
       return this.userPosition;
     },
+    maxZoom () {
+      return this.addMode ? 13 : 100;
+    },
     showFloatingUI () {
       return !((this.$mq === 'sm' || this.$mq === 'xs') && !this.goToMap);
-    },
-    maxZoom () {
-      return this.addMode ? 13 : undefined;
-    },
-    zoom () {
-      if (this.maxZoom) {
-        return this.storedZoom > this.maxZoom ? this.maxZoom : this.storedZoom;
-      }
-      return this.storedZoom;
     },
     clusterOptions () {
       return {
@@ -243,13 +231,6 @@ export default {
         this.$router.push(`/user/${pin.id}/`);
       }
     },
-    mapMoveHandler: debounce(function (center) {
-      this.setCenter(center);
-    }, 0),
-    mapZoomHandler: debounce(function (zoom) {
-      const value = parseInt(zoom, 10);
-      this.setZoom(value);
-    }, 0),
     centerToUser () {
       if (!this.$store.state.geolocation) {
         VuexGeolocation.sync(this.$store);
