@@ -3,12 +3,12 @@
     <v-icon small>mdi-vuejs</v-icon>
     <span
       v-show="showText"
-      class="ml-1">
+      class="ml-1 user-type-name">
       {{ type.verbose_name }}
     </span>
     <span
       v-show="showCount"
-      class="ml-1">
+      class="ml-1 user-type-count">
       ({{ type.count }})
     </span>
   </div>

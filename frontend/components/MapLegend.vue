@@ -58,14 +58,16 @@ export default {
   background-color: rgba(255,255,255,.94);
   border-radius: 3px;
 
-  span {
-    display: inline-block;
-    padding: 0;
-    font-family: @font-roboto;
-    color: @font-dark-secondary;
-    font-size: @font-size-tiny;
-    line-height: @map-card-small-height;
-    transition: @default-transition;
+  .user-type {
+    span {
+      display: inline-block;
+      padding: 0;
+      font-family: @font-roboto;
+      color: @font-dark-secondary;
+      font-size: @font-size-tiny;
+      line-height: @map-card-small-height;
+      // transition: @default-transition;
+    }
   }
 
   // Responsive
@@ -73,6 +75,25 @@ export default {
     display: flex;
     justify-content: space-around;
     width: calc(100vw - 78px);
+    padding: 0;
+
+    .user-type {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 38%;
+
+      span {
+        font-size: @font-size-tiny - 1;
+        line-height: @map-card-small-height + 1;
+        font-weight: 500;
+        white-space: nowrap;
+
+        &.user-type-name {
+          .text-truncate();
+        }
+      }
+    }
   }
 }
 
