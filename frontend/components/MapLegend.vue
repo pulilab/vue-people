@@ -4,8 +4,10 @@
       v-for="type in userTypes"
       :key="type.id"
       :id="type.id"
-      :show-text="true"
+      :show-text="calculateShowText(type.id)"
       :show-count="true"
+      :class="{open: type.id === activeType}"
+      @click.native="setActiveType(type.id)"
     />
   </div>
 </template>
@@ -18,10 +20,26 @@ export default {
   components: {
     UserType
   },
+  data () {
+    return {
+      activeType: 2
+    };
+  },
   computed: {
     ...mapGetters({
       userTypes: 'getUserTypes'
-    })
+    }),
+    isMobile () {
+      return this.$mq === 'sm' || this.$mq === 'xs';
+    }
+  },
+  methods: {
+    calculateShowText (id) {
+      return !this.isMobile || this.activeType === id;
+    },
+    setActiveType (id) {
+      this.activeType = id;
+    }
   }
 };
 </script>
