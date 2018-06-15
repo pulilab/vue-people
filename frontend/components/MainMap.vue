@@ -1,12 +1,16 @@
 <template>
   <div class="main-map">
 
-    <v-slide-y-transition>
-      <map-toolbar v-show="showFloatingUI" />
-    </v-slide-y-transition>
-    <v-slide-y-transition>
-      <tag-filter v-show="showFloatingUI" />
-    </v-slide-y-transition>
+    <no-ssr>
+      <v-slide-y-transition>
+        <map-toolbar v-show="showFloatingUI" />
+      </v-slide-y-transition>
+    </no-ssr>
+    <no-ssr>
+      <v-slide-y-transition>
+        <tag-filter v-show="showFloatingUI" />
+      </v-slide-y-transition>
+    </no-ssr>
 
     <div
       :class="['map-wrapper', {addMode}]">
@@ -110,7 +114,9 @@
       </div>
     </v-snackbar>
 
-    <feedback-button v-if="showFloatingUI" />
+    <no-ssr>
+      <feedback-button v-if="showFloatingUI" />
+    </no-ssr>
   </div>
 </template>
 
