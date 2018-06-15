@@ -17,16 +17,6 @@ describe('getters', () => {
     expect(getters.isAddMode(s)).toEqual(s.addMode);
   });
 
-  test('getZoom', () => {
-    expect(getters.getZoom(s)).toEqual(s.zoom);
-  });
-
-  test('getCenter', () => {
-    s.center = {lat: 1, lng: 2};
-    expect(getters.getCenter(s)).toEqual(s.center);
-    expect(getters.getCenter(s)).not.toBe(s.center);
-  });
-
   test('getFilteredPins', () => {
     const g = {
       getFocusOn: 1
@@ -101,16 +91,6 @@ describe('actions', () => {
     actions.setAddMode(vuex, 1);
     expect(vuex.commit.mock.calls[0]).toEqual(['SET_ADD_MODE', 1]);
   });
-
-  test('setZoom', () => {
-    actions.setZoom(vuex, 1);
-    expect(vuex.commit.mock.calls[0]).toEqual(['SET_ZOOM', 1]);
-  });
-
-  test('setCenter', () => {
-    actions.setCenter(vuex, 1);
-    expect(vuex.commit.mock.calls[0]).toEqual(['SET_CENTER', 1]);
-  });
 });
 
 describe('mutations', () => {
@@ -118,17 +98,5 @@ describe('mutations', () => {
     const s = {};
     mutations.SET_ADD_MODE(s, 1);
     expect(s.addMode).toEqual(1);
-  });
-
-  test('SET_ZOOM', () => {
-    const s = {};
-    mutations.SET_ZOOM(s, 1);
-    expect(s.zoom).toEqual(1);
-  });
-
-  test('SET_CENTER', () => {
-    const s = {};
-    mutations.SET_CENTER(s, 1);
-    expect(s.center).toEqual(1);
   });
 });
