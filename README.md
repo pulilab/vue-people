@@ -9,6 +9,8 @@ CircleCi: [![CircleCI](https://circleci.com/gh/pulilab/vue-people/tree/master.sv
 ## Fronted Build Setup
 
 ``` bash
+$ cd frontend
+
 # install dependencies
 $ yarn install
 
@@ -40,13 +42,17 @@ $ echo "NODE_TLS_REJECT_UNAUTHORIZED = '0'" >> .env
 
 ```bash
 # start django in debug mode
-DEBUG=True docker-compose up -d
+change DEBUG=True in django/.env
 ```
 
 ## Backend build setup
 
 ```bash
 # Build docker service with docker-compose
+$ cd django
+$ cp .env.template .env
+
+$ cd ..
 $ docker-compose build
 $ docker-compose up -d
 
