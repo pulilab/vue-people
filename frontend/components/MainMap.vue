@@ -32,7 +32,7 @@
               :key="pin.key"
               :options="pin.options"
               :lat-lng="pin.latlng"
-              :icon="iconGenerator(pin)"
+              :icon="iconCollection[pin.id]"
               @mouseenter="markerHoverHandler(pin, true, $event)"
               @mouseleave="markerHoverHandler(pin, false, $event)"
               @click="openPersonDetails(pin)"
@@ -138,6 +138,7 @@ export default {
   data () {
     return {
       zoom: 3,
+      iconCollection: {},
       mapOptions: { zoomControl: false, attributionControl: false },
       tooltipOptions: {
         className: 'person-tooltip',
@@ -214,6 +215,12 @@ export default {
         }
       }
     }
+  },
+  mounted () {
+    this.iconCollection = this.pins.reduce((p, c) => {
+      p[c.id] = this.iconGenerator(c);
+      return p;
+    }, {});
   },
   methods: {
     ...mapActions({
