@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import raven
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -48,6 +49,57 @@ INSTALLED_APPS = [
     'simple-feedback',
     'people'
 ]
+
+if not DEBUG:
+    sentry = os.environ.get('SENTRY_DSN')
+    if sentry:
+        INSTALLED_APPS += ['raven.contrib.django.raven_compat']
+        RAVEN_CONFIG = {
+            'dsn': sentry,
+        }
+        LOGGING = {
+            'version': 1,
+            'disable_existing_loggers': True,
+            'root': {
+                'level': 'WARNING',
+                'handlers': ['sentry'],
+            },
+            'formatters': {
+                'verbose': {
+                    'format': '%(levelname)s %(asctime)s %(module)s '
+                              '%(process)d %(thread)d %(message)s'
+                },
+            },
+            'handlers': {
+                'sentry': {
+                    'level': 'ERROR',  # To capture more than ERROR, change to WARNING, INFO, etc.
+                    'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
+                    'tags': {'custom-tag': 'x'},
+                },
+                'console': {
+                    'level': 'DEBUG',
+                    'class': 'logging.StreamHandler',
+                    'formatter': 'verbose'
+                }
+            },
+            'loggers': {
+                'django.db.backends': {
+                    'level': 'ERROR',
+                    'handlers': ['console'],
+                    'propagate': False,
+                },
+                'raven': {
+                    'level': 'DEBUG',
+                    'handlers': ['sentry', 'console'],
+                    'propagate': False,
+                },
+                'sentry.errors': {
+                    'level': 'DEBUG',
+                    'handlers': ['console'],
+                    'propagate': False,
+                },
+            },
+        }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
