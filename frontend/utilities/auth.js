@@ -5,7 +5,7 @@ export const safeSaveToken = (name, value) => {
     if (process.client) {
       window.localStorage.setItem(name, value);
     }
-    Cookie.set(name, value);
+    Cookie.set(name, value, { expires: 365 });
   }
 };
 
