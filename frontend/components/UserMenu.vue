@@ -223,6 +223,10 @@ export default {
 
       .btn {
         min-width: auto;
+
+        .btn__content {
+          padding-left: 12px;
+        }
       }
     }
 
