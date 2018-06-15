@@ -8,8 +8,10 @@ django-redis-cache
 django-allauth
 django-taggit
 django-taggit-serializer
-redis
+django-dotenv
 django-simplefeedback==0.8
+redis
+raven
 
 pytest
 pytest-django
