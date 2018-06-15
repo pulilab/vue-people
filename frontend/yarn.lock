@@ -7959,9 +7959,9 @@ vue2-leaflet-markercluster@^2.0.0:
     leaflet.markercluster "^1.3.0"
     vue2-leaflet "^1.0.2"
 
-vue2-leaflet@^1.0.2, "vue2-leaflet@https://github.com/pulilab/Vue2Leaflet":
+vue2-leaflet@^1.0.2:
   version "1.0.2"
-  resolved "https://github.com/pulilab/Vue2Leaflet#06e832e3146f753b86b8a5b1d5f6a40e8baff5de"
+  resolved "https://registry.yarnpkg.com/vue2-leaflet/-/vue2-leaflet-1.0.2.tgz#73e0c09a30015db9a8dc0e9256443afb180d1fd5"
   dependencies:
     leaflet "^1.3.1"
 
