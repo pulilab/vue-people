@@ -23,7 +23,9 @@
           :options="mapOptions"
           @click="addMarker">
           <l-tilelayer
-            url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'"/>
+            url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'"
+            @loading="mapReadyHandler"
+          />
 
           <v-marker-cluster :options="clusterOptions">
             <l-marker
@@ -139,6 +141,7 @@ export default {
     return {
       zoom: 3,
       iconCollection: {},
+      mapReady: false,
       mapOptions: { zoomControl: false, attributionControl: false },
       tooltipOptions: {
         className: 'person-tooltip',
@@ -286,6 +289,10 @@ export default {
       } else {
         this.hoveredMarker = null;
       }
+    },
+    mapReadyHandler (event) {
+      this.mapReady = true;
+    },
     }
   }
 };
