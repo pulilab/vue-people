@@ -208,7 +208,7 @@ export default {
     userLocation: {
       immediate: true,
       handler (loc) {
-        if (loc && loc.lat) {
+        if (loc && loc.lat && this.centerOnNext) {
           this.centerToUser();
         }
       }
