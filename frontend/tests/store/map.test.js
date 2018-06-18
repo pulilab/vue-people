@@ -78,6 +78,10 @@ describe('getters', () => {
     expect(getters.getShownPins(null, {}, null, {getUserTypes}))
       .toEqual({1: 0, 2: 0});
   });
+
+  test('getCenterOnCurrentPerson', () => {
+    expect(getters.getCenterOnCurrentPerson(s)).toEqual(s.centerOnCurrentPerson);
+  })
 });
 
 describe('actions', () => {
@@ -89,7 +93,12 @@ describe('actions', () => {
 
   test('setAddMode', () => {
     actions.setAddMode(vuex, 1);
-    expect(vuex.commit.mock.calls[0]).toEqual(['SET_ADD_MODE', 1]);
+    expect(vuex.commit).toHaveBeenLastCalledWith('SET_ADD_MODE', 1);
+  });
+
+  test('setCenterOnCurrentPerson', () => {
+    actions.setCenterOnCurrentPerson(vuex, 1);
+    expect(vuex.commit).toHaveBeenLastCalledWith('SET_CENTER_ON_CURRENT', 1);
   });
 });
 
@@ -98,5 +107,11 @@ describe('mutations', () => {
     const s = {};
     mutations.SET_ADD_MODE(s, 1);
     expect(s.addMode).toEqual(1);
+  });
+
+  test('SET_CENTER_ON_CURRENT', () => {
+    const s = {};
+    mutations.SET_CENTER_ON_CURRENT(s, 1);
+    expect(s.centerOnCurrentPerson).toEqual(1);
   });
 });
