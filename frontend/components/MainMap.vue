@@ -138,6 +138,7 @@ export default {
   data () {
     return {
       zoom: 3,
+      iconCollection: {},
       mapOptions: { zoomControl: false, attributionControl: false },
       tooltipOptions: {
         className: 'person-tooltip',
@@ -177,15 +178,6 @@ export default {
     },
     showFloatingUI () {
       return !((this.$mq === 'sm' || this.$mq === 'xs') && !this.goToMap);
-    },
-    iconCollection () {
-      if (this.pins && Array.isArray(this.pins) && process.browser) {
-        return this.pins.reduce((p, c) => {
-          p[c.id] = this.iconGenerator(c);
-          return p;
-        }, {});
-      }
-      return {};
     },
     clusterOptions () {
       return {
@@ -234,6 +226,12 @@ export default {
         }
       }
     }
+  },
+  mounted () {
+    this.iconCollection = this.pins.reduce((p, c) => {
+      p[c.id] = this.iconGenerator(c);
+      return p;
+    }, {});
   },
   methods: {
     ...mapActions({
