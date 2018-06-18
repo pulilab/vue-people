@@ -23,7 +23,7 @@
             icon
             light
             class="btn-center-focus ma-0"
-            @click="flyToPerson">
+            @click="setCenterOnCurrentPerson(true)">
             <v-icon>filter_center_focus</v-icon>
           </v-btn>
         </v-flex>
@@ -132,17 +132,8 @@ export default {
   methods: {
     ...mapActions({
       setCurrent: 'people/setCurrent',
-      setCenter: 'map/setCenter',
-      setZoom: 'map/setZoom'
-    }),
-    async closeDetails () {
-      await this.setCurrent(null);
-      this.$router.push('/');
-    },
-    flyToPerson () {
-      this.setZoom(13);
-      this.setCenter({...this.person.latlng});
-    }
+      setCenterOnCurrentPerson: 'map/setCenterOnCurrentPerson'
+    })
   }
 
 };

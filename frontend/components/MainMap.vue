@@ -165,7 +165,9 @@ export default {
       getUserType: 'getUserType',
       userProfile: 'user/getUserProfile',
       userTypes: 'getUserTypes',
-      goToMap: 'getGoToMap'
+      goToMap: 'getGoToMap',
+      centerOnCurrentPerson: 'map/getCenterOnCurrentPerson',
+      currentPerson: 'people/getCurrentPersonDetails'
     }),
     userMaker () {
       return this.userPosition;
@@ -222,13 +224,21 @@ export default {
           }, 400);
         }
       }
+    },
+    centerOnCurrentPerson: {
+      immediate: true,
+      handler (center) {
+        if (center && this.currentPerson && this.currentPerson.latlng) {
+          this.$refs.mainMap.mapObject.flyTo(this.currentPerson.latlng, 13);
+          this.setCenterOnCurrentPerson(false);
+        }
+      }
     }
   },
   methods: {
     ...mapActions({
       setUserPosition: 'user/setUserPosition',
-      setZoom: 'map/setZoom',
-      setCenter: 'map/setCenter'
+      setCenterOnCurrentPerson: 'map/setCenterOnCurrentPerson'
     }),
     addMarker (event) {
       if (this.addMode) {
