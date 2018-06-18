@@ -199,6 +199,12 @@ export default {
             iconAnchor: [18, 52]
           });
         } };
+    },
+    currentPersonAndMapInitialised () {
+      if (this.currentPerson && this.mapReady) {
+        return this.currentPerson;
+      }
+      return {};
     }
   },
   watch: {
@@ -226,6 +232,17 @@ export default {
         if (center && this.currentPerson && this.currentPerson.latlng) {
           this.$refs.mainMap.mapObject.flyTo(this.currentPerson.latlng, 13);
           this.setCenterOnCurrentPerson(false);
+        }
+      }
+    },
+    currentPersonAndMapInitialised: {
+      immediate: true,
+      handler (current, previous) {
+        if (current && current.latlng) {
+          this.checkfOutOfBound(current.latlng);
+        }
+        if (previous) {
+          this.recalculateSelectedIcon(current.id, previous.id);
         }
       }
     }
@@ -277,6 +294,13 @@ export default {
         return icon;
       }
     },
+    recalculateSelectedIcon (id, previous) {
+      const valid = [id, previous];
+      const pins = this.pins.filter(p => valid.includes(p.id));
+      pins.forEach(p => {
+        this.iconCollection[p.id] = this.iconGenerator(p);
+      });
+    },
     markerHoverHandler (pin, isEnter, event) {
       if (isEnter) {
         this.hoveredMarker = pin.id;
@@ -293,6 +317,13 @@ export default {
     mapReadyHandler (event) {
       this.mapReady = true;
     },
+    checkfOutOfBound (latlng) {
+      if (this.$refs.mainMap) {
+        const bounds = this.$refs.mainMap.mapObject.getBounds();
+        if (!bounds.contains(latlng)) {
+          this.$refs.mainMap.mapObject.flyTo(latlng);
+        }
+      }
     }
   }
 };
