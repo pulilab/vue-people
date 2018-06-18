@@ -1,7 +1,6 @@
 export const state = () => ({
   addMode: false,
-  zoom: 3,
-  center: {lat: 0, lng: 0}
+  centerOnCurrentPerson: false
 });
 
 export const getters = {
@@ -35,17 +34,24 @@ export const getters = {
       }, countInit);
     }
     return countInit;
-  }
+  },
+  getCenterOnCurrentPerson: state => state.centerOnCurrentPerson
 };
 
 export const actions = {
   setAddMode ({commit}, value) {
     commit('SET_ADD_MODE', value);
+  },
+  setCenterOnCurrentPerson ({commit}, value) {
+    commit('SET_CENTER_ON_CURRENT', value);
   }
 };
 
 export const mutations = {
   SET_ADD_MODE: (state, value) => {
     state.addMode = value;
+  },
+  SET_CENTER_ON_CURRENT: (state, value) => {
+    state.centerOnCurrentPerson = value;
   }
 };

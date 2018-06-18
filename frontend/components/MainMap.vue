@@ -23,7 +23,9 @@
           :options="mapOptions"
           @click="addMarker">
           <l-tilelayer
-            url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'"/>
+            url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'"
+            @loading="mapReadyHandler"
+          />
 
           <v-marker-cluster :options="clusterOptions">
             <l-marker
@@ -139,6 +141,7 @@ export default {
     return {
       zoom: 3,
       iconCollection: {},
+      mapReady: false,
       mapOptions: { zoomControl: false, attributionControl: false },
       tooltipOptions: {
         className: 'person-tooltip',
@@ -166,7 +169,9 @@ export default {
       getUserType: 'getUserType',
       userProfile: 'user/getUserProfile',
       userTypes: 'getUserTypes',
-      goToMap: 'getGoToMap'
+      goToMap: 'getGoToMap',
+      centerOnCurrentPerson: 'map/getCenterOnCurrentPerson',
+      currentPerson: 'people/getCurrentPersonDetails'
     }),
     userMaker () {
       return this.userPosition;
@@ -194,13 +199,19 @@ export default {
             iconAnchor: [18, 52]
           });
         } };
+    },
+    currentPersonAndMapInitialised () {
+      if (this.currentPerson && this.mapReady) {
+        return this.currentPerson;
+      }
+      return {};
     }
   },
   watch: {
     userLocation: {
       immediate: true,
       handler (loc) {
-        if (loc && loc.lat) {
+        if (loc && loc.lat && this.centerOnNext) {
           this.centerToUser();
         }
       }
@@ -214,6 +225,26 @@ export default {
           }, 400);
         }
       }
+    },
+    centerOnCurrentPerson: {
+      immediate: true,
+      handler (center) {
+        if (center && this.currentPerson && this.currentPerson.latlng) {
+          this.$refs.mainMap.mapObject.flyTo(this.currentPerson.latlng, 13);
+          this.setCenterOnCurrentPerson(false);
+        }
+      }
+    },
+    currentPersonAndMapInitialised: {
+      immediate: true,
+      handler (current, previous) {
+        if (current && current.latlng) {
+          this.checkfOutOfBound(current.latlng);
+        }
+        if (previous) {
+          this.recalculateSelectedIcon(current.id, previous.id);
+        }
+      }
     }
   },
   mounted () {
@@ -225,8 +256,7 @@ export default {
   methods: {
     ...mapActions({
       setUserPosition: 'user/setUserPosition',
-      setZoom: 'map/setZoom',
-      setCenter: 'map/setCenter'
+      setCenterOnCurrentPerson: 'map/setCenterOnCurrentPerson'
     }),
     addMarker (event) {
       if (this.addMode) {
@@ -264,6 +294,13 @@ export default {
         return icon;
       }
     },
+    recalculateSelectedIcon (id, previous) {
+      const valid = [id, previous];
+      const pins = this.pins.filter(p => valid.includes(p.id));
+      pins.forEach(p => {
+        this.iconCollection[p.id] = this.iconGenerator(p);
+      });
+    },
     markerHoverHandler (pin, isEnter, event) {
       if (isEnter) {
         this.hoveredMarker = pin.id;
@@ -275,6 +312,17 @@ export default {
         }, 100);
       } else {
         this.hoveredMarker = null;
+      }
+    },
+    mapReadyHandler (event) {
+      this.mapReady = true;
+    },
+    checkfOutOfBound (latlng) {
+      if (this.$refs.mainMap) {
+        const bounds = this.$refs.mainMap.mapObject.getBounds();
+        if (!bounds.contains(latlng)) {
+          this.$refs.mainMap.mapObject.flyTo(latlng);
+        }
       }
     }
   }
