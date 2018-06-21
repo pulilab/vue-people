@@ -23,7 +23,7 @@
             icon
             light
             class="btn-center-focus ma-0"
-            @click="setCenterOnCurrentPerson(true)">
+            @click="centerOnCurrentPerson">
             <v-icon>filter_center_focus</v-icon>
           </v-btn>
         </v-flex>
@@ -131,9 +131,11 @@ export default {
   },
   methods: {
     ...mapActions({
-      setCurrent: 'people/setCurrent',
-      setCenterOnCurrentPerson: 'map/setCenterOnCurrentPerson'
-    })
+      setCurrent: 'people/setCurrent'
+    }),
+    centerOnCurrentPerson () {
+      this.$root.$emit('map:center-on', this.person.latlng);
+    }
   }
 
 };

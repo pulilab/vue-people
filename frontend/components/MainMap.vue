@@ -170,7 +170,6 @@ export default {
       userProfile: 'user/getUserProfile',
       userTypes: 'getUserTypes',
       goToMap: 'getGoToMap',
-      centerOnCurrentPerson: 'map/getCenterOnCurrentPerson',
       currentPerson: 'people/getCurrentPersonDetails'
     }),
     userMaker () {
@@ -226,15 +225,6 @@ export default {
         }
       }
     },
-    centerOnCurrentPerson: {
-      immediate: true,
-      handler (center) {
-        if (center && this.currentPerson && this.currentPerson.latlng) {
-          this.$refs.mainMap.mapObject.flyTo(this.currentPerson.latlng, 13);
-          this.setCenterOnCurrentPerson(false);
-        }
-      }
-    },
     currentPersonAndMapInitialised: {
       immediate: true,
       handler (current, previous) {
@@ -252,6 +242,10 @@ export default {
       p[c.id] = this.iconGenerator(c);
       return p;
     }, {});
+    this.$root.$on('map:center-on', this.centerOn);
+  },
+  beforeDestroy () {
+    this.$root.$off(['map:center-on']);
   },
   methods: {
     ...mapActions({
@@ -277,6 +271,11 @@ export default {
         this.centerOnNext = false;
       } else {
         this.centerOnNext = true;
+      }
+    },
+    centerOn (latlng) {
+      if (this.$refs.mainMap && this.$refs.mainMap.mapObject) {
+        this.$refs.mainMap.mapObject.flyTo(latlng, 13);
       }
     },
     iconGenerator (pin, isMe) {
