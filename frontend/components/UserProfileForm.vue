@@ -8,8 +8,9 @@
         class="top-bar"
         row
         align-center
+        align-content-space-between
       >
-        <v-flex xs12>
+        <v-flex>
           <user-avatar />
         </v-flex>
         <v-flex>
@@ -17,7 +18,8 @@
             to="/"
             icon
             light
-            nuxt >
+            nuxt
+          >
             <v-icon>close</v-icon>
           </v-btn>
         </v-flex>
@@ -82,99 +84,129 @@
             Your email will only be stored in the database and only displayed to you.</span>
         </div>
 
-        <v-layout
-          row
-          wrap
-          class="switch-row"
-        >
-          <v-flex xs12 >
-            <div class="switch-title">
-              Email me about
-            </div>
-          </v-flex>
+        <div class="permission-list">
+          <div class="caption">
+            Email me about
+          </div>
 
-          <v-flex xs6>
-            <v-checkbox
-              v-model="profile.feature_updates"
-              light
-              hide-details
-              label="Feature updates"
-              color="primary"
-            />
-            <v-tooltip top>
-              <v-icon
-                slot="activator"
+          <v-layout
+            row
+            wrap
+            class="checkbox-list"
+          >
+            <v-flex
+              md6
+              xs12
+            >
+              <v-checkbox
+                v-model="profile.feature_updates"
                 light
+                hide-details
+                label="Feature updates"
+                color="primary"
+              />
+              <v-tooltip
+                top
+                right
               >
-                help
-              </v-icon>
-              <span> Receive emails about new features and stuff </span>
-            </v-tooltip>
-          </v-flex>
-          <v-flex xs6>
-            <v-checkbox
-              v-model="profile.upcoming_events"
-              light
-              hide-details
-              label="Upcoming Events"
-              color="primary"
-            />
-            <v-tooltip top>
-              <v-icon
-                slot="activator"
+                <v-icon
+                  slot="activator"
+                  light
+                >
+                  help
+                </v-icon>
+                <span> Receive emails about new features and stuff </span>
+              </v-tooltip>
+            </v-flex>
+
+            <v-flex
+              md6
+              xs12
+            >
+              <v-checkbox
+                v-model="profile.upcoming_events"
                 light
+                hide-details
+                label="Upcoming Events"
+                color="primary"
+              />
+              <v-tooltip
+                top
+                right
               >
-                help
-              </v-icon>
-              <span> Receive emails about upcoming events near you </span>
-            </v-tooltip>
-          </v-flex>
+                <v-icon
+                  slot="activator"
+                  light
+                >
+                  help
+                </v-icon>
+                <span> Receive emails about upcoming events near you </span>
+              </v-tooltip>
+            </v-flex>
 
-          <v-flex xs6>
-            <v-checkbox
-              v-model="profile.job_opportunities"
-              light
-              hide-details
-              label="Job Opportunities"
-              color="primary"
-            />
-            <v-tooltip top>
-              <v-icon
-                slot="activator"
+            <v-flex
+              md6
+              xs12
+            >
+              <v-checkbox
+                v-model="profile.job_opportunities"
                 light
+                hide-details
+                label="Job Opportunities"
+                color="primary"
+              />
+              <v-tooltip
+                top
+                right
               >
-                help
-              </v-icon>
-              <span> Receive emails about job opportunities  </span>
-            </v-tooltip>
-          </v-flex>
+                <v-icon
+                  slot="activator"
+                  light
+                >
+                  help
+                </v-icon>
+                <span> Receive emails about job opportunities  </span>
+              </v-tooltip>
+            </v-flex>
+          </v-layout>
+        </div>
 
-          <v-flex xs12 >
-            <div class="switch-title">
-              Jobs profile
-            </div>
-          </v-flex>
+        <div class="permission-list">
+          <div class="caption">
+            Jobs profile
+          </div>
 
-          <v-flex xs6>
-            <v-checkbox
-              v-model="profile.hire_available"
-              light
-              hide-details
-              label="Available for hire"
-              color="primary"
-            />
-            <v-tooltip top>
-              <v-icon
-                slot="activator"
+          <v-layout
+            row
+            wrap
+            class="checkbox-list"
+          >
+            <v-flex
+              md6
+              xs12
+            >
+              <v-checkbox
+                v-model="profile.hire_available"
                 light
+                hide-details
+                label="Available for hire"
+                color="primary"
+              />
+              <v-tooltip
+                top
+                right
               >
-                help
-              </v-icon>
-              <span> Show the hirable badge in your profile details </span>
-            </v-tooltip>
-          </v-flex>
-
-        </v-layout>
+                <v-icon
+                  slot="activator"
+                  light
+                >
+                  help
+                </v-icon>
+                <span> Show the hirable badge in your profile details </span>
+              </v-tooltip>
+            </v-flex>
+          </v-layout>
+        </div>
 
         <v-text-field
           v-validate="'url'"
@@ -338,6 +370,12 @@ export default {
         height: @map-card-height;
         padding: 0 12px;
         background-color: @color-white;
+
+        .flex {
+          &:last-child {
+            flex-grow: 0;
+          }
+        }
       }
     }
 
@@ -352,8 +390,16 @@ export default {
       .switch-row {
         margin: 16px 0;
 
-        .switch-title {
-          margin: 7px 0;
+        .flex {
+          &:last-child {
+            flex-grow: 0;
+            width: 100px;
+            margin-left: 20px;
+          }
+        }
+
+        .caption {
+          margin: 8px 0;
           font-size: @font-size-tiny;
           color: @font-dark-primary;
         }
@@ -363,6 +409,38 @@ export default {
 
           .switch {
             padding-top: 18px;
+          }
+        }
+      }
+
+      .permission-list {
+        display: block;
+        width: 100%;
+        margin: 24px 0;
+        overflow: hidden;
+
+        .flex {
+          position: relative;
+        }
+
+        .caption {
+          margin: 0 0 8px;
+          color: @font-dark-secondary;
+        }
+
+        .checkbox {
+          label {
+            max-width: 60%;
+          }
+        }
+
+        .tooltip {
+          position: absolute;
+          top: 3px;
+          right: 20px;
+
+          .icon {
+            color: @font-dark-disabled;
           }
         }
       }
