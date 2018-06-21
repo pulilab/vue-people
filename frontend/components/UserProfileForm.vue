@@ -84,42 +84,96 @@
 
         <v-layout
           row
+          wrap
           class="switch-row"
         >
-          <v-flex>
-            <div class="switch-custom-label">
-              Receive occasional news about conferences, VueJS meetups and job opportunities in my area
+          <v-flex xs12 >
+            <div class="switch-title">
+              Email me about
             </div>
           </v-flex>
-          <v-flex>
-            <v-switch
-              :label="optInSwitchLabel"
-              v-model="profile.news_opt_in"
-              light
-              hide-details
-              color="primary"
-            />
-          </v-flex>
-        </v-layout>
 
-        <v-layout
-          row
-          class="switch-row"
-        >
-          <v-flex>
-            <div class="switch-custom-label">
-              Show my Github “Jobs profile” setting
-            </div>
-          </v-flex>
-          <v-flex>
-            <v-switch
-              :label="hireableSwitchLabel"
-              v-model="profile.show_hireable"
+          <v-flex xs6>
+            <v-checkbox
+              v-model="profile.feature_updates"
               light
               hide-details
+              label="Feature updates"
               color="primary"
             />
+            <v-tooltip top>
+              <v-icon
+                slot="activator"
+                light
+              >
+                help
+              </v-icon>
+              <span> Receive emails about new features and stuff </span>
+            </v-tooltip>
           </v-flex>
+          <v-flex xs6>
+            <v-checkbox
+              v-model="profile.upcoming_events"
+              light
+              hide-details
+              label="Upcoming Events"
+              color="primary"
+            />
+            <v-tooltip top>
+              <v-icon
+                slot="activator"
+                light
+              >
+                help
+              </v-icon>
+              <span> Receive emails about upcoming events near you </span>
+            </v-tooltip>
+          </v-flex>
+
+          <v-flex xs6>
+            <v-checkbox
+              v-model="profile.job_opportunities"
+              light
+              hide-details
+              label="Job Opportunities"
+              color="primary"
+            />
+            <v-tooltip top>
+              <v-icon
+                slot="activator"
+                light
+              >
+                help
+              </v-icon>
+              <span> Receive emails about job opportunities  </span>
+            </v-tooltip>
+          </v-flex>
+
+          <v-flex xs12 >
+            <div class="switch-title">
+              Jobs profile
+            </div>
+          </v-flex>
+
+          <v-flex xs6>
+            <v-checkbox
+              v-model="profile.hire_available"
+              light
+              hide-details
+              label="Available for hire"
+              color="primary"
+            />
+            <v-tooltip top>
+              <v-icon
+                slot="activator"
+                light
+              >
+                help
+              </v-icon>
+              <span> Show the hirable badge in your profile details </span>
+            </v-tooltip>
+          </v-flex>
+
         </v-layout>
 
         <v-text-field
@@ -220,8 +274,10 @@ export default {
         name: '',
         email: '',
         public_email: false,
-        news_opt_in: false,
-        show_hireable: false,
+        feature_updates: false,
+        upcoming_events: false,
+        job_opportunities: false,
+        hire_available: false,
         twitter_url: '',
         website_url: '',
         company: '',
@@ -240,12 +296,6 @@ export default {
     }),
     publicEmailSwitchLabel () {
       return this.profile.public_email ? 'public' : 'private';
-    },
-    optInSwitchLabel () {
-      return this.profile.news_opt_in ? 'yes' : 'no';
-    },
-    hireableSwitchLabel () {
-      return this.profile.show_hireable ? 'yes' : 'no';
     },
     lastModified () {
       return this.profile.modified ? format(this.profile.modified, 'YYYY-MM-DD HH:mm') : '';
@@ -302,20 +352,8 @@ export default {
       .switch-row {
         margin: 16px 0;
 
-        .flex {
-          &:first-child {
-            flex-grow: 1;
-          }
-
-          &:last-child {
-            min-width: 110px;
-            max-width: 110px;
-            padding-left: 16px;
-          }
-        }
-
-        .switch-custom-label {
-          margin-top: 7px;
+        .switch-title {
+          margin: 7px 0;
           font-size: @font-size-tiny;
           color: @font-dark-primary;
         }
