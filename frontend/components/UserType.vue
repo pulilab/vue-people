@@ -1,5 +1,14 @@
 <template>
   <div :class="['user-type', type.name, 'mx-2']">
+    <span
+      v-if="showCheckbox"
+      class="usertype-checkbox"
+    >
+      <v-checkbox
+        v-model="showThisUsertype"
+        hide-details
+      />
+    </span>
     <v-icon small>mdi-vuejs</v-icon>
     <span
       v-show="showText"
@@ -15,7 +24,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 export default {
   name: 'UserType',
   props: {
@@ -30,15 +39,33 @@ export default {
     showCount: {
       type: Boolean,
       default: false
+    },
+    showCheckbox: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
     ...mapGetters({
-      getUserType: 'getUserType'
+      getUserType: 'getUserType',
+      selectedUserTypes: 'getSelectedUserTypes'
     }),
     type () {
       return this.getUserType(this.id);
+    },
+    showThisUsertype: {
+      get () {
+        return this.selectedUserTypes.includes(this.type.id);
+      },
+      set () {
+        this.toggleSelectedUserTypes(this.type.id);
+      }
     }
+  },
+  methods: {
+    ...mapActions({
+      toggleSelectedUserTypes: 'toggleSelectedUserTypes'
+    })
   }
 };
 </script>

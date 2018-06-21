@@ -6,6 +6,7 @@
       :id="type.id"
       :show-text="calculateShowText(type.id)"
       :show-count="true"
+      :show-checkbox="true"
       :class="{open: type.id === activeType}"
       @click.native="setActiveType(type.id)"
     />
