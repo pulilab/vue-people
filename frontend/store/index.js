@@ -4,7 +4,8 @@ export const state = () => ({
   userTypes: [],
   tags: [],
   goToMap: false,
-  showCookieWarning: true
+  showCookieWarning: true,
+  selectedUserTypes: []
 });
 
 export const getters = {
@@ -27,7 +28,8 @@ export const getters = {
   },
   getShowCookieWarning: state => {
     return state.showCookieWarning;
-  }
+  },
+  getSelectedUserTypes: state => [...state.selectedUserTypes]
 };
 
 export const actions = {
@@ -49,6 +51,14 @@ export const actions = {
   acceptCookieWarning ({commit, dispatch}) {
     saveTokens(null, true);
     dispatch('setShowCookieWarning', false);
+  },
+  toggleSelectedUserTypes ({commit, getters}, value) {
+    const index = getters.getSelectedUserTypes.indexOf(value);
+    if (index === -1) {
+      commit('ADD_SELECTED_USERTYPE', value);
+    } else {
+      commit('RM_SELECTED_USERTYPE', index);
+    }
   }
 };
 
@@ -64,5 +74,11 @@ export const mutations = {
   },
   SET_SHOW_COOKIE_WARNING: (state, value) => {
     state.showCookieWarning = value;
+  },
+  ADD_SELECTED_USERTYPE: (state, value) => {
+    state.selectedUserTypes.push(value);
+  },
+  RM_SELECTED_USERTYPE: (state, index) => {
+    state.selectedUserTypes.splice(index, 1);
   }
 };
