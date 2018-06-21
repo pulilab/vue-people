@@ -28,7 +28,7 @@ export default {
   .feedback-button-wrapper {
 
     vue-django-feedback .vue-django-feedback {
-      z-index: 5;
+      z-index: 5000;
       bottom: 16px;
       right: 16px;
       width: 30px;
@@ -69,6 +69,7 @@ export default {
 
       .pop-up-container {
         bottom: 46px;
+        max-height: calc(100vh - 78px);
 
         .header {
           background-color: @color-brand-primary;
@@ -121,6 +122,8 @@ export default {
 
       // Responsive
       .viewport-sm & {
+        bottom: 62px;
+
         .feedback-button {
           &:hover {
             transform: none;
@@ -133,6 +136,7 @@ export default {
 
         .pop-up-container {
           width: calc(100vw - 32px);
+          max-height: calc(100vh - 123px);
 
           .header {
             width: calc(100vw - 32px);

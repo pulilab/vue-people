@@ -13,9 +13,9 @@
         class="logo"
       >
 
-      <h3 class="title mb-3">
+      <h4 class="subheading mb-3">
         About vuepeople.org
-      </h3>
+      </h4>
 
       <p>
         VuePeople lists and connects Vue.JS developers around the world. <br>
@@ -85,7 +85,7 @@ export default {
     position: relative;
     overflow-x: hidden;
     overflow-y: hidden;
-    height: 100%;
+    height: 100vh;
     background-color: @color-white;
 
     .intro-text {
@@ -98,7 +98,7 @@ export default {
         margin-bottom: 40px;
       }
 
-      h3 {
+      h4 {
         color: @font-dark-primary;
         letter-spacing: -0.25px !important;
       }
@@ -120,14 +120,14 @@ export default {
 
     .credit {
       z-index: 10;
-      position: sticky;
+      position: fixed;
       bottom: 0;
       left: 0;
+      width: 320px;
       height: 64px;
       display: flex;
       align-items: center;
-      width: 100%;
-      padding: 14px 24px;
+      padding: 14px 24px 14px 20px;
       background-color: @color-white;
       color: @font-dark-secondary;
 

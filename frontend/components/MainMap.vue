@@ -367,24 +367,24 @@ export default {
     .person-tooltip {
       border: none;
       border-radius: 3px;
-      background-color: #212121;
+      background-color: @font-dark-primary;
       box-shadow: 0 0 6px 0 rgba(0,0,0,0.12), 0 6px 6px 0 rgba(0,0,0,0.24);
     }
 
     .leaflet-tooltip-left.person-tooltip::before {
-      border-left-color: #212121;
+      border-left-color: @font-dark-primary;
     }
 
     .leaflet-tooltip-right.person-tooltip::before {
-      border-right-color: #212121;
+      border-right-color: @font-dark-primary;
     }
 
     .leaflet-tooltip-bottom.person-tooltip::before {
-      border-bottom-color: #212121;
+      border-bottom-color: @font-dark-primary;
     }
 
     .leaflet-tooltip-top.person-tooltip::before {
-      border-top-color: #212121;
+      border-top-color: @font-dark-primary;
     }
 
     .custom-pin-icon {
@@ -448,7 +448,7 @@ export default {
     }
 
     .home-button {
-      position: absolute;
+      position: fixed;
       bottom: 139px;
       right: 16px;
       z-index: 5000;
@@ -461,6 +461,13 @@ export default {
 
       i {
         font-size: 18px;
+      }
+    }
+
+    // Responsive
+    .viewport-sm & {
+      .home-button {
+        bottom: 185px;
       }
     }
   }

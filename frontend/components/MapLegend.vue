@@ -49,9 +49,9 @@ export default {
   @import "../assets/style/mixins.less";
 
 .map-legend {
-  position: absolute;
+  position: fixed;
   bottom: 16px;
-  left: 16px;
+  left: 336px;
   z-index: 5000;
   height: @map-card-small-height;
   padding: 0 4px;
@@ -72,9 +72,10 @@ export default {
 
   // Responsive
   .viewport-sm & {
+    left: 16px;
     display: flex;
     justify-content: space-around;
-    width: calc(100vw - 78px);
+    width: calc(100vw - 32px);
     padding: 0;
 
     .user-type {
