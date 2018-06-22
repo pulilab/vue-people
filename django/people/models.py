@@ -44,4 +44,7 @@ class Person(models.Model):
         verbose_name_plural = "People"
 
     def __str__(self):
-        return "{} ({}) {}".format(self.user.get_full_name(), self.company, self.user.email)
+        if self.user:
+            return "{} ({}) {}".format(self.user.get_full_name(), self.company, self.user.email)
+        else:
+            return "This person is missing an associate user: {}".format(self.pk)
