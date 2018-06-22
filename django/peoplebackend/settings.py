@@ -221,4 +221,4 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 LOGIN_REDIRECT_URL = '/user?token={}'
-LOGIN_REDIRECT_URL_DEV = 'http://0.0.0.0:3000/user?token={}'
+LOGIN_REDIRECT_URL_DEV = 'http://localhost:3000/user?token={}'
