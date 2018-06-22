@@ -186,7 +186,7 @@
               xs12
             >
               <v-checkbox
-                v-model="profile.hire_available"
+                v-model="profile.hireable"
                 light
                 hide-details
                 label="Available for hire"
@@ -309,7 +309,7 @@ export default {
         feature_updates: false,
         upcoming_events: false,
         job_opportunities: false,
-        hire_available: false,
+        hireable: false,
         twitter_url: '',
         website_url: '',
         company: '',
