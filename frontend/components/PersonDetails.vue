@@ -155,8 +155,6 @@ export default {
 
       .toolbar__content {
         .btn {
-          color: @font-dark-disabled;
-
           &:not(.btn--icon) {
             min-width: 0;
             margin: 0;
@@ -166,9 +164,6 @@ export default {
               padding: 0;
             }
           }
-
-          &.btn-back {}
-          &.btn-center-focus {}
         }
       }
 
