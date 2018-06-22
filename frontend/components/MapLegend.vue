@@ -66,8 +66,6 @@ export default {
       font-family: @font-roboto;
       color: @font-dark-secondary;
       font-size: @font-size-tiny;
-      line-height: @map-card-small-height;
-      // transition: @default-transition;
     }
   }
 
