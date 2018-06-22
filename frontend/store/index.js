@@ -4,7 +4,8 @@ export const state = () => ({
   userTypes: [],
   tags: [],
   goToMap: false,
-  showCookieWarning: true
+  showCookieWarning: true,
+  firstPageVisited: null
 });
 
 export const getters = {
@@ -27,6 +28,9 @@ export const getters = {
   },
   getShowCookieWarning: state => {
     return state.showCookieWarning;
+  },
+  getFirstPageVisited: state => {
+    return state.firstPageVisited;
   }
 };
 
@@ -46,9 +50,12 @@ export const actions = {
   setShowCookieWarning ({commit}, value) {
     commit('SET_SHOW_COOKIE_WARNING', value);
   },
-  acceptCookieWarning ({commit, dispatch}) {
+  acceptCookieWarning ({dispatch}) {
     saveTokens(null, true);
     dispatch('setShowCookieWarning', false);
+  },
+  setFirstPageVisited ({commit}, value) {
+    commit('SET_FIRST_PAGE_VISITED', value);
   }
 };
 
@@ -64,5 +71,8 @@ export const mutations = {
   },
   SET_SHOW_COOKIE_WARNING: (state, value) => {
     state.showCookieWarning = value;
+  },
+  SET_FIRST_PAGE_VISITED: (state, value) => {
+    state.firstPageVisited = value;
   }
 };

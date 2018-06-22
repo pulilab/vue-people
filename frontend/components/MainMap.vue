@@ -142,6 +142,7 @@ export default {
       zoom: 3,
       iconCollection: {},
       mapReady: false,
+      centeredToSelected: false,
       mapOptions: { zoomControl: false, attributionControl: false },
       tooltipOptions: {
         className: 'person-tooltip',
@@ -171,7 +172,8 @@ export default {
       userTypes: 'getUserTypes',
       goToMap: 'getGoToMap',
       centerOnCurrentPerson: 'map/getCenterOnCurrentPerson',
-      currentPerson: 'people/getCurrentPersonDetails'
+      currentPerson: 'people/getCurrentPersonDetails',
+      firstPageVisited: 'getFirstPageVisited'
     }),
     userMaker () {
       return this.userPosition;
@@ -204,7 +206,7 @@ export default {
       if (this.currentPerson && this.mapReady) {
         return this.currentPerson;
       }
-      return {};
+      return null;
     }
   },
   watch: {
@@ -238,11 +240,11 @@ export default {
     currentPersonAndMapInitialised: {
       immediate: true,
       handler (current, previous) {
-        if (current && current.latlng) {
-          this.checkfOutOfBound(current.latlng);
-        }
-        if (previous) {
-          this.recalculateSelectedIcon(current.id, previous.id);
+        const currentId = current ? current.id : undefined;
+        const previousId = previous ? previous.id : undefined;
+        this.recalculateSelectedIcon(currentId, previousId);
+        if (currentId) {
+          this.centerToSelected(current.latlng);
         }
       }
     }
@@ -317,12 +319,12 @@ export default {
     mapReadyHandler (event) {
       this.mapReady = true;
     },
-    checkfOutOfBound (latlng) {
-      if (this.$refs.mainMap) {
-        const bounds = this.$refs.mainMap.mapObject.getBounds();
-        if (!bounds.contains(latlng)) {
+    centerToSelected (latlng) {
+      if (this.$refs.mainMap && !this.centeredToSelected && this.firstPageVisited === 'index-user-id') {
+        this.$nextTick(() => {
           this.$refs.mainMap.mapObject.flyTo(latlng);
-        }
+          this.centeredToSelected = true;
+        });
       }
     }
   }
