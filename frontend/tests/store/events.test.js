@@ -1,4 +1,6 @@
 import { state, getters, actions, mutations } from '~/store/events';
+import { mockAxios } from '../utils';
+import * as meetupUtilities from '~/integrations/meetup/utilities';
 
 test('meetup state is unique between calls', () => {
   const s = state();
@@ -14,7 +16,7 @@ describe('getters', () => {
   });
 
   test('getMeetups', () => {
-    s.meetups = [{ id: 1 }];
+    s.meetups = [{ id: 1, latlng: {} }];
     const result = getters.getMeetups(s);
     expect(result).toEqual(s.meetups);
     expect(result).not.toBe(s.meetups);
@@ -46,11 +48,13 @@ describe('actions', () => {
 
   beforeEach(() => {
     vuex.commit = jest.fn();
+    actions.$axios = mockAxios();
   });
 
-  test('loadMeetups', () => {
-    actions.loadMeetups(vuex);
-    expect(vuex.commit).toHaveBeenCalledWith('SET_MEETUP_LIST', [{id:1}]);
+  test('loadMeetups', async () => {
+    actions.$axios.get.mockReturnValue({data: 1});
+    await actions.loadMeetups(vuex);
+    expect(vuex.commit).toHaveBeenCalledWith('SET_MEETUP_LIST', 1);
   });
 
   test('setCurrent', () => {
@@ -62,8 +66,10 @@ describe('actions', () => {
 describe('mutations', () => {
   test('SET_MEETUP_LIST', () => {
     const s = {};
-    mutations.SET_MEETUP_LIST(s, 1);
-    expect(s.meetups).toEqual(1);
+    jest.spyOn(meetupUtilities, 'groupParser').mockReturnValue(1);
+    mutations.SET_MEETUP_LIST(s, [1]);
+    expect(s.meetups).toEqual([1]);
+    expect(meetupUtilities.groupParser).toHaveBeenCalledWith(1, 0, [1]);
   });
 
   test('SET_CURRENT_MEETUP', () => {
