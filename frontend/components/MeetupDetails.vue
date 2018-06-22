@@ -23,7 +23,7 @@
             light
             class="btn-center-focus ma-0"
             color="primary"
-            @click="centerOnMeetup">
+          >
             <v-icon>check</v-icon>
             Attend
           </v-btn>
