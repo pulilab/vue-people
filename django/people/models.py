@@ -36,7 +36,6 @@ class Person(models.Model):
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
     modified = models.DateTimeField(auto_now=True, auto_now_add=False)
     public_email = models.BooleanField(default=True)
-    news_opt_in = models.BooleanField(default=True)
     feature_updates = models.BooleanField(default=True)
     upcoming_events = models.BooleanField(default=True)
     job_opportunities = models.BooleanField(default=True)
