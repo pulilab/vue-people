@@ -59,6 +59,11 @@ describe('getters', () => {
     const result = getters.getShowCookieWarning(s);
     expect(result).toEqual(s.showCookieWarning);
   });
+
+  test('getFirstPageVisited', () => {
+    const result = getters.getFirstPageVisited(s);
+    expect(result).toEqual(s.firstPageVisited);
+  });
 });
 
 describe('actions', () => {
@@ -102,6 +107,11 @@ describe('actions', () => {
     expect(vuex.dispatch).toHaveBeenLastCalledWith('setShowCookieWarning', false);
     expect(authUtilities.saveTokens).toHaveBeenLastCalledWith(null, true);
   });
+
+  test('setFirstPageVisited', () => {
+    actions.setFirstPageVisited(vuex, true);
+    expect(vuex.commit).toHaveBeenLastCalledWith('SET_FIRST_PAGE_VISITED', true);
+  });
 });
 
 describe('mutations', () => {
@@ -127,5 +137,11 @@ describe('mutations', () => {
     const state = {};
     mutations.SET_SHOW_COOKIE_WARNING(state, 1);
     expect(state.showCookieWarning).toEqual(1);
+  });
+
+  test('SET_FIRST_PAGE_VISITED', () => {
+    const state = {};
+    mutations.SET_FIRST_PAGE_VISITED(state, 1);
+    expect(state.firstPageVisited).toEqual(1);
   });
 });

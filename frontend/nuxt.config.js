@@ -46,7 +46,7 @@ const config = {
     retry: false
   },
   router: {
-    middleware: 'auth'
+    middleware: ['auth', 'entrypoint-spy']
   },
   loading: { color: '#3B8070' },
   build: {
