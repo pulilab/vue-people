@@ -63,7 +63,8 @@ export default {
   name: 'LeftSide',
   computed: {
     showRootContent () {
-      return this.$route && this.$route.name !== 'index-user-id';
+      const leftRoutes = ['index-user-id', 'index-meetup-id'];
+      return this.$route && !leftRoutes.includes(this.$route.name);
     },
     showGoToMapButton () {
       return this.$mq === 'sm' || this.$mq === 'xs';
