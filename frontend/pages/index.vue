@@ -60,12 +60,14 @@ export default {
 <style lang="less">
   .main-container {
     position: relative;
-    height: 100%;
+    height: 100vh;
 
     .left-aside-wrapper {
       z-index: 2;
+      position: relative;
       min-width: 320px;
       max-width: 320px;
+      height: 100vh;
     }
 
     .main-map-wrapper {
