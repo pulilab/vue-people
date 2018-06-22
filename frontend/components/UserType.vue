@@ -1,5 +1,8 @@
 <template>
-  <div :class="['user-type', type.name, 'mx-2']">
+  <div
+    :class="['user-type', type.name, 'mx-2']"
+    @click="toggleFromName"
+  >
     <span
       v-if="showCheckbox"
       class="usertype-checkbox"
@@ -57,15 +60,18 @@ export default {
       get () {
         return this.selectedUserTypes.includes(this.type.id);
       },
-      set () {
-        this.toggleSelectedUserTypes(this.type.id);
-      }
+      set () {}
     }
   },
   methods: {
     ...mapActions({
       toggleSelectedUserTypes: 'toggleSelectedUserTypes'
-    })
+    }),
+    toggleFromName () {
+      if (this.$mq !== 'sm' && this.$mq !== 'xs') {
+        this.toggleSelectedUserTypes(this.type.id);
+      }
+    }
   }
 };
 </script>
@@ -78,6 +84,7 @@ export default {
     position: relative;
     display: inline-block;
     padding-left: 16px;
+    cursor: pointer;
     height: @map-card-small-height;
     line-height: @map-card-small-height;
 
