@@ -6,10 +6,16 @@ export const getters = {
   isAddMode: state => {
     return state.addMode;
   },
+  getPins: (state, getters, rootState, rootGetters) => {
+    return rootGetters['people/getList'].filter(p => p.latlng);
+  },
   getFilteredPins: (state, getters, rootState, rootGetters) => {
     const tags = rootGetters['people/getSelectedTags'];
-    const list = rootGetters['people/getList'].filter(p => p.latlng);
-    const filtered = tags.length > 0 ? list.filter(p => p.tags.some(t => tags.includes(t))) : list;
+    const list = getters.getPins;
+    const selectedUserTypes = rootGetters['getSelectedUserTypes'];
+    let filtered = [];
+    filtered = tags.length > 0 ? list.filter(p => p.tags.some(t => tags.includes(t))) : list;
+    filtered = selectedUserTypes.length > 0 ? filtered.filter(p => selectedUserTypes.includes(p.type)) : filtered;
     return [...filtered.map(p => {
       return {
         ...p,
@@ -19,7 +25,7 @@ export const getters = {
     })];
   },
   getShownPins: (state, getters, rootState, rootGetters) => {
-    let pins = getters.getFilteredPins;
+    let pins = getters.getPins;
     const user = rootGetters['user/getUserProfile'];
     const countInit = rootGetters.getUserTypes.reduce((p, c) => {
       p[c.id] = 0;

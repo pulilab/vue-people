@@ -27,45 +27,40 @@
             @loading="mapReadyHandler"
           />
 
-          <v-marker-cluster :options="clusterOptions">
-            <l-marker
+          <v-marker-cluster
+            v-if="pins.length > 50"
+            ref="markerCluster"
+            :options="clusterOptions"
+          >
+            <map-marker
               v-for="pin in pins"
-              v-show="showFloatingUI"
-              :key="pin.key"
-              :options="pin.options"
-              :lat-lng="pin.latlng"
+              :key="pin.id"
+              :pin="pin"
               :icon="iconCollection[pin.id]"
-              @mouseenter="markerHoverHandler(pin, true, $event)"
-              @mouseleave="markerHoverHandler(pin, false, $event)"
-              @click="openPersonDetails(pin)"
-            >
-              <l-tooltip
-                v-if="showFloatingUI && hoveredMarker === pin.id"
-                :options="tooltipOptions"
-              >
-                <user-avatar
-                  :id="pin.id"
-                  :dark="true"
-                />
-              </l-tooltip>
-            </l-marker>
+              :show-floating-ui="showFloatingUI"
+              @marker-click="openPersonDetails(pin)"
+            />
           </v-marker-cluster>
 
-          <l-marker
-            v-if="userMaker"
+          <template v-if="pins.length <= 50">
+            <map-marker
+              v-for="pin in pins"
+              :key="pin.id"
+              :pin="pin"
+              :icon="iconCollection[pin.id]"
+              :show-floating-ui="showFloatingUI"
+              @marker-click="openPersonDetails(pin)"
+            />
+          </template>
+
+          <map-marker
+            v-if="userMaker.latlng"
             v-show="showFloatingUI"
-            :lat-lng="userMaker"
+            :pin="userMaker"
             :icon="iconGenerator(userProfile, true)"
-            @click="openPersonDetails(userProfile)">
-            <l-tooltip
-              v-if="showFloatingUI"
-              :options="tooltipOptions"
-            >
-              <user-avatar
-                :dark="true"
-              />
-            </l-tooltip>
-          </l-marker>
+            :show-floating-ui="showFloatingUI"
+            @marker-click="openPersonDetails(userProfile)"
+          />
 
           <map-legend
             v-show="showFloatingUI"
@@ -121,9 +116,9 @@
 <script>
 import { mapGetters, mapActions, mapState } from 'vuex';
 import MapToolbar from './MapToolbar.vue';
-import UserAvatar from './UserAvatar.vue';
 import MapLegend from './MapLegend.vue';
 import TagFilter from './TagFilter.vue';
+import MapMarker from './MapMarker.vue';
 import FeedbackButton from './FeedbackButton.vue';
 import VuexGeolocation from 'vuex-geolocation';
 
@@ -132,10 +127,10 @@ export default {
   components: {
     'no-ssr': NoSSR,
     MapToolbar,
-    UserAvatar,
     MapLegend,
     TagFilter,
-    FeedbackButton
+    FeedbackButton,
+    MapMarker
   },
   data () {
     return {
@@ -144,14 +139,6 @@ export default {
       mapReady: false,
       centeredToSelected: false,
       mapOptions: { zoomControl: false, attributionControl: false },
-      tooltipOptions: {
-        className: 'person-tooltip',
-        // set permanent to true to be able to debug / develop the tooltip css
-        permanent: false,
-        direction: 'top',
-        offset: [0, -55]
-      },
-      hoveredMarker: null,
       centerOnNext: false
     };
   },
@@ -165,6 +152,7 @@ export default {
     }),
     ...mapGetters({
       pins: 'map/getFilteredPins',
+      allPins: 'map/getPins',
       addMode: 'map/isAddMode',
       userPosition: 'user/getUserPosition',
       getUserType: 'getUserType',
@@ -175,7 +163,7 @@ export default {
       firstPageVisited: 'getFirstPageVisited'
     }),
     userMaker () {
-      return this.userPosition;
+      return { latlng: this.userPosition };
     },
     maxZoom () {
       return this.addMode ? 13 : 100;
@@ -199,7 +187,8 @@ export default {
             iconSize: [36, 52],
             iconAnchor: [18, 52]
           });
-        } };
+        }
+      };
     },
     currentPersonAndMapInitialised () {
       if (this.currentPerson && this.mapReady) {
@@ -240,7 +229,7 @@ export default {
     }
   },
   mounted () {
-    this.iconCollection = this.pins.reduce((p, c) => {
+    this.iconCollection = this.allPins.reduce((p, c) => {
       p[c.id] = this.iconGenerator(c);
       return p;
     }, {});
@@ -300,19 +289,6 @@ export default {
       pins.forEach(p => {
         this.iconCollection[p.id] = this.iconGenerator(p);
       });
-    },
-    markerHoverHandler (pin, isEnter, event) {
-      if (isEnter) {
-        this.hoveredMarker = pin.id;
-        const m = event.target;
-        window.setTimeout(() => {
-          if (m && !m.isTooltipOpen()) {
-            m.toggleTooltip();
-          }
-        }, 100);
-      } else {
-        this.hoveredMarker = null;
-      }
     },
     mapReadyHandler (event) {
       this.mapReady = true;

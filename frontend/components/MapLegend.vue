@@ -6,6 +6,7 @@
       :id="type.id"
       :show-text="calculateShowText(type.id)"
       :show-count="true"
+      :show-checkbox="true"
       :class="{open: type.id === activeType}"
       @click.native="setActiveType(type.id)"
     />
@@ -65,8 +66,6 @@ export default {
       font-family: @font-roboto;
       color: @font-dark-secondary;
       font-size: @font-size-tiny;
-      line-height: @map-card-small-height;
-      // transition: @default-transition;
     }
   }
 

@@ -17,17 +17,29 @@ describe('getters', () => {
     expect(getters.isAddMode(s)).toEqual(s.addMode);
   });
 
-  test('getFilteredPins', () => {
-    const g = {
-      getFocusOn: 1
-    };
+  test('getPins', () => {
     const rootGetters = {
       'people/getList': [
         {id: 1, type: 1, latlng: {}},
         {id: 2, type: 2, latlng: {}},
         {id: 3, type: 2}
-      ],
-      'people/getSelectedTags': []
+      ]
+    };
+    const result = getters.getPins(null, null, null, rootGetters);
+    expect(result.length).toBe(2);
+  });
+
+  test('getFilteredPins', () => {
+    const g = {
+      getFocusOn: 1,
+      getPins: [
+        {id: 1, type: 1, latlng: {}},
+        {id: 2, type: 2, latlng: {}}
+      ]
+    };
+    const rootGetters = {
+      'people/getSelectedTags': [],
+      getSelectedUserTypes: []
     };
     let result = getters.getFilteredPins(null, g, null, rootGetters);
     expect(result[0]).toEqual({id: 1,
@@ -45,8 +57,14 @@ describe('getters', () => {
     });
     expect(result.length).toEqual(2);
 
+    rootGetters.getSelectedUserTypes = [2];
+    result = getters.getFilteredPins(null, g, null, rootGetters);
+    expect(result.length).toEqual(1);
+
+    rootGetters.getSelectedUserTypes = [];
+
     rootGetters['people/getSelectedTags'] = ['vuex'];
-    rootGetters['people/getList'] = [
+    g.getPins = [
       {id: 1, type: 1, tags: ['vuex'], latlng: {}},
       {id: 2, type: 2, tags: [], latlng: {}}
     ];
@@ -56,12 +74,12 @@ describe('getters', () => {
   });
 
   test('getShownPins', () => {
-    const getFilteredPins = [{type: 1}, {type: 1}, {type: 2}];
+    const getPins = [{type: 1}, {type: 1}, {type: 2}];
     const getUserTypes = [{id: 1}, {id: 2}];
     const getUserProfile = {type: 1};
     expect(getters.getShownPins(
       null,
-      { getFilteredPins },
+      { getPins },
       null,
       { getUserTypes, 'user/getUserProfile': getUserProfile }
     ))
@@ -70,7 +88,7 @@ describe('getters', () => {
     getUserProfile.latlng = [];
     expect(getters.getShownPins(
       null,
-      { getFilteredPins },
+      { getPins },
       null,
       { getUserTypes, 'user/getUserProfile': getUserProfile }
     ))
@@ -78,7 +96,6 @@ describe('getters', () => {
     expect(getters.getShownPins(null, {}, null, {getUserTypes}))
       .toEqual({1: 0, 2: 0});
   });
-
 });
 
 describe('actions', () => {
@@ -92,7 +109,6 @@ describe('actions', () => {
     actions.setAddMode(vuex, 1);
     expect(vuex.commit).toHaveBeenLastCalledWith('SET_ADD_MODE', 1);
   });
-
 });
 
 describe('mutations', () => {
@@ -101,5 +117,4 @@ describe('mutations', () => {
     mutations.SET_ADD_MODE(s, 1);
     expect(s.addMode).toEqual(1);
   });
-
 });

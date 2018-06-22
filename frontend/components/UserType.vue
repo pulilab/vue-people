@@ -1,5 +1,14 @@
 <template>
   <div :class="['user-type', type.name, 'mx-2']">
+    <span
+      v-if="showCheckbox"
+      class="usertype-checkbox"
+    >
+      <v-checkbox
+        v-model="showThisUsertype"
+        hide-details
+      />
+    </span>
     <v-icon small>mdi-vuejs</v-icon>
     <span
       v-show="showText"
@@ -15,7 +24,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 export default {
   name: 'UserType',
   props: {
@@ -30,15 +39,33 @@ export default {
     showCount: {
       type: Boolean,
       default: false
+    },
+    showCheckbox: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
     ...mapGetters({
-      getUserType: 'getUserType'
+      getUserType: 'getUserType',
+      selectedUserTypes: 'getSelectedUserTypes'
     }),
     type () {
       return this.getUserType(this.id);
+    },
+    showThisUsertype: {
+      get () {
+        return this.selectedUserTypes.includes(this.type.id);
+      },
+      set () {
+        this.toggleSelectedUserTypes(this.type.id);
+      }
     }
+  },
+  methods: {
+    ...mapActions({
+      toggleSelectedUserTypes: 'toggleSelectedUserTypes'
+    })
   }
 };
 </script>
@@ -48,22 +75,51 @@ export default {
   @import "../assets/style/mixins.less";
 
   .user-type {
+    position: relative;
     display: inline-block;
+    padding-left: 16px;
+    height: @map-card-small-height;
+    line-height: @map-card-small-height;
 
-    &.dev .icon {
-      color: @color-developer;
+    &.dev .mdi-vuejs {
+      color: @color-developer !important;
     }
 
-    &.enthusiast .icon {
+    &.enthusiast .mdi-vuejs {
       color: @color-enthusiast;
     }
 
-    &.core .icon {
+    &.core .mdi-vuejs {
       color: @color-core-member;
     }
 
-    &.library .icon {
+    &.library .mdi-vuejs {
       color: @color-library;
+    }
+
+    i.mdi-vuejs {
+      position: relative;
+      top: -1px;
+    }
+
+    .usertype-checkbox {
+      position: absolute;
+      top: -1px;
+      left: -6px;
+      transform: scale(0.7);
+
+      .icon--selection-control {
+        color: @font-dark-disabled;
+      }
+    }
+
+    // Responsive
+    .viewport-sm & {
+      padding-left: 0;
+
+      .usertype-checkbox {
+        display: none;
+      }
     }
   }
 </style>
