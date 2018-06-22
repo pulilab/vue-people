@@ -41,6 +41,17 @@
         </v-btn>
       </div>
 
+      <div>
+        <v-btn
+          v-show="showEditLocation"
+          icon
+          light
+          @click="centerOnUser"
+        >
+          <v-icon>filter_center_focus</v-icon>
+        </v-btn>
+      </div>
+
       <v-spacer v-show="!isLoggedIn" />
 
       <v-menu
@@ -208,6 +219,9 @@ export default {
     async confirmLocation () {
       await this.updateUserProfile();
       this.setAddMode(false);
+    },
+    centerOnUser () {
+      this.$root.$emit('map:center-on', this.userProfile.latlng);
     }
   }
 };

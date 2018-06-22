@@ -28,6 +28,9 @@ DEBUG = bool(strtobool(os.environ.get('DEBUG', 'False')))
 
 ALLOWED_HOSTS = ['django:8000', 'django', 'localhost', 'www.vuepeople.org', 'vuepeople.org']
 
+if DEBUG:
+    ALLOWED_HOSTS.append('0.0.0.0')
+
 # Application definition
 
 INSTALLED_APPS = [

@@ -23,7 +23,7 @@
             icon
             light
             class="btn-center-focus ma-0"
-            @click="setCenterOnCurrentPerson(true)">
+            @click="centerOnCurrentPerson">
             <v-icon>filter_center_focus</v-icon>
           </v-btn>
         </v-flex>
@@ -70,7 +70,7 @@
           <div class="caption">
             About
             <span
-              v-if="showHireableBadge"
+              v-if="person.hireable"
               class="hireable"
             >
               <v-icon small>
@@ -124,16 +124,15 @@ export default {
   computed: {
     ...mapGetters({
       person: 'people/getCurrentPersonDetails'
-    }),
-    showHireableBadge () {
-      return this.person.show_hireable && this.person.hireable;
-    }
+    })
   },
   methods: {
     ...mapActions({
-      setCurrent: 'people/setCurrent',
-      setCenterOnCurrentPerson: 'map/setCenterOnCurrentPerson'
-    })
+      setCurrent: 'people/setCurrent'
+    }),
+    centerOnCurrentPerson () {
+      this.$root.$emit('map:center-on', this.person.latlng);
+    }
   }
 
 };
@@ -153,8 +152,6 @@ export default {
 
       .toolbar__content {
         .btn {
-          color: @font-dark-disabled;
-
           &:not(.btn--icon) {
             min-width: 0;
             margin: 0;
@@ -164,9 +161,6 @@ export default {
               padding: 0;
             }
           }
-
-          &.btn-back {}
-          &.btn-center-focus {}
         }
       }
 

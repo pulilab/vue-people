@@ -65,6 +65,11 @@ describe('getters', () => {
     expect(result).toEqual(s.selectedUserTypes);
     expect(result).not.toBe(s.selectedUserTypes);
   });
+
+  test('getFirstPageVisited', () => {
+    const result = getters.getFirstPageVisited(s);
+    expect(result).toEqual(s.firstPageVisited);
+  });
 });
 
 describe('actions', () => {
@@ -109,6 +114,7 @@ describe('actions', () => {
     expect(authUtilities.saveTokens).toHaveBeenLastCalledWith(null, true);
   });
 
+
   test('toggleSelectedUserTypes', () => {
     vuex.getters.getSelectedUserTypes = [];
     actions.toggleSelectedUserTypes(vuex, 1);
@@ -117,6 +123,12 @@ describe('actions', () => {
     vuex.getters.getSelectedUserTypes = [1];
     actions.toggleSelectedUserTypes(vuex, 1);
     expect(vuex.commit).toHaveBeenLastCalledWith('RM_SELECTED_USERTYPE', 0);
+  });
+
+  test('setFirstPageVisited', () => {
+    actions.setFirstPageVisited(vuex, true);
+    expect(vuex.commit).toHaveBeenLastCalledWith('SET_FIRST_PAGE_VISITED', true);
+
   });
 });
 
@@ -145,6 +157,7 @@ describe('mutations', () => {
     expect(state.showCookieWarning).toEqual(1);
   });
 
+
   test('ADD_SELECTED_USERTYPE', () => {
     const state = {
       selectedUserTypes: []
@@ -160,4 +173,11 @@ describe('mutations', () => {
     mutations.RM_SELECTED_USERTYPE(state, 0);
     expect(state.selectedUserTypes).toEqual([]);
   });
+
+  test('SET_FIRST_PAGE_VISITED', () => {
+    const state = {};
+    mutations.SET_FIRST_PAGE_VISITED(state, 1);
+    expect(state.firstPageVisited).toEqual(1);
+  });
+
 });
