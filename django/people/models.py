@@ -5,34 +5,6 @@ from django.contrib.gis.db import models
 from taggit.managers import TaggableManager
 
 
-class ActiveQuerySet(QuerySet):
-    def __init__(self, *args, **kwargs):
-        super(ActiveQuerySet, self).__init__(*args, **kwargs)
-
-        if self.model:
-            self.add_initial_q()
-
-    def delete(self):
-        self.update(is_active=False)
-
-    def add_initial_q(self):
-        self.query.add_q(Q(is_active=True))
-
-
-class SoftDeleteModel(models.Model):
-    is_active = models.BooleanField(default=True)
-
-    all_objects = QuerySet.as_manager()
-    objects = ActiveQuerySet.as_manager()
-
-    class Meta:
-        abstract = True
-
-    def delete(self, *args, **kwargs):
-        self.is_active = False
-        self.save()
-
-
 class Type(models.Model):
     name = models.CharField(max_length=16)
     verbose_name = models.CharField(max_length=32)
@@ -46,7 +18,7 @@ class Type(models.Model):
         return self.verbose_name
 
 
-class Person(SoftDeleteModel):
+class Person(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
     company = models.CharField(max_length=128, blank=True, null=True)
@@ -64,11 +36,15 @@ class Person(SoftDeleteModel):
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
     modified = models.DateTimeField(auto_now=True, auto_now_add=False)
     public_email = models.BooleanField(default=True)
-    news_opt_in = models.BooleanField(default=True)
-    show_hireable = models.BooleanField(default=True)
+    feature_updates = models.BooleanField(default=True)
+    upcoming_events = models.BooleanField(default=True)
+    job_opportunities = models.BooleanField(default=True)
 
     class Meta:
         verbose_name_plural = "People"
 
     def __str__(self):
-        return "{} ({}) {}".format(self.user.get_full_name(), self.company, self.user.email)
+        if self.user:
+            return "{} ({}) {}".format(self.user.get_full_name(), self.company, self.user.email)
+        else:
+            return "This person is missing an associate user: {}".format(self.pk)

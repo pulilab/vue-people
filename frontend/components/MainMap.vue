@@ -142,6 +142,7 @@ export default {
       zoom: 3,
       iconCollection: {},
       mapReady: false,
+      centeredToSelected: false,
       mapOptions: { zoomControl: false, attributionControl: false },
       tooltipOptions: {
         className: 'person-tooltip',
@@ -170,7 +171,8 @@ export default {
       userProfile: 'user/getUserProfile',
       userTypes: 'getUserTypes',
       goToMap: 'getGoToMap',
-      currentPerson: 'people/getCurrentPersonDetails'
+      currentPerson: 'people/getCurrentPersonDetails',
+      firstPageVisited: 'getFirstPageVisited'
     }),
     userMaker () {
       return this.userPosition;
@@ -203,7 +205,7 @@ export default {
       if (this.currentPerson && this.mapReady) {
         return this.currentPerson;
       }
-      return {};
+      return null;
     }
   },
   watch: {
@@ -228,11 +230,11 @@ export default {
     currentPersonAndMapInitialised: {
       immediate: true,
       handler (current, previous) {
-        if (current && current.latlng) {
-          this.checkfOutOfBound(current.latlng);
-        }
-        if (previous) {
-          this.recalculateSelectedIcon(current.id, previous.id);
+        const currentId = current ? current.id : undefined;
+        const previousId = previous ? previous.id : undefined;
+        this.recalculateSelectedIcon(currentId, previousId);
+        if (currentId) {
+          this.centerToSelected(current.latlng);
         }
       }
     }
@@ -249,8 +251,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      setUserPosition: 'user/setUserPosition',
-      setCenterOnCurrentPerson: 'map/setCenterOnCurrentPerson'
+      setUserPosition: 'user/setUserPosition'
     }),
     addMarker (event) {
       if (this.addMode) {
@@ -316,12 +317,12 @@ export default {
     mapReadyHandler (event) {
       this.mapReady = true;
     },
-    checkfOutOfBound (latlng) {
-      if (this.$refs.mainMap) {
-        const bounds = this.$refs.mainMap.mapObject.getBounds();
-        if (!bounds.contains(latlng)) {
+    centerToSelected (latlng) {
+      if (this.$refs.mainMap && !this.centeredToSelected && this.firstPageVisited === 'index-user-id') {
+        this.$nextTick(() => {
           this.$refs.mainMap.mapObject.flyTo(latlng);
-        }
+          this.centeredToSelected = true;
+        });
       }
     }
   }
@@ -366,24 +367,24 @@ export default {
     .person-tooltip {
       border: none;
       border-radius: 3px;
-      background-color: #212121;
+      background-color: @font-dark-primary;
       box-shadow: 0 0 6px 0 rgba(0,0,0,0.12), 0 6px 6px 0 rgba(0,0,0,0.24);
     }
 
     .leaflet-tooltip-left.person-tooltip::before {
-      border-left-color: #212121;
+      border-left-color: @font-dark-primary;
     }
 
     .leaflet-tooltip-right.person-tooltip::before {
-      border-right-color: #212121;
+      border-right-color: @font-dark-primary;
     }
 
     .leaflet-tooltip-bottom.person-tooltip::before {
-      border-bottom-color: #212121;
+      border-bottom-color: @font-dark-primary;
     }
 
     .leaflet-tooltip-top.person-tooltip::before {
-      border-top-color: #212121;
+      border-top-color: @font-dark-primary;
     }
 
     .custom-pin-icon {
@@ -447,7 +448,7 @@ export default {
     }
 
     .home-button {
-      position: absolute;
+      position: fixed;
       bottom: 139px;
       right: 16px;
       z-index: 5000;
@@ -460,6 +461,13 @@ export default {
 
       i {
         font-size: 18px;
+      }
+    }
+
+    // Responsive
+    .viewport-sm & {
+      .home-button {
+        bottom: 185px;
       }
     }
   }

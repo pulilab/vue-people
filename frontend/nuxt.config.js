@@ -46,7 +46,7 @@ const config = {
     retry: false
   },
   router: {
-    middleware: 'auth'
+    middleware: ['auth', 'entrypoint-spy']
   },
   loading: { color: '#3B8070' },
   build: {
@@ -77,8 +77,8 @@ if (process.env.NODE_ENV !== 'production') {
     credentials: true
   };
   config.proxy = {
-    '/api/': { target: 'https://localhost/', secure: false },
-    '/accounts/': { target: 'https://localhost/', secure: false, cors: true }
+    '/api/': { target: 'https://0.0.0.0/', secure: false },
+    '/accounts/': { target: 'https://0.0.0.0/', secure: false, cors: true }
   };
 }
 module.exports = config;

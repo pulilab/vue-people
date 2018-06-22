@@ -70,7 +70,7 @@
           <div class="caption">
             About
             <span
-              v-if="showHireableBadge"
+              v-if="person.hireable"
               class="hireable"
             >
               <v-icon small>
@@ -124,10 +124,7 @@ export default {
   computed: {
     ...mapGetters({
       person: 'people/getCurrentPersonDetails'
-    }),
-    showHireableBadge () {
-      return this.person.show_hireable && this.person.hireable;
-    }
+    })
   },
   methods: {
     ...mapActions({
