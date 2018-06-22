@@ -79,9 +79,6 @@ describe('getters', () => {
       .toEqual({1: 0, 2: 0});
   });
 
-  test('getCenterOnCurrentPerson', () => {
-    expect(getters.getCenterOnCurrentPerson(s)).toEqual(s.centerOnCurrentPerson);
-  })
 });
 
 describe('actions', () => {
@@ -96,10 +93,6 @@ describe('actions', () => {
     expect(vuex.commit).toHaveBeenLastCalledWith('SET_ADD_MODE', 1);
   });
 
-  test('setCenterOnCurrentPerson', () => {
-    actions.setCenterOnCurrentPerson(vuex, 1);
-    expect(vuex.commit).toHaveBeenLastCalledWith('SET_CENTER_ON_CURRENT', 1);
-  });
 });
 
 describe('mutations', () => {
@@ -109,9 +102,4 @@ describe('mutations', () => {
     expect(s.addMode).toEqual(1);
   });
 
-  test('SET_CENTER_ON_CURRENT', () => {
-    const s = {};
-    mutations.SET_CENTER_ON_CURRENT(s, 1);
-    expect(s.centerOnCurrentPerson).toEqual(1);
-  });
 });

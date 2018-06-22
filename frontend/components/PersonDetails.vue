@@ -23,7 +23,7 @@
             icon
             light
             class="btn-center-focus ma-0"
-            @click="setCenterOnCurrentPerson(true)">
+            @click="centerOnCurrentPerson">
             <v-icon>filter_center_focus</v-icon>
           </v-btn>
         </v-flex>
@@ -128,9 +128,11 @@ export default {
   },
   methods: {
     ...mapActions({
-      setCurrent: 'people/setCurrent',
-      setCenterOnCurrentPerson: 'map/setCenterOnCurrentPerson'
-    })
+      setCurrent: 'people/setCurrent'
+    }),
+    centerOnCurrentPerson () {
+      this.$root.$emit('map:center-on', this.person.latlng);
+    }
   }
 
 };
@@ -150,8 +152,6 @@ export default {
 
       .toolbar__content {
         .btn {
-          color: @font-dark-disabled;
-
           &:not(.btn--icon) {
             min-width: 0;
             margin: 0;
@@ -161,9 +161,6 @@ export default {
               padding: 0;
             }
           }
-
-          &.btn-back {}
-          &.btn-center-focus {}
         }
       }
 
