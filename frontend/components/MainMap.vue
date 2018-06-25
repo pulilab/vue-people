@@ -62,7 +62,7 @@
             @marker-click="openPersonDetails(userProfile)"
           />
 
-          <meetup-markers />
+          <meetup-cluster />
 
           <map-legend
             v-show="showFloatingUI"
@@ -123,7 +123,7 @@ import TagFilter from './TagFilter.vue';
 import MapMarker from './MapMarker.vue';
 import FeedbackButton from './FeedbackButton.vue';
 import VuexGeolocation from 'vuex-geolocation';
-import MeetupMarkers from './MeetupMarkers';
+import MeetupCluster from './MeetupCluster';
 
 import NoSSR from 'vue-no-ssr';
 export default {
@@ -134,7 +134,7 @@ export default {
     TagFilter,
     FeedbackButton,
     MapMarker,
-    MeetupMarkers
+    MeetupCluster
   },
   data () {
     return {

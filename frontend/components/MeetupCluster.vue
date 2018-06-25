@@ -5,14 +5,25 @@
     <l-marker
       v-for="pin in meetupsGroups"
       :key="pin.id"
+      :icon="meetupIcon"
       :lat-lng="pin.latlng"
-    />
+    >
+      <l-tooltip
+      >
+        {{ pin.name }}
+      </l-tooltip>
+    </l-marker>
   </v-marker-cluster>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 export default {
+  data () {
+    return {
+      meetupIcon: null
+    };
+  },
   computed: {
     ...mapGetters({
       meetupsGroups: 'events/getMeetups'
@@ -31,11 +42,18 @@ export default {
             className: `meetup-cluster-icon`,
             html,
             iconSize: [48, 58],
-            iconAnchor: [24, 58]
+            iconAnchor: [24, 29]
           });
         }
       };
     }
+  },
+  mounted () {
+    this.meetupIcon = new L.divIcon({ // eslint-disable-line
+      className: `custom-meetup-icon`,
+      iconSize: [48, 55],
+      iconAnchor: [24, 27.5]
+    });
   }
 };
 </script>
@@ -55,6 +73,10 @@ export default {
     font-weight: 600;
     text-align:center;
   }
+}
+
+.custom-meetup-icon {
+  background-image: url('~/assets/pins/pin-meetup-0.svg');
 }
 
 </style>
