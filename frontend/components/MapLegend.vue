@@ -55,7 +55,7 @@ export default {
   left: 336px;
   z-index: 5000;
   height: @map-card-small-height;
-  padding: 0 4px;
+  padding: 0 4px 0 6px;
   background-color: rgba(255,255,255,.94);
   border-radius: 3px;
 
