@@ -41,20 +41,26 @@ export default {
 </script>
 
 <style lang="less">
-.meetup-cluster-icon {
-  background-image: url('~/assets/pins/pin-meetup-group.svg');
+  @import "../assets/style/variables.less";
+  @import "../assets/style/mixins.less";
 
-  span {
-    display: inline-block;
-    background-color: black;
-    border-radius: 1.5em;
-    width: 1.5em;
-    height: 1.5em;
-    margin-top: -5px;
-    margin-left: 35px;
-    font-weight: 600;
-    text-align:center;
+  .meetup-cluster-icon {
+    background-image: url('~/assets/pins/pin-meetup-group.svg');
+
+    span {
+      position: relative;
+      top: -3px;
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      margin-top: 0;
+      margin-left: 33px;
+      font-size: @font-size-tiny - 1;
+      line-height: 20px;
+      font-weight: 600;
+      text-align: center;
+      background-color: @color-grey-darker;
+      border-radius: 20px;
+    }
   }
-}
-
 </style>
