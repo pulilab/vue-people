@@ -67,7 +67,7 @@ export default {
           }
         }, 100);
       } else {
-        this.hoveredMarker = false;
+        this.hovered = false;
       }
     }
   }
