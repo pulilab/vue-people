@@ -104,14 +104,9 @@ export default {
       color: @color-library;
     }
 
-    i.mdi-vuejs {
-      position: relative;
-      top: -1px;
-    }
-
     .usertype-checkbox {
       position: absolute;
-      top: -1px;
+      top: 0;
       left: -6px;
       transform: scale(0.7);
 

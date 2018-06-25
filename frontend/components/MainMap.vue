@@ -422,6 +422,7 @@ export default {
         display: inline-block;
         width: 36px;
         margin-top: 6px;
+        font-size: @font-size-tiny;
         font-weight: 600;
         text-align: center;
       }
