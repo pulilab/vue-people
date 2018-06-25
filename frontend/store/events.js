@@ -1,3 +1,6 @@
+import { findGroups } from '../integrations/meetup/signedUrls';
+import { groupParser } from '../integrations/meetup/utilities';
+
 export const state = () => ({
   meetups: [],
   currentMeetup: null
@@ -5,7 +8,7 @@ export const state = () => ({
 
 export const getters = {
   getMeetups: (state) => {
-    return [...state.meetups.map(m => ({...m}))];
+    return [...state.meetups.map(m => ({...m, latlng: {...m.latlng}}))];
   },
   getCurrentMeetup: state => {
     return state.currentMeetup;
@@ -20,9 +23,9 @@ export const getters = {
 };
 
 export const actions = {
-  loadMeetups ({commit}) {
-    const mockMeetup = {id: 1};
-    commit('SET_MEETUP_LIST', [mockMeetup]);
+  async loadMeetups ({commit}) {
+    const data = await this.$axios.get(findGroups);
+    commit('SET_MEETUP_LIST', data.data);
   },
   setCurrent ({commit}, id) {
     commit('SET_CURRENT_MEETUP', id);
@@ -31,7 +34,8 @@ export const actions = {
 
 export const mutations = {
   SET_MEETUP_LIST: (state, meetups) => {
-    state.meetups = meetups;
+    const parsed = meetups.map(groupParser);
+    state.meetups = parsed;
   },
   SET_CURRENT_MEETUP: (state, id) => {
     state.currentMeetup = id;
