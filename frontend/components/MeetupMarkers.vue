@@ -59,7 +59,7 @@ export default {
       line-height: 20px;
       font-weight: 600;
       text-align: center;
-      background-color: @color-grey-darker;
+      background-color: @color-grey-dark;
       border-radius: 20px;
     }
   }
