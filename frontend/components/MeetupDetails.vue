@@ -79,11 +79,8 @@
           </span>
           <div
             :class="['event-details', 'content', {hidden: !showDetails}]"
-          >
-            <p>Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Fictum,  deserunt mollit anim laborum astutumque! Sed haec quis possit intrepidus aestimare tellus.</p>
-            <p>A communi observantia non est recedendum. Plura mihi bona sunt, inclinet, amari petere vellent. Nihil hic munitissimus habendi senatus locus, nihil horum?</p>
-            <p>Etiam habebis sem dicantur magna mollis euismod. Hi omnes lingua, institutis, legibus inter se differunt. Paullum deliquit, ponderibus modulisque suis ratio utitur. Prima luce, cum quibus mons aliud  consensu ab eo. Morbi odio eros, volutpat ut pharetra vitae, lobortis sed nibh. Me non paenitet nullum festiviorem excogitasse ad hoc.</p>
-          </div>
+            v-html="meetup.description"
+          />
         </div>
 
         <div
