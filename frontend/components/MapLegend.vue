@@ -60,6 +60,8 @@ export default {
   border-radius: 3px;
 
   .user-type {
+    padding-left: 16px;
+
     span {
       display: inline-block;
       padding: 0;
@@ -82,6 +84,7 @@ export default {
       justify-content: space-between;
       align-items: center;
       max-width: 38%;
+      padding-left: 0;
 
       span {
         font-size: @font-size-tiny - 1;

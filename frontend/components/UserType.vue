@@ -83,7 +83,6 @@ export default {
   .user-type {
     position: relative;
     display: inline-block;
-    padding-left: 16px;
     cursor: pointer;
     height: @map-card-small-height;
     line-height: @map-card-small-height;
@@ -117,8 +116,6 @@ export default {
 
     // Responsive
     .viewport-sm & {
-      padding-left: 0;
-
       .usertype-checkbox {
         display: none;
       }

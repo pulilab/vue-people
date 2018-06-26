@@ -44,7 +44,7 @@ export default {
     }
   },
   data () {
-    const iconY = this.icon ? -this.icon.options.iconSize[1] : -55;
+    const iconY = this.icon ? -this.icon.options.iconSize[1] - 3 : -55;
     return {
       hovered: false,
       tooltipOptions: {

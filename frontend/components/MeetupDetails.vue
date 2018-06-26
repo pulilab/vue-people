@@ -35,6 +35,8 @@
         v-if="meetup"
         class="meetup-info">
         <div class="item cover-n-logo">
+          <!-- TODO -->
+          <!-- Need a layout for groups without key_photo and/or group_photo -->
           <div class="meetup-cover">
             <img
               :src="meetup.key_photo"
@@ -69,12 +71,13 @@
             :href="meetup.link"
             target="_blank">Visit group on meetup.com
           </a>
-
+          <!-- TODO -->
+          <!-- When event-details shown button text should say "Hide details" -->
           <span
             :class="['btn-details', { hide: showDetails }]"
             @click="toggleDetails"
           >
-            Show details <!-- Hide details -->
+            Show details
             <v-icon small>arrow_drop_down</v-icon>
           </span>
           <div
@@ -123,9 +126,6 @@
               </v-flex>
             </v-layout>
           </v-layout>
-          <!-- TODO -->
-          <!-- Toggle class 'show/hide' on button -->
-
         </div>
       </div>
     </div>
@@ -233,6 +233,8 @@ export default {
 
           .meetup-cover {
             z-index: 20;
+            min-height: 120px;
+            background-color: rgba(0,0,0,.18);
 
             img {
               display: block;
@@ -280,7 +282,7 @@ export default {
 
           .btn-details {
             display: block;
-            margin: 8px 0;
+            margin: 12px 0 0;
             font-size: @font-size-tiny;
             color: @font-light-secondary;
             cursor: pointer;
@@ -299,7 +301,19 @@ export default {
           }
 
           .event-details {
-            margin: 12px 0;
+            overflow: hidden;
+            display: block;
+            max-height: auto;
+            margin: 12px 0 0;
+            opacity: 1;
+            word-wrap: break-word;
+            transition: opacity 350ms @ease-in-out;
+
+            &.hidden {
+              margin: 0;
+              max-height: 0;
+              opacity: 0;
+            }
           }
         }
 
@@ -324,13 +338,11 @@ export default {
             font-weight: 400;
             color: @color-white;
           }
-
         }
       }
     }
 
     // Responsive
-    .viewport-sm & {
-    }
+    .viewport-sm & {}
   }
 </style>
