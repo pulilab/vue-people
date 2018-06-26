@@ -11,6 +11,9 @@ export default {
   },
   fetch ({store, params}) {
     store.dispatch('events/setCurrent', parseInt(params.id, 10));
+  },
+  destroyed () {
+    this.$store.dispatch('events/setCurrent', null);
   }
 };
 </script>
