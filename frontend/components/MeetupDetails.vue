@@ -37,19 +37,19 @@
         <div class="item cover-n-logo">
           <div class="meetup-cover">
             <img
-              src="~/assets/images/sample-meetup-cover.jpg"
+              :src="meetup.key_photo"
               alt="Meetup cover image"
             >
           </div>
           <div class="meetup-logo elevation-4">
             <img
-              src="~/assets/images/sample-meetup-logo.png"
+              :src="meetup.group_photo"
               alt="Meetup logo image"
             >
           </div>
         </div>
         <div class="item group-info px-4 py-4">
-          <h5>LET'S CODE Group</h5>
+          <h5>{{ meetup.name }}</h5>
           <v-layout
             row
             class="content"
@@ -58,23 +58,42 @@
               <v-icon small>
                 location_on
               </v-icon>
-              Budapest, Hungary
+              {{ meetup.location }}
             </v-flex>
             <v-flex>
               <v-icon small>group</v-icon>
-              123
+              {{ meetup.members }}
             </v-flex>
           </v-layout>
           <a
-            href="#"
+            :href="meetup.link"
             target="_blank">Visit group on meetup.com
           </a>
+
+          <span
+            :class="['btn-details', { hide: showDetails }]"
+            @click="toggleDetails"
+          >
+            Show details <!-- Hide details -->
+            <v-icon small>arrow_drop_down</v-icon>
+          </span>
+          <div
+            :class="['event-details', 'content', {hidden: !showDetails}]"
+          >
+            <p>Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Fictum,  deserunt mollit anim laborum astutumque! Sed haec quis possit intrepidus aestimare tellus.</p>
+            <p>A communi observantia non est recedendum. Plura mihi bona sunt, inclinet, amari petere vellent. Nihil hic munitissimus habendi senatus locus, nihil horum?</p>
+            <p>Etiam habebis sem dicantur magna mollis euismod. Hi omnes lingua, institutis, legibus inter se differunt. Paullum deliquit, ponderibus modulisque suis ratio utitur. Prima luce, cum quibus mons aliud  consensu ab eo. Morbi odio eros, volutpat ut pharetra vitae, lobortis sed nibh. Me non paenitet nullum festiviorem excogitasse ad hoc.</p>
+          </div>
         </div>
-        <div class="item upcoming-event px-4 py-3">
+
+        <div
+          v-if="meetup.next_event"
+          class="item upcoming-event px-4 py-3"
+        >
           <div class="caption">
             Upcoming events
           </div>
-          <h3>This the meetup's title</h3>
+          <h3>{{ meetup.next_event.name }}</h3>
           <v-layout
             column
             class="content"
@@ -109,15 +128,7 @@
           </v-layout>
           <!-- TODO -->
           <!-- Toggle class 'show/hide' on button -->
-          <span class="btn-details show">
-            Show details <!-- Hide details -->
-            <v-icon small>arrow_drop_down</v-icon>
-          </span>
-          <div class="event-details content hidden">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Fictum,  deserunt mollit anim laborum astutumque! Sed haec quis possit intrepidus aestimare tellus.</p>
-            <p>A communi observantia non est recedendum. Plura mihi bona sunt, inclinet, amari petere vellent. Nihil hic munitissimus habendi senatus locus, nihil horum?</p>
-            <p>Etiam habebis sem dicantur magna mollis euismod. Hi omnes lingua, institutis, legibus inter se differunt. Paullum deliquit, ponderibus modulisque suis ratio utitur. Prima luce, cum quibus mons aliud  consensu ab eo. Morbi odio eros, volutpat ut pharetra vitae, lobortis sed nibh. Me non paenitet nullum festiviorem excogitasse ad hoc.</p>
-          </div>
+
         </div>
       </div>
     </div>
@@ -130,12 +141,22 @@ import { mapGetters } from 'vuex';
 export default {
   components: {
   },
+  data () {
+    return {
+      showDetails: false
+    };
+  },
   computed: {
     ...mapGetters({
-      meetup: 'events/getCurrentMeetup'
+      currentMeetup: 'events/getCurrentMeetup',
+      meetup: 'events/getCurrentMeetupDetails'
     })
   },
-  methods: {}
+  methods: {
+    toggleDetails () {
+      this.showDetails = !this.showDetails;
+    }
+  }
 
 };
 </script>
@@ -259,29 +280,6 @@ export default {
             margin: 8px 0 0;
             font-size: @font-size-tiny;
           }
-        }
-
-        &.upcoming-event {
-          .content {
-            .layout {
-              margin: 0 0 12px;
-
-              .flex {
-                flex-grow: 0;
-                padding-right: 12px;
-              }
-            }
-          }
-
-          h3 {
-            margin: 0 0 12px;
-          }
-
-          strong {
-            display: block;
-            font-weight: 400;
-            color: @color-white;
-          }
 
           .btn-details {
             display: block;
@@ -306,6 +304,30 @@ export default {
           .event-details {
             margin: 12px 0;
           }
+        }
+
+        &.upcoming-event {
+          .content {
+            .layout {
+              margin: 0 0 12px;
+
+              .flex {
+                flex-grow: 0;
+                padding-right: 12px;
+              }
+            }
+          }
+
+          h3 {
+            margin: 0 0 12px;
+          }
+
+          strong {
+            display: block;
+            font-weight: 400;
+            color: @color-white;
+          }
+
         }
       }
     }
