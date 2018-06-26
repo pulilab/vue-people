@@ -1,6 +1,5 @@
 import { findGroups } from '../integrations/meetup/signedUrls';
-import { groupParser } from '../integrations/meetup/utilities';
-import { circleOfCoords } from '../utilities/coords';
+import { groupParser, overlappingResolver } from '../integrations/meetup/utilities';
 
 export const state = () => ({
   meetups: [],
@@ -27,26 +26,8 @@ export const actions = {
   async loadMeetups ({commit}) {
     const data = await this.$axios.get(findGroups);
     const meetups = data.data.map(groupParser);
-    const dict = meetups.reduce((p, c, index) => {
-      const key = JSON.stringify(c.latlng);
-      if (p[key]) {
-        p[key].push(index);
-      } else {
-        p[key] = [index];
-      }
-      return p;
-    }, {});
-    for (const k in dict) {
-      if (dict[k].length > 1) {
-        const latlng = JSON.parse(k);
-        const circle = circleOfCoords(latlng, dict[k].length);
-        console.log(circle.length, dict[k].length);
-        dict[k].forEach((value, index) => {
-          meetups[value].latlng = circle[index];
-        });
-      }
-    }
-    commit('SET_MEETUP_LIST', meetups);
+    const combed = overlappingResolver(meetups);
+    commit('SET_MEETUP_LIST', combed);
   },
   setCurrent ({commit}, id) {
     commit('SET_CURRENT_MEETUP', id);
