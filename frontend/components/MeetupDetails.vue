@@ -100,7 +100,7 @@
                 <v-icon small>access_time</v-icon>
               </v-flex>
               <v-flex>
-                <strong>Tuesday, June 26, 2018</strong>
+                <strong>{{ eventDate }}</strong>
                 6:30PM - 9:00PM
               </v-flex>
             </v-layout>
@@ -118,14 +118,11 @@
                 <v-icon small>people</v-icon>
               </v-flex>
               <v-flex>
-                <strong>165 attendees</strong>
+                <strong>{{ meetup.next_event.yes_rsvp_count }} attendees</strong>
                 <span>15 spots left</span>
               </v-flex>
             </v-layout>
           </v-layout>
-          <!-- TODO -->
-          <!-- Toggle class 'show/hide' on button -->
-
         </div>
       </div>
     </div>
@@ -134,6 +131,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { format } from 'date-fns';
 
 export default {
   components: {
@@ -147,7 +145,14 @@ export default {
     ...mapGetters({
       currentMeetup: 'events/getCurrentMeetup',
       meetup: 'events/getCurrentMeetupDetails'
-    })
+    }),
+    eventDate () {
+      if (this.meetup && this.meetup.next_event && this.meetup.next_event.time) {
+        const utcTime = this.meetup.next_event.time - this.meetup.next_event.utc_offset;
+        return format(utcTime, 'dddd, MMMM DD, YYYY');
+      }
+      return 'No upcoming event';
+    }
   },
   methods: {
     toggleDetails () {
