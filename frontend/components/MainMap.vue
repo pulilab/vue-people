@@ -39,7 +39,12 @@
               :icon="iconCollection[pin.id]"
               :show-floating-ui="showFloatingUI"
               @marker-click="openPersonDetails(pin)"
-            />
+            >
+              <user-avatar
+                :id="pin.id"
+                :dark="true"
+              />
+            </map-marker>
           </v-marker-cluster>
 
           <template v-if="pins.length <= 50">
@@ -50,19 +55,25 @@
               :icon="iconCollection[pin.id]"
               :show-floating-ui="showFloatingUI"
               @marker-click="openPersonDetails(pin)"
-            />
+            >
+              <user-avatar
+                :id="pin.id"
+                :dark="true"
+              />
+            </map-marker>
           </template>
 
           <map-marker
             v-if="userMaker.latlng"
-            v-show="showFloatingUI"
             :pin="userMaker"
             :icon="iconGenerator(userProfile, true)"
             :show-floating-ui="showFloatingUI"
             @marker-click="openPersonDetails(userProfile)"
           />
 
-          <meetup-cluster />
+          <meetup-cluster
+            :show-floating-ui="showFloatingUI"
+          />
 
           <map-legend
             v-show="showFloatingUI"
@@ -121,6 +132,7 @@ import MapToolbar from './MapToolbar.vue';
 import MapLegend from './MapLegend.vue';
 import TagFilter from './TagFilter.vue';
 import MapMarker from './MapMarker.vue';
+import UserAvatar from './UserAvatar.vue';
 import FeedbackButton from './FeedbackButton.vue';
 import VuexGeolocation from 'vuex-geolocation';
 import MeetupCluster from './MeetupCluster';
@@ -134,7 +146,8 @@ export default {
     TagFilter,
     FeedbackButton,
     MapMarker,
-    MeetupCluster
+    MeetupCluster,
+    UserAvatar
   },
   data () {
     return {
@@ -341,77 +354,6 @@ export default {
             opacity: 1
           }
         }
-      }
-    }
-
-    .person-tooltip {
-      border: none;
-      border-radius: 3px;
-      background-color: @font-dark-primary;
-      box-shadow: 0 0 6px 0 rgba(0,0,0,0.12), 0 6px 6px 0 rgba(0,0,0,0.24);
-    }
-
-    .leaflet-tooltip-left.person-tooltip::before {
-      border-left-color: @font-dark-primary;
-    }
-
-    .leaflet-tooltip-right.person-tooltip::before {
-      border-right-color: @font-dark-primary;
-    }
-
-    .leaflet-tooltip-bottom.person-tooltip::before {
-      border-bottom-color: @font-dark-primary;
-    }
-
-    .leaflet-tooltip-top.person-tooltip::before {
-      border-top-color: @font-dark-primary;
-    }
-
-    .custom-pin-icon {
-      width: 30px;
-      height: 60px;
-
-      .center-circle {
-        position: relative;
-        top: 3px;
-        left: 4px;
-        width: 24px;
-        height: 24px;
-        border-radius: 24px;
-        border: 1px solid @color-white;
-        box-shadow: 0 2px 2px 0 rgba(0,0,0,.25);
-      }
-
-      .no-icon {
-        top: 5px;
-        left: 5px;
-        border: 0;
-        background: transparent;
-        box-shadow: none;
-
-        i {
-          color: @color-white;
-          font-size: 22.5px;
-        }
-      }
-
-      &.dev {
-        background-image: url('~/assets/pins/pin-dev.svg');
-      }
-      &.core {
-        background-image: url('~/assets/pins/pin-core.svg');
-      }
-      &.enthusiast {
-        background-image: url('~/assets/pins/pin-enthusiast.svg');
-      }
-      &.selected {
-        background-image: url('~/assets/pins/pin-selected.svg');
-      }
-      &.me {
-        background-image: url('~/assets/pins/pin-me.svg');
-      }
-      &.library {
-        background-image: url('~/assets/pins/pin-library.svg');
       }
     }
 
