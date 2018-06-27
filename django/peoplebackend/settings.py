@@ -222,3 +222,4 @@ SOCIALACCOUNT_PROVIDERS = {
 
 LOGIN_REDIRECT_URL = '/user?token={}'
 LOGIN_REDIRECT_URL_DEV = 'http://localhost:3000/user?token={}'
+MEETUP_KEY = os.environ.get('MEETUP_KEY', '')

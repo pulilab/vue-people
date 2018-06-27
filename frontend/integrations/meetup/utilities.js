@@ -14,9 +14,19 @@ export const groupParser = (m) => (
     members: m.members,
     location: m.localized_location,
     link: m.link,
+    urlname: m.urlname,
     description: m.description
   }
 );
+
+export const eventParser = e => {
+  return {
+    name: e.name,
+    venue: e.venue,
+    group_id: e.group.id,
+    rsvp_limit: e.rsvp_limit
+  };
+};
 
 export const overlappingResolver = markers => {
   const dict = markers.reduce((p, c, index) => {
