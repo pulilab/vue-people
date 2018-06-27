@@ -88,7 +88,7 @@ export default {
     line-height: @map-card-small-height;
 
     &.dev .mdi-vuejs {
-      color: @color-developer !important;
+      color: @color-developer;
     }
 
     &.enthusiast .mdi-vuejs {
@@ -103,14 +103,23 @@ export default {
       color: @color-library;
     }
 
+    .mdi-vuejs {
+      position: relative;
+      top: -1px;
+    }
+
     .usertype-checkbox {
       position: absolute;
-      top: 0;
+      top: -1px;
       left: -6px;
       transform: scale(0.7);
 
       .icon--selection-control {
         color: @font-dark-disabled;
+
+        &.icon--checkbox {
+          color: @font-dark-secondary;
+        }
       }
     }
 

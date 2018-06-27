@@ -12,13 +12,17 @@
     />
     <div
       v-show="!isMobile"
-      class="legend-item meetup-filter"
+      class="legend-item event-type mx-2"
     >
-      <v-checkbox
-        v-model="showMeetups"
-      />
-      <span class="meetup-icon" />
-      <span> Meetups </span>
+      <span class="event-checkbox">
+        <v-checkbox
+          v-model="showMeetups"
+          hide-details
+        />
+      </span>
+      <!-- TODO -->
+      <!-- Set checkbox checked if user clicks on filter name -->
+      <span class="event-name">Meetups</span>
     </div>
   </div>
 </template>
@@ -93,6 +97,34 @@ export default {
     }
   }
 
+  // Meetups, conferences
+  .event-type {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    height: @map-card-small-height;
+    line-height: @map-card-small-height;
+
+    .event-checkbox {
+      position: absolute;
+      top: -1px;
+      left: -6px;
+      transform: scale(0.7);
+
+      .icon--selection-control {
+        color: @font-dark-disabled;
+
+        &.icon--checkbox {
+          color: @font-dark-secondary;
+        }
+      }
+    }
+
+    .event-name {
+      margin-left: 2px;
+    }
+  }
+
   // Responsive
   .viewport-sm & {
     left: 16px;
@@ -117,6 +149,10 @@ export default {
         &.user-type-name {
           .text-truncate();
         }
+      }
+
+      .mdi-vuejs {
+        top: 0;
       }
     }
   }
