@@ -5305,6 +5305,12 @@ number-is-nan@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
 
+nuxt-mq@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/nuxt-mq/-/nuxt-mq-1.0.5.tgz#7488ba7f254eec282d4da45c2a4091f5def21bd5"
+  dependencies:
+    vue-mq "^0.2.1"
+
 nuxt@^1.0.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/nuxt/-/nuxt-1.4.0.tgz#66df9ede68daf2ef4cfbcc329da7dda0003e0420"
