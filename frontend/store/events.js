@@ -19,7 +19,7 @@ export const getters = {
       return {
         ...m,
         latlng,
-        options: {meetup_id: m.id}
+        options: {}
       };
     })];
   },
@@ -56,6 +56,6 @@ export const mutations = {
     state.currentMeetup = id;
   },
   ADD_MEETUP_EVENTS: (state, events) => {
-    events.forEach(e => state.meetupEvents.push(e));
+    state.meetupEvents = events;
   }
 };
