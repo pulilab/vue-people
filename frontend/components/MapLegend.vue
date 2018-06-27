@@ -7,14 +7,24 @@
       :show-text="calculateShowText(type.id)"
       :show-count="true"
       :show-checkbox="true"
-      :class="{open: type.id === activeType}"
+      :class="[{open: type.id === activeType}, 'legend-item']"
       @click.native="setActiveType(type.id)"
     />
+    <div
+      v-show="!isMobile"
+      class="legend-item meetup-filter"
+    >
+      <v-checkbox
+        v-model="showMeetups"
+      />
+      <span class="meetup-icon" />
+      <span> Meetups </span>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import UserType from './UserType';
 
 export default {
@@ -28,13 +38,25 @@ export default {
   },
   computed: {
     ...mapGetters({
-      userTypes: 'getUserTypes'
+      userTypes: 'getUserTypes',
+      getShowMeetups: 'map/getShowMeetups'
     }),
+    showMeetups: {
+      get () {
+        return this.getShowMeetups;
+      },
+      set (value) {
+        this.setShowMeetups(value);
+      }
+    },
     isMobile () {
       return this.$mq === 'sm' || this.$mq === 'xs';
     }
   },
   methods: {
+    ...mapActions({
+      setShowMeetups: 'map/setShowMeetups'
+    }),
     calculateShowText (id) {
       return !this.isMobile || this.activeType === id;
     },
@@ -59,7 +81,7 @@ export default {
   background-color: rgba(255,255,255,.94);
   border-radius: 3px;
 
-  .user-type {
+  .legend-item {
     padding-left: 16px;
 
     span {
@@ -79,7 +101,7 @@ export default {
     width: calc(100vw - 32px);
     padding: 0;
 
-    .user-type {
+    .legend-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
