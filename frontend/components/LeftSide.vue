@@ -31,13 +31,27 @@
 
       <v-btn
         v-show="showGoToMapButton"
+        :disabled="!mapReady"
         block
         color="primary"
         class="btn-gotomap"
         @click="setGoToMap(true)"
       >
-        Go to map
-        <v-icon class="ml-1">mdi-arrow-right</v-icon>
+        <span v-show="mapReady"> Go To Map</span>
+        <v-icon
+          v-show="mapReady"
+          class="ml-1"
+        >
+          mdi-arrow-right
+        </v-icon>
+
+        <span v-show="!mapReady"> Loading Map </span>
+        <v-progress-circular
+          v-show="!mapReady"
+          :size="26"
+          class="ml-1"
+          indeterminate
+        />
       </v-btn>
     </div>
     <div class="credit elevation-6">
@@ -54,15 +68,21 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'LeftSide',
   computed: {
+    ...mapGetters({
+      mapReady: 'map/getMapReady'
+    }),
     showRootContent () {
       return this.$route && this.$route.name !== 'index-user-id';
     },
     showGoToMapButton () {
+      if (!this.$mq) {
+        return this.$device.isMobileOrTablet;
+      }
       return this.$mq === 'sm' || this.$mq === 'xs';
     }
   },
@@ -112,6 +132,12 @@ export default {
       .btn-gotomap {
         float: left;
         margin: 8px 0 48px;
+        &.btn--disabled  {
+          // TODO : adjust the disabled button color / background
+          .btn__content {
+            color: black;
+          }
+        }
       }
     }
 
