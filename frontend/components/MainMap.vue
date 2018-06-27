@@ -72,6 +72,7 @@
           />
 
           <meetup-cluster
+            v-if="showMeetups"
             :show-floating-ui="showFloatingUI"
           />
 
@@ -177,7 +178,8 @@ export default {
       goToMap: 'getGoToMap',
       currentPerson: 'people/getCurrentPersonDetails',
       firstPageVisited: 'getFirstPageVisited',
-      mapReady: 'map/getMapReady'
+      mapReady: 'map/getMapReady',
+      showMeetups: 'map/getShowMeetups'
     }),
     userMaker () {
       return { latlng: this.userPosition };
