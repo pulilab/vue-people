@@ -14,18 +14,15 @@
       >
 
       <h4 class="subheading mb-3">
-        About vuepeople.org
+        Welcome to VuePeople!
       </h4>
 
       <p>
-        VuePeople lists and connects Vue.JS developers around the world. <br>
-        The aim of this site is for Vue.JS developers to use this tool to present themselves and their work to the world, and to provide a platform to connect with like-minded individuals.
+        VuePeople.org is a network that connects the Vue.JS community with events and work opportunities.
       </p>
 
       <p>
-        We’ve created this place so you can follow the Vue.JS community as it grows.
-        As the site is still a work in progress, we are happy to receive your feedback and next feature,
-        either as a ticket, or as a pull request here:
+        VuePeople.org is open sourced. Your can contribute or submit a ticket at
         <a
           href="https://github.com/pulilab/vue-people"
           target="_blank">https://github.com/pulilab/vue-people
@@ -34,13 +31,27 @@
 
       <v-btn
         v-show="showGoToMapButton"
+        :disabled="!mapReady"
         block
         color="primary"
         class="btn-gotomap"
         @click="setGoToMap(true)"
       >
-        Go to map
-        <v-icon class="ml-1">mdi-arrow-right</v-icon>
+        <span v-show="mapReady"> Go To Map </span>
+        <v-icon
+          v-show="mapReady"
+          class="ml-1"
+        >
+          mdi-arrow-right
+        </v-icon>
+
+        <span v-show="!mapReady"> Loading Map </span>
+        <v-progress-circular
+          v-show="!mapReady"
+          :size="26"
+          class="ml-2"
+          indeterminate
+        />
       </v-btn>
     </div>
     <div class="credit elevation-6">
@@ -57,16 +68,22 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'LeftSide',
   computed: {
+    ...mapGetters({
+      mapReady: 'map/getMapReady'
+    }),
     showRootContent () {
       const leftRoutes = ['index-user-id', 'index-meetup-id'];
       return this.$route && !leftRoutes.includes(this.$route.name);
     },
     showGoToMapButton () {
+      if (!this.$mq) {
+        return this.$device.isMobileOrTablet;
+      }
       return this.$mq === 'sm' || this.$mq === 'xs';
     }
   },
@@ -101,7 +118,6 @@ export default {
 
       h4 {
         color: @font-dark-primary;
-        letter-spacing: -0.25px !important;
       }
 
       p {
@@ -116,6 +132,13 @@ export default {
       .btn-gotomap {
         float: left;
         margin: 8px 0 48px;
+
+        &.btn--disabled  {
+          .btn__content {
+            background-color: fade(@color-brand-primary, 70%);
+            color: @color-white;
+          }
+        }
       }
     }
 

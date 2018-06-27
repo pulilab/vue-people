@@ -24,7 +24,7 @@
           @click="addMarker">
           <l-tilelayer
             url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'"
-            @loading="mapReadyHandler"
+            @loading="setMapReady"
           />
 
           <v-marker-cluster
@@ -153,7 +153,6 @@ export default {
     return {
       zoom: 3,
       iconCollection: {},
-      mapReady: false,
       centeredToSelected: false,
       mapOptions: { zoomControl: false, attributionControl: false },
       centerOnNext: false
@@ -177,7 +176,8 @@ export default {
       userTypes: 'getUserTypes',
       goToMap: 'getGoToMap',
       currentPerson: 'people/getCurrentPersonDetails',
-      firstPageVisited: 'getFirstPageVisited'
+      firstPageVisited: 'getFirstPageVisited',
+      mapReady: 'map/getMapReady'
     }),
     userMaker () {
       return { latlng: this.userPosition };
@@ -257,7 +257,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      setUserPosition: 'user/setUserPosition'
+      setUserPosition: 'user/setUserPosition',
+      setMapReady: 'map/setMapReady'
     }),
     addMarker (event) {
       if (this.addMode) {
@@ -306,9 +307,6 @@ export default {
       pins.forEach(p => {
         this.iconCollection[p.id] = this.iconGenerator(p);
       });
-    },
-    mapReadyHandler (event) {
-      this.mapReady = true;
     },
     centerToSelected (latlng) {
       if (this.$refs.mainMap && !this.centeredToSelected && this.firstPageVisited === 'index-user-id') {
