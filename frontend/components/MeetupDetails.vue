@@ -339,6 +339,7 @@ export default {
 
           h3 {
             margin: 0 0 12px;
+            font-size: @font-size-base;
           }
 
           strong {
