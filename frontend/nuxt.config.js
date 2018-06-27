@@ -36,7 +36,8 @@ const config = {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
-    'nuxt-mq'
+    'nuxt-mq',
+    'nuxt-device-detect'
   ],
   proxy: {},
   axios: {

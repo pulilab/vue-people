@@ -5305,6 +5305,10 @@ number-is-nan@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
 
+nuxt-device-detect@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/nuxt-device-detect/-/nuxt-device-detect-1.1.1.tgz#bd885935356cd2f8e685f93f844919fcf8184934"
+
 nuxt-mq@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nuxt-mq/-/nuxt-mq-1.0.5.tgz#7488ba7f254eec282d4da45c2a4091f5def21bd5"
