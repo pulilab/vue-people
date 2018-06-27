@@ -37,7 +37,7 @@
         class="btn-gotomap"
         @click="setGoToMap(true)"
       >
-        <span v-show="mapReady"> Go To Map</span>
+        <span v-show="mapReady"> Go To Map </span>
         <v-icon
           v-show="mapReady"
           class="ml-1"
@@ -49,7 +49,7 @@
         <v-progress-circular
           v-show="!mapReady"
           :size="26"
-          class="ml-1"
+          class="ml-2"
           indeterminate
         />
       </v-btn>
@@ -132,10 +132,11 @@ export default {
       .btn-gotomap {
         float: left;
         margin: 8px 0 48px;
+
         &.btn--disabled  {
-          // TODO : adjust the disabled button color / background
           .btn__content {
-            color: black;
+            background-color: fade(@color-brand-primary, 70%);
+            color: @color-white;
           }
         }
       }
