@@ -100,6 +100,10 @@ describe('getters', () => {
     expect(getters.getShownPins(null, {}, null, {getUserTypes}))
       .toEqual({1: 0, 2: 0});
   });
+
+  test('getShowMeetups', () => {
+    expect(getters.getShowMeetups(s)).toEqual(s.showMeetups);
+  });
 });
 
 describe('actions', () => {
@@ -118,6 +122,11 @@ describe('actions', () => {
     actions.setMapReady(vuex);
     expect(vuex.commit).toHaveBeenLastCalledWith('SET_MAP_READY', true);
   });
+
+  test('setShowMeetups', () => {
+    actions.setShowMeetups(vuex, 1);
+    expect(vuex.commit).toHaveBeenLastCalledWith('SET_SHOW_MEETUPS', 1);
+  });
 });
 
 describe('mutations', () => {
@@ -130,5 +139,10 @@ describe('mutations', () => {
     const s = {};
     mutations.SET_MAP_READY(s, 1);
     expect(s.mapReady).toEqual(1);
+  });
+  test('SET_SHOW_MEETUPS', () => {
+    const s = {};
+    mutations.SET_SHOW_MEETUPS(s, 1);
+    expect(s.showMeetups).toEqual(1);
   });
 });

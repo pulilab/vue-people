@@ -1,6 +1,7 @@
 export const state = () => ({
   addMode: false,
-  mapReady: false
+  mapReady: false,
+  showMeetups: true
 });
 
 export const getters = {
@@ -43,7 +44,8 @@ export const getters = {
       }, countInit);
     }
     return countInit;
-  }
+  },
+  getShowMeetups: state => state.showMeetups
 };
 
 export const actions = {
@@ -52,6 +54,9 @@ export const actions = {
   },
   setMapReady ({commit}) {
     commit('SET_MAP_READY', true);
+  },
+  setShowMeetups ({commit}, value) {
+    commit('SET_SHOW_MEETUPS', value);
   }
 };
 
@@ -61,5 +66,8 @@ export const mutations = {
   },
   SET_MAP_READY: (state, value) => {
     state.mapReady = value;
+  },
+  SET_SHOW_MEETUPS: (state, value) => {
+    state.showMeetups = value;
   }
 };
