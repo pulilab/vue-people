@@ -259,7 +259,7 @@ export default {
             display: block;
             width: 60px;
             height: 60px;
-            background-color: @color-white;
+            background: @color-white url('~/assets/images/meetup-nologo.svg') center no-repeat;
             border-radius: 3px;
 
             img {
