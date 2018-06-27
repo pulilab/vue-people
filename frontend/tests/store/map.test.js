@@ -17,6 +17,10 @@ describe('getters', () => {
     expect(getters.isAddMode(s)).toEqual(s.addMode);
   });
 
+  test('getMapReady', () => {
+    expect(getters.getMapReady(s)).toEqual(s.mapReady);
+  });
+
   test('getPins', () => {
     const rootGetters = {
       'people/getList': [
@@ -109,6 +113,11 @@ describe('actions', () => {
     actions.setAddMode(vuex, 1);
     expect(vuex.commit).toHaveBeenLastCalledWith('SET_ADD_MODE', 1);
   });
+
+  test('setMapReady', () => {
+    actions.setMapReady(vuex);
+    expect(vuex.commit).toHaveBeenLastCalledWith('SET_MAP_READY', true);
+  });
 });
 
 describe('mutations', () => {
@@ -116,5 +125,10 @@ describe('mutations', () => {
     const s = {};
     mutations.SET_ADD_MODE(s, 1);
     expect(s.addMode).toEqual(1);
+  });
+  test('SET_MAP_READY', () => {
+    const s = {};
+    mutations.SET_MAP_READY(s, 1);
+    expect(s.mapReady).toEqual(1);
   });
 });
