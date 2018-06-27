@@ -117,7 +117,6 @@ export default {
 
       h4 {
         color: @font-dark-primary;
-        letter-spacing: -0.25px !important;
       }
 
       p {
