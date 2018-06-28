@@ -23,21 +23,26 @@ describe('getters', () => {
 
   test('getMeetups', () => {
     s.meetups = [{ id: 1, latlng: {}, options: {} }];
-    const getEvents = [ { group_id: 2 } ];
+    const getEvents = [ { id: 1, group_id: 2, time: 1 }, { id: 2, group_id: 3, time: 2 } ];
     let result = getters.getMeetups(s, {getEvents});
-    expect(result).toEqual(s.meetups);
+    expect(result).toEqual(
+      [{
+        event: undefined,
+        has_event_with_coords: false,
+        id: 1,
+        latlng: {},
+        options: {}
+      }]
+    );
     expect(result).not.toBe(s.meetups);
-    expect(result[0]).toEqual(s.meetups[0]);
     expect(result[0]).not.toBe(s.meetups[0]);
 
     getEvents[0].group_id = 1;
+    getEvents[1].group_id = 1;
     result = getters.getMeetups(s, {getEvents});
-    expect(result).toEqual(s.meetups);
-    expect(result).not.toBe(s.meetups);
-    expect(result[0]).toEqual(s.meetups[0]);
-    expect(result[0]).not.toBe(s.meetups[0]);
+    expect(result[0].event.id).toBe(1);
 
-    getEvents[0].venue = {lat: 1, lon: 2};
+    getEvents[0].latlng = {lat: 1, lng: 2};
     result = getters.getMeetups(s, {getEvents});
 
     expect(result[0].latlng).toEqual({lat: 1, lng: 2});
@@ -49,8 +54,9 @@ describe('getters', () => {
 
   test('getMeetupDetails', () => {
     const getMeetups = [{id: 1}, {id: 2}];
-    let result = getters.getMeetupDetails(s, {getMeetups})(1);
-    expect(result).toEqual(getMeetups[0]);
+    const getEvents = [{group_id: 1}];
+    let result = getters.getMeetupDetails(s, {getMeetups, getEvents})(1);
+    expect(result).toEqual({...getMeetups[0], events: [getEvents[0]]});
     expect(result).not.toBe(getMeetups[0]);
   });
 
@@ -78,6 +84,16 @@ describe('actions', () => {
     expect(meetupUtilities.groupParser).toHaveBeenCalledWith(1, 0, [1]);
     expect(meetupUtilities.overlappingResolver).toHaveBeenCalledWith([1]);
     expect(vuex.commit).toHaveBeenCalledWith('SET_MEETUP_LIST', 1);
+  });
+
+  test('loadEvents', async () => {
+    jest.spyOn(meetupUtilities, 'eventParser').mockReturnValue(1);
+    jest.spyOn(meetupUtilities, 'overlappingResolver').mockReturnValue(1);
+    actions.$axios.get.mockReturnValue({data: [1]});
+    await actions.loadEvents(vuex);
+    expect(meetupUtilities.eventParser).toHaveBeenCalledWith(1, 0, [1]);
+    expect(meetupUtilities.overlappingResolver).toHaveBeenCalledWith([1]);
+    expect(vuex.commit).toHaveBeenCalledWith('ADD_MEETUP_EVENTS', 1);
   });
 
   test('setCurrent', () => {

@@ -1,4 +1,4 @@
-import { groupParser, overlappingResolver } from '../integrations/meetup/utilities';
+import { groupParser, overlappingResolver, eventParser } from '../integrations/meetup/utilities';
 
 export const state = () => ({
   meetups: [],
@@ -11,13 +11,17 @@ export const getters = {
     return [...state.meetupEvents];
   },
   getMeetups: (state, getters) => {
-    const events = getters.getEvents;
     return [...state.meetups.map(m => {
-      const event = events.filter(e => e.group_id === m.id)[0];
-      const latlng = event && event.venue ? { lat: event.venue.lat, lng: event.venue.lon } : {...m.latlng};
+      const events = getters.getEvents
+        .filter(e => e.group_id === m.id)
+        .sort((a, b) => a.time - b.time);
+      const event = events[0];
+      const latlng = event && event.latlng ? { ...event.latlng } : {...m.latlng};
       return {
         ...m,
         latlng,
+        has_event_with_coords: !!(event && event.latlng),
+        event,
         options: {}
       };
     })];
@@ -26,7 +30,8 @@ export const getters = {
     return state.currentMeetup;
   },
   getMeetupDetails: (state, getters) => id => {
-    return {...getters.getMeetups.find(p => p.id === id)};
+    const events = getters.getEvents.filter(e => e.group_id === id);
+    return {...getters.getMeetups.find(p => p.id === id), events};
   },
   getCurrentMeetupDetails: (state, getters) => {
     const current = getters.getCurrentMeetup;
@@ -44,7 +49,12 @@ export const actions = {
   setCurrent ({commit}, id) {
     commit('SET_CURRENT_MEETUP', id);
   },
-  async loadEvents ({commit}, groupNames) {}
+  async loadEvents ({commit}, groupNames) {
+    const { data } = await this.$axios.get('/api/meetup/events');
+    const events = data.map(eventParser);
+    const combed = overlappingResolver(events);
+    commit('ADD_MEETUP_EVENTS', combed);
+  }
 };
 
 export const mutations = {
