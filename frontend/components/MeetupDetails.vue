@@ -172,7 +172,8 @@ export default {
   },
   data () {
     return {
-      showDetails: false
+      showDetails: false,
+      showEventDetails: false
     };
   },
   computed: {
@@ -191,6 +192,9 @@ export default {
   methods: {
     toggleDetails () {
       this.showDetails = !this.showDetails;
+    },
+    toggleEventDetails () {
+      this.showEventDetails = !this.showEventDetails;
     }
   }
 
