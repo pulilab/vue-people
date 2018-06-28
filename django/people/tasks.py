@@ -38,18 +38,19 @@ def sync_meetup_groups_and_events():
 
         # Sync events
         for group in MeetupGroup.objects.all():
-            events_url = settings.MEETUP_EVENTS_API_URL.replace('<urlname>', group.data['urlname'])
-            r = requests.get('{}?status=upcoming&no_earlier_than={}&no_later_than={}&key={}'.format(
-                events_url, today.isoformat(), next_month_same_day.isoformat(), settings.MEETUP_API_KEY))
-            r.raise_for_status()
-            events = r.json()
-            for event in events:
-                local_date = calculate_utc_local_date(event['time'], event['utc_offset'])
-                me, created = MeetupEvent.objects.get_or_create(id=event['id'],
-                                                                defaults=dict(group=group, date=local_date, data=event))
-                if not created:
-                    if me.data != event:
-                        me.data = event
-                        me.date = local_date
-                        me.save()
-            time.sleep(1)
+            if "next_event" in group.data:
+                events_url = settings.MEETUP_EVENTS_API_URL.replace('<urlname>', group.data['urlname'])
+                r = requests.get('{}?status=upcoming&no_earlier_than={}&no_later_than={}&key={}'.format(
+                    events_url, today.isoformat(), next_month_same_day.isoformat(), settings.MEETUP_API_KEY))
+                r.raise_for_status()
+                events = r.json()
+                for event in events:
+                    local_date = calculate_utc_local_date(event['time'], event['utc_offset'])
+                    me, created = MeetupEvent.objects.get_or_create(id=event['id'],
+                                                                    defaults=dict(group=group, date=local_date, data=event))
+                    if not created:
+                        if me.data != event:
+                            me.data = event
+                            me.date = local_date
+                            me.save()
+                time.sleep(1)
