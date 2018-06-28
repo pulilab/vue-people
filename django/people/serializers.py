@@ -4,7 +4,7 @@ from rest_framework import serializers
 from taggit.models import Tag
 from taggit_serializer.serializers import (TagListSerializerField,
                                            TaggitSerializer)
-from .models import Type, Person
+from .models import Type, Person, MeetupGroup, MeetupEvent
 
 
 class CustomEmailField(serializers.Field):
@@ -55,8 +55,23 @@ class PersonSerializer(TaggitSerializer, serializers.ModelSerializer):
         instance.user.save()
         return instance
 
+
 class TagSerialiser(serializers.ModelSerializer):
 
     class Meta:
         model = Tag
+        fields = "__all__"
+
+
+class MeetupGroupSerialiser(serializers.ModelSerializer):
+
+    class Meta:
+        model = MeetupGroup
+        fields = "__all__"
+
+
+class MeetupEventSerialiser(serializers.ModelSerializer):
+
+    class Meta:
+        model = MeetupEvent
         fields = "__all__"
