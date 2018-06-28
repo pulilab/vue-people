@@ -317,7 +317,7 @@ export default {
     centerToSelected (latlng) {
       if (this.$refs.mainMap && !this.centeredToSelected && this.firstPageVisited === 'index-user-id') {
         this.$nextTick(() => {
-          this.$refs.mainMap.mapObject.flyTo(latlng);
+          this.$refs.mainMap.mapObject.flyTo(latlng, 13);
           this.centeredToSelected = true;
         });
       }
