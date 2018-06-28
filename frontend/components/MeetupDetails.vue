@@ -20,6 +20,9 @@
         </v-flex>
         <v-flex>
           <v-btn
+            v-if="event"
+            :href="event.link"
+            target="blank"
             light
             class="btn-attend ma-0"
             color="primary"
@@ -97,13 +100,13 @@
         </div>
 
         <div
-          v-if="meetup.next_event"
+          v-if="event"
           class="item upcoming-event px-4 py-3"
         >
           <div class="caption">
-            Upcoming events
+            Next event
           </div>
-          <h3>{{ meetup.next_event.name }}</h3>
+          <h3>{{ event.name }}</h3>
           <v-layout
             column
             class="content"
@@ -114,16 +117,16 @@
               </v-flex>
               <v-flex>
                 <strong>{{ eventDate }}</strong>
-                6:30PM - 9:00PM
+                {{ eventTimeSpan }}
               </v-flex>
             </v-layout>
             <v-layout align-center>
               <v-flex>
                 <v-icon small>location_on</v-icon>
               </v-flex>
-              <v-flex>
+              <v-flex v-if="event.venue">
                 <strong>Name of the place</strong>
-                Paulay Ede u. 12., Ground floor, Budapest
+                {{ event.venue.address_1 }}, {{ event.venue.zip }} {{ event.venue.city }}
               </v-flex>
             </v-layout>
             <v-layout align-center>
@@ -131,8 +134,12 @@
                 <v-icon small>people</v-icon>
               </v-flex>
               <v-flex>
-                <strong>{{ meetup.next_event.yes_rsvp_count }} attendees</strong>
-                <span>15 spots left</span>
+                <strong>{{ event.yes_rsvp_count }} attendees</strong>
+                <span>{{ eventAvailableSpots }}
+                  <span v-show="eventAvailableSpots > 1" > spots </span>
+                  <span v-show="eventAvailableSpots === 1" > spot </span>
+                  left
+                </span>
               </v-flex>
             </v-layout>
           </v-layout>
@@ -150,7 +157,7 @@
           </span>
           <div
             :class="['event-details', 'content', {hidden: !showEventDetails}]"
-            v-html="meetup.description"
+            v-html="event.description"
           />
         </div>
       </div>
@@ -176,12 +183,29 @@ export default {
       currentMeetup: 'events/getCurrentMeetup',
       meetup: 'events/getCurrentMeetupDetails'
     }),
+    event () {
+      return this.meetup && this.meetup.event;
+    },
     eventDate () {
-      if (this.meetup && this.meetup.next_event && this.meetup.next_event.time) {
-        const utcTime = this.meetup.next_event.time - this.meetup.next_event.utc_offset;
-        return format(utcTime, 'dddd, MMMM DD, YYYY');
+      if (this.event && this.event.date) {
+        return format(this.event.date, 'dddd, MMMM DD, YYYY');
       }
       return 'No upcoming event';
+    },
+    eventTimeSpan () {
+      if (this.event) {
+        const timeFormat = 'HH:mm';
+        const utcStartTime = new Date(this.event.date).getTime() - this.event.utc_offset;
+        const startDate = format(utcStartTime, timeFormat);
+        const endDate = format(utcStartTime + this.event.duration, timeFormat);
+        return `${startDate} - ${endDate}`;
+      }
+    },
+    eventAvailableSpots () {
+      if (this.event && this.event.rsvp_limit) {
+        return this.event.rsvp_limit - this.event.yes_rsvp_count;
+      }
+      return '-';
     }
   },
   methods: {
