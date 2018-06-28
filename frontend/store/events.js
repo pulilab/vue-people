@@ -1,4 +1,3 @@
-import { findGroups } from '../integrations/meetup/signedUrls';
 import { groupParser, overlappingResolver } from '../integrations/meetup/utilities';
 
 export const state = () => ({
@@ -37,7 +36,7 @@ export const getters = {
 
 export const actions = {
   async loadMeetups ({commit, dispatch}) {
-    const { data } = await this.$axios.get(findGroups);
+    const { data } = await this.$axios.get('/api/meetup/groups');
     const meetups = data.map(groupParser);
     const combed = overlappingResolver(meetups);
     commit('SET_MEETUP_LIST', combed);
