@@ -135,6 +135,27 @@
                 <span>15 spots left</span>
               </v-flex>
             </v-layout>
+            <v-layout align-center >
+              <v-flex>
+                <span
+                  :class="['btn-details', { hide: showEventDetails }]"
+                  @click="toggleEventDetails"
+                >
+                  <span v-show="!showEventDetails">
+                    Show details
+                  </span>
+                  <span v-show="showEventDetails">
+                    Hide details
+                  </span>
+                  <v-icon small>arrow_drop_down</v-icon>
+                </span>
+                // TODO proper binding once API is ready
+                <div
+                  :class="['event-details', 'content', {hidden: !showEventDetails}]"
+                  v-html="meetup.description"
+                />
+              </v-flex>
+            </v-layout>
           </v-layout>
         </div>
       </div>
