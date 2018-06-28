@@ -29,7 +29,7 @@ ALLOWED_HOSTS = ['django:8000', 'django', 'localhost', 'www.vuepeople.org', 'vue
 if DEBUG:
     ALLOWED_HOSTS.append('0.0.0.0')
 
-# Application definition
+TIME_ZONE = os.environ.get('TIME_ZONE', 'UTC')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -174,8 +174,6 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
