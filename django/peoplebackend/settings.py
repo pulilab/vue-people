@@ -218,3 +218,12 @@ SOCIALACCOUNT_PROVIDERS = {
 
 LOGIN_REDIRECT_URL = '/user?token={}'
 LOGIN_REDIRECT_URL_DEV = 'http://localhost:3000/user?token={}'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': [
+            'redis:6379',
+        ],
+    }
+}
