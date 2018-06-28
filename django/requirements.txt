@@ -13,6 +13,7 @@ django-simplefeedback==0.8
 celery
 redis
 raven
+python-dateutil
 
 pytest
 pytest-django
