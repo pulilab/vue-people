@@ -2,8 +2,7 @@ import time
 import requests
 import pytz
 
-from dateutil import relativedelta
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.conf import settings
 from celery.schedules import crontab
 from celery.task import periodic_task
@@ -34,13 +33,13 @@ def sync_meetup_groups_and_events():
                     mg.save()
 
         today = datetime.today()
-        next_month_same_day = today + relativedelta.relativedelta(months=1)
+        next_month_same_day = today + timedelta(days=31)
 
         # Sync events
         for group in MeetupGroup.objects.all():
             if "next_event" in group.data:
                 events_url = settings.MEETUP_EVENTS_API_URL.replace('<urlname>', group.data['urlname'])
-                r = requests.get('{}?status=upcoming&no_earlier_than={}&no_later_than={}&key={}'.format(
+                r = requests.get('{}?status=upcoming&no_later_than={}&key={}'.format(
                     events_url, today.isoformat(), next_month_same_day.isoformat(), settings.MEETUP_API_KEY))
                 r.raise_for_status()
                 events = r.json()
