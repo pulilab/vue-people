@@ -35,12 +35,16 @@
         v-if="meetup"
         class="meetup-info">
         <div class="item cover-n-logo">
-          <!-- TODO -->
-          <!-- Need a layout for groups without key_photo and/or group_photo -->
           <div class="meetup-cover">
             <img
+              v-show="meetup.key_photo"
               :src="meetup.key_photo"
               alt="Meetup cover image"
+            >
+            <img
+              v-show="!meetup.key_photo"
+              src=""
+              alt="Meetup cover image placeholder"
             >
           </div>
           <div
