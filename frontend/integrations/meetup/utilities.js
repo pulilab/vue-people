@@ -1,8 +1,10 @@
 import { circleOfCoords } from '../../utilities/coords';
 
-export const groupParser = (m) => (
-  {
-    id: m.id,
+export const groupParser = (m) => {
+  const id = m.id;
+  m = m.data;
+  return {
+    id,
     name: m.name,
     latlng: {
       lat: m.lat,
@@ -10,26 +12,46 @@ export const groupParser = (m) => (
     },
     group_photo: m.group_photo ? m.group_photo.photo_link : undefined,
     key_photo: m.key_photo ? m.key_photo.photo_link : undefined,
-    next_event: m.next_event,
     members: m.members,
     location: m.localized_location,
     link: m.link,
     urlname: m.urlname,
     description: m.description
-  }
-);
+  };
+};
 
 export const eventParser = e => {
+  const id = e.id;
+  const date = e.date;
+  e = e.data;
   return {
+    id,
+    date,
+    link: e.link,
     name: e.name,
-    venue: e.venue,
+    latlng: e.venue ? { lat: e.venue.lat, lng: e.venue.lon } : undefined,
+    venue: e.venue ? {
+      address_1: e.venue.address_1,
+      zip: e.venue.zip,
+      city: e.venue.city
+    } : undefined,
+    time: e.time,
+    duration: e.duration,
+    utc_offset: e.utc_offset,
+    local_time: e.local_time,
+    local_date: e.local_date,
     group_id: e.group.id,
-    rsvp_limit: e.rsvp_limit
+    rsvp_limit: e.rsvp_limit,
+    yes_rsvp_count: e.yes_rsvp_count,
+    description: e.description
   };
 };
 
 export const overlappingResolver = markers => {
   const dict = markers.reduce((p, c, index) => {
+    if (!c.latlng) {
+      return p;
+    }
     const key = JSON.stringify(c.latlng);
     if (p[key]) {
       p[key].push(index);
