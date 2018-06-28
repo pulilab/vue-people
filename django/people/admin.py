@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Person, Type
+from .models import Person, Type, MeetupGroup, MeetupEvent
 
 
 class HasLocationFilter(admin.SimpleListFilter):
@@ -23,6 +23,8 @@ class HasLocationFilter(admin.SimpleListFilter):
 
 
 admin.site.register(Type)
+admin.site.register(MeetupGroup)
+admin.site.register(MeetupEvent)
 
 @admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):
