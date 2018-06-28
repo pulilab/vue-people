@@ -78,7 +78,7 @@
         <div class="email-privacy-hint">
           <span v-show="profile.public_email">
             <v-icon small>info</v-icon>
-            Your email will be visible in the map and in your user detail.</span>
+            Your email will be visible in your user pin on the public map.</span>
           <span v-show="!profile.public_email">
             <v-icon small>info</v-icon>
             Your email will only be stored in the database and only displayed to you.</span>
@@ -115,7 +115,7 @@
                 >
                   help
                 </v-icon>
-                <span> Receive emails about new features and stuff </span>
+                <span> You will be notified when new feature updates have been released on VuePeople.org. </span>
               </v-tooltip>
             </v-flex>
 
@@ -140,7 +140,7 @@
                 >
                   help
                 </v-icon>
-                <span> Receive emails about upcoming events near you </span>
+                <span> You will be notified about events, meetups and conferences within your pinned location. </span>
               </v-tooltip>
             </v-flex>
 
@@ -165,7 +165,7 @@
                 >
                   help
                 </v-icon>
-                <span> Receive emails about job opportunities  </span>
+                <span> Your availability will be visible in your user pin on the public map. </span>
               </v-tooltip>
             </v-flex>
           </v-layout>

@@ -17,6 +17,10 @@ describe('getters', () => {
     expect(getters.isAddMode(s)).toEqual(s.addMode);
   });
 
+  test('getMapReady', () => {
+    expect(getters.getMapReady(s)).toEqual(s.mapReady);
+  });
+
   test('getPins', () => {
     const rootGetters = {
       'people/getList': [
@@ -96,6 +100,10 @@ describe('getters', () => {
     expect(getters.getShownPins(null, {}, null, {getUserTypes}))
       .toEqual({1: 0, 2: 0});
   });
+
+  test('getShowMeetups', () => {
+    expect(getters.getShowMeetups(s)).toEqual(s.showMeetups);
+  });
 });
 
 describe('actions', () => {
@@ -109,6 +117,16 @@ describe('actions', () => {
     actions.setAddMode(vuex, 1);
     expect(vuex.commit).toHaveBeenLastCalledWith('SET_ADD_MODE', 1);
   });
+
+  test('setMapReady', () => {
+    actions.setMapReady(vuex);
+    expect(vuex.commit).toHaveBeenLastCalledWith('SET_MAP_READY', true);
+  });
+
+  test('setShowMeetups', () => {
+    actions.setShowMeetups(vuex, 1);
+    expect(vuex.commit).toHaveBeenLastCalledWith('SET_SHOW_MEETUPS', 1);
+  });
 });
 
 describe('mutations', () => {
@@ -116,5 +134,15 @@ describe('mutations', () => {
     const s = {};
     mutations.SET_ADD_MODE(s, 1);
     expect(s.addMode).toEqual(1);
+  });
+  test('SET_MAP_READY', () => {
+    const s = {};
+    mutations.SET_MAP_READY(s, 1);
+    expect(s.mapReady).toEqual(1);
+  });
+  test('SET_SHOW_MEETUPS', () => {
+    const s = {};
+    mutations.SET_SHOW_MEETUPS(s, 1);
+    expect(s.showMeetups).toEqual(1);
   });
 });

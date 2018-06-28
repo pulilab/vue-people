@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="50px" viewBox="0 0 40 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>pin-meetup-group copy 4</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-30.0%" y="-180.0%" width="160.0%" height="460.0%" filterUnits="objectBoundingBox" id="filter-1">
+            <feGaussianBlur stdDeviation="3" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <filter x="-10.0%" y="-150.0%" width="120.0%" height="400.0%" filterUnits="objectBoundingBox" id="filter-2">
+            <feGaussianBlur stdDeviation="1" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <circle id="path-3" cx="18" cy="18" r="18"></circle>
+        <circle id="path-5" cx="18" cy="18" r="18"></circle>
+    </defs>
+    <g id="VuePeople-updates-1.1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Map---component-(New-pins---inventory)" transform="translate(-64.000000, -283.000000)">
+            <g id="Group-2" transform="translate(66.000000, 277.000000)">
+                <g id="pin-meetup-group-copy-4" transform="translate(0.000000, 7.000000)">
+                    <g id="Group-8" transform="translate(3.000000, 38.000000)" fill="#000000">
+                        <ellipse id="Oval-2" fill-opacity="0.2" filter="url(#filter-1)" cx="15" cy="2.5" rx="15" ry="2.5"></ellipse>
+                        <ellipse id="Oval-2" fill-opacity="0.1" filter="url(#filter-2)" cx="15" cy="3" rx="15" ry="1"></ellipse>
+                    </g>
+                    <circle id="Oval-4" stroke="#9E9E9E" fill="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" cx="18" cy="18" r="18.5"></circle>
+                    <g id="Group-5">
+                        <mask id="mask-4" fill="white">
+                            <use xlink:href="#path-3"></use>
+                        </mask>
+                        <g id="Oval-4"></g>
+                        <g id="Group-3" mask="url(#mask-4)">
+                            <g transform="translate(5.000000, 5.000000)">
+                                <g id="Group" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(0.000000, 8.000000)">
+                                    <ellipse id="Oval" fill="#4A90E2" fill-rule="nonzero" cx="4.96688781" cy="3.25219243" rx="3.1171325" ry="3.19237915"></ellipse>
+                                    <polygon id="Shape" fill="#4A90E2" fill-rule="nonzero" points="4.96893929 12.5110993 0 7.40778895 0 22.2572667 9.93787857 22.2572667 9.93787857 7.40778895"></polygon>
+                                    <polygon id="path18" fill="#3A71B0" fill-rule="nonzero" transform="translate(4.968939, 11.821597) rotate(-180.000000) translate(-4.968939, -11.821597) " points="6.88147808 16.2354041 4.96893929 12.8376247 3.05640049 16.2354041 0 16.2354041 4.96893929 7.40778895 9.93787857 16.2354041"></polygon>
+                                </g>
+                                <g id="Group" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(16.000000, 8.000000)">
+                                    <ellipse id="Oval" fill="#FB8D20" fill-rule="nonzero" cx="4.96688781" cy="3.25219243" rx="3.1171325" ry="3.19237915"></ellipse>
+                                    <polygon id="Shape" fill="#FB8D20" fill-rule="nonzero" points="4.96893929 12.5110993 0 7.40778895 0 22.2572667 9.93787857 22.2572667 9.93787857 7.40778895"></polygon>
+                                    <polygon id="path18" fill="#C7701A" fill-rule="nonzero" transform="translate(4.968939, 11.821597) rotate(-180.000000) translate(-4.968939, -11.821597) " points="6.88147808 16.2354041 4.96893929 12.8376247 3.05640049 16.2354041 0 16.2354041 4.96893929 7.40778895 9.93787857 16.2354041"></polygon>
+                                </g>
+                                <polygon id="Shape" fill="#FFFFFF" fill-rule="nonzero" points="4 15 4 32.2075817 22 32.2075817 22 15"></polygon>
+                                <g id="Group" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(5.000000, 0.000000)">
+                                    <circle id="Oval" fill="#42B883" fill-rule="nonzero" cx="7.92940537" cy="5.09360158" r="5"></circle>
+                                    <polygon id="Shape" fill="#42B883" fill-rule="nonzero" points="8 19.5785731 0 11.5924216 0 32.2075817 16 32.2075817 16 11.5924216"></polygon>
+                                    <polygon id="path18" fill="#435466" fill-rule="nonzero" transform="translate(8.000000, 18.499573) rotate(-180.000000) translate(-8.000000, -18.499573) " points="11.0791904 25.4067239 8 20.0895514 4.92080956 25.4067239 0 25.4067239 8 11.5924216 16 25.4067239"></polygon>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                    <mask id="mask-6" fill="white">
+                        <use xlink:href="#path-5"></use>
+                    </mask>
+                    <circle stroke="#FFFFFF" stroke-width="2" cx="18" cy="18" r="17"></circle>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

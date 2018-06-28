@@ -83,13 +83,12 @@ export default {
   .user-type {
     position: relative;
     display: inline-block;
-    padding-left: 16px;
     cursor: pointer;
     height: @map-card-small-height;
     line-height: @map-card-small-height;
 
     &.dev .mdi-vuejs {
-      color: @color-developer !important;
+      color: @color-developer;
     }
 
     &.enthusiast .mdi-vuejs {
@@ -104,7 +103,7 @@ export default {
       color: @color-library;
     }
 
-    i.mdi-vuejs {
+    .mdi-vuejs {
       position: relative;
       top: -1px;
     }
@@ -117,13 +116,15 @@ export default {
 
       .icon--selection-control {
         color: @font-dark-disabled;
+
+        &.icon--checkbox {
+          color: @font-dark-secondary;
+        }
       }
     }
 
     // Responsive
     .viewport-sm & {
-      padding-left: 0;
-
       .usertype-checkbox {
         display: none;
       }

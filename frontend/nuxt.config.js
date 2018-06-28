@@ -31,12 +31,13 @@ const config = {
     { src: '~plugins/vee-validate.js', ssr: true },
     { src: '~plugins/vue-leaflet.js', ssr: false },
     { src: '~plugins/store-tokens.js', ssr: false },
-    { src: '~plugins/vue-mq.js', ssr: false },
     { src: '~plugins/vue-django-feedback.js', ssr: false }
   ],
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/proxy'
+    '@nuxtjs/proxy',
+    'nuxt-mq',
+    'nuxt-device-detect'
   ],
   proxy: {},
   axios: {
@@ -44,6 +45,15 @@ const config = {
     browserBaseURL: '/',
     credentials: true,
     retry: false
+  },
+  mq: {
+    breakpoints: {
+      xs: 320,
+      sm: 480,
+      md: 768,
+      lg: 1024,
+      xl: Infinity
+    }
   },
   router: {
     middleware: ['auth', 'entrypoint-spy']

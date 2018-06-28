@@ -1,11 +1,16 @@
 export const state = () => ({
-  addMode: false
+  addMode: false,
+  mapReady: false,
+  showMeetups: true
 });
 
 export const getters = {
   isAddMode: state => {
     return state.addMode;
   },
+
+  getMapReady: state => state.mapReady,
+
   getPins: (state, getters, rootState, rootGetters) => {
     return rootGetters['people/getList'].filter(p => p.latlng);
   },
@@ -39,17 +44,30 @@ export const getters = {
       }, countInit);
     }
     return countInit;
-  }
+  },
+  getShowMeetups: state => state.showMeetups
 };
 
 export const actions = {
   setAddMode ({commit}, value) {
     commit('SET_ADD_MODE', value);
+  },
+  setMapReady ({commit}) {
+    commit('SET_MAP_READY', true);
+  },
+  setShowMeetups ({commit}, value) {
+    commit('SET_SHOW_MEETUPS', value);
   }
 };
 
 export const mutations = {
   SET_ADD_MODE: (state, value) => {
     state.addMode = value;
+  },
+  SET_MAP_READY: (state, value) => {
+    state.mapReady = value;
+  },
+  SET_SHOW_MEETUPS: (state, value) => {
+    state.showMeetups = value;
   }
 };
