@@ -56,8 +56,6 @@
         {{ tag }}
       </v-chip>
     </div>
-    <!-- TODO -->
-    <!-- Show only if one tag's selected at least -->
     <div
       v-show="showTagsBadge"
       class="badge">
@@ -93,7 +91,7 @@ export default {
       }
     },
     showTagsBadge () {
-      return this.$mq === 'sm' || this.$mq === 'xs';
+      return (this.$mq === 'sm' || this.$mq === 'xs') && this.getSelectedTags && this.getSelectedTags.length > 0;
     },
     showTagsChips () {
       return !this.dropdownOpen && this.selectedTags.length > 0 && !this.showTagsBadge;
