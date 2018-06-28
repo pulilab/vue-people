@@ -43,7 +43,10 @@
               alt="Meetup cover image"
             >
           </div>
-          <div class="meetup-logo elevation-4">
+          <div
+            v-show="meetup.group_photo"
+            class="meetup-logo elevation-4"
+          >
             <img
               :src="meetup.group_photo"
               alt="Meetup logo image"
@@ -71,13 +74,16 @@
             :href="meetup.link"
             target="_blank">Visit group on meetup.com
           </a>
-          <!-- TODO -->
-          <!-- When event-details shown button text should say "Hide details" -->
           <span
             :class="['btn-details', { hide: showDetails }]"
             @click="toggleDetails"
           >
-            Show details
+            <span v-show="!showDetails">
+              Show details
+            </span>
+            <span v-show="showDetails">
+              Hide details
+            </span>
             <v-icon small>arrow_drop_down</v-icon>
           </span>
           <div
