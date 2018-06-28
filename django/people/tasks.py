@@ -13,10 +13,6 @@ from .models import MeetupGroup, MeetupEvent
 logger = get_task_logger(__name__)
 
 
-def calculate_utc_local_date(time, utc_offset):
-    return datetime.fromtimestamp(((int(time) + int(utc_offset)) / 1000), tz=pytz.utc)
-
-
 def sync_groups():
     r = requests.get('{}?radius=global&topic_id={}&key={}'.format(settings.MEETUP_GROUPS_API_URL,
                                                                   ','.join(settings.MEETUP_TOPIC_IDS),
@@ -45,14 +41,13 @@ def sync_events():
             events = r.json()
 
             for event in events:
-                local_date = calculate_utc_local_date(event['time'], event['utc_offset'])
+                utc_date = datetime.fromtimestamp(int(event['time']) / 1000, tz=pytz.UTC)
                 me, created = MeetupEvent.objects.get_or_create(id=event['id'],
-                                                                defaults=dict(group=group, date=local_date,
-                                                                              data=event))
+                                                                defaults=dict(group=group, date=utc_date, data=event))
                 if not created:
                     if me.data != event:
                         me.data = event
-                        me.date = local_date
+                        me.date = utc_date
                         me.save()
             time.sleep(1)  # anti-throttle
 
