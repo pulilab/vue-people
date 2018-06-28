@@ -225,6 +225,7 @@ export default {
           }
 
           &.btn-attend {
+            padding: 0 16px 0 12px;
             color: @color-white;
           }
         }
