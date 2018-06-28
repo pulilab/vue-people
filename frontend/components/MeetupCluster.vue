@@ -6,7 +6,6 @@
       v-for="pin in meetupsGroups"
       :key="pin.id"
       :pin="pin"
-      :force-hovered="pin.id === 28760056"
       :icon="iconChooser(pin)"
       :show-floating-ui="showFloatingUi"
       additional-tooltip-class="meetup-tooltip"
@@ -113,17 +112,17 @@ export default {
       this.$router.push(`/meetup/${id}/`);
     },
     iconChooser (pin) {
-      if (pin.next_event) {
+      if (pin.has_event_with_coords) {
         return this.currentMeetup !== pin.id ? this.meetupEventIcon : this.meetupEventIconSelected;
       }
       return this.currentMeetup !== pin.id ? this.meetupIcon : this.meetupIconSelected;
     },
     formatTooltipDate (pin) {
-      if (pin && pin.next_event && pin.next_event.time) {
-        const utcTime = pin.next_event.time - pin.next_event.utc_offset;
-        return format(utcTime, 'DD MMMM, YYYY');
+      if (pin && pin.event && pin.event.date) {
+        const date = format(pin.event.date, 'DD MMMM, YYYY');
+        return `${date} - ${pin.event.local_time}`;
       }
-      return 'No upcoming event';
+      return pin.has_event_with_coords ? 'Time not specificed' : 'No upcoming event';
     }
   }
 };
