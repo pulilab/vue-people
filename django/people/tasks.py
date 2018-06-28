@@ -12,8 +12,10 @@ from .models import MeetupGroup, MeetupEvent
 
 logger = get_task_logger(__name__)
 
+
 def calculate_utc_local_date(time, utc_offset):
-    return datetime.fromtimestamp(((int(time)+int(utc_offset))/1000), tz=pytz.utc)
+    return datetime.fromtimestamp(((int(time) + int(utc_offset)) / 1000), tz=pytz.utc)
+
 
 @periodic_task(run_every=crontab(hour=2, minute=15))
 def sync_meetup_groups_and_events():
@@ -43,10 +45,12 @@ def sync_meetup_groups_and_events():
                     events_url, today.isoformat(), next_month_same_day.isoformat(), settings.MEETUP_API_KEY))
                 r.raise_for_status()
                 events = r.json()
+
                 for event in events:
                     local_date = calculate_utc_local_date(event['time'], event['utc_offset'])
                     me, created = MeetupEvent.objects.get_or_create(id=event['id'],
-                                                                    defaults=dict(group=group, date=local_date, data=event))
+                                                                    defaults=dict(group=group, date=local_date,
+                                                                                  data=event))
                     if not created:
                         if me.data != event:
                             me.data = event
