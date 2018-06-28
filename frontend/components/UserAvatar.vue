@@ -109,7 +109,6 @@ export default {
       }
 
       .email {
-        margin-top: -2px;
         max-width: calc(100vw - 440px);
         .text-truncate();
         color: @font-dark-secondary;
