@@ -358,7 +358,7 @@ export default {
     }
 
     .custom-cluster-icon {
-      background-image: url('~/assets/pins/pin-multi.svg');
+      background-image: url('~/assets/pins/pin-multi2.svg');
 
       span {
         display: inline-block;
