@@ -140,10 +140,12 @@ export default {
       position: relative;
       top: -6px;
       display: inline-block;
-      width: 20px;
+      min-width: 20px;
       height: 20px;
       margin-top: 0;
       margin-left: 26px;
+      padding: 0 4px;
+      color: @font-light-primary;
       font-size: @font-size-tiny - 1;
       line-height: 20px;
       font-weight: 600;
@@ -156,15 +158,16 @@ export default {
   .custom-meetup-icon {
     background-image: url('~/assets/pins/pin-meetup-0-small.svg');
 
+    &.meetup-selected {
+        background-image: url('~/assets/pins/pin-meetup-0-small-selected.svg');
+    }
+
     &.meetup-event {
       background-image: url('~/assets/pins/pin-meetup-1-small.svg');
 
       &.meetup-selected {
         background-image: url('~/assets/pins/pin-meetup-1-small-selected.svg');
       }
-    }
-    &.meetup-selected {
-        background-image: url('~/assets/pins/pin-meetup-0-small-selected.svg');
     }
   }
 

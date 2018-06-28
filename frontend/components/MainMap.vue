@@ -349,6 +349,7 @@ export default {
         .avatar-wrapper {
           opacity: 0
         }
+
         .leaflet-pane {
           .avatar-wrapper {
             opacity: 1
@@ -361,12 +362,21 @@ export default {
       background-image: url('~/assets/pins/pin-multi2.svg');
 
       span {
+        position: relative;
+        top: -6px;
         display: inline-block;
-        width: 36px;
-        margin-top: 6px;
-        font-size: @font-size-tiny;
+        min-width: 20px;
+        height: 20px;
+        margin-top: 0;
+        margin-left: 26px;
+        padding: 0 4px;
+        color: @font-light-primary;
+        font-size: @font-size-tiny - 1;
+        line-height: 20px;
         font-weight: 600;
         text-align: center;
+        background-color: @color-grey-dark;
+        border-radius: 20px;
       }
     }
 
