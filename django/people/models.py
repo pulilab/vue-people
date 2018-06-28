@@ -61,7 +61,7 @@ class MeetupGroup(models.Model):
 class MeetupEvent(models.Model):
     id = models.CharField(primary_key=True, editable=False, max_length=512)
     group = models.ForeignKey(MeetupGroup, on_delete=models.CASCADE)
-    date = models.DateTimeField(verbose_name="Local Date")
+    date = models.DateTimeField(verbose_name="UTC Date")
     data = JSONField(default=dict())
 
     def __str__(self):

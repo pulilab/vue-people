@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             name='MeetupEvent',
             fields=[
                 ('id', models.CharField(editable=False, max_length=512, primary_key=True, serialize=False)),
-                ('date', models.DateTimeField(verbose_name='Local Date')),
+                ('date', models.DateTimeField(verbose_name='UTC Date')),
                 ('data', django.contrib.postgres.fields.jsonb.JSONField(default={})),
             ],
         ),
