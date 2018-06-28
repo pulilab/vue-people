@@ -43,7 +43,7 @@
             >
             <img
               v-show="!meetup.key_photo"
-              src=""
+              src="~/assets/images/meetup-nocover.png"
               alt="Meetup cover image placeholder"
             >
           </div>
@@ -58,7 +58,7 @@
           </div>
         </div>
         <div class="item group-info px-4 py-4">
-          <h5>{{ meetup.name }}</h5>
+          <h3>{{ meetup.name }}</h3>
           <v-layout
             row
             class="content"
@@ -149,7 +149,6 @@
                   </span>
                   <v-icon small>arrow_drop_down</v-icon>
                 </span>
-                // TODO proper binding once API is ready
                 <div
                   :class="['event-details', 'content', {hidden: !showEventDetails}]"
                   v-html="meetup.description"
@@ -248,6 +247,7 @@ export default {
       .meetup-info {}
 
       .item {
+        margin-top: 12px;
         border-bottom: 1px solid @font-light-dividers;
 
         .caption {
@@ -270,14 +270,61 @@ export default {
           }
         }
 
+        h3 {
+          margin: 0 0 12px;
+          font-size: @font-size-base;
+        }
+
+        .btn-details {
+          display: inline-block;
+          margin: 8px 0;
+          padding: 4px 4px 4px 8px;
+          background-color: darken(@color-brand-secondary, 5%);
+          font-size: @font-size-tiny - 2;
+          font-weight: 500;
+          color: @font-light-secondary;
+          text-transform: uppercase;
+          cursor: pointer;
+          border-radius: 4px;
+
+          .icon {
+            position: relative;
+            top: -1px;
+            color: @font-light-secondary;
+          }
+
+          &.hide {
+            .icon {
+              transform: rotate(180deg);
+            }
+          }
+        }
+
+        .event-details {
+          overflow: hidden;
+          display: block;
+          max-height: auto;
+          margin: 12px 0 0;
+          opacity: 1;
+          word-wrap: break-word;
+          transition: opacity 350ms @ease-in-out;
+
+          &.hidden {
+            margin: 0;
+            max-height: 0;
+            opacity: 0;
+          }
+        }
+
         &.cover-n-logo {
           position: relative;
+          margin-top: 0;
           border: 0;
 
           .meetup-cover {
             z-index: 20;
-            min-height: 120px;
-            background-color: rgba(0,0,0,.18);
+            min-height: 101px;
+            background-color: darken(@color-brand-secondary, 5%);
 
             img {
               display: block;
@@ -312,51 +359,10 @@ export default {
             padding-right: 20px;
           }
 
-          h5 {
-            margin: 8px 0;
-            font-size: @font-size-small;
-          }
-
           a {
             display: block;
-            margin: 8px 0 0;
+            margin: 8px 0;
             font-size: @font-size-tiny;
-          }
-
-          .btn-details {
-            display: block;
-            margin: 12px 0 0;
-            font-size: @font-size-tiny;
-            color: @font-light-secondary;
-            cursor: pointer;
-
-            .icon {
-              position: relative;
-              top: -1px;
-              color: @font-light-secondary;
-            }
-
-            &.hide {
-              .icon {
-                transform: rotate(180deg);
-              }
-            }
-          }
-
-          .event-details {
-            overflow: hidden;
-            display: block;
-            max-height: auto;
-            margin: 12px 0 0;
-            opacity: 1;
-            word-wrap: break-word;
-            transition: opacity 350ms @ease-in-out;
-
-            &.hidden {
-              margin: 0;
-              max-height: 0;
-              opacity: 0;
-            }
           }
         }
 
@@ -370,11 +376,6 @@ export default {
                 padding-right: 12px;
               }
             }
-          }
-
-          h3 {
-            margin: 0 0 12px;
-            font-size: @font-size-base;
           }
 
           strong {
