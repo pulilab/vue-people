@@ -52,8 +52,9 @@ export default {
     const peoplePromise = store.dispatch('people/loadPeople');
     const userTypePromise = store.dispatch('loadUserTypes');
     const tagsPromise = store.dispatch('loadTags');
-    const meetupPromise = store.dispatch('events/loadMeetups');
-    await Promise.all([peoplePromise, userTypePromise, tagsPromise, meetupPromise]);
+    const meetupGroupPromise = store.dispatch('events/loadMeetups');
+    const meetupEventsPromise = store.dispatch('events/loadEvents');
+    await Promise.all([peoplePromise, userTypePromise, tagsPromise, meetupGroupPromise, meetupEventsPromise]);
   }
 };
 </script>
