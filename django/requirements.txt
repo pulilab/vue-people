@@ -10,6 +10,7 @@ django-taggit
 django-taggit-serializer
 django-dotenv
 django-simplefeedback==0.8
+celery
 redis
 raven
 
