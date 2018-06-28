@@ -13,6 +13,7 @@
     <div
       v-show="!isMobile"
       class="legend-item event-type mx-2"
+      @click="toggleMeetupsVisibility()"
     >
       <span class="event-checkbox">
         <v-checkbox
@@ -20,8 +21,6 @@
           hide-details
         />
       </span>
-      <!-- TODO -->
-      <!-- Set checkbox checked if user clicks on filter name -->
       <span class="event-name">Meetups</span>
     </div>
   </div>
@@ -49,9 +48,7 @@ export default {
       get () {
         return this.getShowMeetups;
       },
-      set (value) {
-        this.setShowMeetups(value);
-      }
+      set () {}
     },
     isMobile () {
       return this.$mq === 'sm' || this.$mq === 'xs';
@@ -66,6 +63,9 @@ export default {
     },
     setActiveType (id) {
       this.activeType = id;
+    },
+    toggleMeetupsVisibility () {
+      this.setShowMeetups(!this.getShowMeetups);
     }
   }
 };
