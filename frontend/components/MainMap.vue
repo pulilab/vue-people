@@ -69,7 +69,11 @@
             :icon="iconGenerator(userProfile, true)"
             :show-floating-ui="showFloatingUI"
             @marker-click="openPersonDetails(userProfile)"
-          />
+          >
+            <user-avatar
+              :dark="true"
+            />
+          </map-marker>
 
           <meetup-cluster
             v-if="showMeetups"
