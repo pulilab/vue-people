@@ -1,6 +1,8 @@
+from django.forms import ModelForm
 from django.contrib import admin
-
+from prettyjson import PrettyJSONWidget
 from .models import Person, Type, MeetupGroup, MeetupEvent
+
 
 
 class HasLocationFilter(admin.SimpleListFilter):
@@ -22,9 +24,36 @@ class HasLocationFilter(admin.SimpleListFilter):
             return queryset
 
 
+class JsonForm(ModelForm):
+    class Meta:
+        model = None
+        fields = '__all__'
+        widgets = {
+            'data': PrettyJSONWidget(attrs={'initial': 'parsed', 'rows': 80, 'cols': 80}),
+        }
+
+
+class MeetupGroupJsonForm(JsonForm):
+    class Meta(JsonForm.Meta):
+        model = MeetupGroup
+
+
+class MeetupEventJsonForm(JsonForm):
+    class Meta(JsonForm.Meta):
+        model = MeetupEvent
+
+
+@admin.register(MeetupGroup)
+class MeetupGroupAdmin(admin.ModelAdmin):
+    form = MeetupGroupJsonForm
+
+
+@admin.register(MeetupEvent)
+class MeetupEventAdmin(admin.ModelAdmin):
+    form = MeetupEventJsonForm
+
+
 admin.site.register(Type)
-admin.site.register(MeetupGroup)
-admin.site.register(MeetupEvent)
 
 @admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):
