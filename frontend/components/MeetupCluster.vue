@@ -138,10 +138,10 @@ export default {
 
     span {
       position: relative;
-      top: -6px;
+      top: -7px;
       display: inline-block;
-      min-width: 20px;
-      height: 20px;
+      min-width: 22px;
+      height: 22px;
       margin-top: 0;
       margin-left: 26px;
       padding: 0 4px;
@@ -150,6 +150,7 @@ export default {
       line-height: 20px;
       font-weight: 600;
       text-align: center;
+      border: 1px solid @color-grey-light;
       background-color: @color-grey-dark;
       border-radius: 20px;
     }
