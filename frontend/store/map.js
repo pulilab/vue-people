@@ -1,7 +1,7 @@
 export const state = () => ({
   addMode: false,
   mapReady: false,
-  showMeetups: true
+  pinFilters: []
 });
 
 export const getters = {
@@ -14,13 +14,15 @@ export const getters = {
   getPins: (state, getters, rootState, rootGetters) => {
     return rootGetters['people/getList'].filter(p => p.latlng);
   },
+  getPinFilters: state => state.pinFilters,
+
   getFilteredPins: (state, getters, rootState, rootGetters) => {
     const tags = rootGetters['people/getSelectedTags'];
     const list = getters.getPins;
-    const selectedUserTypes = rootGetters['getSelectedUserTypes'];
+    const pinFilters = getters.getPinFilters;
     let filtered = [];
     filtered = tags.length > 0 ? list.filter(p => p.tags.some(t => tags.includes(t))) : list;
-    filtered = filtered.filter(p => selectedUserTypes.includes(p.type));
+    filtered = pinFilters.length > 0 ? filtered.filter(p => pinFilters.includes(p.type)) : filtered;
     return [...filtered.map(p => {
       return {
         ...p,
@@ -44,8 +46,7 @@ export const getters = {
       }, countInit);
     }
     return countInit;
-  },
-  getShowMeetups: state => state.showMeetups
+  }
 };
 
 export const actions = {
@@ -55,8 +56,13 @@ export const actions = {
   setMapReady ({commit}) {
     commit('SET_MAP_READY', true);
   },
-  setShowMeetups ({commit}, value) {
-    commit('SET_SHOW_MEETUPS', value);
+  togglePinFilters ({commit, getters}, value) {
+    const index = getters.getPinFilters.indexOf(value);
+    if (index === -1) {
+      commit('ADD_PIN_FILTER', value);
+    } else {
+      commit('RM_PIN_FILTER', index);
+    }
   }
 };
 
@@ -67,7 +73,10 @@ export const mutations = {
   SET_MAP_READY: (state, value) => {
     state.mapReady = value;
   },
-  SET_SHOW_MEETUPS: (state, value) => {
-    state.showMeetups = value;
+  ADD_PIN_FILTER: (state, value) => {
+    state.pinFilters.push(value);
+  },
+  RM_PIN_FILTER: (state, index) => {
+    state.pinFilters.splice(index, 1);
   }
 };

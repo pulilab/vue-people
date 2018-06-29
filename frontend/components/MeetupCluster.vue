@@ -1,5 +1,6 @@
 <template>
   <v-marker-cluster
+    v-if="showMeetups"
     :options="clusterOptions"
   >
     <map-marker
@@ -64,7 +65,8 @@ export default {
   computed: {
     ...mapGetters({
       meetupsGroups: 'events/getMeetups',
-      currentMeetup: 'events/getCurrentMeetup'
+      currentMeetup: 'events/getCurrentMeetup',
+      pinFilters: 'map/getPinFilters'
     }),
     clusterOptions () {
       return {
@@ -84,6 +86,9 @@ export default {
           });
         }
       };
+    },
+    showMeetups () {
+      return this.pinFilters.length === 0 || this.pinFilters.includes('meetups');
     }
   },
   mounted () {

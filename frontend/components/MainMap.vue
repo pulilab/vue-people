@@ -76,7 +76,6 @@
           </map-marker>
 
           <meetup-cluster
-            v-if="showMeetups"
             :show-floating-ui="showFloatingUI"
           />
 
@@ -182,8 +181,7 @@ export default {
       goToMap: 'getGoToMap',
       currentPerson: 'people/getCurrentPersonDetails',
       firstPageVisited: 'getFirstPageVisited',
-      mapReady: 'map/getMapReady',
-      showMeetups: 'map/getShowMeetups'
+      mapReady: 'map/getMapReady'
     }),
     userMaker () {
       return { latlng: this.userPosition };

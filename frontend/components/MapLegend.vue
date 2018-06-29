@@ -13,7 +13,7 @@
     <div
       v-show="!isMobile"
       class="legend-item event-type mx-2"
-      @click="toggleMeetupsVisibility()"
+      @click="toggleMeetupFilter"
     >
       <span class="event-checkbox">
         <v-checkbox
@@ -42,11 +42,11 @@ export default {
   computed: {
     ...mapGetters({
       userTypes: 'getUserTypes',
-      getShowMeetups: 'map/getShowMeetups'
+      pinFilters: 'map/getPinFilters'
     }),
     showMeetups: {
       get () {
-        return this.getShowMeetups;
+        return this.pinFilters.includes('meetups');
       },
       set () {}
     },
@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      setShowMeetups: 'map/setShowMeetups'
+      togglePinFilters: 'map/togglePinFilters'
     }),
     calculateShowText (id) {
       return !this.isMobile || this.activeType === id;
@@ -64,8 +64,8 @@ export default {
     setActiveType (id) {
       this.activeType = id;
     },
-    toggleMeetupsVisibility () {
-      this.setShowMeetups(!this.getShowMeetups);
+    toggleMeetupFilter () {
+      this.togglePinFilters('meetups');
     }
   }
 };

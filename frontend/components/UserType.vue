@@ -51,25 +51,25 @@ export default {
   computed: {
     ...mapGetters({
       getUserType: 'getUserType',
-      selectedUserTypes: 'getSelectedUserTypes'
+      pinFilters: 'map/getPinFilters'
     }),
     type () {
       return this.getUserType(this.id);
     },
     showThisUsertype: {
       get () {
-        return this.selectedUserTypes.includes(this.type.id);
+        return this.pinFilters.includes(this.type.id);
       },
       set () {}
     }
   },
   methods: {
     ...mapActions({
-      toggleSelectedUserTypes: 'toggleSelectedUserTypes'
+      togglePinFilters: 'map/togglePinFilters'
     }),
     toggleFromName () {
       if (this.$mq !== 'sm' && this.$mq !== 'xs') {
-        this.toggleSelectedUserTypes(this.type.id);
+        this.togglePinFilters(this.type.id);
       }
     }
   }
