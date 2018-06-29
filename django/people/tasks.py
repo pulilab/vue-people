@@ -36,7 +36,7 @@ def sync_events():
         if "next_event" in group.data:
             events_url = settings.MEETUP_EVENTS_API_URL.replace('<urlname>', group.data['urlname'])
             r = requests.get('{}?status=upcoming&no_later_than={}&key={}'.format(
-                events_url, today.isoformat(), next_month_same_day.isoformat(), settings.MEETUP_API_KEY))
+                events_url, next_month_same_day.isoformat(), settings.MEETUP_API_KEY))
             r.raise_for_status()
             events = r.json()
 
