@@ -33,26 +33,30 @@ describe('getters', () => {
     expect(result.length).toBe(2);
   });
 
+  test('getPinFilters', () => {
+    expect(getters.getPinFilters(s)).toEqual(s.pinFilters);
+  });
+
   test('getFilteredPins', () => {
     const g = {
       getFocusOn: 1,
       getPins: [
         {id: 1, type: 1, latlng: {}},
         {id: 2, type: 2, latlng: {}}
-      ]
+      ],
+      getPinFilters: []
     };
     const rootGetters = {
-      'people/getSelectedTags': [],
-      getSelectedUserTypes: []
+      'people/getSelectedTags': []
     };
     let result = getters.getFilteredPins(null, g, null, rootGetters);
-    expect(result).toEqual([]);
+    expect(result.length).toEqual(2);
 
-    rootGetters.getSelectedUserTypes = [2];
+    g.getPinFilters = [2];
     result = getters.getFilteredPins(null, g, null, rootGetters);
     expect(result.length).toEqual(1);
 
-    rootGetters.getSelectedUserTypes = [1, 2];
+    g.getPinFilters = [1, 2];
 
     rootGetters['people/getSelectedTags'] = ['vuex'];
     g.getPins = [
@@ -87,10 +91,6 @@ describe('getters', () => {
     expect(getters.getShownPins(null, {}, null, {getUserTypes}))
       .toEqual({1: 0, 2: 0});
   });
-
-  test('getShowMeetups', () => {
-    expect(getters.getShowMeetups(s)).toEqual(s.showMeetups);
-  });
 });
 
 describe('actions', () => {
@@ -110,9 +110,18 @@ describe('actions', () => {
     expect(vuex.commit).toHaveBeenLastCalledWith('SET_MAP_READY', true);
   });
 
-  test('setShowMeetups', () => {
-    actions.setShowMeetups(vuex, 1);
-    expect(vuex.commit).toHaveBeenLastCalledWith('SET_SHOW_MEETUPS', 1);
+  test('togglePinFilters', () => {
+    vuex.getters = {
+      getPinFilters: []
+    };
+    actions.togglePinFilters(vuex, 1);
+    expect(vuex.commit).toHaveBeenCalledWith('ADD_PIN_FILTER', 1);
+
+    vuex.getters = {
+      getPinFilters: [1]
+    };
+    actions.togglePinFilters(vuex, 1);
+    expect(vuex.commit).toHaveBeenLastCalledWith('RM_PIN_FILTER', 0);
   });
 });
 
@@ -127,9 +136,20 @@ describe('mutations', () => {
     mutations.SET_MAP_READY(s, 1);
     expect(s.mapReady).toEqual(1);
   });
-  test('SET_SHOW_MEETUPS', () => {
-    const s = {};
-    mutations.SET_SHOW_MEETUPS(s, 1);
-    expect(s.showMeetups).toEqual(1);
+
+  test('ADD_PIN_FILTER', () => {
+    const s = {
+      pinFilters: []
+    };
+    mutations.ADD_PIN_FILTER(s, 1);
+    expect(s.pinFilters).toEqual([1]);
+  });
+
+  test('RM_PIN_FILTER', () => {
+    const s = {
+      pinFilters: []
+    };
+    mutations.RM_PIN_FILTER(s, 0);
+    expect(s.pinFilters).toEqual([]);
   });
 });

@@ -76,7 +76,6 @@
           </map-marker>
 
           <meetup-cluster
-            v-if="showMeetups"
             :show-floating-ui="showFloatingUI"
           />
 
@@ -182,8 +181,7 @@ export default {
       goToMap: 'getGoToMap',
       currentPerson: 'people/getCurrentPersonDetails',
       firstPageVisited: 'getFirstPageVisited',
-      mapReady: 'map/getMapReady',
-      showMeetups: 'map/getShowMeetups'
+      mapReady: 'map/getMapReady'
     }),
     userMaker () {
       return { latlng: this.userPosition };
@@ -196,8 +194,17 @@ export default {
     },
     clusterOptions () {
       return {
-        disableClusteringAtZoom: 13,
+        disableClusteringAtZoom: 8,
         spiderfyOnMaxZoom: false,
+        maxClusterRadius: zoom => {
+          const radiuses = {
+            4: 100,
+            5: 120,
+            6: 110,
+            7: 110
+          };
+          return radiuses[zoom] || 80;
+        },
         polygonOptions: {
           stroke: false,
           fillColor: '#42B883'
@@ -363,25 +370,14 @@ export default {
     }
 
     .custom-cluster-icon {
-      background-image: url('~/assets/pins/pin-multi2.svg');
+      background-image: url('~/assets/pins/pin-multi3.svg');
 
-      span {
-        position: relative;
-        top: -7px;
+       span {
         display: inline-block;
-        min-width: 22px;
-        height: 22px;
-        margin-top: 0;
-        margin-left: 26px;
-        padding: 0 4px;
-        color: @font-light-primary;
-        font-size: @font-size-tiny - 1;
-        line-height: 20px;
-        font-weight: 600;
+        width: 36px;
+        margin-top: 6px;
+        font-weight: 800;
         text-align: center;
-        border: 1px solid @color-grey-light;
-        background-color: @color-grey-dark;
-        border-radius: 20px;
       }
     }
 

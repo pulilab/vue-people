@@ -60,12 +60,6 @@ describe('getters', () => {
     expect(result).toEqual(s.showCookieWarning);
   });
 
-  test('getSelectedUserTypes', () => {
-    const result = getters.getSelectedUserTypes(s);
-    expect(result).toEqual(s.selectedUserTypes);
-    expect(result).not.toBe(s.selectedUserTypes);
-  });
-
   test('getFirstPageVisited', () => {
     const result = getters.getFirstPageVisited(s);
     expect(result).toEqual(s.firstPageVisited);
@@ -88,7 +82,6 @@ describe('actions', () => {
     await actions.loadUserTypes(vuex);
     expect(actions.$axios.get).toHaveBeenLastCalledWith('/api/user-type/');
     expect(vuex.commit).toHaveBeenCalledWith('SET_USER_TYPES', [{id: 1}]);
-    expect(vuex.commit).toHaveBeenLastCalledWith('SET_SELECTED_USERTYPE', [1]);
   });
 
   test('loadTags', async () => {
@@ -113,17 +106,6 @@ describe('actions', () => {
     actions.acceptCookieWarning(vuex);
     expect(vuex.dispatch).toHaveBeenLastCalledWith('setShowCookieWarning', false);
     expect(authUtilities.saveTokens).toHaveBeenLastCalledWith(null, true);
-  });
-
-
-  test('toggleSelectedUserTypes', () => {
-    vuex.getters.getSelectedUserTypes = [];
-    actions.toggleSelectedUserTypes(vuex, 1);
-    expect(vuex.commit).toHaveBeenLastCalledWith('ADD_SELECTED_USERTYPE', 1);
-
-    vuex.getters.getSelectedUserTypes = [1];
-    actions.toggleSelectedUserTypes(vuex, 1);
-    expect(vuex.commit).toHaveBeenLastCalledWith('RM_SELECTED_USERTYPE', 0);
   });
 
   test('setFirstPageVisited', () => {
@@ -156,28 +138,6 @@ describe('mutations', () => {
     const state = {};
     mutations.SET_SHOW_COOKIE_WARNING(state, 1);
     expect(state.showCookieWarning).toEqual(1);
-  });
-
-  test('SET_SELECTED_USERTYPE', () => {
-    const state = {};
-    mutations.SET_SELECTED_USERTYPE(state, 1);
-    expect(state.selectedUserTypes).toEqual(1);
-  });
-
-  test('ADD_SELECTED_USERTYPE', () => {
-    const state = {
-      selectedUserTypes: []
-    };
-    mutations.ADD_SELECTED_USERTYPE(state, 1);
-    expect(state.selectedUserTypes).toEqual([1]);
-  });
-
-  test('RM_SELECTED_USERTYPE', () => {
-    const state = {
-      selectedUserTypes: []
-    };
-    mutations.RM_SELECTED_USERTYPE(state, 0);
-    expect(state.selectedUserTypes).toEqual([]);
   });
 
   test('SET_FIRST_PAGE_VISITED', () => {
