@@ -194,7 +194,7 @@ export default {
     },
     clusterOptions () {
       return {
-        disableClusteringAtZoom: 13,
+        disableClusteringAtZoom: 8,
         spiderfyOnMaxZoom: false,
         maxClusterRadius: zoom => {
           const radiuses = {
