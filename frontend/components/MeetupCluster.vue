@@ -57,7 +57,8 @@ export default {
       meetupIcon: null,
       meetupEventIcon: null,
       meetupIconSelected: null,
-      meetupEventIconSelected: null
+      meetupEventIconSelected: null,
+      timeZoneOffset: 0
     };
   },
   computed: {
@@ -106,6 +107,8 @@ export default {
       iconSize: [34, 52],
       iconAnchor: [17, 52]
     });
+
+    this.timeZoneOffset = new Date().getTimezoneOffset() * 60000;
   },
   methods: {
     openMeetupDetails (id) {
@@ -119,7 +122,7 @@ export default {
     },
     formatTooltipDate (pin) {
       if (pin && pin.event && pin.event.date) {
-        const date = format(pin.event.display_time, 'dddd, MMMM DD, YYYY');
+        const date = format(pin.event.local_parsed_time + this.timeZoneOffset, 'dddd, MMMM DD, YYYY');
         return `${date} - ${pin.event.local_time}`;
       }
       return pin.has_event_with_coords ? 'Time not specificed' : 'No upcoming event';

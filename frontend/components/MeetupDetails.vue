@@ -175,7 +175,8 @@ export default {
   data () {
     return {
       showDetails: false,
-      showEventDetails: false
+      showEventDetails: false,
+      timeZoneOffset: 0
     };
   },
   computed: {
@@ -187,16 +188,16 @@ export default {
       return this.meetup && this.meetup.event;
     },
     eventDate () {
-      if (this.event && this.event.date) {
-        return format(this.event.date, 'dddd, MMMM DD, YYYY');
+      if (this.event && this.event.local_parsed_time) {
+        return format(this.event.local_parsed_time + this.timeZoneOffset, 'dddd, MMMM DD, YYYY');
       }
       return 'No upcoming event';
     },
     eventTimeSpan () {
       if (this.event) {
         const timeFormat = 'HH:mm';
-        const startDate = format(this.event.display_time, timeFormat);
-        const endDate = format(this.event.display_time + this.event.duration, timeFormat);
+        const startDate = format(this.event.local_parsed_time + this.timeZoneOffset, timeFormat);
+        const endDate = format(this.event.local_parsed_time + this.timeZoneOffset + this.event.duration, timeFormat);
         return `${startDate} - ${endDate}`;
       }
     },
@@ -206,6 +207,9 @@ export default {
       }
       return '-';
     }
+  },
+  mounted () {
+    this.timeZoneOffset = new Date().getTimezoneOffset() * 60000;
   },
   methods: {
     toggleDetails () {
