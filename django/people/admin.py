@@ -61,7 +61,7 @@ class PersonAdmin(admin.ModelAdmin):
     ordering =('github_login', 'type', 'location')
     search_fields = ('github_login', 'user__first_name', 'user__last_name', 'user__email', 'company')
     list_filter = ('type', 'public_email', HasLocationFilter)
-    fields = ('is_active', 'bio', 'company', 'github_url', 'twitter_url', 'website_url', 'type', 'public_email')
+    fields = ('bio', 'company', 'github_url', 'twitter_url', 'website_url', 'type', 'public_email')
 
     def user_email(self, obj):
         return obj.user.email
