@@ -24,6 +24,8 @@ export const eventParser = e => {
   const id = e.id;
   const date = e.date;
   e = e.data;
+  const localOffset = new Date().getTimezoneOffset() * 60000;
+  const utc_time = e.time + e.utc_offset;
   return {
     id,
     date,
@@ -36,8 +38,9 @@ export const eventParser = e => {
       city: e.venue.city
     } : undefined,
     time: e.time,
-    duration: e.duration,
-    utc_offset: e.utc_offset,
+    utc_time,
+    display_time: utc_time + localOffset,
+    duration: e.duration ? e.duration : 10800000,
     local_time: e.local_time,
     local_date: e.local_date,
     group_id: e.group.id,

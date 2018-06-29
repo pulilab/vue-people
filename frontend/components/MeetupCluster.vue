@@ -119,7 +119,7 @@ export default {
     },
     formatTooltipDate (pin) {
       if (pin && pin.event && pin.event.date) {
-        const date = format(pin.event.date, 'DD MMMM, YYYY');
+        const date = format(pin.event.display_time, 'DD MMMM, YYYY');
         return `${date} - ${pin.event.local_time}`;
       }
       return pin.has_event_with_coords ? 'Time not specificed' : 'No upcoming event';

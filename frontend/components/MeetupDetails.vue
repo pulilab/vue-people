@@ -195,9 +195,8 @@ export default {
     eventTimeSpan () {
       if (this.event) {
         const timeFormat = 'HH:mm';
-        const utcStartTime = new Date(this.event.date).getTime() - this.event.utc_offset;
-        const startDate = format(utcStartTime, timeFormat);
-        const endDate = format(utcStartTime + this.event.duration, timeFormat);
+        const startDate = format(this.event.display_time, timeFormat);
+        const endDate = format(this.event.display_time + this.event.duration, timeFormat);
         return `${startDate} - ${endDate}`;
       }
     },
