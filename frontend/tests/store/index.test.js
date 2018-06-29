@@ -84,10 +84,11 @@ describe('actions', () => {
   });
 
   test('loadUserTypes', async () => {
-    actions.$axios.get.mockReturnValue({ data: 1 });
+    actions.$axios.get.mockReturnValue({ data: [{ id: 1 }] });
     await actions.loadUserTypes(vuex);
-    expect(actions.$axios.get.mock.calls[0]).toEqual(['/api/user-type/']);
-    expect(vuex.commit.mock.calls[0]).toEqual(['SET_USER_TYPES', 1]);
+    expect(actions.$axios.get).toHaveBeenLastCalledWith('/api/user-type/');
+    expect(vuex.commit).toHaveBeenCalledWith('SET_USER_TYPES', [{id: 1}]);
+    expect(vuex.commit).toHaveBeenLastCalledWith('SET_SELECTED_USERTYPE', [1]);
   });
 
   test('loadTags', async () => {
@@ -157,6 +158,11 @@ describe('mutations', () => {
     expect(state.showCookieWarning).toEqual(1);
   });
 
+  test('SET_SELECTED_USERTYPE', () => {
+    const state = {};
+    mutations.SET_SELECTED_USERTYPE(state, 1);
+    expect(state.selectedUserTypes).toEqual(1);
+  });
 
   test('ADD_SELECTED_USERTYPE', () => {
     const state = {
