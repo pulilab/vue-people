@@ -40,6 +40,7 @@ export const actions = {
   async loadUserTypes ({commit}) {
     const { data } = await this.$axios.get('/api/user-type/');
     commit('SET_USER_TYPES', data);
+    commit('SET_SELECTED_USERTYPE', data.map(d => d.id));
   },
   async loadTags ({commit}) {
     const { data } = await this.$axios.get('/api/tags/');
@@ -81,6 +82,9 @@ export const mutations = {
   },
   SET_SHOW_COOKIE_WARNING: (state, value) => {
     state.showCookieWarning = value;
+  },
+  SET_SELECTED_USERTYPE: (state, value) => {
+    state.selectedUserTypes = value;
   },
   ADD_SELECTED_USERTYPE: (state, value) => {
     state.selectedUserTypes.push(value);

@@ -16,7 +16,20 @@ services:
       - ./django/media:/usr/share/app/media:rw
       - log_data:/var/log/django
       - media_data:/usr/src/app/media
-    command: /usr/local/bin/gunicorn peoplebackend.wsgi:application -w 2 -b :8000 --reload --timeout 120
+    command: /usr/local/bin/gunicorn peoplebackend.wsgi:application -w 5 -b :8000 --reload --timeout 120
+
+  celery:
+    restart: always
+    build: ./django
+    environment:
+      - C_FORCE_ROOT=true
+    links:
+      - postgis
+      - redis
+    volumes:
+      - ./django:/usr/src/app
+      - log_data:/var/log/django
+    command: /usr/local/bin/celery -A peoplebackend worker -B -l info
 
   nuxt:
     restart: always

@@ -92,7 +92,9 @@ $ docker-compose up -d
  sudo cp /home/$(whoami)/vue-people/nginx/certs/live/$DOMAIN/cert.pem /home/$(whoami)/vue-people/nginx/certs/cert.pem
 
 # own the certificates:
- sudo chown $(whoami):$(whoami) cert.pem chain.pem key.pem
+ sudo chown $(whoami):$(whoami) /home/$(whoami)/vue-people/nginx/certs/key.pem
+ sudo chown $(whoami):$(whoami) /home/$(whoami)/vue-people/nginx/certs/chain.pem
+ sudo chown $(whoami):$(whoami) /home/$(whoami)/vue-people/nginx/certs/cert.pem
 
 # refresh certificates
  docker run -it --rm -v /home/$(whoami)/vue-people/nginx/certs:/etc/letsencrypt:rw -v /home/$(whoami)/vue-people/nginx/certs-data:/data/letsencrypt:rw  deliverous/certbot renew --webroot --webroot-path=/data/letsencrypt -d $DOMAIN

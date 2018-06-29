@@ -1,11 +1,14 @@
+from datetime import date, timedelta
+
 from rest_framework.generics import get_object_or_404
-from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin, CreateModelMixin
+from rest_framework.mixins import ListModelMixin
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from taggit.models import Tag
 
 from .permission import IsMeOrReadOnly
-from .serializers import UserTypeSerializer, PersonSerializer, TagSerialiser
-from .models import Person, Type
+from .serializers import UserTypeSerializer, PersonSerializer, TagSerialiser, MeetupGroupSerialiser, \
+    MeetupEventSerialiser
+from .models import Person, Type, MeetupGroup, MeetupEvent
 
 
 class UserTypeViewSet(ListModelMixin, GenericViewSet):
@@ -49,5 +52,19 @@ class PersonViewSet(ModelViewSet):
 class TagViewSet(ListModelMixin, GenericViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerialiser
+    permission_classes = []
+    authentication_classes = []
+
+
+class MeetupGroupViewSet(ListModelMixin, GenericViewSet):
+    queryset = MeetupGroup.objects.all()
+    serializer_class = MeetupGroupSerialiser
+    permission_classes = []
+    authentication_classes = []
+
+
+class MeetupEventViewSet(ListModelMixin, GenericViewSet):
+    queryset = MeetupEvent.objects.filter(date__gt=date.today() - timedelta(1))
+    serializer_class = MeetupEventSerialiser
     permission_classes = []
     authentication_classes = []

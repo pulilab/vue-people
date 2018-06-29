@@ -1,1 +1,2 @@
 .env
+celerybeat-schedule

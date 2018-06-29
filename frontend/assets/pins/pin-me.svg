@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="33px" height="60px" viewBox="0 0 33 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: sketchtool 49.2 (51160) - http://www.bohemiancoding.com/sketch -->
-    <title>16989BBB-BE5D-4171-9035-A22D9A68C9B7</title>
-    <desc>Created with sketchtool.</desc>
+<svg width="33px" height="61px" viewBox="0 0 33 61" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>Pin - Dev</title>
+    <desc>Created with Sketch.</desc>
     <defs>
         <filter x="-42.9%" y="-180.0%" width="185.7%" height="460.0%" filterUnits="objectBoundingBox" id="filter-1">
             <feGaussianBlur stdDeviation="3" in="SourceGraphic"></feGaussianBlur>
@@ -10,24 +10,20 @@
         <filter x="-14.3%" y="-150.0%" width="128.6%" height="400.0%" filterUnits="objectBoundingBox" id="filter-2">
             <feGaussianBlur stdDeviation="1" in="SourceGraphic"></feGaussianBlur>
         </filter>
-        <path d="M23.8951818,21.6511905 C26.1110909,18.0797619 26.3699091,15.9583333 26.3699091,13.0952381 C26.3699091,5.86309524 20.2386364,0 13.1477273,0 C5.96818182,0 0,5.86309524 0,13.0952381 C0,15.9583333 0.222181818,18.0797619 2.43809091,21.6511905 C3.42490909,23.2440476 13.1477273,33.6309524 13.1477273,49.5535714 C13.1477273,33.6309524 22.9071818,23.2440476 23.8951818,21.6511905 Z" id="path-3"></path>
+        <path d="M25.7332727,22.5172381 C28.1196364,18.8029524 28.3983636,16.5966667 28.3983636,13.6190476 C28.3983636,6.09761905 21.7954545,0 14.1590909,0 C6.42727273,0 0,6.09761905 0,13.6190476 C0,16.5966667 0.239272727,18.8029524 2.62563636,22.5172381 C3.68836364,24.1738095 14.1590909,34.9761905 14.1590909,51.5357143 C14.1590909,34.9761905 24.6692727,24.1738095 25.7332727,22.5172381 Z" id="path-3"></path>
     </defs>
     <g id="VuePeople-app-v1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Map---component-(my-profile---more)" transform="translate(-864.000000, -458.000000)">
+        <g id="Map---component-(feature:-hover-on-pin)" transform="translate(-965.000000, -146.000000)">
             <g id="Google-map" transform="translate(30.000000, 30.000000)">
-                <g id="Pins" transform="translate(605.000000, 118.000000)">
-                    <g id="Pin---my-location" transform="translate(232.000000, 311.000000)">
+                <g id="Pins---new" transform="translate(603.000000, 117.000000)">
+                    <g id="Pin---Dev" transform="translate(334.000000, 0.000000)">
                         <g id="pin">
-                            <ellipse id="Oval-2" fill-opacity="0.3" fill="#000000" filter="url(#filter-1)" cx="13.5" cy="50.5" rx="10.5" ry="2.5"></ellipse>
-                            <ellipse id="Oval-2" fill-opacity="0.1" fill="#000000" filter="url(#filter-2)" cx="13.5" cy="51" rx="10.5" ry="1"></ellipse>
+                            <ellipse id="Oval-2" fill-opacity="0.3" fill="#000000" filter="url(#filter-1)" cx="14.5" cy="51.5" rx="10.5" ry="2.5"></ellipse>
+                            <ellipse id="Oval-2" fill-opacity="0.1" fill="#000000" filter="url(#filter-2)" cx="14.5" cy="52" rx="10.5" ry="1"></ellipse>
                             <g id="Imported-Layers" stroke-linecap="round" stroke-linejoin="round">
-                                <use fill="#42B883" fill-rule="evenodd" xlink:href="#path-3"></use>
-                                <path stroke="#30855E" stroke-width="1" d="M24.3200643,21.9147713 C24.1780371,22.1437115 22.7936779,23.9348567 22.3680793,24.5130818 C21.1552942,26.1607914 20.0481419,27.8454515 18.998026,29.7226228 C15.6348477,35.7345892 13.6477273,42.3230186 13.6477273,49.5535714 L12.6477273,49.5535714 C12.6477273,42.321655 10.6673828,35.7320906 7.31591089,29.7199832 C6.2696242,27.8430801 5.16639181,26.1585289 3.95843346,24.5118305 C3.53022645,23.9280953 2.15396942,22.1419787 2.01322607,21.9147998 C0.000801329214,18.6713313 -0.5,16.6612944 -0.5,13.0952381 C-0.5,5.61396708 5.66478447,-0.5 13.1477273,-0.5 C20.5854874,-0.5 26.8699091,5.65611863 26.8699091,13.0952381 C26.8699091,16.6025204 26.345751,18.6499213 24.3200643,21.9147713 Z"></path>
+                                <use fill="#F5515F" fill-rule="evenodd" xlink:href="#path-3"></use>
+                                <path stroke="#C2404B" stroke-width="1" d="M26.1539336,22.7875054 L26.1539704,22.7874482 C26.0017546,23.0244372 24.5116868,24.8862516 24.0527079,25.4884481 C22.7461615,27.2026828 21.5534107,28.9553656 20.4221361,30.9082807 C16.7994136,37.1621727 14.6590909,44.0152496 14.6590909,51.5357143 L13.6590909,51.5357143 C13.6590909,44.0138352 11.5260691,37.1595855 7.9159614,30.9055554 C6.78881367,28.9529223 5.60028746,27.2003554 4.29894232,25.4871743 C3.83718566,24.8792858 2.35592711,23.0228079 2.20497546,22.7875054 C0.0390635698,19.4163446 -0.5,17.3269175 -0.5,13.6190476 C-0.5,5.84559596 6.12549852,-0.5 14.1590909,-0.5 C22.1441862,-0.5 28.8983636,5.88943973 28.8983636,13.6190476 C28.8983636,17.2658133 28.3341601,19.3940644 26.1539336,22.7875054 Z"></path>
                             </g>
-                        </g>
-                        <g id="ic_stars_24px" transform="translate(3.000000, 4.000000)">
-                            <polygon id="Shape" points="0 0 20 0 20 20 0 20"></polygon>
-                            <path d="M9.99166667,1.66666667 C5.39166667,1.66666667 1.66666667,5.4 1.66666667,10 C1.66666667,14.6 5.39166667,18.3333333 9.99166667,18.3333333 C14.6,18.3333333 18.3333333,14.6 18.3333333,10 C18.3333333,5.4 14.6,1.66666667 9.99166667,1.66666667 Z M13.525,15 L10,12.875 L6.475,15 L7.40833333,10.9916667 L4.3,8.3 L8.4,7.95 L10,4.16666667 L11.6,7.94166667 L15.7,8.29166667 L12.5916667,10.9833333 L13.525,15 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path>
                         </g>
                     </g>
                 </g>

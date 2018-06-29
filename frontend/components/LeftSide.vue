@@ -18,11 +18,13 @@
       </h4>
 
       <p>
-        VuePeople.org is a network that connects the Vue.JS community with events and work opportunities.
+        VuePeople.org is a network that connects the Vue.JS community with events<br>
+        and work opportunities.
       </p>
 
       <p>
-        VuePeople.org is open sourced. Your can contribute or submit a ticket at
+        VuePeople.org is open sourced.<br>
+        You can contribute or submit a ticket at
         <a
           href="https://github.com/pulilab/vue-people"
           target="_blank">https://github.com/pulilab/vue-people
@@ -77,7 +79,8 @@ export default {
       mapReady: 'map/getMapReady'
     }),
     showRootContent () {
-      return this.$route && this.$route.name !== 'index-user-id';
+      const leftRoutes = ['index-user-id', 'index-meetup-id'];
+      return this.$route && !leftRoutes.includes(this.$route.name);
     },
     showGoToMapButton () {
       if (!this.$mq) {

@@ -1,8 +1,7 @@
 from django.contrib.auth.models import User
-from django.db.models import QuerySet
-from django.db.models.query_utils import Q
 from django.contrib.gis.db import models
 from taggit.managers import TaggableManager
+from django.contrib.postgres.fields import JSONField
 
 
 class Type(models.Model):
@@ -48,3 +47,22 @@ class Person(models.Model):
             return "{} ({}) {}".format(self.user.get_full_name(), self.company, self.user.email)
         else:
             return "This person is missing an associate user: {}".format(self.pk)
+
+
+class MeetupGroup(models.Model):
+    id = models.IntegerField(primary_key=True, editable=False)
+    data = JSONField(default=dict())
+
+    def __str__(self):
+        return "{}: {} in {}".format(
+            self.data.get('urlname', ''), self.data.get('name', ''), self.data.get('country', ''))
+
+
+class MeetupEvent(models.Model):
+    id = models.CharField(primary_key=True, editable=False, max_length=512)
+    group = models.ForeignKey(MeetupGroup, on_delete=models.CASCADE)
+    date = models.DateTimeField(verbose_name="UTC Date")
+    data = JSONField(default=dict())
+
+    def __str__(self):
+        return "[{}] {}".format(self.group.data.get('name', ''), self.data.get('name', ''))

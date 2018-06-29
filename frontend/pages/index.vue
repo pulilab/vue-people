@@ -44,15 +44,17 @@ export default {
       return !!(this.$route.name === 'index-user');
     },
     hideLeft () {
-      return this.goToMap && (this.$mq === 'xs' || this.$mq === 'sm') && this.$route.name !== 'index-user-id';
+      const leftRoutes = ['index-user-id', 'index-meetup-id'];
+      return this.goToMap && (this.$mq === 'xs' || this.$mq === 'sm') && !leftRoutes.includes(this.$route.name);
     }
   },
   async fetch ({store}) {
     const peoplePromise = store.dispatch('people/loadPeople');
     const userTypePromise = store.dispatch('loadUserTypes');
     const tagsPromise = store.dispatch('loadTags');
-
-    await Promise.all([peoplePromise, userTypePromise, tagsPromise]);
+    const meetupGroupPromise = store.dispatch('events/loadMeetups');
+    const meetupEventsPromise = store.dispatch('events/loadEvents');
+    await Promise.all([peoplePromise, userTypePromise, tagsPromise, meetupGroupPromise, meetupEventsPromise]);
   }
 };
 </script>

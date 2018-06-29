@@ -9,9 +9,7 @@ https://docs.djangoproject.com/en/2.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
-
 import os
-import raven
 from distutils.util  import strtobool
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -31,7 +29,7 @@ ALLOWED_HOSTS = ['django:8000', 'django', 'localhost', 'www.vuepeople.org', 'vue
 if DEBUG:
     ALLOWED_HOSTS.append('0.0.0.0')
 
-# Application definition
+TIME_ZONE = os.environ.get('TIME_ZONE', 'UTC')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -42,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.gis',
+    'prettyjson',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -177,8 +176,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
-
 USE_I18N = True
 
 USE_L10N = True
@@ -222,3 +219,22 @@ SOCIALACCOUNT_PROVIDERS = {
 
 LOGIN_REDIRECT_URL = '/user?token={}'
 LOGIN_REDIRECT_URL_DEV = 'http://localhost:3000/user?token={}'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': [
+            'redis:6379',
+        ],
+    }
+}
+
+# Celery settings
+CELERY_BROKER_URL = 'redis://redis:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TIMEZONE = TIME_ZONE
+
+MEETUP_API_KEY = os.environ.get('MEETUP_API_KEY')
+MEETUP_GROUPS_API_URL = "https://api.meetup.com/find/groups"  # https://www.meetup.com/meetup_api/docs/find/groups/
+MEETUP_EVENTS_API_URL = "https://api.meetup.com/<urlname>/events"  # https://www.meetup.com/meetup_api/docs/:urlname/events/#list
+MEETUP_TOPIC_IDS = ['1511132', '1517158']  # Vue and VueJS
