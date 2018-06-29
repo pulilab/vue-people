@@ -46,26 +46,13 @@ describe('getters', () => {
       getSelectedUserTypes: []
     };
     let result = getters.getFilteredPins(null, g, null, rootGetters);
-    expect(result[0]).toEqual({id: 1,
-      type: 1,
-      key: 1,
-      options: {},
-      latlng: {}
-    });
-    expect(result[1]).toEqual({
-      id: 2,
-      type: 2,
-      key: 2,
-      options: {},
-      latlng: {}
-    });
-    expect(result.length).toEqual(2);
+    expect(result).toEqual([]);
 
     rootGetters.getSelectedUserTypes = [2];
     result = getters.getFilteredPins(null, g, null, rootGetters);
     expect(result.length).toEqual(1);
 
-    rootGetters.getSelectedUserTypes = [];
+    rootGetters.getSelectedUserTypes = [1, 2];
 
     rootGetters['people/getSelectedTags'] = ['vuex'];
     g.getPins = [

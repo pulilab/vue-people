@@ -20,7 +20,7 @@ export const getters = {
     const selectedUserTypes = rootGetters['getSelectedUserTypes'];
     let filtered = [];
     filtered = tags.length > 0 ? list.filter(p => p.tags.some(t => tags.includes(t))) : list;
-    filtered = selectedUserTypes.length > 0 ? filtered.filter(p => selectedUserTypes.includes(p.type)) : filtered;
+    filtered = filtered.filter(p => selectedUserTypes.includes(p.type));
     return [...filtered.map(p => {
       return {
         ...p,
