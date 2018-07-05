@@ -13,7 +13,7 @@ export const getters = {
   getMeetups: (state, getters) => {
     return [...state.meetups.map(m => {
       const events = getters.getEvents
-        .filter(e => e.group_id === m.id)
+        .filter(e => e.group_id === m.id && e.latlng && (e.latlng.lat !== 0 || e.latlng.lng !== 0))
         .sort((a, b) => a.time - b.time);
       const event = events[0];
       const latlng = event && event.latlng ? { ...event.latlng } : {...m.latlng};
