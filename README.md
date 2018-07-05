@@ -100,3 +100,7 @@ $ docker-compose up -d
  docker run -it --rm -v /home/$(whoami)/vue-people/nginx/certs:/etc/letsencrypt:rw -v /home/$(whoami)/vue-people/nginx/certs-data:/data/letsencrypt:rw  deliverous/certbot renew --webroot --webroot-path=/data/letsencrypt -d $DOMAIN
 
 ```
+
+## License
+
+[MIT](https://github.com/pulilab/vue-people/blob/master/LICENSE)
