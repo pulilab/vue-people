@@ -23,7 +23,11 @@ describe('getters', () => {
 
   test('getMeetups', () => {
     s.meetups = [{ id: 1, latlng: {}, options: {} }];
-    const getEvents = [ { id: 1, group_id: 2, time: 1 }, { id: 2, group_id: 3, time: 2 } ];
+    const getEvents = [
+      { id: 1, group_id: 2, time: 1 },
+      { id: 2, group_id: 3, time: 2 },
+      { id: 3, group_id: 4, time: 3 }
+    ];
     let result = getters.getMeetups(s, {getEvents});
     expect(result).toEqual(
       [{
@@ -37,15 +41,15 @@ describe('getters', () => {
     expect(result).not.toBe(s.meetups);
     expect(result[0]).not.toBe(s.meetups[0]);
 
+    getEvents[2].group_id = 1;
     getEvents[0].group_id = 1;
+    getEvents[0].latlng = {lat: 0, lng: 2};
     getEvents[1].group_id = 1;
+    getEvents[1].latlng = {lat: 3, lng: 0};
     result = getters.getMeetups(s, {getEvents});
+
     expect(result[0].event.id).toBe(1);
-
-    getEvents[0].latlng = {lat: 1, lng: 2};
-    result = getters.getMeetups(s, {getEvents});
-
-    expect(result[0].latlng).toEqual({lat: 1, lng: 2});
+    expect(result[0].latlng).toEqual({lat: 0, lng: 2});
   });
 
   test('getCurrentMeetup', () => {

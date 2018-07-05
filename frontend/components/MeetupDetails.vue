@@ -70,11 +70,11 @@
               <v-icon small>
                 location_on
               </v-icon>
-              {{ meetup.location }}
+              <text-or-placeholder :text="meetup.location" />
             </v-flex>
             <v-flex>
               <v-icon small>group</v-icon>
-              {{ meetup.members }}
+              <text-or-placeholder :text="meetup.members" />
             </v-flex>
           </v-layout>
           <a
@@ -100,7 +100,7 @@
         </div>
 
         <div
-          v-if="event"
+          v-if="event && event.name"
           class="item upcoming-event px-4 py-3"
         >
           <div class="caption">
@@ -116,8 +116,10 @@
                 <v-icon small>access_time</v-icon>
               </v-flex>
               <v-flex>
-                <strong>{{ eventDate }}</strong>
-                {{ eventTimeSpan }}
+                <strong>
+                  <text-or-placeholder :text="eventDate" />
+                </strong>
+                <text-or-placeholder :text="eventTimeSpan" />
               </v-flex>
             </v-layout>
             <v-layout align-center>
@@ -126,7 +128,7 @@
               </v-flex>
               <v-flex v-if="event.venue">
                 <strong>Name of the place</strong>
-                {{ event.venue.address_1 }}, {{ event.venue.zip }} {{ event.venue.city }}
+                <text-or-placeholder :text="eventAddress" />
               </v-flex>
             </v-layout>
             <v-layout align-center>
@@ -134,11 +136,17 @@
                 <v-icon small>people</v-icon>
               </v-flex>
               <v-flex>
-                <strong>{{ event.yes_rsvp_count }} attendees</strong>
-                <span>{{ eventAvailableSpots }}
-                  <span v-show="eventAvailableSpots > 1" > spots </span>
-                  <span v-show="eventAvailableSpots === 1" > spot </span>
-                  left
+                <strong>
+                  <text-or-placeholder
+                    :text="attendess"
+                    placeholder="N/A"
+                  />
+                </strong>
+                <span>
+                  <text-or-placeholder
+                    :text="eventAvailableSpots"
+                    placeholder=""
+                  />
                 </span>
               </v-flex>
             </v-layout>
@@ -168,9 +176,11 @@
 <script>
 import { mapGetters } from 'vuex';
 import { format } from 'date-fns';
+import TextOrPlaceholder from './base/TextOrPlaceholder';
 
 export default {
   components: {
+    TextOrPlaceholder
   },
   data () {
     return {
@@ -201,11 +211,23 @@ export default {
         return `${startDate} - ${endDate}`;
       }
     },
+    attendess () {
+      if (this.event && this.event.yes_rsvp_count) {
+        const plural = this.event.yes_rsvp_count === 1 ? 'attendee' : 'attendees';
+        return `${this.event.yes_rsvp_count} ${plural}`;
+      }
+    },
     eventAvailableSpots () {
       if (this.event && this.event.rsvp_limit) {
-        return this.event.rsvp_limit - this.event.yes_rsvp_count;
+        const value = this.event.rsvp_limit - this.event.yes_rsvp_count;
+        const plural = value === 1 ? 'spot' : 'spots';
+        return `${value} ${plural} left`;
       }
-      return '-';
+    },
+    eventAddress () {
+      if (this.event && this.event.venue) {
+        return `${this.event.venue.address_1}, ${this.event.venue.zip} ${this.event.venue.city}`;
+      }
     }
   },
   mounted () {
