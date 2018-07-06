@@ -2,6 +2,10 @@ from django.contrib.auth.models import User
 from django.contrib.gis.db import models
 from taggit.managers import TaggableManager
 from django.contrib.postgres.fields import JSONField
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 
 class Type(models.Model):
@@ -42,6 +46,16 @@ class Person(models.Model):
     class Meta:
         verbose_name_plural = "People"
 
+    def send_position(self):
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            "people",
+            {
+                "type": "send.person",
+                "id": self.id
+            }
+    )
+
     def __str__(self):
         if self.user:
             return "{} ({}) {}".format(self.user.get_full_name(), self.company, self.user.email)
@@ -66,3 +80,8 @@ class MeetupEvent(models.Model):
 
     def __str__(self):
         return "[{}] {}".format(self.group.data.get('name', ''), self.data.get('name', ''))
+
+
+@receiver(post_save, sender=Person)
+def update_websocket(sender, instance, created, **kwargs):
+    instance.send_position()
