@@ -1,6 +1,7 @@
 import { gitHubUserRepositories } from '~/integrations/github/queries';
 import { gitHubGraphQlRequest, filterOutNonVueAndZeroStars } from '~/integrations/github/utilities';
 import { apiReadParser, latLngParser } from '~/utilities/parsers';
+import { WebSocketBridge } from 'django-channels';
 
 export const state = () => ({
   list: [],
@@ -90,12 +91,35 @@ export const actions = {
   },
   setSelectedTags ({commit}, value) {
     commit('SET_SELECTED_TAGS', value);
+  },
+  openSocket ({ dispatch, commit, state }) {
+    const webSocketBridge = new WebSocketBridge();
+    webSocketBridge.connect('ws://localhost/ws-people');
+    webSocketBridge.listen(action => {
+      if (action.person) {
+        const person = apiReadParser(action.person);
+        const index = state.list.findIndex(p => p.id === action.person.id);
+        if (!index) {
+          const audio = new Audio('/ding.mp3');
+          audio.play();
+          commit('ADD_PERSON', person);
+        } else {
+          commit('UPDATE_PERSON', {index, person});
+        }
+      }
+    });
   }
 };
 
 export const mutations = {
   SET_PEOPLE_LIST: (state, people) => {
     state.list = people;
+  },
+  ADD_PERSON: (state, person) => {
+    state.list.push(person);
+  },
+  UPDATE_PERSON: (state, {person, index}) => {
+    state.list.splice(index, 1, person);
   },
   SET_CURRENT: (state, id) => {
     state.current = id;
