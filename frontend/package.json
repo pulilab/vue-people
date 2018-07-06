@@ -20,6 +20,7 @@
     "@nuxtjs/google-analytics": "^2.0.2",
     "@nuxtjs/proxy": "^1.1.4",
     "date-fns": "^1.29.0",
+    "django-channels": "^1.1.6",
     "dotenv": "^5.0.1",
     "js-cookie": "^2.2.0",
     "lodash": "^4.17.10",

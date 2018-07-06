@@ -31,7 +31,8 @@ const config = {
     { src: '~plugins/vee-validate.js', ssr: true },
     { src: '~plugins/vue-leaflet.js', ssr: false },
     { src: '~plugins/store-tokens.js', ssr: false },
-    { src: '~plugins/vue-django-feedback.js', ssr: false }
+    { src: '~plugins/vue-django-feedback.js', ssr: false },
+    { src: '~plugins/web-sockets.js', ssr: false }
   ],
   modules: [
     '@nuxtjs/axios',
