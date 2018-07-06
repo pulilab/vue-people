@@ -75,7 +75,6 @@ export const overlappingResolver = markers => {
 
 export const eventHasValidLatLng = event => {
   return event &&
-  event.venue &&
-  event.venue.latlng &&
-  (event.venue.latlng.lat || event.venue.latlng.lng);
+  event.latlng &&
+  (event.latlng.lat || event.latlng.lng);
 };
