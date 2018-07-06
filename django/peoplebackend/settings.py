@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
+    'channels',
     'rest_framework',
     'rest_framework_gis',
     'taggit',
@@ -238,3 +239,14 @@ MEETUP_API_KEY = os.environ.get('MEETUP_API_KEY')
 MEETUP_GROUPS_API_URL = "https://api.meetup.com/find/groups"  # https://www.meetup.com/meetup_api/docs/find/groups/
 MEETUP_EVENTS_API_URL = "https://api.meetup.com/<urlname>/events"  # https://www.meetup.com/meetup_api/docs/:urlname/events/#list
 MEETUP_TOPIC_IDS = ['1511132', '1517158']  # Vue and VueJS
+
+
+ASGI_APPLICATION = "peoplebackend.routing.application"
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("redis", 6379)],
+        },
+    },
+}
