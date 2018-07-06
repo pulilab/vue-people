@@ -1,4 +1,4 @@
-import { groupParser, overlappingResolver, eventParser } from '../integrations/meetup/utilities';
+import { groupParser, overlappingResolver, eventParser, eventHasValidLatLng } from '../integrations/meetup/utilities';
 
 export const state = () => ({
   meetups: [],
@@ -13,14 +13,15 @@ export const getters = {
   getMeetups: (state, getters) => {
     return [...state.meetups.map(m => {
       const events = getters.getEvents
-        .filter(e => e.group_id === m.id && e.latlng && (e.latlng.lat !== 0 || e.latlng.lng !== 0))
+        .filter(e => e.group_id === m.id && e.latlng)
         .sort((a, b) => a.time - b.time);
       const event = events[0];
-      const latlng = event && event.latlng ? { ...event.latlng } : {...m.latlng};
+      const validLatLng = eventHasValidLatLng(event);
+      const latlng = event && validLatLng ? { ...event.latlng } : {...m.latlng};
       return {
         ...m,
         latlng,
-        has_event_with_coords: !!(event && event.latlng),
+        has_event_with_coords: !!(event && validLatLng),
         event,
         options: {}
       };

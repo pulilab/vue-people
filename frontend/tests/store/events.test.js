@@ -22,6 +22,7 @@ describe('getters', () => {
   });
 
   test('getMeetups', () => {
+    jest.spyOn(meetupUtilities, 'eventHasValidLatLng').mockReturnValue(true);
     s.meetups = [{ id: 1, latlng: {}, options: {} }];
     const getEvents = [
       { id: 1, group_id: 2, time: 1 },
