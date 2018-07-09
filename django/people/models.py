@@ -42,6 +42,7 @@ class Person(models.Model):
     feature_updates = models.BooleanField(default=True)
     upcoming_events = models.BooleanField(default=True)
     job_opportunities = models.BooleanField(default=True)
+    settings = JSONField(default=dict())
 
     class Meta:
         verbose_name_plural = "People"
