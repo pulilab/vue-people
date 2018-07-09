@@ -34,6 +34,9 @@ export const getters = {
   },
   getCsrfToken: state => {
     return state.csrfToken;
+  },
+  getSettings: state => {
+    return state.savedProfile && state.savedProfile.settings ? {...state.savedProfile.settings} : {};
   }
 };
 
