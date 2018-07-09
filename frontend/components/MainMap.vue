@@ -36,7 +36,7 @@
               v-for="pin in pins"
               :key="pin.id"
               :pin="pin"
-              :icon="iconCollection[pin.id]"
+              :icon="getMarkerIcon(pin)"
               :show-floating-ui="showFloatingUI"
               @marker-click="openPersonDetails(pin)"
             >
@@ -52,7 +52,7 @@
               v-for="pin in pins"
               :key="pin.id"
               :pin="pin"
-              :icon="iconCollection[pin.id]"
+              :icon="getMarkerIcon(pin)"
               :show-floating-ui="showFloatingUI"
               @marker-click="openPersonDetails(pin)"
             >
@@ -328,6 +328,15 @@ export default {
           this.centeredToSelected = true;
         });
       }
+    },
+    getMarkerIcon (pin) {
+      const icon = this.iconCollection[pin.id];
+      if (icon) {
+        return icon;
+      }
+      const newIcon = this.iconGenerator(pin);
+      this.iconCollection[pin.id] = newIcon;
+      return newIcon;
     }
   }
 };
