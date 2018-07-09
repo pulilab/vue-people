@@ -23,7 +23,8 @@ const config = {
     '~/assets/style/main.less'
   ],
   env: {
-    gitHubApiKey: process.env.GITHUB_KEY || ''
+    gitHubApiKey: process.env.GITHUB_KEY || '',
+    webSocketURL: process.env.WEBSOCKET_URL || 'ws://localhost/'
   },
   plugins: [
     { src: '~plugins/axios.js', ssr: true },
