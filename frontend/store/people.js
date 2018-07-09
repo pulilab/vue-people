@@ -1,6 +1,7 @@
 import { gitHubUserRepositories } from '~/integrations/github/queries';
 import { gitHubGraphQlRequest, filterOutNonVueAndZeroStars } from '~/integrations/github/utilities';
 import { apiReadParser, latLngParser } from '~/utilities/parsers';
+import { playDing } from '~/utilities/media';
 import { WebSocketBridge } from 'django-channels';
 
 export const state = () => ({
@@ -8,7 +9,8 @@ export const state = () => ({
   current: null,
   currentPersonRepositories: [],
   currentPersonContributed: [],
-  selectedTags: []
+  selectedTags: [],
+  peopleWebSocketBridge: null
 });
 
 export const getters = {
@@ -92,22 +94,31 @@ export const actions = {
   setSelectedTags ({commit}, value) {
     commit('SET_SELECTED_TAGS', value);
   },
-  openSocket ({ dispatch, commit, state }) {
+  openSocket ({ dispatch, commit }) {
     const webSocketBridge = new WebSocketBridge();
-    webSocketBridge.connect('ws://localhost/ws-people');
-    webSocketBridge.listen(action => {
-      if (action.person) {
-        const person = apiReadParser(action.person);
-        const index = state.list.findIndex(p => p.id === action.person.id);
-        if (!index) {
-          const audio = new Audio('/ding.mp3');
-          audio.play();
-          commit('ADD_PERSON', person);
-        } else {
-          commit('UPDATE_PERSON', {index, person});
+    webSocketBridge.connect(`${process.env.webSocketURL}ws-people`);
+    webSocketBridge.listen(a => dispatch('socketAction', a));
+    commit('SET_PEOPLE_WEBSOCKET_BRIDGE', webSocketBridge);
+  },
+  socketAction ({commit, rootGetters, state}, action) {
+    if (action && action.person) {
+      const person = apiReadParser(action.person);
+      const index = state.list.findIndex(p => p.id === action.person.id);
+      if (index !== -1) {
+        const settings = rootGetters['user/getSettings'];
+        const newPin = person.location && !state.list[index].location;
+        if (settings.ding && newPin) {
+          playDing();
         }
+        commit('UPDATE_PERSON', {index, person});
+      } else {
+        commit('ADD_PERSON', person);
       }
-    });
+    }
+  },
+  closeSocket ({commit, state}) {
+    state.peopleWebSocketBridge.socket.close(1000, '', { keepClosed: true });
+    commit('SET_PEOPLE_WEBSOCKET_BRIDGE', null);
   }
 };
 
@@ -132,5 +143,8 @@ export const mutations = {
   },
   SET_SELECTED_TAGS: (state, tags) => {
     state.selectedTags = [...tags];
+  },
+  SET_PEOPLE_WEBSOCKET_BRIDGE: (state, ws) => {
+    state.peopleWebSocketBridge = ws;
   }
 };
