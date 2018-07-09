@@ -22,20 +22,34 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-dialog
+      v-model="settingsDialog"
+      persistent
+      max-width="450"
+    >
+      <settings-form />
+    </v-dialog>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import SettingsForm from './SettingsForm';
+
 export default {
+  components: {
+    SettingsForm
+  },
   computed: {
     ...mapGetters({
-      optOutDialog: 'layout/getOptOutDialogOpen'
+      optOutDialog: 'layout/getOptOutDialogOpen',
+      settingsDialog: 'layout/getSettingsDialogOpen'
     })
   },
   methods: {
     ...mapActions({
       setOptOutDialogOpen: 'layout/setOptOutDialogOpen',
+      setSettingsDialogOpen: 'layout/setSettingsDialogOpen',
       optOut: 'user/optOut'
     }),
     confirmOptOut () {
@@ -44,6 +58,12 @@ export default {
     },
     cancelOptOut () {
       this.setOptOutDialogOpen(false);
+    },
+    closeSettings () {
+      this.setSettingsDialogOpen(false);
+    },
+    saveSettings () {
+      this.setSettingsDialogOpen(false);
     }
   }
 };
