@@ -214,8 +214,8 @@ export default {
           return L.divIcon({
             className: `custom-cluster-icon`,
             html,
-            iconSize: [48, 58],
-            iconAnchor: [24, 58]
+            iconSize: [48, 52],
+            iconAnchor: [24, 52]
           });
         }
       };
