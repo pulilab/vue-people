@@ -56,6 +56,21 @@
         />
       </v-btn>
     </div>
+
+    <div class="new-user-pop px-4 pb-4">
+      <h6 class="body-2 mb-4">
+        Proudly present our newest user:
+      </h6>
+      <!-- TODO -->
+      <!-- Add '.bounceInLeft' for intro and '.bounceOutDown' for outro animation -->
+      <v-card
+        light
+        class="up-wrapper elevation-4 animated"
+      >
+        <user-avatar/>
+      </v-card>
+    </div>
+
     <div class="credit elevation-6">
       <span>
         <img
@@ -71,9 +86,12 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-
+import UserAvatar from './UserAvatar';
 export default {
   name: 'LeftSide',
+  components: {
+    UserAvatar
+  },
   computed: {
     ...mapGetters({
       mapReady: 'map/getMapReady'
@@ -109,7 +127,7 @@ export default {
     background-color: @color-white;
 
     .intro-text {
-      height: calc(100% - 64px);
+      max-height: calc(100% - 64px);
       overflow-y: auto;
 
       .logo {
@@ -141,6 +159,16 @@ export default {
             color: @color-white;
           }
         }
+      }
+    }
+
+    .new-user-pop {
+      h6 {
+        color: @font-dark-secondary;
+      }
+
+      .up-wrapper {
+        padding: 12px;
       }
     }
 
