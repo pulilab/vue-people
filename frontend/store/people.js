@@ -32,6 +32,13 @@ export const getters = {
         )
     ];
   },
+  getLatestUser: (state, getters) => {
+    const last = getters.getList.filter(u => u.name).slice(-1)[0];
+    if (last) {
+      return last.id;
+    }
+    return null;
+  },
   getCurrentPerson: state => {
     return state.current;
   },
@@ -104,21 +111,28 @@ export const actions = {
     if (action && action.person) {
       const person = apiReadParser(action.person);
       const index = state.list.findIndex(p => p.id === action.person.id);
+      const settings = rootGetters['user/getSettings'];
       if (index !== -1) {
-        const settings = rootGetters['user/getSettings'];
-        const newPin = person.location && !state.list[index].location;
-        if (settings.ding && newPin) {
-          playDing();
-        }
+        const stored = {...state.list[index]};
         commit('UPDATE_PERSON', {index, person});
+        if (settings.ding && person.name && !stored.name) {
+          playDing(settings.ding, person);
+        }
       } else {
         commit('ADD_PERSON', person);
+        if (settings.ding && person.name) {
+          playDing();
+        }
       }
     }
   },
   closeSocket ({commit, state}) {
     state.peopleWebSocketBridge.socket.close(1000, '', { keepClosed: true });
     commit('SET_PEOPLE_WEBSOCKET_BRIDGE', null);
+  },
+  deletePerson ({commit}, index) {
+    console.log('delete person', index)
+    commit('DELETE_PERSON', index);
   }
 };
 
@@ -131,6 +145,9 @@ export const mutations = {
   },
   UPDATE_PERSON: (state, {person, index}) => {
     state.list.splice(index, 1, person);
+  },
+  DELETE_PERSON: (state, index) => {
+    state.list.splice(index, 1);
   },
   SET_CURRENT: (state, id) => {
     state.current = id;
