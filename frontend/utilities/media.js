@@ -5,5 +5,4 @@ export const playDing = () => {
   } catch (e) {
     console.log(e);
   }
-}
-;
+};
