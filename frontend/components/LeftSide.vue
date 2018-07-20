@@ -57,17 +57,20 @@
       </v-btn>
     </div>
 
-    <div class="new-user-pop px-4 pb-4">
+    <div
+      v-show="mapReady"
+      class="new-user-pop px-4 pb-4"
+    >
       <h6 class="body-2 mb-4">
-        Proudly present our newest user:
+        Welcome to our latest member:
       </h6>
-      <!-- TODO -->
-      <!-- Add '.bounceInLeft' for intro and '.bounceOutDown' for outro animation -->
       <v-card
+        v-if="lastUser"
+        :class="['up-wrapper', 'elevation-4', 'animated', lastUserAnimation]"
         light
-        class="up-wrapper elevation-4 animated"
+        @click.native.stop.capture="goToLatestUserDetails"
       >
-        <user-avatar/>
+        <user-avatar :id="lastUser" />
       </v-card>
     </div>
 
@@ -92,9 +95,16 @@ export default {
   components: {
     UserAvatar
   },
+  data () {
+    return {
+      lastUser: null,
+      lastUserAnimation: null
+    };
+  },
   computed: {
     ...mapGetters({
-      mapReady: 'map/getMapReady'
+      mapReady: 'map/getMapReady',
+      latestUser: 'people/getLatestUser'
     }),
     showRootContent () {
       const leftRoutes = ['index-user-id', 'index-meetup-id'];
@@ -107,10 +117,30 @@ export default {
       return this.$mq === 'sm' || this.$mq === 'xs';
     }
   },
+  watch: {
+    latestUser: {
+      immediate: true,
+      handler (user, old) {
+        if (user && !old) {
+          this.lastUser = user;
+          this.lastUserAnimation = 'bounceInLeft';
+        } else if (user && old) {
+          this.lastUserAnimation = 'bounceOutDown';
+          setTimeout(() => {
+            this.lastUser = user;
+            this.lastUserAnimation = 'bounceInLeft';
+          }, 1000);
+        }
+      }
+    }
+  },
   methods: {
     ...mapActions({
       setGoToMap: 'setGoToMap'
-    })
+    }),
+    goToLatestUserDetails () {
+      this.$router.push(`/user/${this.latestUser}/`);
+    }
   }
 };
 </script>
@@ -168,6 +198,7 @@ export default {
       }
 
       .up-wrapper {
+        cursor: pointer;
         padding: 12px;
       }
     }
