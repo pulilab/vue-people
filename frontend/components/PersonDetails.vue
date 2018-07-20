@@ -20,6 +20,7 @@
         </v-flex>
         <v-flex>
           <v-btn
+            :disabled="!person.latlng"
             icon
             light
             class="btn-center-focus ma-0"
