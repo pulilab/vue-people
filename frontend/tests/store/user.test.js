@@ -186,6 +186,7 @@ describe('actions', () => {
     vuex.getters.getUserProfile = {id: 1};
     actions.$axios.delete.mockResolvedValue(true);
     await actions.optOut(vuex);
+    expect(vuex.dispatch).toHaveBeenCalledWith('people/deletePerson', 1, {root: true});
     expect(actions.$axios.delete).toHaveBeenLastCalledWith('/api/user/1/');
     expect(vuex.dispatch).toHaveBeenLastCalledWith('logout');
   });

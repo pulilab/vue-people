@@ -39,6 +39,15 @@ describe('getters', () => {
     expect(parsersUtils.latLngParser).toHaveBeenCalledTimes(2);
   });
 
+  test('getLatestUser', () => {
+    let getList = [{id: 1}, {id: 2, name: 'bob'}, {id: 3, name: 'carl'}];
+    let result = getters.getLatestUser(null, {getList});
+    expect(result).toBe(3);
+    getList = [{id: 1}, {id: 2}, {id: 3}];
+    result = getters.getLatestUser(null, {getList});
+    expect(result).toBe(null);
+  });
+
   test('getCurrentPerson', () => {
     expect(getters.getCurrentPerson(s)).toEqual(s.current);
   });
@@ -216,7 +225,7 @@ describe('actions', () => {
   });
 
   test('socketAction', () => {
-    const parserSpy = jest.spyOn(parsersUtils, 'apiReadParser').mockReturnValue(2);
+    const parserSpy = jest.spyOn(parsersUtils, 'apiReadParser').mockReturnValue({id: 2});
     jest.spyOn(mediaUtils, 'playDing').mockReturnValue(undefined);
     actions.socketAction(vuex);
     expect(vuex.commit).not.toHaveBeenCalled();
@@ -230,17 +239,40 @@ describe('actions', () => {
       'user/getSettings': {}
     };
     actions.socketAction(vuex, {person: { id: 1 }});
-    expect(vuex.commit).toHaveBeenCalledWith('ADD_PERSON', 2);
+    expect(vuex.commit).toHaveBeenCalledWith('ADD_PERSON', {id: 2});
+    expect(mediaUtils.playDing).not.toHaveBeenCalled();
 
+    parserSpy.mockReturnValue({name: 'evan'});
+    actions.socketAction(vuex, {person: { id: 1 }});
+    expect(vuex.commit).toHaveBeenCalledWith('ADD_PERSON', {id: 2});
+    expect(mediaUtils.playDing).not.toHaveBeenCalled();
+
+    vuex.rootGetters['user/getSettings'].ding = true;
+    actions.socketAction(vuex, {person: { id: 1 }});
+    expect(vuex.commit).toHaveBeenCalledWith('ADD_PERSON', {id: 2});
+    expect(mediaUtils.playDing).toHaveBeenCalled();
+
+    mediaUtils.playDing.mockClear();
+
+    vuex.rootGetters['user/getSettings'].ding = false;
+    parserSpy.mockReturnValue(2);
     vuex.state.list = [{id: 1}];
     actions.socketAction(vuex, {person: { id: 1 }});
     expect(vuex.commit).toHaveBeenCalledWith('UPDATE_PERSON', {index: 0, person: 2});
     expect(mediaUtils.playDing).not.toHaveBeenCalled();
 
-    parserSpy.mockReturnValue({location: {}});
     vuex.rootGetters['user/getSettings'].ding = true;
+    parserSpy.mockReturnValue({name: 'evan'});
+    vuex.state.list = [{id: 1, name: 'bob'}];
     actions.socketAction(vuex, {person: { id: 1 }});
-    expect(vuex.commit).toHaveBeenCalledWith('UPDATE_PERSON', {index: 0, person: 2});
+    expect(vuex.commit).toHaveBeenCalledWith('UPDATE_PERSON', {index: 0, person: {name: 'evan'}});
+    expect(mediaUtils.playDing).not.toHaveBeenCalled();
+
+    vuex.rootGetters['user/getSettings'].ding = true;
+    parserSpy.mockReturnValue({name: 'evan'});
+    vuex.state.list = [{id: 1, name: undefined}];
+    actions.socketAction(vuex, {person: { id: 1 }});
+    expect(vuex.commit).toHaveBeenCalledWith('UPDATE_PERSON', {index: 0, person: {name: 'evan'}});
     expect(mediaUtils.playDing).toHaveBeenCalled();
   });
 
@@ -255,6 +287,11 @@ describe('actions', () => {
     actions.closeSocket(vuex);
     expect(vuex.commit).toHaveBeenCalledWith('SET_PEOPLE_WEBSOCKET_BRIDGE', null);
     expect(vuex.state.peopleWebSocketBridge.socket.close).toHaveBeenCalled();
+  });
+
+  test('deletePerson', () => {
+    actions.deletePerson(vuex, 1);
+    expect(vuex.commit).toHaveBeenLastCalledWith('DELETE_PERSON', 1);
   });
 });
 
@@ -279,6 +316,14 @@ describe('mutations', () => {
     };
     mutations.UPDATE_PERSON(s, {person: 2, index: 0});
     expect(s.list).toEqual([2]);
+  });
+
+  test('UPDATE_PERSON', () => {
+    const s = {
+      list: [1, 2]
+    };
+    mutations.DELETE_PERSON(s, 1);
+    expect(s.list).toEqual([1]);
   });
 
   test('SET_CURRENT', () => {
