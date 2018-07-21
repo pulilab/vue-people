@@ -131,7 +131,6 @@ export const actions = {
     commit('SET_PEOPLE_WEBSOCKET_BRIDGE', null);
   },
   deletePerson ({commit}, index) {
-    console.log('delete person', index)
     commit('DELETE_PERSON', index);
   }
 };
