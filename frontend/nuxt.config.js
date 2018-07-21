@@ -24,7 +24,7 @@ const config = {
   ],
   env: {
     gitHubApiKey: process.env.GITHUB_KEY || '',
-    webSocketURL: process.env.WEBSOCKET_URL || 'ws://localhost/'
+    webSocketProtocol: process.env.WEBSOCKET_PROTOCOL || 'wss'
   },
   plugins: [
     { src: '~plugins/axios.js', ssr: true },

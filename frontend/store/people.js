@@ -103,7 +103,7 @@ export const actions = {
   },
   openSocket ({ dispatch, commit }) {
     const webSocketBridge = new WebSocketBridge();
-    webSocketBridge.connect(`${process.env.webSocketURL}ws-people`);
+    webSocketBridge.connect(`${process.env.webSocketProtocol}://${window.location.hostname}/ws-people`);
     webSocketBridge.listen(a => dispatch('socketAction', a));
     commit('SET_PEOPLE_WEBSOCKET_BRIDGE', webSocketBridge);
   },
