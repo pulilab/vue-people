@@ -25,7 +25,7 @@
     "js-cookie": "^2.2.0",
     "lodash": "^4.17.10",
     "mdi": "^2.2.43",
-    "nuxt": "^1.0.0",
+    "nuxt": "^1.4.0",
     "nuxt-device-detect": "^1.1.1",
     "nuxt-mq": "^1.0.5",
     "vee-validate": "^2.0.6",
