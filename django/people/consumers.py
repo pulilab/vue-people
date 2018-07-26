@@ -4,7 +4,6 @@ from people.serializers import PersonSerializer
 from people.models import Person
 
 class PersonConsumer(JsonWebsocketConsumer):
-    activation_code = None
 
     def connect(self):
         self.accept()
