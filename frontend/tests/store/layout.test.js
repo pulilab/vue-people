@@ -21,6 +21,13 @@ describe('getters', () => {
     result = getters.getOptOutDialogOpen(s);
     expect(result).toEqual(s.optOutDialogOpen);
   });
+  test('getSettingsDialogOpen', () => {
+    let result = getters.getSettingsDialogOpen(s);
+    expect(result).toEqual(s.settingsDialogOpen);
+    s.settingsDialogOpen = true;
+    result = getters.getSettingsDialogOpen(s);
+    expect(result).toEqual(s.settingsDialogOpen);
+  });
 });
 
 describe('actions', () => {
@@ -36,15 +43,24 @@ describe('actions', () => {
 
   test('setOptOutDialogOpen', () => {
     actions.setOptOutDialogOpen(vuex, true);
-    expect(vuex.commit).toHaveBeenLastCalledWith('SET_OUT_OUT_DIALOG_OPEN', true);
+    expect(vuex.commit).toHaveBeenLastCalledWith('SET_OPT_OUT_DIALOG_OPEN', true);
+  });
+  test('setSettingsDialogOpen', () => {
+    actions.setSettingsDialogOpen(vuex, true);
+    expect(vuex.commit).toHaveBeenLastCalledWith('SET_SETTINGS_DIALOG_OPEN', true);
   });
 });
 
 describe('mutations', () => {
-  test('SET_OUT_OUT_DIALOG_OPEN', () => {
+  test('SET_OPT_OUT_DIALOG_OPEN', () => {
     const state = {};
-    mutations.SET_OUT_OUT_DIALOG_OPEN(state, 1);
+    mutations.SET_OPT_OUT_DIALOG_OPEN(state, 1);
     expect(state.optOutDialogOpen).toEqual(1);
+  });
+  test('SET_SETTINGS_DIALOG_OPEN', () => {
+    const state = {};
+    mutations.SET_SETTINGS_DIALOG_OPEN(state, 1);
+    expect(state.settingsDialogOpen).toEqual(1);
   });
 
 });

@@ -127,6 +127,19 @@
             v-if="isLoggedIn"
             avatar
             active-class=""
+            @click="openSettingsDialog">
+            <v-list-tile-avatar>
+              <v-icon>settings</v-icon>
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>Settings</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+
+          <v-list-tile
+            v-if="isLoggedIn"
+            avatar
+            active-class=""
             @click="doLogout">
             <v-list-tile-avatar>
               <v-icon>mdi-logout</v-icon>
@@ -206,7 +219,8 @@ export default {
       setAddMode: 'map/setAddMode',
       updateUserProfile: 'user/updateUserProfile',
       setGoToMap: 'setGoToMap',
-      setOptOutDialogOpen: 'layout/setOptOutDialogOpen'
+      setOptOutDialogOpen: 'layout/setOptOutDialogOpen',
+      setSettingsDialogOpen: 'layout/setSettingsDialogOpen'
     }),
     doLogout () {
       this.menu = false;
@@ -222,7 +236,12 @@ export default {
     },
     centerOnUser () {
       this.$root.$emit('map:center-on', this.userProfile.latlng);
+    },
+    openSettingsDialog () {
+      this.menu = false;
+      this.setSettingsDialogOpen(true);
     }
+
   }
 };
 </script>

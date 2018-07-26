@@ -16,7 +16,7 @@ services:
       - ./django/media:/usr/share/app/media:rw
       - log_data:/var/log/django
       - media_data:/usr/src/app/media
-    command: /usr/local/bin/gunicorn peoplebackend.wsgi:application -w 5 -b :8000 --reload --timeout 120
+    command: /usr/local/bin/daphne -b 0.0.0.0 -p 8000 asgi:application
 
   celery:
     restart: always

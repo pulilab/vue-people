@@ -1,4 +1,4 @@
-Django
+Django==2.0.4
 gunicorn
 psycopg2
 djangorestframework
@@ -11,7 +11,10 @@ django-taggit-serializer
 django-dotenv
 django-simplefeedback==0.8
 django-prettyjson==0.3.0
+daphne==2.1.1
 celery
+channels==2.1.1
+channels-redis==2.1.1
 redis
 raven
 

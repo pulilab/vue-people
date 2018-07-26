@@ -56,6 +56,24 @@
         />
       </v-btn>
     </div>
+
+    <div
+      v-show="mapReady"
+      class="new-user-pop px-4 pb-4"
+    >
+      <h6 class="body-2 mb-4">
+        Welcome to our latest member:
+      </h6>
+      <v-card
+        v-if="lastUser"
+        :class="['up-wrapper', 'elevation-4', 'animated', lastUserAnimation]"
+        light
+        @click.native.stop.capture="goToLatestUserDetails"
+      >
+        <user-avatar :id="lastUser" />
+      </v-card>
+    </div>
+
     <div class="credit elevation-6">
       <span>
         <img
@@ -71,12 +89,22 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-
+import UserAvatar from './UserAvatar';
 export default {
   name: 'LeftSide',
+  components: {
+    UserAvatar
+  },
+  data () {
+    return {
+      lastUser: null,
+      lastUserAnimation: null
+    };
+  },
   computed: {
     ...mapGetters({
-      mapReady: 'map/getMapReady'
+      mapReady: 'map/getMapReady',
+      latestUser: 'people/getLatestUser'
     }),
     showRootContent () {
       const leftRoutes = ['index-user-id', 'index-meetup-id'];
@@ -89,10 +117,30 @@ export default {
       return this.$mq === 'sm' || this.$mq === 'xs';
     }
   },
+  watch: {
+    latestUser: {
+      immediate: true,
+      handler (user, old) {
+        if (user && !old) {
+          this.lastUser = user;
+          this.lastUserAnimation = 'bounceInLeft';
+        } else if (user && old) {
+          this.lastUserAnimation = 'bounceOutDown';
+          setTimeout(() => {
+            this.lastUser = user;
+            this.lastUserAnimation = 'bounceInLeft';
+          }, 1000);
+        }
+      }
+    }
+  },
   methods: {
     ...mapActions({
       setGoToMap: 'setGoToMap'
-    })
+    }),
+    goToLatestUserDetails () {
+      this.$router.push(`/user/${this.latestUser}/`);
+    }
   }
 };
 </script>
@@ -109,7 +157,7 @@ export default {
     background-color: @color-white;
 
     .intro-text {
-      height: calc(100% - 64px);
+      max-height: calc(100% - 64px);
       overflow-y: auto;
 
       .logo {
@@ -141,6 +189,17 @@ export default {
             color: @color-white;
           }
         }
+      }
+    }
+
+    .new-user-pop {
+      h6 {
+        color: @font-dark-secondary;
+      }
+
+      .up-wrapper {
+        cursor: pointer;
+        padding: 12px;
       }
     }
 

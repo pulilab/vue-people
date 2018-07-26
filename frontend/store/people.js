@@ -1,13 +1,16 @@
 import { gitHubUserRepositories } from '~/integrations/github/queries';
 import { gitHubGraphQlRequest, filterOutNonVueAndZeroStars } from '~/integrations/github/utilities';
 import { apiReadParser, latLngParser } from '~/utilities/parsers';
+import { playDing } from '~/utilities/media';
+import { WebSocketBridge } from 'django-channels';
 
 export const state = () => ({
   list: [],
   current: null,
   currentPersonRepositories: [],
   currentPersonContributed: [],
-  selectedTags: []
+  selectedTags: [],
+  peopleWebSocketBridge: null
 });
 
 export const getters = {
@@ -28,6 +31,13 @@ export const getters = {
         }
         )
     ];
+  },
+  getLatestUser: (state, getters) => {
+    const last = getters.getList.filter(u => u.name).slice(-1)[0];
+    if (last) {
+      return last.id;
+    }
+    return null;
   },
   getCurrentPerson: state => {
     return state.current;
@@ -90,12 +100,53 @@ export const actions = {
   },
   setSelectedTags ({commit}, value) {
     commit('SET_SELECTED_TAGS', value);
+  },
+  openSocket ({ dispatch, commit }) {
+    const webSocketBridge = new WebSocketBridge();
+    webSocketBridge.connect(`${process.env.webSocketProtocol}://${window.location.hostname}/ws-people`);
+    webSocketBridge.listen(a => dispatch('socketAction', a));
+    commit('SET_PEOPLE_WEBSOCKET_BRIDGE', webSocketBridge);
+  },
+  socketAction ({commit, rootGetters, state}, action) {
+    if (action && action.person) {
+      const person = apiReadParser(action.person);
+      const index = state.list.findIndex(p => p.id === action.person.id);
+      const settings = rootGetters['user/getSettings'];
+      if (index !== -1) {
+        const stored = {...state.list[index]};
+        commit('UPDATE_PERSON', {index, person});
+        if (settings.ding && person.name && !stored.name) {
+          playDing(settings.ding, person);
+        }
+      } else {
+        commit('ADD_PERSON', person);
+        if (settings.ding && person.name) {
+          playDing();
+        }
+      }
+    }
+  },
+  closeSocket ({commit, state}) {
+    state.peopleWebSocketBridge.socket.close(1000, '', { keepClosed: true });
+    commit('SET_PEOPLE_WEBSOCKET_BRIDGE', null);
+  },
+  deletePerson ({commit}, index) {
+    commit('DELETE_PERSON', index);
   }
 };
 
 export const mutations = {
   SET_PEOPLE_LIST: (state, people) => {
     state.list = people;
+  },
+  ADD_PERSON: (state, person) => {
+    state.list.push(person);
+  },
+  UPDATE_PERSON: (state, {person, index}) => {
+    state.list.splice(index, 1, person);
+  },
+  DELETE_PERSON: (state, index) => {
+    state.list.splice(index, 1);
   },
   SET_CURRENT: (state, id) => {
     state.current = id;
@@ -108,5 +159,8 @@ export const mutations = {
   },
   SET_SELECTED_TAGS: (state, tags) => {
     state.selectedTags = [...tags];
+  },
+  SET_PEOPLE_WEBSOCKET_BRIDGE: (state, ws) => {
+    state.peopleWebSocketBridge = ws;
   }
 };

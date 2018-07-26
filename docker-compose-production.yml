@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  nginx:
+    restart: always
+    image: nginx:1.13.1
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/site:/usr/share/nginx/html:rw
+      - ./nginx/conf.production.d:/etc/nginx/conf.d:ro
+      - ./nginx/config/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/certs:/etc/letsencrypt:rw
+      - ./nginx/certs-data:/data/letsencrypt:rw

@@ -209,7 +209,7 @@
         </div>
 
         <v-text-field
-          v-validate="{url:require_protocol}"
+          v-validate="{url:'require_protocol'}"
           v-if="false"
           v-model="profile.githubUrl"
           :error-messages="errors.collect('GitHub Profile')"
@@ -219,7 +219,7 @@
         />
 
         <v-text-field
-          v-validate="{url:require_protocol}"
+          v-validate="{url:'require_protocol'}"
           v-model="profile.twitter_url"
           :error-messages="errors.collect('Twitter profile')"
           label="Twitter profile"
@@ -228,7 +228,7 @@
         />
 
         <v-text-field
-          v-validate="{url:require_protocol}"
+          v-validate="{url:'require_protocol'}"
           v-model="profile.website_url"
           :error-messages="errors.collect('Your website')"
           label="Your website"

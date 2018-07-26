@@ -34,6 +34,9 @@ export const getters = {
   },
   getCsrfToken: state => {
     return state.csrfToken;
+  },
+  getSettings: state => {
+    return state.savedProfile && state.savedProfile.settings ? {...state.savedProfile.settings} : {};
   }
 };
 
@@ -81,6 +84,7 @@ export const actions = {
   },
   async optOut ({dispatch, getters}) {
     const profileId = getters.getUserProfile.id;
+    dispatch('people/deletePerson', profileId, {root: true});
     await this.$axios.delete(`/api/user/${profileId}/`);
     dispatch('logout');
   }

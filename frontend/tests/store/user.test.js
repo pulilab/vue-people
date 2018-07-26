@@ -82,6 +82,18 @@ describe('getters', () => {
   test('getCsrfToken', () => {
     expect(getters.getCsrfToken(s)).toEqual(s.csrfToken);
   });
+
+  test('getSettings', () => {
+    s.savedProfile = null;
+    expect(getters.getSettings(s)).toEqual({});
+
+    s.savedProfile = {};
+    expect(getters.getSettings(s)).toEqual({});
+
+    s.savedProfile = {settings: { ding: true }};
+    expect(getters.getSettings(s)).toEqual(s.savedProfile.settings);
+    expect(getters.getSettings(s)).not.toBe(s.savedProfile.settings);
+  });
 });
 
 describe('actions', () => {
@@ -174,13 +186,13 @@ describe('actions', () => {
     vuex.getters.getUserProfile = {id: 1};
     actions.$axios.delete.mockResolvedValue(true);
     await actions.optOut(vuex);
+    expect(vuex.dispatch).toHaveBeenCalledWith('people/deletePerson', 1, {root: true});
     expect(actions.$axios.delete).toHaveBeenLastCalledWith('/api/user/1/');
     expect(vuex.dispatch).toHaveBeenLastCalledWith('logout');
   });
 });
 
 describe('mutations', () => {
-
   test('SET_USER_POSITION', () => {
     const s = {};
     mutations.SET_USER_POSITION(s, 1);

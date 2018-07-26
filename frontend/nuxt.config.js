@@ -23,7 +23,8 @@ const config = {
     '~/assets/style/main.less'
   ],
   env: {
-    gitHubApiKey: process.env.GITHUB_KEY || ''
+    gitHubApiKey: process.env.GITHUB_KEY || '',
+    webSocketProtocol: process.env.WEBSOCKET_PROTOCOL || 'wss'
   },
   plugins: [
     { src: '~plugins/axios.js', ssr: true },
@@ -31,7 +32,8 @@ const config = {
     { src: '~plugins/vee-validate.js', ssr: true },
     { src: '~plugins/vue-leaflet.js', ssr: false },
     { src: '~plugins/store-tokens.js', ssr: false },
-    { src: '~plugins/vue-django-feedback.js', ssr: false }
+    { src: '~plugins/vue-django-feedback.js', ssr: false },
+    { src: '~plugins/web-sockets.js', ssr: false }
   ],
   modules: [
     '@nuxtjs/axios',
