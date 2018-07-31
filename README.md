@@ -81,7 +81,7 @@ $ docker-compose up -d
  export DOMAIN=NAME_OF_THE_DOMAIN
 
 # Pull the docker image for certbot:
- docker pull deliverous/certbot
+ docker pull certbot/certbot
 
 # Obtain the certificates
  docker run -it --rm -v /home/$(whoami)/vue-people/nginx/certs:/etc/letsencrypt:rw -v /home/$(whoami)/vue-people/nginx/certs-data:/data/letsencrypt:rw  deliverous/certbot  certonly --webroot --webroot-path=/data/letsencrypt -d $DOMAIN
@@ -97,7 +97,7 @@ $ docker-compose up -d
  sudo chown $(whoami):$(whoami) /home/$(whoami)/vue-people/nginx/certs/cert.pem
 
 # refresh certificates
- docker run -it --rm -v /home/$(whoami)/vue-people/nginx/certs:/etc/letsencrypt:rw -v /home/$(whoami)/vue-people/nginx/certs-data:/data/letsencrypt:rw  deliverous/certbot renew --webroot --webroot-path=/data/letsencrypt -d $DOMAIN
+ docker run -it --rm -v /home/$(whoami)/vue-people/nginx/certs:/etc/letsencrypt:rw -v /home/$(whoami)/vue-people/nginx/certs-data:/data/letsencrypt:rw  certbot/certbot renew --webroot --webroot-path=/data/letsencrypt
 
 ```
 
