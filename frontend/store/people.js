@@ -33,7 +33,10 @@ export const getters = {
     ];
   },
   getLatestUser: (state, getters) => {
-    const last = getters.getList.filter(u => u.name).slice(-1)[0];
+    const last = getters.getList
+      .filter(u => u.name)
+      .sort((a, b) => a.id - b.id)
+      .slice(-1)[0];
     if (last) {
       return last.id;
     }
