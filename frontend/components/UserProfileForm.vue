@@ -42,7 +42,7 @@
         <v-select
           v-model="profile.type"
           :items="userTypes"
-          label="Selecte usertype"
+          label="Select user type"
           item-text="verbose_name"
           item-value="id"
           item-disabled="disabled"
