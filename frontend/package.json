@@ -32,7 +32,7 @@
     "vue": "2.5.17",
     "vue-django-feedback": "^1.5.1",
     "vue-no-ssr": "^0.2.2",
-    "vue2-leaflet": "git+https://github.com/KoRiGaN/Vue2Leaflet.git#next",
+    "vue2-leaflet": "1.0.2",
     "vue2-leaflet-markercluster": "^2.0.0",
     "vuetify": "^1.0.10",
     "vuex-geolocation": "^1.1.0"
