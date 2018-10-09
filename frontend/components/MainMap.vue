@@ -28,7 +28,7 @@
           />
 
           <v-marker-cluster
-            v-if="pins.length > 50"
+            v-if="pins.length > 50 && iconsReady"
             ref="markerCluster"
             :options="clusterOptions"
           >
@@ -47,7 +47,7 @@
             </map-marker>
           </v-marker-cluster>
 
-          <template v-if="pins.length <= 50">
+          <template v-if="pins.length <= 50 && iconsReady">
             <map-marker
               v-for="pin in pins"
               :key="pin.id"
@@ -159,7 +159,8 @@ export default {
       iconCollection: {},
       centeredToSelected: false,
       mapOptions: { zoomControl: false, attributionControl: false },
-      centerOnNext: false
+      centerOnNext: false,
+      iconsReady: false
     };
   },
   computed: {
@@ -259,10 +260,13 @@ export default {
     }
   },
   mounted () {
-    this.iconCollection = this.allPins.reduce((p, c) => {
-      p[c.id] = this.iconGenerator(c);
-      return p;
-    }, {});
+    this.$nextTick(() => {
+      this.iconCollection = this.allPins.reduce((p, c) => {
+        p[c.id] = this.iconGenerator(c);
+        return p;
+      }, {});
+      this.iconsReady = true;
+    });
     this.$root.$on('map:center-on', this.centerOn);
   },
   beforeDestroy () {
