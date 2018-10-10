@@ -21,10 +21,10 @@
           :max-zoom="maxZoom"
           :world-copy-jump="true"
           :options="mapOptions"
+          @leaflet:load="setMapReady"
           @click="addMarker">
           <l-tilelayer
             url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'"
-            @loading="setMapReady"
           />
 
           <v-marker-cluster
