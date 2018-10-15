@@ -104,3 +104,17 @@ $ docker-compose up -d
 ## License
 
 [MIT](https://github.com/pulilab/vue-people/blob/master/LICENSE)
+
+
+## How to contribute:
+
+- fork the repo
+- clone the repo
+- `cd vue-people/frontend && yarn`
+- `yarn dev`
+- `cd.. && docker-compose build`
+- `docker-compose up -d`
+- `docker-compose exec django python manage.py migrate`
+- code :D
+- commit and create a PR from your fork to this repo
+
