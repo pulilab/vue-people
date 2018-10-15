@@ -229,7 +229,7 @@
 
         <v-text-field
           v-validate="{url:'require_protocol'}"
-          v-model="profile.discord_url"
+          v-model="profile.discord_tag"
           :error-messages="errors.collect('Discord profile')"
           label="Discord profile"
           data-vv-name="Discord profile"
@@ -320,7 +320,7 @@ export default {
         job_opportunities: false,
         hireable: false,
         twitter_url: '',
-        discord_url: '',
+        discord_tag: '',
         website_url: '',
         company: '',
         tags: [],
