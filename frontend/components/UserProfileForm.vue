@@ -229,6 +229,15 @@
 
         <v-text-field
           v-validate="{url:'require_protocol'}"
+          v-model="profile.discord_url"
+          :error-messages="errors.collect('Discord profile')"
+          label="Discord profile"
+          data-vv-name="Discord profile"
+          light
+        />
+
+        <v-text-field
+          v-validate="{url:'require_protocol'}"
           v-model="profile.website_url"
           :error-messages="errors.collect('Your website')"
           label="Your website"
@@ -311,6 +320,7 @@ export default {
         job_opportunities: false,
         hireable: false,
         twitter_url: '',
+        discord_url: '',
         website_url: '',
         company: '',
         tags: [],
