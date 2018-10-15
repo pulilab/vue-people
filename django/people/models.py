@@ -31,6 +31,7 @@ class Person(models.Model):
     github_updated = models.DateTimeField(blank=True, null=True)
     github_url = models.URLField()
     twitter_url = models.URLField(blank=True, null=True)
+    discord_url = models.URLField(blank=True, null=True)
     website_url = models.URLField(blank=True, null=True)
     avatar_url = models.URLField(blank=True, null=True)
     location = models.PointField(blank=True, null=True)
