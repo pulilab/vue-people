@@ -58,14 +58,6 @@
               Twitter
             </v-btn>
             <v-btn
-              :href="person.discord_tag"
-              :disabled="!person.discord_tag"
-              flat
-              target="_blank">
-              <v-icon class="mr-1">mdi-discord</v-icon>
-              Discord
-            </v-btn>
-            <v-btn
               :href="person.website_url"
               :disabled="!person.website_url"
               flat
@@ -111,6 +103,14 @@
               small>
               {{ tag }}
             </v-chip>
+              <v-btn
+              :href="person.discord_tag"
+              :disabled="!person.discord_tag"
+              flat
+              target="_blank">
+              <v-icon class="mr-1">mdi-discord</v-icon>
+              Discord
+            </v-btn>
           </div>
         </div>
         <repository-list/>
