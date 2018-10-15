@@ -58,6 +58,14 @@
               Twitter
             </v-btn>
             <v-btn
+              :href="person.Discord_url"
+              :disabled="!person.Discord_url"
+              flat
+              target="_blank">
+              <v-icon class="mr-1">mdi-Discord</v-icon>
+              Discord
+            </v-btn>
+            <v-btn
               :href="person.website_url"
               :disabled="!person.website_url"
               flat
