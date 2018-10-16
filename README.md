@@ -112,9 +112,22 @@ $ docker-compose up -d
 - clone the repo
 - `cd vue-people/frontend && yarn`
 - `yarn dev`
+- `cp .env.template .env`
+- edit `.env` and: 
+-- add `NODE_TLS_REJECT_UNAUTHORIZED = '0'` 
+-- add `WEBSOCKET_PROTOCOL=ws`
+-- modify `host` to `host=0.0.0.0`
 - `cd.. && docker-compose build`
 - `docker-compose up -d`
 - `docker-compose exec django python manage.py migrate`
+- `docker-compose exec django python manage.py createsuperuser` and follow the prompt to generate an admin user
+- go to `locahost/admin` and login with the created credentials
+- in the admin:
+  - Go to sites -> add site -> fill the two input with `localhost`
+  - Go to social accounts/social applications -> add social application
+  - fill with: provider: GitHub | name: Github | ClientId: XXX  | Secret Key: XXXX
+  - to obtain ClientID and Secret Key follow this guide: https://developer.github.com/apps/building-oauth-apps/creating-an-oauth-app/
+  - Homepage url is: `http://localhost` and callback url is: `http://localhost/accounts/github/login/callback/` 
 - code :D
 - commit and create a PR from your fork to this repo
 
