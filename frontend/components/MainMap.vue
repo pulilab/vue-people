@@ -261,7 +261,7 @@ export default {
     }
   },
   mounted () {
-    this.$nextTick(() => {
+    window.requestIdleCallback(() => {
       this.iconCollection = this.allPins.reduce((p, c) => {
         p[c.id] = this.iconGenerator(c);
         return p;
