@@ -4,17 +4,10 @@
     :options="pin.options"
     :lat-lng="pin.latlng"
     :icon="icon"
-    @mouseenter="markerHoverHandler(true, $event)"
-    @mouseleave="markerHoverHandler(false, $event)"
+    @mouseenter="markerHoverHandler(true)"
+    @mouseleave="markerHoverHandler(false)"
     @click="emitMarkerClick"
-  >
-    <l-tooltip
-      v-if="showFloatingUi && hovered || forceHovered"
-      :options="tooltipOptions"
-    >
-      <slot />
-    </l-tooltip>
-  </l-marker>
+  />
 </template>
 
 <script>
@@ -33,47 +26,17 @@ export default {
     showFloatingUi: {
       type: Boolean,
       required: true
-    },
-    forceHovered: {
-      type: Boolean,
-      default: false
-    },
-    additionalTooltipClass: {
-      type: String,
-      default: ''
     }
-  },
-  data () {
-    const iconY = this.icon ? -this.icon.options.iconSize[1] - 3 : -55;
-    return {
-      hovered: false,
-      tooltipOptions: {
-        className: `dark-tooltip ${this.additionalTooltipClass}`,
-        permanent: true,
-        direction: 'top',
-        offset: [0, iconY]
-      }
-    };
   },
   methods: {
     emitMarkerClick () {
       this.$emit('marker-click');
     },
-    markerHoverHandler (isEnter, event) {
+    markerHoverHandler (isEnter) {
       if (isEnter) {
-        this.hovered = true;
-        const m = event.target;
-        window.setTimeout(() => {
-          if (m && !m.isTooltipOpen()) {
-            try {
-              m.toggleTooltip();
-            } catch (e) {
-              console.log(e);
-            }
-          }
-        }, 100);
+        this.$emit('hover:in', this.pin);
       } else {
-        this.hovered = false;
+        this.$emit('hover:out');
       }
     }
   }
@@ -84,29 +47,6 @@ export default {
 
     @import "../assets/style/variables.less";
     @import "../assets/style/mixins.less";
-
-    .dark-tooltip {
-      border: none;
-      border-radius: 3px;
-      background-color: @font-dark-primary;
-      box-shadow: 0 0 6px 0 rgba(0,0,0,0.12), 0 6px 6px 0 rgba(0,0,0,0.24);
-    }
-
-    .leaflet-tooltip-left.dark-tooltip::before {
-      border-left-color: @font-dark-primary;
-    }
-
-    .leaflet-tooltip-right.dark-tooltip::before {
-      border-right-color: @font-dark-primary;
-    }
-
-    .leaflet-tooltip-bottom.dark-tooltip::before {
-      border-bottom-color: @font-dark-primary;
-    }
-
-    .leaflet-tooltip-top.dark-tooltip::before {
-      border-top-color: @font-dark-primary;
-    }
 
     .custom-pin-icon {
       width: 30px;
