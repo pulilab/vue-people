@@ -26,6 +26,13 @@
           <l-tilelayer
             url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'"
           />
+          <tooltip-group ref="tooltipLayer">
+            <user-avatar
+              :id="instance"
+              :dark="true"
+              slot-scope="{ instance }"
+            />
+          </tooltip-group>
 
           <v-marker-cluster
             v-if="pins.length > 50 && iconsReady"
@@ -39,12 +46,9 @@
               :icon="getMarkerIcon(pin)"
               :show-floating-ui="showFloatingUI"
               @marker-click="openPersonDetails(pin)"
-            >
-              <user-avatar
-                :id="pin.id"
-                :dark="true"
-              />
-            </map-marker>
+              @hover:in="tooltipShow"
+              @hover:out="tooltipHide"
+            />
           </v-marker-cluster>
 
           <template v-if="pins.length <= 50 && iconsReady">
@@ -55,12 +59,9 @@
               :icon="getMarkerIcon(pin)"
               :show-floating-ui="showFloatingUI"
               @marker-click="openPersonDetails(pin)"
-            >
-              <user-avatar
-                :id="pin.id"
-                :dark="true"
-              />
-            </map-marker>
+              @hover:in="tooltipShow"
+              @hover:out="tooltipHide"
+            />
           </template>
 
           <map-marker
@@ -69,11 +70,9 @@
             :icon="iconGenerator(userProfile, true)"
             :show-floating-ui="showFloatingUI"
             @marker-click="openPersonDetails(userProfile)"
-          >
-            <user-avatar
-              :dark="true"
-            />
-          </map-marker>
+            @hover:in="tooltipShow"
+            @hover:out="tooltipHide"
+          />
 
           <meetup-cluster
             :show-floating-ui="showFloatingUI"
@@ -140,6 +139,7 @@ import UserAvatar from './UserAvatar.vue';
 import FeedbackButton from './FeedbackButton.vue';
 import VuexGeolocation from 'vuex-geolocation';
 import MeetupCluster from './MeetupCluster';
+import TooltipGroup from './TooltipGroup';
 
 import NoSSR from 'vue-no-ssr';
 export default {
@@ -151,7 +151,8 @@ export default {
     FeedbackButton,
     MapMarker,
     MeetupCluster,
-    UserAvatar
+    UserAvatar,
+    TooltipGroup
   },
   data () {
     return {
@@ -260,7 +261,7 @@ export default {
     }
   },
   mounted () {
-    this.$nextTick(() => {
+    window.requestIdleCallback(() => {
       this.iconCollection = this.allPins.reduce((p, c) => {
         p[c.id] = this.iconGenerator(c);
         return p;
@@ -341,6 +342,12 @@ export default {
       const newIcon = this.iconGenerator(pin);
       this.iconCollection[pin.id] = newIcon;
       return newIcon;
+    },
+    tooltipShow ({id, latlng}) {
+      this.$refs.tooltipLayer.open(id, latlng);
+    },
+    tooltipHide () {
+      this.$refs.tooltipLayer.close();
     }
   }
 };

@@ -1,51 +1,65 @@
 <template>
-  <v-marker-cluster
-    v-if="showMeetups"
-    :options="clusterOptions"
-  >
-    <map-marker
-      v-for="pin in meetupsGroups"
-      :key="pin.id"
-      :pin="pin"
-      :icon="iconChooser(pin)"
-      :show-floating-ui="showFloatingUi"
-      additional-tooltip-class="meetup-tooltip"
-      @marker-click="openMeetupDetails(pin.id)"
+  <div>
+
+    <tooltip-group
+      ref="tooltipLayer"
+      class-names="meetup-tooltip"
     >
       <v-layout
+        slot-scope="{ instance }"
         row
         align-center
       >
-        <div class="logo">
-          <img :src="pin.group_photo">
-          <span class="m"> Meetup </span>
-        </div>
-        <div class="details">
-          <v-layout
-            column
-            align-content-center
-          >
-            <v-flex class="title">
-              {{ pin.name }}
-            </v-flex>
-            <v-flex class="date">
-              {{ formatTooltipDate(pin) }}
-            </v-flex>
-          </v-layout>
-        </div>
+        <template v-if="instance">
+          <div class="logo">
+            <img :src="instance.group_photo">
+            <span class="m"> Meetup </span>
+          </div>
+          <div class="details">
+            <v-layout
+              column
+              align-content-center
+            >
+              <v-flex class="title">
+                {{ instance.name }}
+              </v-flex>
+              <v-flex class="date">
+                {{ formatTooltipDate(instance) }}
+              </v-flex>
+            </v-layout>
+          </div>
+        </template>
       </v-layout>
-    </map-marker>
-  </v-marker-cluster>
+    </tooltip-group>
+
+    <v-marker-cluster
+      v-if="showMeetups"
+      :options="clusterOptions"
+    >
+      <map-marker
+        v-for="pin in meetupsGroups"
+        :key="pin.id"
+        :pin="pin"
+        :icon="iconChooser(pin)"
+        :show-floating-ui="showFloatingUi"
+        @marker-click="openMeetupDetails(pin.id)"
+        @hover:in="tooltipShow"
+        @hover:out="tooltipHide"
+      />
+    </v-marker-cluster>
+  </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import { format } from 'date-fns';
 import MapMarker from './MapMarker.vue';
+import TooltipGroup from './TooltipGroup';
 
 export default {
   components: {
-    MapMarker
+    MapMarker,
+    TooltipGroup
   },
   props: {
     showFloatingUi: {
@@ -131,6 +145,12 @@ export default {
         return `${date} - ${pin.event.local_time}`;
       }
       return pin.has_event_with_coords ? 'Time not specificed' : 'No upcoming event';
+    },
+    tooltipShow (pin) {
+      this.$refs.tooltipLayer.open(pin, pin.latlng);
+    },
+    tooltipHide () {
+      this.$refs.tooltipLayer.close();
     }
   }
 };
