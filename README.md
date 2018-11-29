@@ -117,6 +117,8 @@ $ docker-compose up -d
 -- add `NODE_TLS_REJECT_UNAUTHORIZED = '0'` 
 -- add `WEBSOCKET_PROTOCOL=ws`
 -- modify `host` to `host=0.0.0.0`
+- `cd ../django/ && cp .env.template .env`
+- add a random long strin under SECRET_KEY in django/.env
 - `cd.. && docker-compose build`
 - `docker-compose up -d`
 - `docker-compose exec django python manage.py migrate`
