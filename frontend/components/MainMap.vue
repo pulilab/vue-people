@@ -261,7 +261,7 @@ export default {
     }
   },
   mounted () {
-    window.requestIdleCallback(() => {
+    window.requestAnimationFrame(() => {
       this.iconCollection = this.allPins.reduce((p, c) => {
         p[c.id] = this.iconGenerator(c);
         return p;
