@@ -252,7 +252,6 @@ export default {
   },
   mounted () {
     window.requestAnimationFrame(() => {
-      console.log('req frame');
       this.iconCollection = this.allPins.reduce((p, c) => {
         p[c.id] = this.iconGenerator(c);
         return p;
