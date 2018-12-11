@@ -63,7 +63,6 @@
             @hover:out="tooltipHide"
           />
 
-
           <meetup-cluster
             :show-floating-ui="showFloatingUI"
           />
@@ -253,13 +252,14 @@ export default {
   },
   mounted () {
     window.requestAnimationFrame(() => {
+      console.log('req frame');
       this.iconCollection = this.allPins.reduce((p, c) => {
         p[c.id] = this.iconGenerator(c);
         return p;
       }, {});
       this.iconsReady = true;
     });
-    // this._defaultIcon = new window.L.Icon.Default();
+    this._defaultIcon = new window.L.Icon.Default();
     this.$root.$on('map:center-on', this.centerOn);
   },
   beforeDestroy () {
@@ -332,8 +332,6 @@ export default {
         if (icon) {
           return icon;
         }
-        // const newIcon = this.iconGenerator(pin);
-        // this.iconCollection[pin.id] = newIcon;
         return this._defaultIcon;
       }
     },
