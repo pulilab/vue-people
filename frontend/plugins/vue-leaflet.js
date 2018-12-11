@@ -1,8 +1,7 @@
 import Vue from 'vue';
-import Vue2Leaflet from 'vue2-leaflet';
-import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster';
+import {LMap, LTileLayer, LMarker, LTooltip, LLayerGroup, LControlZoom, L} from 'vue2-leaflet';
+import CustomMarkerCluster from '@/components/CustomMarkerCluster';
 
-import L from 'leaflet';
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
@@ -11,10 +10,10 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 });
 
-Vue.component('l-map', Vue2Leaflet.LMap);
-Vue.component('l-tilelayer', Vue2Leaflet.LTileLayer);
-Vue.component('l-marker', Vue2Leaflet.LMarker);
-Vue.component('l-tooltip', Vue2Leaflet.LTooltip);
-Vue.component('l-layer-group', Vue2Leaflet.LLayerGroup);
-Vue.component('l-control-zoom', Vue2Leaflet.LControlZoom);
-Vue.component('v-marker-cluster', Vue2LeafletMarkerCluster);
+Vue.component('l-map', LMap);
+Vue.component('l-tilelayer', LTileLayer);
+Vue.component('l-marker', LMarker);
+Vue.component('l-tooltip', LTooltip);
+Vue.component('l-layer-group', LLayerGroup);
+Vue.component('l-control-zoom', LControlZoom);
+Vue.component('custom-marker-cluster', CustomMarkerCluster);
