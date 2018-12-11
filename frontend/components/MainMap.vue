@@ -34,35 +34,24 @@
             />
           </tooltip-group>
 
-          <v-marker-cluster
-            v-if="pins.length > 50 && iconsReady"
+          <custom-marker-cluster
             ref="markerCluster"
             :options="clusterOptions"
+            :total="pins.length"
           >
-            <map-marker
-              v-for="pin in pins"
-              :key="pin.id"
-              :pin="pin"
-              :icon="getMarkerIcon(pin)"
-              :show-floating-ui="showFloatingUI"
-              @marker-click="openPersonDetails(pin)"
-              @hover:in="tooltipShow"
-              @hover:out="tooltipHide"
-            />
-          </v-marker-cluster>
-
-          <template v-if="pins.length <= 50 && iconsReady">
-            <map-marker
-              v-for="pin in pins"
-              :key="pin.id"
-              :pin="pin"
-              :icon="getMarkerIcon(pin)"
-              :show-floating-ui="showFloatingUI"
-              @marker-click="openPersonDetails(pin)"
-              @hover:in="tooltipShow"
-              @hover:out="tooltipHide"
-            />
-          </template>
+            <template v-if="iconsReady">
+              <map-marker
+                v-for="pin in pins"
+                :key="pin.id"
+                :pin="pin"
+                :icon="getMarkerIcon(pin)"
+                :show-floating-ui="showFloatingUI"
+                @marker-click="openPersonDetails(pin)"
+                @hover:in="tooltipShow"
+                @hover:out="tooltipHide"
+              />
+            </template>
+          </custom-marker-cluster>
 
           <map-marker
             v-if="userMaker.latlng"
@@ -73,6 +62,7 @@
             @hover:in="tooltipShow"
             @hover:out="tooltipHide"
           />
+
 
           <meetup-cluster
             :show-floating-ui="showFloatingUI"
@@ -196,6 +186,7 @@ export default {
     },
     clusterOptions () {
       return {
+        chunkedLoading: true,
         disableClusteringAtZoom: 8,
         spiderfyOnMaxZoom: false,
         maxClusterRadius: zoom => {
@@ -268,6 +259,7 @@ export default {
       }, {});
       this.iconsReady = true;
     });
+    // this._defaultIcon = new window.L.Icon.Default();
     this.$root.$on('map:center-on', this.centerOn);
   },
   beforeDestroy () {
@@ -335,13 +327,15 @@ export default {
       }
     },
     getMarkerIcon (pin) {
-      const icon = this.iconCollection[pin.id];
-      if (icon) {
-        return icon;
+      if (process.client) {
+        const icon = this.iconCollection[pin.id];
+        if (icon) {
+          return icon;
+        }
+        // const newIcon = this.iconGenerator(pin);
+        // this.iconCollection[pin.id] = newIcon;
+        return this._defaultIcon;
       }
-      const newIcon = this.iconGenerator(pin);
-      this.iconCollection[pin.id] = newIcon;
-      return newIcon;
     },
     tooltipShow ({id, latlng}) {
       this.$refs.tooltipLayer.open(id, latlng);
