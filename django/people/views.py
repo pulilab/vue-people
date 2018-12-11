@@ -1,7 +1,8 @@
 from datetime import date, timedelta
 
 from rest_framework.generics import get_object_or_404
-from rest_framework.mixins import ListModelMixin
+from rest_framework.mixins import ListModelMixin, CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, \
+    DestroyModelMixin
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from taggit.models import Tag
 
@@ -25,7 +26,7 @@ class PeopleViewSet(ListModelMixin, GenericViewSet):
     authentication_classes = []
 
 
-class PersonViewSet(ModelViewSet):
+class PersonViewSet(CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet):
     queryset = Person.objects.all().select_related('user').prefetch_related('tags')
     serializer_class = PersonDetailSerializer
     permission_classes = [IsMeOrReadOnly]
