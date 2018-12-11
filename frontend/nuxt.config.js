@@ -64,9 +64,6 @@ const config = {
   loading: { color: '#3B8070' },
   build: {
     extractCSS: true,
-    vendor: [
-      '~/vue.config.js'
-    ],
     extend (config, { isDev }) {
       if (isDev && process.client) {
         config.module.rules.push({
