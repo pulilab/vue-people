@@ -10,9 +10,9 @@ services:
       - postgis
       - redis
     volumes:
-      - ./django:/usr/src/app
+      - ./django:/src
       - ./frontend:/frontend
-      - ./nginx/site/static:/usr/src/app/static:rw
+      - ./nginx/site/static:/src/static:rw
       - ./django/media:/usr/share/app/media:rw
       - log_data:/var/log/django
       - media_data:/usr/src/app/media
@@ -27,7 +27,7 @@ services:
       - postgis
       - redis
     volumes:
-      - ./django:/usr/src/app
+      - ./django:/src
       - log_data:/var/log/django
     command: /usr/local/bin/celery -A peoplebackend worker -B -l info
 
