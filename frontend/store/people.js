@@ -16,21 +16,10 @@ export const state = () => ({
 export const getters = {
   getList: (state, getters, rootState, rootGetters) => {
     const user = rootGetters['user/getUserProfile'];
-    return [
+    const result = [
       ...state.list.filter(p => !user || !user.id || p.id !== user.id)
-        .map(p => {
-          const latlng = latLngParser(p);
-          const type = p.type ? p.type : 1;
-          return {
-            ...p,
-            selected: getters.getCurrentPerson === p.id,
-            latlng,
-            type,
-            location: undefined
-          };
-        }
-        )
     ];
+    return result;
   },
   getLatestUser: (state, getters) => {
     const last = getters.getList
@@ -74,7 +63,19 @@ export const getters = {
 export const actions = {
   async loadPeople ({commit}) {
     const { data } = await this.$axios.get('/api/people/');
-    const parsed = data.map(d => apiReadParser(d));
+    const parsed = data.map(d => {
+      const p = apiReadParser(d);
+      const latlng = latLngParser(p);
+      const type = p.type ? p.type : 1;
+      return {
+        ...p,
+        selected: getters.getCurrentPerson === p.id,
+        latlng,
+        type,
+        location: undefined
+      };
+    });
+    Object.freeze(parsed);
     commit('SET_PEOPLE_LIST', parsed);
   },
   setCurrent ({commit}, id) {
