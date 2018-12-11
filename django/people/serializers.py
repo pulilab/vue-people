@@ -31,6 +31,14 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ("last_login", "first_name", "last_name", "email")
 
 
+class UserListSerializer(serializers.ModelSerializer):
+    email = CustomEmailField()
+
+    class Meta:
+        model = User
+        fields = ("first_name", "last_name", "email")
+
+
 class UserTypeSerializer(serializers.ModelSerializer):
 
     class Meta:
