@@ -143,6 +143,11 @@ describe('actions', () => {
     await actions.loadPeople(vuex);
     expect(actions.$axios.get.mock.calls[0]).toEqual(['/api/people/']);
     expect(vuex.commit.mock.calls[0]).toEqual(['SET_PEOPLE_LIST', [{a: 1, latlng: 1, selected: false, type: 1, location: undefined}]]);
+
+    parsersUtils.apiReadParser = jest.fn().mockReturnValue({ a: 1, type: 2 });
+    await actions.loadPeople(vuex);
+    expect(actions.$axios.get.mock.calls[1]).toEqual(['/api/people/']);
+    expect(vuex.commit.mock.calls[1]).toEqual(['SET_PEOPLE_LIST', [{a: 1, latlng: 1, selected: false, type: 2, location: undefined}]]);
   });
 
   test('setCurrent', () => {
