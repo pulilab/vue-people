@@ -34,9 +34,6 @@ class PersonViewSet(CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, Dest
     def create(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
 
-    def list(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
     def perform_destroy(self, person):
         person.user.delete()
 
