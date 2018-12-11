@@ -4,7 +4,7 @@ psycopg2
 djangorestframework
 djangorestframework-gis
 coreapi
-django-redis-cache
+django-redis
 django-allauth
 django-taggit
 django-taggit-serializer
