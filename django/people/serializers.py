@@ -56,6 +56,14 @@ class PersonDetailSerializer(TaggitSerializer, serializers.ModelSerializer):
         return instance
 
 
+class PersonListSerializer(TaggitSerializer, serializers.ModelSerializer):
+    user = UserListSerializer()
+
+    class Meta:
+        model = Person
+        fields = ("id", "location", "user", "type", "avatar_url")
+
+
 class TagSerialiser(serializers.ModelSerializer):
 
     class Meta:
