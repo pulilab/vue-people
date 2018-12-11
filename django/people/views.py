@@ -49,6 +49,20 @@ class PersonViewSet(ModelViewSet):
         return obj
 
 
+class PeopleSearchViewSet(ModelViewSet):
+    queryset = Person.objects.none()
+    serializer_class = PersonListSerializer
+    permission_classes = []
+    authentication_classes = []
+
+    def get_queryset(self):
+        queryset = self.queryset
+        tags = self.request.query_params.getlist('tag', None)
+        if tags is not None:
+            queryset = Person.objects.all().select_related('user').filter(tags__name__in=tags).distinct()
+        return queryset
+
+
 class TagViewSet(ListModelMixin, GenericViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerialiser
