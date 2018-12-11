@@ -60,7 +60,7 @@ class PeopleSearchViewSet(ModelViewSet):
         queryset = self.queryset
         tags = self.request.query_params.getlist('tag', None)
         if tags is not None:
-            queryset = Person.objects.all().select_related('user').filter(tags__id__in=tags).distinct()
+            queryset = Person.objects.exclude(location=None).select_related('user').filter(tags__id__in=tags).distinct()
         return queryset
 
 
