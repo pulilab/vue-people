@@ -1,6 +1,6 @@
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import JsonWebsocketConsumer
-from people.serializers import PersonSerializer
+from people.serializers import PersonDetailSerializer
 from people.models import Person
 
 class PersonConsumer(JsonWebsocketConsumer):
@@ -15,7 +15,7 @@ class PersonConsumer(JsonWebsocketConsumer):
 
     def send_person(self, event):
         person = Person.objects.get(id=event['id'])
-        p = PersonSerializer(person).data
+        p = PersonDetailSerializer(person).data
         self.send_json({
             "person": p
         })

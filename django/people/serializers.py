@@ -38,7 +38,7 @@ class UserTypeSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class PersonSerializer(TaggitSerializer, serializers.ModelSerializer):
+class PersonDetailSerializer(TaggitSerializer, serializers.ModelSerializer):
     tags = TagListSerializerField()
     user = UserSerializer()
 
