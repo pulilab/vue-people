@@ -6,8 +6,8 @@ from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from taggit.models import Tag
 
 from .permission import IsMeOrReadOnly
-from .serializers import UserTypeSerializer, PersonSerializer, TagSerialiser, MeetupGroupSerialiser, \
-    MeetupEventSerialiser
+from .serializers import UserTypeSerializer, PersonDetailSerializer, TagSerialiser, MeetupGroupSerialiser, \
+    MeetupEventSerialiser, PersonListSerializer
 from .models import Person, Type, MeetupGroup, MeetupEvent
 
 
@@ -26,8 +26,8 @@ class PeopleViewSet(ListModelMixin, GenericViewSet):
 
 
 class PersonViewSet(ModelViewSet):
-    queryset = Person.objects.all()
-    serializer_class = PersonSerializer
+    queryset = Person.objects.all().select_related('user').prefetch_related('tags')
+    serializer_class = PersonDetailSerializer
     permission_classes = [IsMeOrReadOnly]
 
     def create(self, request, *args, **kwargs):
