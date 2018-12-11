@@ -19,8 +19,8 @@ class UserTypeViewSet(ListModelMixin, GenericViewSet):
 
 
 class PeopleViewSet(ListModelMixin, GenericViewSet):
-    queryset = Person.objects.all().select_related('user').prefetch_related('tags')
-    serializer_class = PersonSerializer
+    queryset = Person.objects.all().select_related('user')
+    serializer_class = PersonListSerializer
     permission_classes = []
     authentication_classes = []
 
