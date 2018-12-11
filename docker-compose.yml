@@ -41,7 +41,7 @@ services:
 
   nginx:
     restart: always
-    image: nginx:1.13.1
+    image: nginx:1.15.6
     ports:
       - "80:80"
       - "443:443"
@@ -70,7 +70,7 @@ services:
 
   redis:
     restart: always
-    image: redis:4.0.9
+    image: redis:4.0.10
     expose:
       - "6379"
 
