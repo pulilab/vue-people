@@ -47,6 +47,13 @@ class PersonViewSet(CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, Dest
         return obj
 
 
+class PersonViewSet(RetrieveModelMixin, GenericViewSet):
+    queryset = Person.objects.all().select_related('user').prefetch_related('tags')
+    serializer_class = PersonDetailSerializer
+    permission_classes = []
+    authentication_classes = []
+
+
 class PeopleSearchViewSet(ModelViewSet):
     queryset = Person.objects.none()
     serializer_class = PersonListSerializer
