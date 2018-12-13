@@ -26,10 +26,13 @@ class PeopleViewSet(ListModelMixin, GenericViewSet):
     authentication_classes = []
 
 
-class PersonViewSet(CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet):
+class UserViewSet(ListModelMixin, CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet):
     queryset = Person.objects.all().select_related('user').prefetch_related('tags')
     serializer_class = PersonDetailSerializer
     permission_classes = [IsMeOrReadOnly]
+
+    def list(self, request, *args, **kwargs):
+        return super().retrieve(request, *args, **kwargs)
 
     def create(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
