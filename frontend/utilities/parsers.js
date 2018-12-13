@@ -45,3 +45,16 @@ export const latLngParser = p => {
     };
   }
 };
+
+export const personParser = (d) => {
+  const p = apiReadParser(d);
+  const latlng = latLngParser(p);
+  const type = p.type ? p.type : 1;
+  return {
+    ...p,
+    latlng,
+    type,
+    location: undefined
+  };
+}
+;
