@@ -34,7 +34,7 @@
     "vue": "2.5.17",
     "vue-django-feedback": "^1.5.1",
     "vue-no-ssr": "^0.2.2",
-    "vue2-leaflet": "1.2.3-beta.5",
+    "vue2-leaflet": "1.2.3-beta.8",
     "vuetify": "1.0.10",
     "vuex-geolocation": "^1.1.0"
   },
