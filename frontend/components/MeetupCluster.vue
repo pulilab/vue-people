@@ -32,9 +32,10 @@
       </v-layout>
     </tooltip-group>
 
-    <v-marker-cluster
+    <custom-marker-cluster
       v-if="showMeetups"
       :options="clusterOptions"
+      :total="meetupsGroups.length"
     >
       <map-marker
         v-for="pin in meetupsGroups"
@@ -46,7 +47,7 @@
         @hover:in="tooltipShow"
         @hover:out="tooltipHide"
       />
-    </v-marker-cluster>
+    </custom-marker-cluster>
   </div>
 </template>
 

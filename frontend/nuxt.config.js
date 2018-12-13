@@ -1,4 +1,5 @@
 const result = require('dotenv').config();
+const path = require('path');
 
 if (result.error) {
   console.log('\x1b[31m%s\x1b[0m', 'Missing .env file, follow the README instructions');
@@ -63,8 +64,8 @@ const config = {
   loading: { color: '#3B8070' },
   build: {
     extractCSS: true,
-    extend (config, { isDev, isClient }) {
-      if (isDev && isClient) {
+    extend (config, { isDev }) {
+      if (isDev && process.client) {
         config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,
@@ -72,6 +73,7 @@ const config = {
           exclude: /(node_modules)/
         });
       }
+      config.resolve.alias['leaflet'] = path.join(this.options.srcDir, 'node_modules/leaflet');
     }
   }
 };
