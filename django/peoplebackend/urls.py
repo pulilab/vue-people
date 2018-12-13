@@ -20,12 +20,13 @@ from rest_framework.routers import DefaultRouter
 from rest_framework.documentation import include_docs_urls
 
 from people.views import UserTypeViewSet, PersonViewSet, PeopleViewSet, TagViewSet, \
-    MeetupGroupViewSet, MeetupEventViewSet, PeopleSearchViewSet
+    MeetupGroupViewSet, MeetupEventViewSet, PeopleSearchViewSet, UserViewSet
 
 router = DefaultRouter()
 router.register(r'api/user-type', UserTypeViewSet)
-router.register(r'api/user', PersonViewSet)
+router.register(r'api/user', UserViewSet)
 router.register(r'api/people', PeopleViewSet)
+router.register(r'api/person', PersonViewSet)
 router.register(r'api/search', PeopleSearchViewSet)
 router.register(r'api/tags', TagViewSet)
 router.register(r'api/meetup/groups', MeetupGroupViewSet)
