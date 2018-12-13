@@ -51,16 +51,24 @@ describe('getters', () => {
   });
 
   test('getPersonDetails', () => {
-    const getList = [{id: 1}, {id: 2}];
+    const list = [{id: 1}, {id: 2}];
+    const peopleLibrary = {
+      1: { id: 1 },
+      2: { id: 2 }
+    };
     const rootGetters = {
       'user/getUserProfile': null
     };
-    let result = getters.getPersonDetails(s, {getList}, {}, rootGetters)(1);
-    expect(result).toEqual(getList[0]);
-    expect(result).not.toBe(getList[0]);
+    let result = getters.getPersonDetails({peopleLibrary: {}, list}, {}, {}, rootGetters)(1);
+    expect(result).toEqual(list[0]);
+    expect(result).not.toBe(list[0]);
+
+    result = getters.getPersonDetails({peopleLibrary}, {}, {}, rootGetters)(1);
+    expect(result).toEqual(list[0]);
+    expect(result).not.toBe(list[0]);
 
     rootGetters['user/getUserProfile'] = { id: 1 };
-    result = getters.getPersonDetails(s, {getList}, {}, rootGetters)(1);
+    result = getters.getPersonDetails({peopleLibrary}, {}, {}, rootGetters)(1);
     expect(result).toEqual(rootGetters['user/getUserProfile']);
     expect(result).not.toBe(rootGetters['user/getUserProfile']);
   });
@@ -138,23 +146,22 @@ describe('actions', () => {
 
   test('loadPeople', async () => {
     actions.$axios.get.mockReturnValue({data: [1]});
-    parsersUtils.apiReadParser = jest.fn().mockReturnValue({ a: 1 });
-    parsersUtils.latLngParser = jest.fn().mockReturnValue(1);
+    const mockResult = { a: 1, latlng: 1 };
+    parsersUtils.personParser = jest.fn().mockReturnValue(mockResult);
     await actions.loadPeople(vuex);
     expect(actions.$axios.get.mock.calls[0]).toEqual(['/api/people/']);
-    expect(vuex.commit.mock.calls[0]).toEqual(['SET_PEOPLE_LIST', [{a: 1, latlng: 1, selected: false, type: 1, location: undefined}]]);
-
-    parsersUtils.apiReadParser = jest.fn().mockReturnValue({ a: 1, type: 2 });
-    await actions.loadPeople(vuex);
-    expect(actions.$axios.get.mock.calls[1]).toEqual(['/api/people/']);
-    expect(vuex.commit.mock.calls[1]).toEqual(['SET_PEOPLE_LIST', [{a: 1, latlng: 1, selected: false, type: 2, location: undefined}]]);
+    expect(vuex.commit.mock.calls[0]).toEqual(['SET_PEOPLE_LIST', [mockResult]]);
   });
 
-  test('setCurrent', () => {
-    actions.setCurrent(vuex, 1);
-    expect(vuex.commit.mock.calls[0]).toEqual(['SET_CURRENT', 1]);
-    expect(vuex.commit.mock.calls[1]).toEqual(['SET_CURRENT_PERSON_REPOSITORY_LIST', []]);
-    expect(vuex.commit.mock.calls[2]).toEqual(['SET_CURRENT_PERSON_CONTRIBUTED_LIST', []]);
+  test('setCurrent', async () => {
+    actions.$axios.get.mockReturnValue({data: [1]});
+    const mockResult = { a: 1, latlng: 1 };
+    parsersUtils.personParser = jest.fn().mockReturnValue(mockResult);
+    await actions.setCurrent(vuex, 1);
+    expect(vuex.commit.mock.calls[0]).toEqual(['SET_PERSON', {id: 1, person: mockResult}]);
+    expect(vuex.commit.mock.calls[1]).toEqual(['SET_CURRENT', 1]);
+    expect(vuex.commit.mock.calls[2]).toEqual(['SET_CURRENT_PERSON_REPOSITORY_LIST', []]);
+    expect(vuex.commit.mock.calls[3]).toEqual(['SET_CURRENT_PERSON_CONTRIBUTED_LIST', []]);
   });
 
   test('loadRepositories', async () => {
@@ -308,26 +315,42 @@ describe('mutations', () => {
 
   test('ADD_PERSON', () => {
     const s = {
-      list: []
+      list: [],
+      peopleLibrary: {}
     };
-    mutations.ADD_PERSON(s, 1);
-    expect(s.list).toEqual([1]);
+    mutations.ADD_PERSON(s, {id: 1});
+    expect(s.list).toEqual([{id: 1}]);
+    expect(s.peopleLibrary[1]).toEqual({id: 1});
+  });
+  test('SET_PERSON', () => {
+    const s = {
+      peopleLibrary: {}
+    };
+    mutations.SET_PERSON(s, {id: 1, person: {id: 1}});
+    expect(s.peopleLibrary[1]).toEqual({id: 1});
   });
 
   test('UPDATE_PERSON', () => {
     const s = {
-      list: []
+      list: [{id: 2}],
+      peopleLibrary: {1: {id: 2}}
     };
-    mutations.UPDATE_PERSON(s, {person: 2, index: 0});
-    expect(s.list).toEqual([2]);
+    mutations.UPDATE_PERSON(s, {person: {id: 1}, index: 0});
+    expect(s.list).toEqual([{id: 1}]);
+    expect(s.peopleLibrary[1]).toEqual({id: 1});
   });
 
-  test('UPDATE_PERSON', () => {
+  test('DELETE_PERSON', () => {
     const s = {
-      list: [1, 2]
+      list: [{id: 1}, {id: 2}],
+      peopleLibrary: {
+        1: 1,
+        2: 2
+      }
     };
     mutations.DELETE_PERSON(s, 1);
-    expect(s.list).toEqual([1]);
+    expect(s.list).toEqual([{id: 1}]);
+    expect(s.peopleLibrary).toEqual({1: 1});
   });
 
   test('SET_CURRENT', () => {
