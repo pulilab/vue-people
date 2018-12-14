@@ -64,12 +64,19 @@ class PersonDetailSerializer(TaggitSerializer, serializers.ModelSerializer):
         return instance
 
 
-class PersonListSerializer(TaggitSerializer, serializers.ModelSerializer):
+class PersonListSerializer(serializers.ModelSerializer):
     user = UserListSerializer()
 
     class Meta:
         model = Person
         fields = ("id", "location", "user", "type", "avatar_url")
+
+
+class PeopleSearchSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Person
+        fields = ("id")
 
 
 class TagSerialiser(serializers.ModelSerializer):
