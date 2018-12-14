@@ -21,7 +21,7 @@ export const getters = {
     const list = getters.getPins;
     const pinFilters = getters.getPinFilters;
     let filtered = [];
-    filtered = tagFiltered.length > 0 ? list.filter(p => tagFiltered.indexOf(p.id) > -1) : list;
+    filtered = tagFiltered.length > 0 ? list.filter(p => tagFiltered.includes(p.id)) : list;
     filtered = pinFilters.length > 0 ? filtered.filter(p => pinFilters.includes(p.type)) : filtered;
     return [...filtered.map(p => {
       return {
