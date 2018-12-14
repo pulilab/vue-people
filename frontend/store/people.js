@@ -1,16 +1,19 @@
 import { gitHubUserRepositories } from '~/integrations/github/queries';
 import { gitHubGraphQlRequest, filterOutNonVueAndZeroStars } from '~/integrations/github/utilities';
-import { apiReadParser, latLngParser } from '~/utilities/parsers';
+import { personParser, apiReadParser } from '~/utilities/parsers';
 import { playDing } from '~/utilities/media';
 import { WebSocketBridge } from 'django-channels';
+import qs from 'qs';
 
 export const state = () => ({
   list: [],
+  filtered: [],
   current: null,
   currentPersonRepositories: [],
   currentPersonContributed: [],
   selectedTags: [],
-  peopleWebSocketBridge: null
+  peopleWebSocketBridge: null,
+  peopleLibrary: {}
 });
 
 export const getters = {
@@ -39,7 +42,11 @@ export const getters = {
     if (loggedIn && id === loggedIn.id) {
       return {...loggedIn};
     }
-    return {...getters.getList.find(p => p.id === id)};
+    const detailed = state.peopleLibrary[id];
+    if (!detailed) {
+      return { ...state.list.find(p => p.id === id) };
+    }
+    return { ...detailed };
   },
   getCurrentPersonDetails: (state, getters, rootState, rootGetters) => {
     const current = getters.getCurrentPerson;
@@ -63,22 +70,15 @@ export const getters = {
 export const actions = {
   async loadPeople ({commit}) {
     const { data } = await this.$axios.get('/api/people/');
-    const parsed = data.map(d => {
-      const p = apiReadParser(d);
-      const latlng = latLngParser(p);
-      const type = p.type ? p.type : 1;
-      return {
-        ...p,
-        selected: getters.getCurrentPerson === p.id,
-        latlng,
-        type,
-        location: undefined
-      };
-    });
-    Object.freeze(parsed);
+    const parsed = data.map(personParser);
     commit('SET_PEOPLE_LIST', parsed);
   },
-  setCurrent ({commit}, id) {
+  async setCurrent ({commit}, id) {
+    if (id) {
+      const { data } = await this.$axios.get(`/api/person/${id}/`);
+      const person = personParser(data);
+      commit('SET_PERSON', {id, person});
+    }
     commit('SET_CURRENT', id);
     commit('SET_CURRENT_PERSON_REPOSITORY_LIST', []);
     commit('SET_CURRENT_PERSON_CONTRIBUTED_LIST', []);
@@ -102,8 +102,16 @@ export const actions = {
     }
     return false;
   },
-  setSelectedTags ({commit}, value) {
-    commit('SET_SELECTED_TAGS', value);
+  async setSelectedTags ({commit}, tags) {
+    commit('SET_SELECTED_TAGS', tags);
+    const { data } = await this.$axios({
+      method: 'get',
+      url: '/api/search/',
+      params: {tag: tags.map(t => t.id)},
+      paramsSerializer: params => qs.stringify(params, {arrayFormat: 'repeat'})
+    });
+    const filtered = data.map(d => d.id);
+    commit('SET_FILTERED', filtered);
   },
   openSocket ({ dispatch, commit }) {
     const webSocketBridge = new WebSocketBridge();
@@ -143,14 +151,20 @@ export const mutations = {
   SET_PEOPLE_LIST: (state, people) => {
     state.list = people;
   },
+  SET_PERSON: (state, {id, person}) => {
+    state.peopleLibrary[id] = {...person};
+  },
   ADD_PERSON: (state, person) => {
     state.list.push(person);
+    state.peopleLibrary[person.id] = {...person};
   },
   UPDATE_PERSON: (state, {person, index}) => {
     state.list.splice(index, 1, person);
+    state.peopleLibrary[person.id] = {...person};
   },
   DELETE_PERSON: (state, index) => {
-    state.list.splice(index, 1);
+    const [deleted] = state.list.splice(index, 1);
+    state.peopleLibrary[deleted.id] = undefined;
   },
   SET_CURRENT: (state, id) => {
     state.current = id;
@@ -166,5 +180,8 @@ export const mutations = {
   },
   SET_PEOPLE_WEBSOCKET_BRIDGE: (state, ws) => {
     state.peopleWebSocketBridge = ws;
+  },
+  SET_FILTERED: (state, filtered) => {
+    state.filtered = filtered;
   }
 };

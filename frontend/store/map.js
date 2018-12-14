@@ -12,16 +12,16 @@ export const getters = {
   getMapReady: state => state.mapReady,
 
   getPins: (state, getters, rootState, rootGetters) => {
-    return rootGetters['people/getList'].filter(p => p.latlng);
+    return rootGetters['people/getList'];
   },
   getPinFilters: state => state.pinFilters,
 
   getFilteredPins: (state, getters, rootState, rootGetters) => {
-    const tags = rootGetters['people/getSelectedTags'];
+    const tagFiltered = rootState.people.filtered;
     const list = getters.getPins;
     const pinFilters = getters.getPinFilters;
     let filtered = [];
-    filtered = tags.length > 0 ? list.filter(p => p.tags.some(t => tags.includes(t))) : list;
+    filtered = tagFiltered.length > 0 ? list.filter(p => tagFiltered.includes(p.id)) : list;
     filtered = pinFilters.length > 0 ? filtered.filter(p => pinFilters.includes(p.type)) : filtered;
     return [...filtered.map(p => {
       return {
@@ -32,7 +32,7 @@ export const getters = {
     })];
   },
   getShownPins: (state, getters, rootState, rootGetters) => {
-    let pins = getters.getPins;
+    let pins = getters.getFilteredPins;
     const user = rootGetters['user/getUserProfile'];
     const countInit = rootGetters.getUserTypes.reduce((p, c) => {
       p[c.id] = 0;

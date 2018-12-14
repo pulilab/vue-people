@@ -31,6 +31,14 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ("last_login", "first_name", "last_name", "email")
 
 
+class UserListSerializer(serializers.ModelSerializer):
+    email = CustomEmailField()
+
+    class Meta:
+        model = User
+        fields = ("first_name", "last_name", "email")
+
+
 class UserTypeSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -38,7 +46,7 @@ class UserTypeSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class PersonSerializer(TaggitSerializer, serializers.ModelSerializer):
+class PersonDetailSerializer(TaggitSerializer, serializers.ModelSerializer):
     tags = TagListSerializerField()
     user = UserSerializer()
 
@@ -54,6 +62,21 @@ class PersonSerializer(TaggitSerializer, serializers.ModelSerializer):
         instance.user.email = user_data.get('email', instance.user.email)
         instance.user.save()
         return instance
+
+
+class PersonListSerializer(serializers.ModelSerializer):
+    user = UserListSerializer()
+
+    class Meta:
+        model = Person
+        fields = ("id", "location", "user", "type", "avatar_url")
+
+
+class PeopleSearchSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Person
+        fields = ("id",)
 
 
 class TagSerialiser(serializers.ModelSerializer):

@@ -40,8 +40,7 @@ export const actions = {
   },
   async loadTags ({commit}) {
     const { data } = await this.$axios.get('/api/tags/');
-    const tags = data.map(t => t.name);
-    commit('SET_TAGS', tags);
+    commit('SET_TAGS', data);
   },
   setGoToMap ({commit}, value) {
     commit('SET_GO_TO_MAP', value);
