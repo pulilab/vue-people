@@ -26,6 +26,7 @@
           v-model="selectedTags"
           label="Type here to filter by tag."
           prepend-icon="search"
+          item-text="name"
           light
           solo
           single-line
@@ -49,11 +50,11 @@
     >
       <v-chip
         v-for="tag in selectedTags"
-        :key="tag"
+        :key="tag.id"
         close
         @input="removeTag(tag)"
       >
-        {{ tag }}
+        {{ tag.name }}
       </v-chip>
     </div>
     <div

@@ -162,6 +162,11 @@ describe('actions', () => {
     expect(vuex.commit.mock.calls[1]).toEqual(['SET_CURRENT', 1]);
     expect(vuex.commit.mock.calls[2]).toEqual(['SET_CURRENT_PERSON_REPOSITORY_LIST', []]);
     expect(vuex.commit.mock.calls[3]).toEqual(['SET_CURRENT_PERSON_CONTRIBUTED_LIST', []]);
+
+    await actions.setCurrent(vuex, null);
+    expect(vuex.commit.mock.calls[4]).toEqual(['SET_CURRENT', null]);
+    expect(vuex.commit.mock.calls[5]).toEqual(['SET_CURRENT_PERSON_REPOSITORY_LIST', []]);
+    expect(vuex.commit.mock.calls[6]).toEqual(['SET_CURRENT_PERSON_CONTRIBUTED_LIST', []]);
   });
 
   test('loadRepositories', async () => {
@@ -222,9 +227,16 @@ describe('actions', () => {
     expect(console.error).toHaveBeenCalledWith('error');
   });
 
-  test('setSelectedTags', () => {
-    actions.setSelectedTags(vuex, 1);
-    expect(vuex.commit.mock.calls[0]).toEqual(['SET_SELECTED_TAGS', 1]);
+  test('setSelectedTags', async () => {
+    actions.$axios = jest.fn((config) => {
+      config.paramsSerializer([]);
+      return {
+        data: [{id: 1}]
+      };
+    });
+    await actions.setSelectedTags(vuex, [{id: 1}]);
+    expect(vuex.commit.mock.calls[0]).toEqual(['SET_SELECTED_TAGS', [{id: 1}]]);
+    expect(vuex.commit.mock.calls[1]).toEqual(['SET_FILTERED', [1]]);
   });
 
   test('openSocket', () => {
@@ -381,5 +393,11 @@ describe('mutations', () => {
     const s = {};
     mutations.SET_PEOPLE_WEBSOCKET_BRIDGE(s, 1);
     expect(s.peopleWebSocketBridge).toEqual(1);
+  });
+
+  test('SET_FILTERED', () => {
+    const s = {};
+    mutations.SET_FILTERED(s, 1);
+    expect(s.filtered).toEqual(1);
   });
 });

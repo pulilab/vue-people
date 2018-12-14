@@ -3,9 +3,11 @@ import { gitHubGraphQlRequest, filterOutNonVueAndZeroStars } from '~/integration
 import { personParser, apiReadParser } from '~/utilities/parsers';
 import { playDing } from '~/utilities/media';
 import { WebSocketBridge } from 'django-channels';
+import qs from 'qs';
 
 export const state = () => ({
   list: [],
+  filtered: [],
   current: null,
   currentPersonRepositories: [],
   currentPersonContributed: [],
@@ -72,9 +74,11 @@ export const actions = {
     commit('SET_PEOPLE_LIST', parsed);
   },
   async setCurrent ({commit}, id) {
-    const { data } = await this.$axios.get(`/api/person/${id}/`);
-    const person = personParser(data);
-    commit('SET_PERSON', {id, person});
+    if (id) {
+      const { data } = await this.$axios.get(`/api/person/${id}/`);
+      const person = personParser(data);
+      commit('SET_PERSON', {id, person});
+    }
     commit('SET_CURRENT', id);
     commit('SET_CURRENT_PERSON_REPOSITORY_LIST', []);
     commit('SET_CURRENT_PERSON_CONTRIBUTED_LIST', []);
@@ -98,8 +102,16 @@ export const actions = {
     }
     return false;
   },
-  setSelectedTags ({commit}, value) {
-    commit('SET_SELECTED_TAGS', value);
+  async setSelectedTags ({commit}, tags) {
+    commit('SET_SELECTED_TAGS', tags);
+    const { data } = await this.$axios({
+      method: 'get',
+      url: '/api/search/',
+      params: {tag: tags.map(t => t.id)},
+      paramsSerializer: params => qs.stringify(params, {arrayFormat: 'repeat'})
+    });
+    const filtered = data.map(d => d.id);
+    commit('SET_FILTERED', filtered);
   },
   openSocket ({ dispatch, commit }) {
     const webSocketBridge = new WebSocketBridge();
@@ -168,5 +180,8 @@ export const mutations = {
   },
   SET_PEOPLE_WEBSOCKET_BRIDGE: (state, ws) => {
     state.peopleWebSocketBridge = ws;
+  },
+  SET_FILTERED: (state, filtered) => {
+    state.filtered = filtered;
   }
 };

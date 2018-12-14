@@ -85,10 +85,10 @@ describe('actions', () => {
   });
 
   test('loadTags', async () => {
-    actions.$axios.get.mockReturnValue({ data: [{name: 1, id: 2}] });
+    actions.$axios.get.mockReturnValue({ data: [{id: 2}] });
     await actions.loadTags(vuex);
     expect(actions.$axios.get.mock.calls[0]).toEqual(['/api/tags/']);
-    expect(vuex.commit.mock.calls[0]).toEqual(['SET_TAGS', [1]]);
+    expect(vuex.commit.mock.calls[0]).toEqual(['SET_TAGS', [{id: 2}]]);
   });
 
   test('setGoToMap', () => {
@@ -111,7 +111,6 @@ describe('actions', () => {
   test('setFirstPageVisited', () => {
     actions.setFirstPageVisited(vuex, true);
     expect(vuex.commit).toHaveBeenLastCalledWith('SET_FIRST_PAGE_VISITED', true);
-
   });
 });
 
@@ -145,5 +144,4 @@ describe('mutations', () => {
     mutations.SET_FIRST_PAGE_VISITED(state, 1);
     expect(state.firstPageVisited).toEqual(1);
   });
-
 });

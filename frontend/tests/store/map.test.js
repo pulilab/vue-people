@@ -24,9 +24,8 @@ describe('getters', () => {
   test('getPins', () => {
     const rootGetters = {
       'people/getList': [
-        {id: 1, type: 1, latlng: {}},
-        {id: 2, type: 2, latlng: {}},
-        {id: 3, type: 2}
+        {id: 1, type: 1},
+        {id: 2, type: 2}
       ]
     };
     const result = getters.getPins(null, null, null, rootGetters);
@@ -46,35 +45,37 @@ describe('getters', () => {
       ],
       getPinFilters: []
     };
-    const rootGetters = {
-      'people/getSelectedTags': []
+    const rootState = {
+      people: {
+        filtered: []
+      }
     };
-    let result = getters.getFilteredPins(null, g, null, rootGetters);
+    let result = getters.getFilteredPins(null, g, rootState);
     expect(result.length).toEqual(2);
 
     g.getPinFilters = [2];
-    result = getters.getFilteredPins(null, g, null, rootGetters);
+    result = getters.getFilteredPins(null, g, rootState);
     expect(result.length).toEqual(1);
 
     g.getPinFilters = [1, 2];
 
-    rootGetters['people/getSelectedTags'] = ['vuex'];
+    rootState.people.filtered = [1];
     g.getPins = [
       {id: 1, type: 1, tags: ['vuex'], latlng: {}},
       {id: 2, type: 2, tags: [], latlng: {}}
     ];
-    result = getters.getFilteredPins(null, g, null, rootGetters);
+    result = getters.getFilteredPins(null, g, rootState );
     expect(result[0]).toEqual({id: 1, type: 1, key: 1, options: {}, tags: ['vuex'], latlng: {}});
     expect(result.length).toEqual(1);
   });
 
   test('getShownPins', () => {
-    const getPins = [{type: 1}, {type: 1}, {type: 2}];
+    const getFilteredPins = [{type: 1}, {type: 1}, {type: 2}];
     const getUserTypes = [{id: 1}, {id: 2}];
     const getUserProfile = {type: 1};
     expect(getters.getShownPins(
       null,
-      { getPins },
+      { getFilteredPins },
       null,
       { getUserTypes, 'user/getUserProfile': getUserProfile }
     ))
@@ -83,7 +84,7 @@ describe('getters', () => {
     getUserProfile.latlng = [];
     expect(getters.getShownPins(
       null,
-      { getPins },
+      { getFilteredPins },
       null,
       { getUserTypes, 'user/getUserProfile': getUserProfile }
     ))
