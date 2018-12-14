@@ -8,7 +8,7 @@ from taggit.models import Tag
 
 from .permission import IsMeOrReadOnly
 from .serializers import UserTypeSerializer, PersonDetailSerializer, TagSerialiser, MeetupGroupSerialiser, \
-    MeetupEventSerialiser, PersonListSerializer
+    MeetupEventSerialiser, PersonListSerializer, PeopleSearchSerializer
 from .models import Person, Type, MeetupGroup, MeetupEvent
 
 
@@ -59,7 +59,7 @@ class PersonViewSet(RetrieveModelMixin, GenericViewSet):
 
 class PeopleSearchViewSet(ModelViewSet):
     queryset = Person.objects.none()
-    serializer_class = PersonListSerializer
+    serializer_class = PeopleSearchSerializer
     permission_classes = []
     authentication_classes = []
 
