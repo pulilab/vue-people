@@ -30,6 +30,7 @@
     "nuxt": "^1.4.2",
     "nuxt-device-detect": "^1.1.1",
     "nuxt-mq": "^1.0.5",
+    "qs": "^6.6.0",
     "vee-validate": "^2.0.6",
     "vue": "2.5.17",
     "vue-django-feedback": "^1.5.1",
