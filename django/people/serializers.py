@@ -76,7 +76,7 @@ class PeopleSearchSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Person
-        fields = ("id")
+        fields = ("id",)
 
 
 class TagSerialiser(serializers.ModelSerializer):
