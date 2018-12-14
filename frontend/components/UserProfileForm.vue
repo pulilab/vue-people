@@ -323,9 +323,12 @@ export default {
     ...mapGetters({
       userProfile: 'user/getUserProfile',
       usLoggedIn: 'user/getLoginStatus',
-      tagList: 'getTags',
+      tags: 'getTags',
       userTypes: 'getUserTypes'
     }),
+    tagList () {
+      return this.tags.map(t => t.name);
+    },
     publicEmailSwitchLabel () {
       return this.profile.public_email ? 'public' : 'private';
     },
