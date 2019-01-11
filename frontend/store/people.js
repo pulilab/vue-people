@@ -1,6 +1,6 @@
 import { gitHubUserRepositories } from '~/integrations/github/queries';
 import { gitHubGraphQlRequest, filterOutNonVueAndZeroStars } from '~/integrations/github/utilities';
-import { personParser, apiReadParser } from '~/utilities/parsers';
+import { personParser } from '~/utilities/parsers';
 import { playDing } from '~/utilities/media';
 import { WebSocketBridge } from 'django-channels';
 import qs from 'qs';
@@ -121,7 +121,7 @@ export const actions = {
   },
   socketAction ({commit, rootGetters, state}, action) {
     if (action && action.person) {
-      const person = apiReadParser(action.person);
+      const person = personParser(action.person);
       const index = state.list.findIndex(p => p.id === action.person.id);
       const settings = rootGetters['user/getSettings'];
       if (index !== -1) {
@@ -142,8 +142,8 @@ export const actions = {
     state.peopleWebSocketBridge.socket.close(1000, '', { keepClosed: true });
     commit('SET_PEOPLE_WEBSOCKET_BRIDGE', null);
   },
-  deletePerson ({commit}, index) {
-    commit('DELETE_PERSON', index);
+  deletePerson ({commit}, id) {
+    commit('DELETE_PERSON', id);
   }
 };
 
@@ -162,9 +162,10 @@ export const mutations = {
     state.list.splice(index, 1, person);
     state.peopleLibrary[person.id] = {...person};
   },
-  DELETE_PERSON: (state, index) => {
-    const [deleted] = state.list.splice(index, 1);
-    state.peopleLibrary[deleted.id] = undefined;
+  DELETE_PERSON: (state, id) => {
+    const index = state.list.findIndex(p => p.id === id);
+    state.list.splice(index, 1);
+    state.peopleLibrary[id] = undefined;
   },
   SET_CURRENT: (state, id) => {
     state.current = id;
