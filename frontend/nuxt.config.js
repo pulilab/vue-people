@@ -73,7 +73,7 @@ const config = {
           exclude: /(node_modules)/
         });
       }
-      config.resolve.alias['leaflet'] = path.join(this.options.srcDir, 'node_modules/leaflet');
+      config.resolve.alias['leaflet'] = path.join(__dirname, 'node_modules/leaflet');
     }
   }
 };
