@@ -248,7 +248,7 @@ describe('actions', () => {
   });
 
   test('socketAction', () => {
-    const parserSpy = jest.spyOn(parsersUtils, 'apiReadParser').mockReturnValue({id: 2});
+    const parserSpy = jest.spyOn(parsersUtils, 'personParser').mockReturnValue({id: 2});
     jest.spyOn(mediaUtils, 'playDing').mockReturnValue(undefined);
     actions.socketAction(vuex);
     expect(vuex.commit).not.toHaveBeenCalled();
@@ -361,8 +361,8 @@ describe('mutations', () => {
       }
     };
     mutations.DELETE_PERSON(s, 1);
-    expect(s.list).toEqual([{id: 1}]);
-    expect(s.peopleLibrary).toEqual({1: 1});
+    expect(s.list).toEqual([{id: 2}]);
+    expect(s.peopleLibrary).toEqual({2: 2});
   });
 
   test('SET_CURRENT', () => {

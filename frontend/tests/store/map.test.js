@@ -24,12 +24,12 @@ describe('getters', () => {
   test('getPins', () => {
     const rootGetters = {
       'people/getList': [
-        {id: 1, type: 1},
+        {id: 1, type: 1, latlng: {}},
         {id: 2, type: 2}
       ]
     };
     const result = getters.getPins(null, null, null, rootGetters);
-    expect(result.length).toBe(2);
+    expect(result.length).toBe(1);
   });
 
   test('getPinFilters', () => {
