@@ -29,7 +29,7 @@ export default {
 
     vue-django-feedback .vue-django-feedback {
       z-index: 5000;
-      bottom: 16px;
+      bottom: 22px;
       right: 16px;
       width: 30px;
       height: 30px;
