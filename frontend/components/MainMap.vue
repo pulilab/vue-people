@@ -83,6 +83,19 @@
             v-if="showFloatingUI"
             position="bottomright"
           />
+          <l-control-attribution
+            v-if="showFloatingUI"
+            position="bottomright"
+            prefix="<a target='_blank'
+            href='http://leafletjs.com'
+            title='A JS library for interactive maps'>Leaflet</a> |
+            <span>Powered by:
+              <a
+                target='_blank'
+                href='https://www.esri.com/en-us/home'
+              >Esri</a>
+            </span>"
+          />
         </l-map>
       </no-ssr>
     </div>
@@ -378,6 +391,12 @@ export default {
           }
         }
       }
+    }
+
+    .leaflet-control-attribution {
+      position: fixed;
+      bottom: 6px;
+      right: 0;
     }
 
     .custom-cluster-icon {

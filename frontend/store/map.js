@@ -12,7 +12,7 @@ export const getters = {
   getMapReady: state => state.mapReady,
 
   getPins: (state, getters, rootState, rootGetters) => {
-    return rootGetters['people/getList'];
+    return rootGetters['people/getList'].filter(p => p.latlng);
   },
   getPinFilters: state => state.pinFilters,
 
