@@ -46,13 +46,13 @@ class MeetupEventJsonForm(JsonForm):
 @admin.register(MeetupGroup)
 class MeetupGroupAdmin(admin.ModelAdmin):
     form = MeetupGroupJsonForm
-    search_fields = ['data__name']
+    ordering = ['id']
 
 
 @admin.register(MeetupEvent)
 class MeetupEventAdmin(admin.ModelAdmin):
     form = MeetupEventJsonForm
-    search_fields = ['data__name', 'group__data__name']
+    ordering = ['id']
 
 
 admin.site.register(Type)
