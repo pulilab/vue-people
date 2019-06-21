@@ -45,11 +45,11 @@ def sync_events():
                 r = requests.get('{}?status=upcoming&no_later_than={}&key={}'.format(
                     events_url, next_month_same_day.isoformat(), settings.MEETUP_API_KEY))
             except HTTPError:
-                pass
+                sentry.error('Sync event HTTP error', exc_info=1)
             else:
                 events = r.json()
                 if 'errors' in events:
-                    sentry.debug('Sync event error', extra=events)
+                    sentry.error('Sync event error', extra=events)
                 else:
                     for event in events:
                         utc_date = datetime.fromtimestamp(int(event['time']) / 1000, tz=pytz.UTC)
