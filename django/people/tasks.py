@@ -1,3 +1,4 @@
+import logging
 import time
 import requests
 import pytz
@@ -12,7 +13,7 @@ from requests import HTTPError
 from .models import MeetupGroup, MeetupEvent
 
 logger = get_task_logger(__name__)
-
+sentry = logging.getLogger('raven')
 
 def sync_groups():
     try:
@@ -47,17 +48,19 @@ def sync_events():
                 pass
             else:
                 events = r.json()
-
-                for event in events:
-                    utc_date = datetime.fromtimestamp(int(event['time']) / 1000, tz=pytz.UTC)
-                    me, created = MeetupEvent.objects.get_or_create(id=event['id'],
-                                                                    defaults=dict(group=group, date=utc_date, data=event))
-                    if not created:
-                        if me.data != event:
-                            me.data = event
-                            me.date = utc_date
-                            me.save()
-                time.sleep(1)  # anti-throttle
+                if 'errors' in events:
+                    sentry.debug('Sync event error', extra=events)
+                else:
+                    for event in events:
+                        utc_date = datetime.fromtimestamp(int(event['time']) / 1000, tz=pytz.UTC)
+                        me, created = MeetupEvent.objects.get_or_create(id=event['id'],
+                                                                        defaults=dict(group=group, date=utc_date, data=event))
+                        if not created:
+                            if me.data != event:
+                                me.data = event
+                                me.date = utc_date
+                                me.save()
+                time.sleep(5)  # anti-throttle
 
 
 @periodic_task(run_every=crontab(hour=2, minute=15))
