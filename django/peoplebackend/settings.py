@@ -24,7 +24,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'CHANGETHIS')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(strtobool(os.environ.get('DEBUG', 'False')))
 
-ALLOWED_HOSTS = ['django:8000', 'django', 'localhost', 'www.vuepeople.org', 'vuepeople.org']
+ALLOWED_HOSTS = ['django:8000', 'django', 'localhost', '*.vuepeople.org', '*.vuejs.org' ]
 
 if DEBUG:
     ALLOWED_HOSTS.append('0.0.0.0')
